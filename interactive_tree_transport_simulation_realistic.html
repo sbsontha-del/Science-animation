@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Interactive Plant Transport Simulation</title>
+<style>
+  :root{
+    --bg:#eef7ec;
+    --panel:#ffffff;
+    --text:#18351f;
+    --muted:#617267;
+    --green:#1f7a36;
+    --green2:#58a845;
+    --blue:#1677d2;
+    --red:#e54135;
+    --orange:#ef8a1f;
+    --purple:#6f4ac8;
+    --border:#cfe0cf;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    font-family:Arial,Helvetica,sans-serif;
+    background:var(--bg);
+    color:var(--text);
+  }
+  .app{
+    width:min(1180px,100%);
+    margin:auto;
+    padding:12px;
+  }
+  header{
+    background:linear-gradient(90deg,#0f5d25,#178137);
+    color:#fff;
+    border-radius:16px;
+    padding:14px 16px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+    flex-wrap:wrap;
+  }
+  header h1{
+    margin:0;
+    font-size:clamp(1.35rem,4vw,2rem);
+  }
+  header p{
+    margin:4px 0 0;
+    opacity:.95;
+  }
+  .header-buttons{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+  }
+  button{
+    border:0;
+    border-radius:11px;
+    padding:11px 14px;
+    font-weight:700;
+    cursor:pointer;
+    font-size:1rem;
+  }
+  .primary{background:#7647cc;color:white}
+  .secondary{background:white;color:#17351e}
+  .layout{
+    margin-top:12px;
+    display:grid;
+    grid-template-columns:280px minmax(0,1fr) 260px;
+    gap:12px;
+    align-items:start;
+  }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:13px;
+  }
+  .panel h2{
+    margin:0 0 12px;
+    font-size:1.06rem;
+  }
+  .choice{
+    display:grid;
+    gap:8px;
+  }
+  .choice label{
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:10px;
+    font-weight:700;
+    cursor:pointer;
+  }
+  .choice input{margin-right:7px}
+  .control{
+    margin-top:17px;
+  }
+  .control label{
+    display:block;
+    font-weight:700;
+    margin-bottom:7px;
+  }
+  input[type="range"]{width:100%}
+  .tip,.science-note{
+    margin-top:15px;
+    padding:10px;
+    border-radius:9px;
+    line-height:1.45;
+  }
+  .tip{
+    background:#eef6ff;
+    border-left:4px solid var(--blue);
+  }
+  .science-note{
+    background:#fff8e8;
+    border-left:4px solid #dda700;
+  }
+  .stage{
+    padding:0;
+    overflow:hidden;
+    position:relative;
+    min-height:690px;
+    background:#cceeff;
+  }
+  canvas{
+    display:block;
+    width:100%;
+    height:auto;
+    aspect-ratio: 4 / 5;
+    background:linear-gradient(#9fdcff 0 64%, #bfe48e 64% 74%, #6f4424 74%);
+    touch-action:manipulation;
+  }
+  .stage-overlay{
+    position:absolute;
+    inset:auto 10px 10px 10px;
+    display:flex;
+    justify-content:space-between;
+    gap:8px;
+    pointer-events:none;
+  }
+  .pill{
+    background:rgba(255,255,255,.92);
+    border-radius:999px;
+    padding:7px 10px;
+    font-weight:700;
+    font-size:.9rem;
+  }
+  .metric{
+    display:flex;
+    justify-content:space-between;
+    gap:10px;
+    margin:11px 0 5px;
+  }
+  .track{
+    height:10px;
+    background:#e8eee8;
+    border-radius:99px;
+    overflow:hidden;
+  }
+  .fill{
+    height:100%;
+    width:50%;
+    transition:width .4s ease;
+  }
+  .result{
+    margin-top:15px;
+    font-size:1.6rem;
+    font-weight:800;
+    color:var(--green);
+  }
+  .badge{
+    display:inline-block;
+    background:#e9f5eb;
+    color:#236e31;
+    border-radius:999px;
+    padding:5px 8px;
+    font-weight:700;
+    margin-top:12px;
+  }
+  .legend{
+    margin-top:16px;
+    line-height:1.8;
+  }
+  .legend-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+  }
+  .swatch{
+    width:25px;
+    height:5px;
+    border-radius:9px;
+    display:inline-block;
+  }
+  .status{
+    margin-top:12px;
+    padding:10px;
+    border-radius:10px;
+    background:#f2f7f2;
+    font-weight:700;
+  }
+  @media (max-width:930px){
+    .layout{grid-template-columns:1fr}
+    .stage{order:-1;min-height:0}
+    canvas{aspect-ratio: 4 / 5.2}
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div>
+      <h1>🌳 Plant Transport Simulation</h1>
+      <p>Watch water and food move through a fruit tree.</p>
+    </div>
+    <div class="header-buttons">
+      <button id="playBtn" class="primary">▶ Start</button>
+      <button id="resetBtn" class="secondary">↻ Reset</button>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="panel">
+      <h2>1. Choose the farmer's action</h2>
+      <div class="choice">
+        <label><input type="radio" name="action" value="none" checked>Keep all phloem tubes intact</label>
+        <label><input type="radio" name="action" value="upper">Remove phloem from upper branches</label>
+        <label><input type="radio" name="action" value="all">Remove phloem from all fruit branches</label>
+      </div>
+
+      <div class="control">
+        <label for="speed">2. Animation speed</label>
+        <input id="speed" type="range" min="0.5" max="2.2" step="0.1" value="1.2">
+      </div>
+
+      <div class="control">
+        <label for="day">3. Time</label>
+        <input id="day" type="range" min="0" max="10" step="1" value="0">
+        <div class="status">Day <span id="dayLabel">0</span></div>
+      </div>
+
+      <div class="tip">
+        <strong>Try this:</strong><br>
+        Choose <em>Remove phloem from upper branches</em>, then press <strong>Start</strong>.
+      </div>
+
+      <div class="science-note">
+        <strong>Science note:</strong><br>
+        Xylem carries water and minerals upwards. Phloem carries food made in leaves to other parts of the plant.
+      </div>
+    </aside>
+
+    <main class="panel stage">
+      <canvas id="simCanvas" width="800" height="1000" aria-label="Interactive fruit tree showing water and food transport"></canvas>
+      <div class="stage-overlay">
+        <span class="pill">💧 Blue = water in xylem</span>
+        <span class="pill">🍬 Yellow = food in phloem</span>
+      </div>
+    </main>
+
+    <aside class="panel">
+      <h2>Observation</h2>
+
+      <div class="metric"><span>Upper fruits</span><strong id="upperValue">50</strong></div>
+      <div class="track"><div id="upperBar" class="fill" style="background:#8cb640"></div></div>
+
+      <div class="metric"><span>Lower fruits</span><strong id="lowerValue">50</strong></div>
+      <div class="track"><div id="lowerBar" class="fill" style="background:#ef8a1f"></div></div>
+
+      <div class="metric"><span>Roots</span><strong id="rootValue">50</strong></div>
+      <div class="track"><div id="rootBar" class="fill" style="background:#6f4ac8"></div></div>
+
+      <span class="badge">Result</span>
+      <div id="resultText" class="result">Balanced transport</div>
+      <p id="explanation">Food is distributed to upper fruits, lower fruits and roots.</p>
+
+      <div class="legend">
+        <div class="legend-row"><span class="swatch" style="background:#1677d2"></span>Xylem — water tubes</div>
+        <div class="legend-row"><span class="swatch" style="background:#e54135"></span>Phloem — food tubes</div>
+        <div class="legend-row"><span class="swatch" style="background:#f5cb23"></span>Food particles</div>
+      </div>
+
+      <div class="science-note">
+        This is a simplified classroom model. Removing phloem can injure the plant and should not be copied without horticultural guidance.
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById("simCanvas");
+const ctx = canvas.getContext("2d");
+const playBtn = document.getElementById("playBtn");
+const resetBtn = document.getElementById("resetBtn");
+const daySlider = document.getElementById("day");
+const dayLabel = document.getElementById("dayLabel");
+const speedSlider = document.getElementById("speed");
+
+let running = false;
+let last = 0;
+let elapsedDay = 0;
+
+const waterParticles = [];
+const foodParticles = [];
+
+const branches = {
+  trunk: [[400,820],[402,690],[405,560],[408,430],[410,310],[412,210]],
+  leftUpper: [[410,350],[350,300],[300,250],[245,210]],
+  rightUpper:[[410,340],[470,295],[525,250],[585,210]],
+  leftLower:[[405,470],[340,450],[270,435],[205,420]],
+  rightLower:[[408,465],[475,445],[545,430],[610,415]]
+};
+
+function selectedAction(){
+  return document.querySelector('input[name="action"]:checked').value;
+}
+
+function pointOnPath(path,t){
+  const segs=[];
+  let total=0;
+  for(let i=0;i<path.length-1;i++){
+    const a=path[i],b=path[i+1];
+    const len=Math.hypot(b[0]-a[0],b[1]-a[1]);
+    segs.push({a,b,len});
+    total+=len;
+  }
+  let d=t*total;
+  for(const s of segs){
+    if(d<=s.len){
+      const u=d/s.len;
+      return [s.a[0]+(s.b[0]-s.a[0])*u,s.a[1]+(s.b[1]-s.a[1])*u];
+    }
+    d-=s.len;
+  }
+  return path[path.length-1];
+}
+
+
+function drawCloud(x,y,s){
+  ctx.save();
+  ctx.fillStyle="rgba(255,255,255,.82)";
+  ctx.shadowColor="rgba(255,255,255,.3)";
+  ctx.shadowBlur=10;
+  for(const [dx,dy,r] of [[0,0,34],[35,-7,28],[67,4,34],[31,18,36]]){
+    ctx.beginPath();ctx.arc(x+dx*s,y+dy*s,r*s,0,Math.PI*2);ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawLeafCluster(x,y,rx,ry,seed=0){
+  ctx.save();
+  for(let i=0;i<34;i++){
+    const a=(i*2.399+seed)% (Math.PI*2);
+    const rr=Math.sqrt((i+1)/34);
+    const px=x+Math.cos(a)*rx*rr*.9;
+    const py=y+Math.sin(a)*ry*rr*.82;
+    const size=10+((i*7+seed*13)%10);
+    const g=ctx.createRadialGradient(px-3,py-4,1,px,py,size);
+    g.addColorStop(0,"#b8df72");
+    g.addColorStop(.55,"#5f9f42");
+    g.addColorStop(1,"#2f6e32");
+    ctx.fillStyle=g;
+    ctx.beginPath();
+    ctx.ellipse(px,py,size*.72,size, a*.18,0,Math.PI*2);
+    ctx.fill();
+  }
+  ctx.restore();
+}
+
+function drawBranch(path,width){
+  ctx.save();
+  ctx.lineCap="round";
+  ctx.lineJoin="round";
+  const g=ctx.createLinearGradient(path[0][0],path[0][1],path[path.length-1][0],path[path.length-1][1]);
+  g.addColorStop(0,"#4a2612");
+  g.addColorStop(.45,"#7a421d");
+  g.addColorStop(1,"#9c5a2c");
+  ctx.strokeStyle=g;
+  ctx.lineWidth=width;
+  ctx.beginPath();
+  ctx.moveTo(path[0][0],path[0][1]);
+  for(let i=1;i<path.length;i++){
+    const prev=path[i-1],cur=path[i];
+    const mx=(prev[0]+cur[0])/2;
+    const my=(prev[1]+cur[1])/2;
+    ctx.quadraticCurveTo(prev[0],prev[1],mx,my);
+  }
+  ctx.lineTo(path[path.length-1][0],path[path.length-1][1]);
+  ctx.stroke();
+
+  ctx.globalAlpha=.32;
+  ctx.strokeStyle="#c98246";
+  ctx.lineWidth=Math.max(2,width*.11);
+  ctx.beginPath();
+  ctx.moveTo(path[0][0]-width*.12,path[0][1]);
+  for(let i=1;i<path.length;i++)ctx.lineTo(path[i][0]-width*.12,path[i][1]);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawTree(day, action){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+
+  const sky=ctx.createLinearGradient(0,0,0,canvas.height);
+  sky.addColorStop(0,"#88c9ef");
+  sky.addColorStop(.62,"#c9ebfb");
+  sky.addColorStop(.63,"#8fc668");
+  sky.addColorStop(.74,"#a8d57b");
+  sky.addColorStop(.75,"#704521");
+  sky.addColorStop(1,"#4e2d18");
+  ctx.fillStyle=sky;
+  ctx.fillRect(0,0,canvas.width,canvas.height);
+
+  const sun=ctx.createRadialGradient(90,105,8,90,105,60);
+  sun.addColorStop(0,"#fff4a5");
+  sun.addColorStop(.55,"#ffd65c");
+  sun.addColorStop(1,"rgba(255,208,66,0)");
+  ctx.fillStyle=sun;
+  ctx.beginPath();ctx.arc(90,105,60,0,Math.PI*2);ctx.fill();
+
+  drawCloud(565,92,1);
+  drawCloud(72,185,.78);
+
+  // distant landscape
+  ctx.fillStyle="rgba(69,120,56,.38)";
+  for(let x=0;x<800;x+=52){
+    const h=22+((x*13)%35);
+    ctx.beginPath();
+    ctx.arc(x,645,h,Math.PI,0);
+    ctx.fill();
+  }
+
+  // roots
+  const roots=[
+    [[405,820],[345,860],[250,900],[135,935]],
+    [[410,820],[375,890],[320,945],[255,980]],
+    [[418,820],[475,875],[565,915],[690,950]],
+    [[410,820],[455,905],[500,955],[545,990]],
+    [[400,820],[330,835],[235,850],[150,865]]
+  ];
+  roots.forEach((p,i)=>drawBranch(p,20-i*2));
+
+  // main trunk, slightly irregular
+  const trunkLeft=[[365,825],[372,720],[370,610],[375,500],[382,390],[390,285]];
+  const trunkRight=[[445,825],[440,720],[445,610],[438,500],[430,390],[420,285]];
+  const trunkGrad=ctx.createLinearGradient(365,0,445,0);
+  trunkGrad.addColorStop(0,"#4a2713");
+  trunkGrad.addColorStop(.35,"#74411f");
+  trunkGrad.addColorStop(.65,"#9a5b2f");
+  trunkGrad.addColorStop(1,"#5a3118");
+  ctx.fillStyle=trunkGrad;
+  ctx.beginPath();
+  ctx.moveTo(trunkLeft[0][0],trunkLeft[0][1]);
+  trunkLeft.slice(1).forEach(p=>ctx.lineTo(p[0],p[1]));
+  [...trunkRight].reverse().forEach(p=>ctx.lineTo(p[0],p[1]));
+  ctx.closePath();
+  ctx.fill();
+
+  // bark ridges
+  ctx.save();
+  ctx.globalAlpha=.22;
+  ctx.strokeStyle="#2e180d";
+  ctx.lineWidth=4;
+  for(let i=0;i<9;i++){
+    const x=382+i*7;
+    ctx.beginPath();
+    ctx.moveTo(x,800);
+    ctx.bezierCurveTo(x-10,690,x+9,575,x-2,430);
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // branches
+  const structural=[
+    [branches.leftUpper,42],
+    [branches.rightUpper,44],
+    [branches.leftLower,48],
+    [branches.rightLower,46],
+    [[[410,330],[365,255],[320,190],[295,135]],28],
+    [[[418,315],[460,245],[505,180],[535,135]],30],
+    [[[390,405],[325,365],[260,340],[195,330]],26],
+    [[[430,390],[500,355],[570,335],[630,330]],26]
+  ];
+  structural.forEach(([p,w])=>drawBranch(p,w));
+
+  // fine twigs
+  const twigs=[
+    [[260,250],[215,205],[180,175]],
+    [[315,190],[280,145],[250,110]],
+    [[505,180],[545,145],[585,125]],
+    [[560,245],[610,220],[650,205]],
+    [[260,340],[210,320],[165,310]],
+    [[570,335],[625,320],[675,320]]
+  ];
+  twigs.forEach(p=>drawBranch(p,12));
+
+  // canopy layers behind and in front
+  const clusters=[
+    [190,220,115,86,1],[300,155,130,92,2],[425,145,150,100,3],
+    [565,220,120,90,4],[255,315,125,90,5],[430,290,165,110,6],
+    [585,320,110,82,7],[335,245,155,105,8]
+  ];
+  clusters.forEach(c=>drawLeafCluster(...c));
+
+  // tubes
+  ctx.lineWidth=10;
+  ctx.strokeStyle="#1677d2";
+  drawPath(branches.trunk);
+  drawPath(branches.leftUpper);
+  drawPath(branches.rightUpper);
+  drawPath(branches.leftLower);
+  drawPath(branches.rightLower);
+
+  ctx.lineWidth=9;
+  ctx.strokeStyle="#e54135";
+  drawFoodPath(branches.trunk,false);
+
+  const cutUpper = action==="upper" || action==="all";
+  const cutAll = action==="all";
+  drawFoodPath(branches.leftUpper,cutUpper);
+  drawFoodPath(branches.rightUpper,cutUpper);
+  drawFoodPath(branches.leftLower,cutAll);
+  drawFoodPath(branches.rightLower,cutAll);
+
+  if(cutUpper){
+    drawCut(295,255,-.55);
+    drawCut(525,250,.55);
+  }
+  if(cutAll){
+    drawCut(270,435,-.2);
+    drawCut(545,430,.2);
+  }
+
+  const upperSize = action==="upper" ? 34-day*1.6 : action==="all" ? 34-day*2 : 34+day*.4;
+  const lowerSize = action==="upper" ? 42+day*2.8 : action==="all" ? 42-day*2.1 : 42+day*.7;
+
+  drawFruit(245,305,Math.max(17,upperSize),"#88b447");
+  drawFruit(585,305,Math.max(17,upperSize),"#88b447");
+  drawFruit(205,510,Math.max(20,lowerSize),"#ed7b1f");
+  drawFruit(610,505,Math.max(20,lowerSize),"#ed7b1f");
+
+  drawParticles(action);
+}
+
+function drawPath(path){
+  ctx.beginPath();
+  ctx.moveTo(path[0][0]-12,path[0][1]);
+  for(let i=1;i<path.length;i++){
+    const p0=path[i-1],p1=path[i];
+    const mx=(p0[0]+p1[0])/2,my=(p0[1]+p1[1])/2;
+    ctx.quadraticCurveTo(p0[0]-12,p0[1],mx-12,my);
+  }
+  ctx.lineTo(path[path.length-1][0]-12,path[path.length-1][1]);
+  ctx.stroke();
+}
+
+function drawFoodPath(path,cut){
+  ctx.save();
+  ctx.globalAlpha=cut?.14:1;
+  ctx.beginPath();
+  ctx.moveTo(path[0][0]+12,path[0][1]);
+  for(let i=1;i<path.length;i++){
+    const p0=path[i-1],p1=path[i];
+    const mx=(p0[0]+p1[0])/2,my=(p0[1]+p1[1])/2;
+    ctx.quadraticCurveTo(p0[0]+12,p0[1],mx+12,my);
+  }
+  ctx.lineTo(path[path.length-1][0]+12,path[path.length-1][1]);
+  ctx.stroke();
+  ctx.restore();
+}
+
+function drawCut(x,y,rot){
+  ctx.save();
+  ctx.translate(x,y);
+  ctx.rotate(rot);
+  ctx.strokeStyle="rgba(255,255,255,.95)";
+  ctx.lineWidth=8;
+  ctx.setLineDash([15,11]);
+  ctx.beginPath();
+  ctx.moveTo(-28,0);
+  ctx.lineTo(28,0);
+  ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.restore();
+}
+
+function drawFruit(x,y,r,color){
+  ctx.save();
+  ctx.translate(x,y);
+
+  const fruitGrad=ctx.createRadialGradient(-r*.3,-r*.35,2,0,0,r);
+  fruitGrad.addColorStop(0,"#ffd17a");
+  fruitGrad.addColorStop(.28,color);
+  fruitGrad.addColorStop(1,"#a94818");
+  ctx.fillStyle=fruitGrad;
+
+  ctx.beginPath();
+  ctx.moveTo(0,-r*.92);
+  ctx.bezierCurveTo(r*.72,-r*.78,r*.96,-r*.18,r*.76,r*.5);
+  ctx.bezierCurveTo(r*.52,r*.95,-r*.52,r*.95,-r*.76,r*.5);
+  ctx.bezierCurveTo(-r*.96,-r*.18,-r*.72,-r*.78,0,-r*.92);
+  ctx.closePath();
+  ctx.fill();
+
+  ctx.strokeStyle="#4d2b14";
+  ctx.lineWidth=Math.max(4,r*.11);
+  ctx.beginPath();
+  ctx.moveTo(0,-r*.9);
+  ctx.quadraticCurveTo(r*.06,-r*1.15,r*.25,-r*1.35);
+  ctx.stroke();
+
+  ctx.fillStyle="#4f8f39";
+  ctx.beginPath();
+  ctx.ellipse(r*.24,-r*1.16,r*.25,r*.1,-.45,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.fillStyle="rgba(255,255,255,.28)";
+  ctx.beginPath();
+  ctx.ellipse(-r*.3,-r*.25,r*.15,r*.28,-.4,0,Math.PI*2);
+  ctx.fill();
+
+  ctx.restore();
+}
+function seedParticles(){
+  waterParticles.length=0;foodParticles.length=0;
+  const waterPaths=[branches.trunk,branches.leftUpper,branches.rightUpper,branches.leftLower,branches.rightLower];
+  for(let i=0;i<38;i++){
+    waterParticles.push({path:waterPaths[i%waterPaths.length],t:Math.random(),speed:.08+Math.random()*.06});
+  }
+  const foodPaths=[branches.trunk,branches.leftUpper,branches.rightUpper,branches.leftLower,branches.rightLower];
+  for(let i=0;i<44;i++){
+    foodParticles.push({path:foodPaths[i%foodPaths.length],t:Math.random(),speed:.06+Math.random()*.05});
+  }
+}
+
+function drawParticles(action){
+  for(const p of waterParticles){
+    const pos=pointOnPath(p.path,p.t);
+    ctx.fillStyle="#4fb0ff";
+    ctx.beginPath();ctx.arc(pos[0]-12,pos[1],6,0,Math.PI*2);ctx.fill();
+  }
+
+  for(const p of foodParticles){
+    const isUpper=p.path===branches.leftUpper||p.path===branches.rightUpper;
+    const isLower=p.path===branches.leftLower||p.path===branches.rightLower;
+    if((action==="upper"&&isUpper)||(action==="all"&&(isUpper||isLower))) continue;
+    const pos=pointOnPath(p.path,1-p.t);
+    ctx.fillStyle="#ffd43b";
+    ctx.beginPath();ctx.arc(pos[0]+12,pos[1],6,0,Math.PI*2);ctx.fill();
+  }
+}
+
+function animate(ts){
+  if(!running){last=ts;requestAnimationFrame(animate);return}
+  const dt=Math.min(.04,(ts-last)/1000||0);last=ts;
+  const speed=Number(speedSlider.value);
+
+  for(const p of waterParticles){
+    p.t=(p.t+p.speed*dt*speed)%1;
+  }
+  for(const p of foodParticles){
+    p.t=(p.t+p.speed*dt*speed)%1;
+  }
+
+  elapsedDay += dt*speed*.75;
+  if(elapsedDay>=1){
+    elapsedDay=0;
+    let d=Number(daySlider.value);
+    if(d<10){
+      daySlider.value=d+1;
+      updateUI();
+    }else{
+      running=false;
+      playBtn.textContent="▶ Start";
+    }
+  }
+
+  drawTree(Number(daySlider.value),selectedAction());
+  requestAnimationFrame(animate);
+}
+
+function updateUI(){
+  const d=Number(daySlider.value);
+  const action=selectedAction();
+  dayLabel.textContent=d;
+
+  let upper=50,lower=50,root=50;
+  let result="Balanced transport";
+  let explanation="Food is distributed to upper fruits, lower fruits and roots.";
+
+  if(action==="upper"){
+    upper=Math.max(10,50-d*4);
+    lower=Math.min(95,50+d*4.5);
+    root=Math.min(65,50+d*1.5);
+    result=d===0?"Ready to begin":"Lower fruits grow larger";
+    explanation=d===0
+      ?"Press Start and watch the food particles."
+      :"Less food reaches the upper fruits. In this simplified model, more food is stored in the lower fruits.";
+  } else if(action==="all"){
+    upper=Math.max(5,50-d*4.5);
+    lower=Math.max(8,50-d*4);
+    root=Math.max(10,50-d*3.5);
+    result=d===0?"Ready to begin":"Food transport is disrupted";
+    explanation=d===0
+      ?"Press Start and watch the food particles."
+      :"Removing phloem from all fruit branches reduces food transport to all fruits.";
+  }
+
+  setMetric("upper",upper);
+  setMetric("lower",lower);
+  setMetric("root",root);
+  document.getElementById("resultText").textContent=result;
+  document.getElementById("explanation").textContent=explanation;
+  drawTree(d,action);
+}
+
+function setMetric(id,val){
+  document.getElementById(id+"Value").textContent=Math.round(val);
+  document.getElementById(id+"Bar").style.width=val+"%";
+}
+
+playBtn.addEventListener("click",()=>{
+  running=!running;
+  if(running && Number(daySlider.value)>=10) daySlider.value=0;
+  playBtn.textContent=running?"⏸ Pause":"▶ Start";
+  updateUI();
+});
+
+resetBtn.addEventListener("click",()=>{
+  running=false;
+  elapsedDay=0;
+  playBtn.textContent="▶ Start";
+  daySlider.value=0;
+  speedSlider.value=1.2;
+  document.querySelector('input[name="action"][value="none"]').checked=true;
+  seedParticles();
+  updateUI();
+});
+
+daySlider.addEventListener("input",updateUI);
+document.querySelectorAll('input[name="action"]').forEach(el=>{
+  el.addEventListener("change",()=>{
+    daySlider.value=0;
+    elapsedDay=0;
+    updateUI();
+  });
+});
+
+canvas.addEventListener("click",(e)=>{
+  const rect=canvas.getBoundingClientRect();
+  const x=(e.clientX-rect.left)*canvas.width/rect.width;
+  const y=(e.clientY-rect.top)*canvas.height/rect.height;
+  const nearUpper=(Math.hypot(x-290,y-260)<95)||(Math.hypot(x-525,y-255)<95);
+  if(nearUpper){
+    document.querySelector('input[name="action"][value="upper"]').checked=true;
+    daySlider.value=0;
+    updateUI();
+  }
+});
+
+seedParticles();
+updateUI();
+requestAnimationFrame(animate);
+</script>
+</body>
+</html>
