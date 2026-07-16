@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pose a Testable Question</title>
+  <style>
+    :root{
+      --blue:#2563eb;
+      --green:#16a34a;
+      --yellow:#facc15;
+      --red:#dc2626;
+      --purple:#7c3aed;
+      --ink:#17324d;
+      --soft:#eef6ff;
+      --panel:#ffffff;
+      --line:#c9dff2;
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Arial,Helvetica,sans-serif;
+      color:var(--ink);
+      background:linear-gradient(180deg,#dff4ff,#f8fbff);
+      min-height:100vh;
+    }
+
+    button,select,input{font:inherit}
+
+    .app{
+      width:min(1050px,100%);
+      margin:auto;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    header{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      padding:15px 20px;
+      background:rgba(255,255,255,.95);
+      border-bottom:1px solid var(--line);
+      position:sticky;
+      top:0;
+      z-index:30;
+    }
+
+    .title{
+      font-size:clamp(19px,3vw,29px);
+      font-weight:800;
+    }
+
+    .score{
+      background:#fff7cc;
+      border:2px solid #e7bf32;
+      border-radius:999px;
+      padding:8px 14px;
+      font-weight:800;
+      white-space:nowrap;
+    }
+
+    .progress-track{
+      height:8px;
+      background:#dbeafe;
+    }
+
+    #progress{
+      height:100%;
+      width:20%;
+      background:linear-gradient(90deg,var(--blue),var(--purple));
+      transition:width .35s ease;
+    }
+
+    main{
+      flex:1;
+      padding:18px;
+    }
+
+    .scene{
+      display:none;
+      background:rgba(255,255,255,.96);
+      border-radius:26px;
+      padding:clamp(20px,4vw,38px);
+      min-height:650px;
+      box-shadow:0 12px 35px rgba(30,75,110,.15);
+      animation:fade .4s ease;
+    }
+
+    .scene.active{display:block}
+
+    @keyframes fade{
+      from{opacity:0;transform:translateY(10px)}
+      to{opacity:1;transform:none}
+    }
+
+    h1,h2{
+      text-align:center;
+      margin:0 0 16px;
+    }
+
+    h1{font-size:clamp(32px,6vw,54px)}
+    h2{font-size:clamp(27px,5vw,41px)}
+
+    .lead{
+      max-width:850px;
+      margin:0 auto 24px;
+      text-align:center;
+      font-size:clamp(18px,2.4vw,24px);
+      line-height:1.5;
+    }
+
+    .instruction{
+      max-width:860px;
+      margin:0 auto 22px;
+      background:#f8fbff;
+      border:2px solid var(--line);
+      border-radius:20px;
+      padding:18px;
+      line-height:1.55;
+      font-size:18px;
+    }
+
+    .plant-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:24px;
+      margin-top:20px;
+    }
+
+    .plant-card{
+      background:#fafdff;
+      border:3px solid var(--line);
+      border-radius:22px;
+      padding:20px;
+      text-align:center;
+    }
+
+    .plant-card h3{
+      margin:0 0 8px;
+      font-size:25px;
+    }
+
+    .plant-visual{
+      height:280px;
+      position:relative;
+      overflow:hidden;
+      border-radius:18px;
+      background:linear-gradient(#dff5ff 0 68%,#9bd27b 68%);
+    }
+
+    .plant-svg{
+      position:absolute;
+      bottom:22px;
+      left:50%;
+      transform:translateX(-50%);
+      width:150px;
+    }
+
+    .water{
+      position:absolute;
+      left:18px;
+      top:18px;
+      right:18px;
+      height:20px;
+      background:#dcecf7;
+      border-radius:999px;
+      overflow:hidden;
+    }
+
+    .water-fill{
+      height:100%;
+      background:linear-gradient(90deg,#56c3ff,#2f7af3);
+    }
+
+    .water-label{
+      margin-top:12px;
+      font-weight:800;
+      font-size:20px;
+    }
+
+    .question-box{
+      max-width:850px;
+      margin:24px auto 0;
+      background:#f8fbff;
+      border:2px solid var(--line);
+      border-radius:22px;
+      padding:22px;
+    }
+
+    .question-box h3{
+      margin-top:0;
+      font-size:24px;
+    }
+
+    .option-list{
+      display:grid;
+      gap:12px;
+      margin-top:14px;
+    }
+
+    .option{
+      width:100%;
+      text-align:left;
+      background:white;
+      border:3px solid #b9d2e8;
+      border-radius:16px;
+      padding:15px;
+      font-weight:700;
+      cursor:pointer;
+      transition:.2s;
+    }
+
+    .option:hover{transform:translateY(-2px);border-color:var(--blue)}
+    .option.correct{background:#dcfce7;border-color:var(--green)}
+    .option.wrong{background:#fee2e2;border-color:var(--red);animation:shake .3s}
+
+    @keyframes shake{
+      25%{transform:translateX(-8px)}
+      75%{transform:translateX(8px)}
+    }
+
+    .feedback{
+      min-height:30px;
+      margin-top:12px;
+      text-align:center;
+      font-weight:800;
+      font-size:18px;
+    }
+
+    .factor-grid{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:16px;
+      margin-top:20px;
+    }
+
+    .factor{
+      border:3px solid var(--line);
+      border-radius:18px;
+      padding:20px;
+      background:white;
+      cursor:pointer;
+      font-weight:800;
+      text-align:left;
+      transition:.2s;
+    }
+
+    .factor:hover{border-color:var(--blue);transform:translateY(-2px)}
+    .factor.selected{background:#dbeafe;border-color:var(--blue)}
+
+    .callout{
+      max-width:850px;
+      margin:22px auto 0;
+      background:#eef6ff;
+      border-left:6px solid var(--blue);
+      border-radius:16px;
+      padding:18px;
+      font-size:20px;
+      font-weight:700;
+    }
+
+    .test-card{
+      border:3px solid var(--line);
+      border-radius:18px;
+      padding:18px;
+      margin-bottom:14px;
+      background:white;
+    }
+
+    .test-card p{
+      margin:0 0 14px;
+      font-size:19px;
+      font-weight:700;
+    }
+
+    .yes-no{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .yes-no button{
+      border:2px solid var(--line);
+      border-radius:12px;
+      padding:10px 16px;
+      background:white;
+      cursor:pointer;
+      font-weight:800;
+    }
+
+    .builder{
+      max-width:850px;
+      margin:auto;
+      display:grid;
+      gap:18px;
+    }
+
+    label{
+      font-weight:800;
+      display:block;
+    }
+
+    select{
+      width:100%;
+      margin-top:8px;
+      border:2px solid var(--line);
+      border-radius:14px;
+      padding:12px;
+      background:white;
+    }
+
+    .built-question{
+      background:#eef6ff;
+      border:3px solid var(--blue);
+      border-radius:20px;
+      padding:22px;
+      text-align:center;
+      font-size:clamp(21px,3vw,30px);
+      font-weight:900;
+      line-height:1.4;
+    }
+
+    .variable-summary{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:18px;
+      margin-top:22px;
+    }
+
+    .summary-card{
+      border-radius:18px;
+      padding:20px;
+      text-align:center;
+      font-weight:700;
+    }
+
+    .summary-card strong{
+      display:block;
+      margin-bottom:8px;
+      font-size:22px;
+    }
+
+    .changed{background:#dbeafe}
+    .measured{background:#dcfce7}
+
+    .checklist{
+      max-width:750px;
+      margin:22px auto 0;
+      background:#f8fbff;
+      border:2px solid var(--line);
+      border-radius:20px;
+      padding:20px;
+    }
+
+    .check-row{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      margin:12px 0;
+      font-size:18px;
+      font-weight:700;
+    }
+
+    .check-row input{
+      margin-top:3px;
+      width:20px;
+      height:20px;
+    }
+
+    .primary{
+      border:none;
+      border-radius:15px;
+      padding:13px 22px;
+      background:var(--blue);
+      color:white;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 5px 0 #1746a2;
+    }
+
+    .primary:active{
+      transform:translateY(3px);
+      box-shadow:0 2px 0 #1746a2;
+    }
+
+    .nav{
+      display:flex;
+      justify-content:space-between;
+      gap:14px;
+      padding:16px 20px 24px;
+    }
+
+    .nav button{
+      border:none;
+      border-radius:15px;
+      padding:13px 22px;
+      background:var(--blue);
+      color:white;
+      font-weight:800;
+      cursor:pointer;
+      box-shadow:0 5px 0 #1746a2;
+    }
+
+    .nav button:disabled{
+      opacity:.35;
+      cursor:not-allowed;
+    }
+
+    .hidden{display:none!important}
+
+    .final-score{
+      text-align:center;
+      font-size:clamp(34px,6vw,58px);
+      font-weight:900;
+      color:var(--purple);
+      margin:25px 0;
+    }
+
+    .confetti{
+      position:fixed;
+      top:-20px;
+      width:10px;
+      height:18px;
+      z-index:100;
+      animation:fall 1.8s linear forwards;
+    }
+
+    @keyframes fall{
+      to{transform:translateY(110vh) rotate(800deg)}
+    }
+
+    @media(max-width:760px){
+      .plant-grid,.factor-grid,.variable-summary{grid-template-columns:1fr}
+      .scene{min-height:720px}
+      header{align-items:flex-start}
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="title">🌱 Pose a Testable Question</div>
+    <div class="score">⭐ Score: <span id="score">0</span></div>
+  </header>
+
+  <div class="progress-track"><div id="progress"></div></div>
+
+  <main>
+    <section class="scene active">
+      <h1>Pose a Question</h1>
+      <p class="lead">A testable question can be answered by carrying out an experiment and collecting evidence.</p>
+
+      <div class="instruction">
+        In a fair experiment, scientists change only <strong>one factor</strong> and keep all other factors the same. They then measure what happens.
+      </div>
+
+      <div class="plant-grid">
+        <div class="plant-card">
+          <h3>Plant A</h3>
+          <div class="plant-visual">
+            <div class="water"><div class="water-fill" style="width:35%"></div></div>
+            <svg class="plant-svg" viewBox="0 0 180 220" aria-label="Plant A with fewer leaves">
+              <ellipse cx="90" cy="190" rx="58" ry="18" fill="#8d5b4a"/>
+              <rect x="84" y="78" width="12" height="115" rx="6" fill="#4c9c2d"/>
+              <ellipse cx="57" cy="96" rx="37" ry="19" fill="#78bf3d" transform="rotate(22 57 96)"/>
+              <ellipse cx="125" cy="72" rx="36" ry="18" fill="#6caf37" transform="rotate(-20 125 72)"/>
+            </svg>
+          </div>
+          <div class="water-label">Less water absorbed</div>
+        </div>
+
+        <div class="plant-card">
+          <h3>Plant B</h3>
+          <div class="plant-visual">
+            <div class="water"><div class="water-fill" style="width:78%"></div></div>
+            <svg class="plant-svg" viewBox="0 0 180 220" aria-label="Plant B with more leaves">
+              <ellipse cx="90" cy="190" rx="58" ry="18" fill="#8d5b4a"/>
+              <rect x="84" y="57" width="12" height="136" rx="6" fill="#4c9c2d"/>
+              <ellipse cx="53" cy="78" rx="39" ry="20" fill="#78bf3d" transform="rotate(23 53 78)"/>
+              <ellipse cx="129" cy="59" rx="38" ry="19" fill="#6caf37" transform="rotate(-21 129 59)"/>
+              <ellipse cx="59" cy="122" rx="35" ry="18" fill="#80c943" transform="rotate(-18 59 122)"/>
+              <ellipse cx="125" cy="106" rx="37" ry="19" fill="#75bb39" transform="rotate(18 125 106)"/>
+            </svg>
+          </div>
+          <div class="water-label">More water absorbed</div>
+        </div>
+      </div>
+
+      <div class="question-box">
+        <h3>What do you observe?</h3>
+        <div class="option-list" data-answer="Plant B has more leaves than Plant A.">
+          <button class="option">Plant B has more leaves than Plant A.</button>
+          <button class="option">Plant B is prettier than Plant A.</button>
+          <button class="option">Plant A is happier than Plant B.</button>
+        </div>
+        <div class="feedback" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="scene">
+      <h2>Step 2: Wonder</h2>
+      <p class="lead">Choose one factor that might affect the amount of water absorbed by a plant.</p>
+
+      <div class="factor-grid">
+        <button class="factor" data-factor="number of leaves">🍃 Number of leaves</button>
+        <button class="factor" data-factor="amount of sunlight">☀️ Amount of sunlight</button>
+        <button class="factor" data-factor="temperature">🌡️ Temperature</button>
+        <button class="factor" data-factor="wind speed">💨 Wind speed</button>
+      </div>
+
+      <div class="callout">
+        My chosen factor: <span id="chosenFactor">None yet</span>
+      </div>
+    </section>
+
+    <section class="scene">
+      <h2>Step 3: Is It Testable?</h2>
+      <p class="lead">Decide whether each question can be answered by carrying out an experiment.</p>
+
+      <div class="test-card" data-correct="yes">
+        <p>Does the number of leaves affect the amount of water absorbed?</p>
+        <div class="yes-no">
+          <button data-answer="yes">Testable</button>
+          <button data-answer="no">Not testable</button>
+        </div>
+      </div>
+
+      <div class="test-card" data-correct="no">
+        <p>Which plant is the prettiest?</p>
+        <div class="yes-no">
+          <button data-answer="yes">Testable</button>
+          <button data-answer="no">Not testable</button>
+        </div>
+      </div>
+
+      <div class="test-card" data-correct="yes">
+        <p>Does temperature affect the amount of water absorbed?</p>
+        <div class="yes-no">
+          <button data-answer="yes">Testable</button>
+          <button data-answer="no">Not testable</button>
+        </div>
+      </div>
+
+      <div class="feedback" id="testableFeedback" aria-live="polite"></div>
+    </section>
+
+    <section class="scene">
+      <h2>Step 4: Build Your Question</h2>
+      <p class="lead">Choose a changed variable and a measured variable.</p>
+
+      <div class="builder">
+        <label>
+          Changed variable
+          <select id="factorSelect">
+            <option value="number of leaves">number of leaves</option>
+            <option value="amount of sunlight">amount of sunlight</option>
+            <option value="temperature">temperature</option>
+            <option value="wind speed">wind speed</option>
+          </select>
+        </label>
+
+        <label>
+          Measured variable
+          <select id="measureSelect">
+            <option value="amount of water absorbed by a plant">amount of water absorbed by a plant</option>
+            <option value="height of the plant">height of the plant</option>
+            <option value="number of flowers produced">number of flowers produced</option>
+          </select>
+        </label>
+
+        <div class="built-question" id="builtQuestion"></div>
+      </div>
+    </section>
+
+    <section class="scene">
+      <h2>Step 5: Check Your Question</h2>
+      <p class="lead">Make sure your question can be tested fairly.</p>
+
+      <div class="built-question" id="finalQuestion"></div>
+
+      <div class="variable-summary">
+        <div class="summary-card changed">
+          <strong>Changed Variable</strong>
+          <span id="finalChanged"></span>
+        </div>
+        <div class="summary-card measured">
+          <strong>Measured Variable</strong>
+          <span id="finalMeasured"></span>
+        </div>
+      </div>
+
+      <div class="checklist">
+        <label class="check-row"><input type="checkbox" id="check1">I changed only one factor.</label>
+        <label class="check-row"><input type="checkbox" id="check2">I stated what would be measured.</label>
+        <label class="check-row"><input type="checkbox" id="check3">My question can be answered through an experiment.</label>
+
+        <button class="primary" id="completeBtn" type="button">Complete Activity</button>
+        <div class="feedback" id="completeFeedback" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section class="scene">
+      <h2>Well Done!</h2>
+      <p class="lead">You have created a clear and testable scientific question.</p>
+      <div class="final-score">⭐ Final Score: <span id="finalScore">0</span></div>
+      <div class="built-question" id="finishedQuestion"></div>
+      <div style="text-align:center;margin-top:24px">
+        <button class="primary" id="restartBtn" type="button">Restart Activity</button>
+      </div>
+    </section>
+  </main>
+
+  <div class="nav">
+    <button id="prevBtn" type="button">← Previous</button>
+    <button id="nextBtn" type="button">Next →</button>
+  </div>
+</div>
+
+<script>
+  const scenes=[...document.querySelectorAll('.scene')];
+  const prevBtn=document.getElementById('prevBtn');
+  const nextBtn=document.getElementById('nextBtn');
+  const progress=document.getElementById('progress');
+  const scoreEl=document.getElementById('score');
+  const finalScore=document.getElementById('finalScore');
+  let current=0;
+  let score=0;
+  let chosenFactor='number of leaves';
+  const answeredGroups=new WeakSet();
+
+  function showScene(index){
+    scenes.forEach((scene,i)=>scene.classList.toggle('active',i===index));
+    current=index;
+    prevBtn.disabled=current===0;
+    nextBtn.classList.toggle('hidden',current===scenes.length-1);
+    progress.style.width=((current+1)/scenes.length*100)+'%';
+    finalScore.textContent=score;
+    document.getElementById('finishedQuestion').textContent=document.getElementById('finalQuestion').textContent;
+    window.scrollTo({top:0,behavior:'smooth'});
+  }
+
+  prevBtn.addEventListener('click',()=>showScene(Math.max(0,current-1)));
+  nextBtn.addEventListener('click',()=>showScene(Math.min(scenes.length-1,current+1)));
+
+  document.querySelectorAll('.option-list').forEach(group=>{
+    const answer=group.dataset.answer;
+    const feedback=group.parentElement.querySelector('.feedback');
+
+    group.querySelectorAll('.option').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(answeredGroups.has(group)) return;
+
+        if(btn.textContent.trim()===answer){
+          btn.classList.add('correct');
+          feedback.textContent='Correct! This is an observation that can be seen and compared.';
+          feedback.style.color='var(--green)';
+          score+=10;
+          scoreEl.textContent=score;
+          answeredGroups.add(group);
+          confetti();
+        }else{
+          btn.classList.add('wrong');
+          feedback.textContent='Try again. Choose something that can be directly observed.';
+          feedback.style.color='var(--red)';
+          setTimeout(()=>btn.classList.remove('wrong'),500);
+        }
+      });
+    });
+  });
+
+  document.querySelectorAll('.factor').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      document.querySelectorAll('.factor').forEach(b=>b.classList.remove('selected'));
+      btn.classList.add('selected');
+      chosenFactor=btn.dataset.factor;
+      document.getElementById('chosenFactor').textContent=chosenFactor;
+      document.getElementById('factorSelect').value=chosenFactor;
+      updateQuestion();
+    });
+  });
+
+  document.querySelectorAll('.test-card').forEach(card=>{
+    card.querySelectorAll('button').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        if(card.dataset.done) return;
+        const feedback=document.getElementById('testableFeedback');
+        const correct=btn.dataset.answer===card.dataset.correct;
+        card.dataset.done='yes';
+
+        if(correct){
+          btn.style.background='#dcfce7';
+          btn.style.borderColor='var(--green)';
+          feedback.textContent='Correct!';
+          feedback.style.color='var(--green)';
+          score+=5;
+          scoreEl.textContent=score;
+        }else{
+          btn.style.background='#fee2e2';
+          btn.style.borderColor='var(--red)';
+          feedback.textContent='Not quite. Think about whether evidence can be collected.';
+          feedback.style.color='var(--red)';
+        }
+      });
+    });
+  });
+
+  const factorSelect=document.getElementById('factorSelect');
+  const measureSelect=document.getElementById('measureSelect');
+
+  function updateQuestion(){
+    const factor=factorSelect.value;
+    const measure=measureSelect.value;
+    const question=`Does the ${factor} affect the ${measure}?`;
+    document.getElementById('builtQuestion').textContent=question;
+    document.getElementById('finalQuestion').textContent=question;
+    document.getElementById('finalChanged').textContent=factor;
+    document.getElementById('finalMeasured').textContent=measure;
+    document.getElementById('finishedQuestion').textContent=question;
+  }
+
+  factorSelect.addEventListener('change',updateQuestion);
+  measureSelect.addEventListener('change',updateQuestion);
+
+  document.getElementById('completeBtn').addEventListener('click',()=>{
+    const checks=['check1','check2','check3'].every(id=>document.getElementById(id).checked);
+    const feedback=document.getElementById('completeFeedback');
+
+    if(checks){
+      feedback.textContent='Excellent! Your question is clear and testable.';
+      feedback.style.color='var(--green)';
+      if(!feedback.dataset.scored){
+        score+=15;
+        scoreEl.textContent=score;
+        feedback.dataset.scored='yes';
+      }
+      confetti();
+      setTimeout(()=>showScene(5),900);
+    }else{
+      feedback.textContent='Complete all three checks first.';
+      feedback.style.color='var(--red)';
+    }
+  });
+
+  function confetti(){
+    const colours=['#2563eb','#16a34a','#facc15','#dc2626','#7c3aed'];
+    for(let i=0;i<38;i++){
+      const p=document.createElement('div');
+      p.className='confetti';
+      p.style.left=Math.random()*100+'vw';
+      p.style.background=colours[Math.floor(Math.random()*colours.length)];
+      p.style.animationDelay=Math.random()*.4+'s';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),2200);
+    }
+  }
+
+  document.getElementById('restartBtn').addEventListener('click',()=>location.reload());
+
+  updateQuestion();
+  showScene(0);
+</script>
+</body>
+</html>
