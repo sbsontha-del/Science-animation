@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Singapore Primary 5 Scientific Investigation Academy</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Game HUD Header (Sticky Top) -->
+  <header id="game-header" class="hidden">
+    <div class="hud-container">
+      <div class="hud-logo" id="hud-logo-btn">
+        <span>🐻</span> Science Academy
+      </div>
+      
+      <!-- Player Stats HUD -->
+      <div class="hud-stats">
+        <div class="hud-stat-item" title="Scientist Rank">
+          <span id="player-rank-icon">🎖️</span>
+          <span id="player-rank">Explorer</span>
+        </div>
+        <div class="hud-stat-item" title="Experience Points">
+          <span>⭐</span>
+          <span id="player-xp">0 XP</span>
+          <div class="xp-mini-bar"><div id="xp-fill"></div></div>
+        </div>
+        <div class="hud-stat-item" title="Science Coins">
+          <span>🪙</span>
+          <span id="player-coins">0</span>
+        </div>
+        <div class="hud-stat-item" title="Mastery Stars">
+          <span>🌟</span>
+          <span id="player-stars">0 / 8</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="hud-actions">
+        <button class="btn btn-secondary btn-hud" id="notebook-toggle-btn">📖 Notebook</button>
+        <button class="btn btn-secondary btn-hud" id="teacher-toggle-btn">⚙️ Teacher Panel</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Game Content View -->
+  <main>
+    
+    <!-- SCREEN 1: WELCOME SCREEN -->
+    <section id="welcome-screen" class="glass-panel text-center max-w-xl mx-auto my-12">
+      <div class="sprout-avatar-header justify-center mb-4">
+        <div class="sprout-avatar" style="width: 80px; height: 80px; font-size: 3rem;">🐻</div>
+      </div>
+      <h1 class="font-bold text-lg mb-2 text-indigo-800">Scientist Academy</h1>
+      <p class="text-slate-600 mb-6 text-sm">
+        Welcome, Junior Scientist! I am <strong>Professor Sprout</strong>, your guide. 
+        Together, we will master the 8 scientific investigation skills and unlock your Scientific Master Badge!
+      </p>
+
+      <form id="login-form" class="flex flex-col gap-4 max-w-md mx-auto items-center">
+        <div class="w-full text-left">
+          <label class="text-xs font-bold text-slate-500 uppercase block mb-1">Enter Your Name</label>
+          <input type="text" id="pupil-name-input" class="journal-input w-full" placeholder="e.g. Isaac Newton" required style="border: 2px solid #cbd5e1;">
+        </div>
+        <button type="submit" class="btn btn-primary w-full mt-2">Start My Journey 🚀</button>
+      </form>
+    </section>
+
+    <!-- SCREEN 2: PROGRESS MAP SCREEN (MISSION VIEW) -->
+    <section id="map-screen" class="hidden">
+      <div class="map-title">
+        <h1>Scientist Progress Map</h1>
+        <p class="text-slate-600 text-sm">Complete each module to unlock the next skill. Master all 8 to become a Master Scientist!</p>
+      </div>
+
+      <!-- Graduation Banner Container -->
+      <div id="map-grad-banner-container"></div>
+
+      <!-- Interactive Stepping Stone Path -->
+      <div class="progress-map-container">
+        <div class="map-path-line" id="map-path-line"></div>
+        <div class="map-nodes-grid" id="map-nodes-grid">
+          <!-- 8 nodes populated dynamically by JS -->
+        </div>
+      </div>
+
+      <!-- Scientist Rank & Rewards Summary Card -->
+      <div class="glass-panel mt-6 max-w-2xl mx-auto flex justify-between items-center p-6 bg-white/90">
+        <div>
+          <h3 class="font-bold text-slate-800">Your Badge Case</h3>
+          <p class="text-xs text-slate-500">Unlocks as you complete investigation mastery challenges.</p>
+          <div class="flex gap-3 mt-3" id="badges-container">
+            <!-- Unlocked badges list -->
+          </div>
+        </div>
+        <div class="text-right">
+          <div class="text-xs font-bold text-indigo-500 uppercase">Current Rank</div>
+          <h2 class="font-bold text-slate-800" id="map-rank-title">Explorer</h2>
+          <p class="text-xs text-slate-500 mt-1" id="next-rank-xp-readout">Need 100 XP to rank up</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SCREEN 3: MODULE WORKSPACE SCREEN -->
+    <section id="workspace-screen" class="hidden">
+      <!-- Steps HUD Progress Indicator -->
+      <div class="wizard-steps-hud mb-6">
+        <div class="w-step active" id="step-node-0"><span class="w-step-circle">1</span> Objectives</div>
+        <div class="w-step" id="step-node-1"><span class="w-step-circle">2</span> Learn Concept</div>
+        <div class="w-step" id="step-node-2"><span class="w-step-circle">3</span> Practise</div>
+        <div class="w-step" id="step-node-3"><span class="w-step-circle">4</span> Mastery Quiz</div>
+        <div class="w-step" id="step-node-4"><span class="w-step-circle">5</span> Rewards</div>
+      </div>
+
+      <!-- Active Workspace Split Screen -->
+      <div class="split-screen">
+        
+        <!-- Left Panel: Professor Sprout Guide Panel -->
+        <div class="modelled-content-panel">
+          <div class="sprout-dialog-box bg-white/95">
+            <div class="sprout-avatar-header">
+              <div class="sprout-avatar" id="sprout-avatar-icon">🐻</div>
+              <div>
+                <span class="sprout-name">Professor Sprout</span>
+                <div class="text-[10px] text-slate-400 uppercase tracking-widest font-bold">Academy Mentor</div>
+              </div>
+            </div>
+            <p class="sprout-speech" id="sprout-speech-bubble">
+              Loading mentor instructions...
+            </p>
+            
+            <!-- Contextual Hint button inside Sprout box -->
+            <div class="hint-trigger hidden" id="workspace-hint-btn">
+              💡 Need a hint?
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Panel: Lesson/Activity Interactive Container -->
+        <div class="workspace-interactive-panel flex flex-col justify-between">
+          <div class="glass-panel bg-white/95 flex-1 flex flex-col min-h-[380px]" id="workspace-card-body">
+            <!-- Swapped dynamically based on activeStepIndex -->
+          </div>
+
+          <!-- Bottom Navigation Controls -->
+          <div class="nav-footer mt-4">
+            <button class="btn btn-secondary" id="workspace-prev-btn" disabled>⬅️ Back</button>
+            <button class="btn btn-primary" id="workspace-next-btn">Next Step ➡️</button>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- SCREEN 4: ACADEMY COMPLETION SCREEN -->
+    <section id="academy-completion-screen" class="hidden max-w-4xl mx-auto my-6 p-8 glass-panel relative bg-gradient-to-b from-indigo-50/50 to-purple-50/50" style="border-radius: 1.5rem;">
+      <div id="academy-completion-content" class="flex flex-col items-center">
+        <!-- Sprout celebration animation & header -->
+        <div class="completion-header mb-6 text-center">
+          <div class="completion-sprout-avatar animate-bounce inline-block" style="font-size: 4rem; filter: drop-shadow(0 4px 10px rgba(0,0,0,0.15)); line-height: 1;">🐻🎓🎉</div>
+          <h1 class="font-bold text-3xl text-indigo-900 mt-4">Scientist Academy Graduation!</h1>
+          <p class="text-slate-600 text-sm mt-2 max-w-xl mx-auto">Congratulations, Master Scientist! You have completed all 8 modules, mastered every scientific investigation skill, and graduated at the top of the academy!</p>
+        </div>
+
+        <div class="flex flex-col md:flex-row gap-6 w-full items-stretch justify-center">
+          <!-- Left: Premium Certificate Frame -->
+          <div class="certificate-frame flex-1 flex flex-col items-center justify-between p-8 border-8 border-amber-400 bg-white shadow-xl relative" style="border-style: double; border-radius: 12px; min-height: 380px;">
+            <div class="absolute inset-2 border-2 border-amber-300" style="pointer-events: none;"></div>
+            <div class="text-[9px] uppercase tracking-widest text-amber-600 font-bold mb-2">Official Graduation Certificate</div>
+            <div class="font-serif text-3xl font-bold text-slate-800 my-4">Scientist Academy</div>
+            <div class="text-xs text-slate-500 italic">This certifies that</div>
+            <div class="text-2xl font-bold text-indigo-900 border-b-2 border-slate-300 px-6 py-2 my-2 min-w-[200px]" id="cert-pupil-name">Player Name</div>
+            <div class="text-xs text-slate-500 italic mt-2 text-center">has successfully cleared all 8 modules and is hereby awarded the rank of</div>
+            <div class="text-xl font-extrabold text-amber-500 uppercase tracking-wide mt-2">👑 Master Scientist 👑</div>
+            <div class="flex gap-6 mt-6 justify-between w-full">
+              <div class="text-left">
+                <div class="text-[8px] text-slate-400 font-bold uppercase">Issued By</div>
+                <div class="text-[10px] font-bold font-serif text-slate-700">Professor Sprout 🐻</div>
+              </div>
+              <div class="text-right">
+                <div class="text-[8px] text-slate-400 font-bold uppercase">Date Awarded</div>
+                <div class="text-[10px] font-bold text-slate-700" id="cert-date">July 2026</div>
+              </div>
+            </div>
+            <!-- Gold seal image/badge -->
+            <div class="absolute bottom-6 right-6 w-14 h-14 bg-amber-400 rounded-full flex items-center justify-center border-4 border-white shadow-md text-xl font-bold text-white">🏆</div>
+          </div>
+
+          <!-- Right: Summary Dashboard -->
+          <div class="summary-dashboard flex flex-col justify-between p-6 bg-white/80 border border-slate-200 shadow-md rounded-2xl w-full md:w-80">
+            <div>
+              <h3 class="font-bold text-slate-800 text-base border-b border-slate-100 pb-2 mb-4">Graduation Stats</h3>
+              <div class="flex flex-col gap-4">
+                <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
+                  <span class="text-slate-500 text-xs font-semibold">Total Badge Count</span>
+                  <span class="font-bold text-slate-800 flex items-center gap-1"><span id="completion-badges-count">8</span> 🏆</span>
+                </div>
+                <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
+                  <span class="text-slate-500 text-xs font-semibold">Total XP Earned</span>
+                  <span class="font-bold text-indigo-600 flex items-center gap-1"><span id="completion-xp-count">2400</span> XP</span>
+                </div>
+                <div class="flex justify-between items-center bg-slate-50 p-3 rounded-xl border border-slate-100">
+                  <span class="text-slate-500 text-xs font-semibold">Modules Completed</span>
+                  <span class="font-bold text-emerald-600 text-xs">8 / 8 Cleared</span>
+                </div>
+              </div>
+              <div class="mt-4 text-left">
+                <div class="text-[10px] text-slate-400 uppercase font-bold tracking-wider mb-2">Graduation Badges Case</div>
+                <div class="flex flex-wrap gap-2 justify-start" id="completion-badges-grid">
+                  <!-- Badges list -->
+                </div>
+              </div>
+            </div>
+
+            <!-- Graduation actions -->
+            <div class="flex flex-col gap-2 mt-6">
+              <button class="btn btn-primary text-xs py-2 w-full" id="completion-review-notebook" style="background: var(--accent-purple); box-shadow: none;">📖 Review Science Notebook</button>
+              <button class="btn btn-primary text-xs py-2 w-full" id="completion-download-cert" style="background: #16a34a; box-shadow: none;">🎓 Download/Print Certificate</button>
+              <button class="btn btn-secondary text-xs py-2 w-full" id="completion-replay-modules">🔄 Replay Any Module</button>
+              <button class="btn btn-secondary text-xs py-2 w-full" id="completion-return-map">🗺️ Return to Academy Map</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Visually separated reset action -->
+        <div class="w-full border-t border-slate-200 mt-8 pt-6 flex justify-end">
+          <button class="btn btn-secondary text-red-600 border-red-200 hover:bg-red-50 text-[10px] py-1.5 px-3" id="completion-restart-academy" style="border: 1px solid #fecaca; color: #dc2626; box-shadow: none; margin: 0;">
+            ⚠️ Restart the Whole Academy
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- LIGHTBOX 1: DIGITAL SCIENCE NOTEBOOK MODAL -->
+  <div class="modal-overlay hidden" id="notebook-modal">
+    <div class="modal-box max-w-4xl w-full p-0 overflow-hidden bg-transparent">
+      <div class="notebook-modal-header flex justify-between items-center p-4 bg-purple-950 text-white">
+        <h3 class="font-bold font-mono">📖 DIGITAL SCIENCE NOTEBOOK</h3>
+        <button class="modal-close-btn" id="notebook-close-btn">✖</button>
+      </div>
+      
+      <!-- Notebook Ruled Binder Layout -->
+      <div class="notebook relative" style="min-height: 500px; border-left: 24px solid #8b5cf6;">
+        <div class="notebook-spirals">
+          <div class="notebook-ring"></div>
+          <div class="notebook-ring"></div>
+          <div class="notebook-ring"></div>
+          <div class="notebook-ring"></div>
+          <div class="notebook-ring"></div>
+          <div class="notebook-ring"></div>
+          <div class="notebook-ring"></div>
+          <div class="notebook-ring"></div>
+          <div class="notebook-ring"></div>
+          <div class="notebook-ring"></div>
+        </div>
+        
+        <!-- Tab Selectors for Notebook Pages -->
+        <div class="notebook-tabs-container" id="notebook-tabs">
+          <!-- Populated dynamically (Tabs 1 to 8) -->
+        </div>
+
+        <div class="notebook-header justify-between items-center flex border-b-2 border-red-200">
+          <span id="notebook-page-title">Digital Journal</span>
+          <span class="text-xs text-slate-500 font-mono" id="notebook-page-number">PAGE 1</span>
+        </div>
+        
+        <!-- Ruled notebook page content -->
+        <div class="notebook-body overflow-y-auto pr-2 max-h-[380px]" id="notebook-page-body">
+          <p class="text-slate-400 italic text-center mt-12">No notes recorded yet. Complete academy modules to fill your science notebook!</p>
+        </div>
+        
+        <!-- Overlay stamp container for Professor Sprout's approval -->
+        <div class="approval-stamp hidden" id="notebook-approval-stamp">
+          APPROVED
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LIGHTBOX 2: TEACHER DASHBOARD CONFIGURATION MODAL -->
+  <div class="modal-overlay hidden" id="teacher-modal">
+    <div class="modal-box max-w-3xl w-full p-6 bg-white rounded-2xl shadow-2xl">
+      <div class="flex justify-between items-center border-b pb-3 mb-4">
+        <h3 class="font-bold text-lg text-slate-800">⚙️ Teacher Dashboard Controls</h3>
+        <button class="modal-close-btn text-slate-500 hover:text-slate-800 font-bold" id="teacher-close-btn">✖</button>
+      </div>
+
+      <!-- Config Tabs -->
+      <div class="teacher-tab-headers flex gap-4 border-b mb-4">
+        <button class="teacher-tab-btn active" id="tab-btn-settings">Investigation Settings</button>
+        <button class="teacher-tab-btn" id="tab-btn-reports">Class Reports & Diagnostics</button>
+      </div>
+
+      <!-- TAB Content 1: Settings -->
+      <div class="teacher-tab-content" id="teacher-settings-panel">
+        <form id="teacher-config-form" class="flex flex-col gap-4">
+          <!-- Science Topic checklist -->
+          <div>
+            <span class="text-xs font-bold text-slate-500 uppercase block mb-2">Include Primary 5 Science Topics:</span>
+            <div class="grid grid-cols-2 gap-2" id="topic-checklist-container">
+              <label class="flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" name="topics" value="Plant Transport" checked class="ctrl-checkbox"> Plant Transport
+              </label>
+              <label class="flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" name="topics" value="Plant Reproduction" checked class="ctrl-checkbox"> Plant Reproduction
+              </label>
+              <label class="flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" name="topics" value="Water Cycle" checked class="ctrl-checkbox"> Water Cycle
+              </label>
+              <label class="flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" name="topics" value="Heat" checked class="ctrl-checkbox"> Heat Conductivity
+              </label>
+              <label class="flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" name="topics" value="Light" checked class="ctrl-checkbox"> Light & Shadows
+              </label>
+              <label class="flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" name="topics" value="Electricity" checked class="ctrl-checkbox"> Electricity
+              </label>
+              <label class="flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" name="topics" value="Magnets" checked class="ctrl-checkbox"> Magnets
+              </label>
+              <label class="flex items-center gap-2 text-sm text-slate-700">
+                <input type="checkbox" name="topics" value="Forces" checked class="ctrl-checkbox"> Forces & Friction
+              </label>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-4 border-t pt-3">
+            <!-- Difficulty Level -->
+            <div>
+              <label class="text-xs font-bold text-slate-500 uppercase block mb-1">Module Difficulty Level</label>
+              <select id="teacher-difficulty" class="journal-input p-2 w-full text-sm">
+                <option value="easy">Easy (Full Scaffolding)</option>
+                <option value="medium" selected>Medium (Standard MOE P5)</option>
+                <option value="hard">Hard (Transfer-of-Learning Challenges)</option>
+              </select>
+            </div>
+            <!-- Practice Questions Count -->
+            <div>
+              <label class="text-xs font-bold text-slate-500 uppercase block mb-1">Practice Questions per Module</label>
+              <input type="number" id="teacher-question-count" class="journal-input p-2 w-full text-sm" value="3" min="1" max="5">
+            </div>
+          </div>
+
+          <!-- Feature Toggles -->
+          <div class="flex gap-6 border-t pt-3">
+            <label class="flex items-center gap-2 text-sm text-slate-700 font-semibold">
+              <input type="checkbox" id="teacher-enable-hints" checked class="ctrl-checkbox"> Enable Professor Sprout Hints
+            </label>
+            <label class="flex items-center gap-2 text-sm text-slate-700 font-semibold">
+              <input type="checkbox" id="teacher-shuffle" class="ctrl-checkbox"> Shuffle Questions
+            </label>
+          </div>
+
+          <div class="border-t pt-3 text-right">
+            <button type="submit" class="btn btn-primary text-sm px-6">Apply Academy Settings</button>
+          </div>
+        </form>
+      </div>
+
+      <!-- TAB Content 2: Reports -->
+      <div class="teacher-tab-content hidden" id="teacher-reports-panel">
+        <div class="flex justify-between items-center mb-3">
+          <span class="text-xs font-bold text-slate-500 uppercase">Class Summary Report</span>
+          <div class="text-xs text-slate-500">Total Pupils: <strong>6</strong> | Completion Rate: <strong id="class-avg-completion">65%</strong></div>
+        </div>
+
+        <div class="overflow-x-auto max-h-[300px] border rounded-lg">
+          <table class="data-table-form w-full text-left" style="margin: 0;">
+            <thead>
+              <tr class="bg-slate-50 border-b">
+                <th class="p-2 text-xs font-bold text-slate-500">Pupil Name</th>
+                <th class="p-2 text-xs font-bold text-slate-500 text-center">Modules Cleared</th>
+                <th class="p-2 text-xs font-bold text-slate-500 text-center">Avg Quiz Score</th>
+                <th class="p-2 text-xs font-bold text-slate-500 text-center">XP</th>
+                <th class="p-2 text-xs font-bold text-slate-500">Misconceptions Flagged</th>
+              </tr>
+            </thead>
+            <tbody id="teacher-reports-table-body">
+              <!-- Populated dynamically with MockStudentProgress -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- CONFETTI / BADGE CELEBRATION ELEMENT OVERLAY -->
+  <div class="confetti-container hidden" id="confetti-celebration"></div>
+
+  <!-- SCRIPT FILES -->
+  <script src="data.js"></script>
+  <script src="simulations.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
