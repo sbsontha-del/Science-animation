@@ -1,0 +1,1576 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Strength or Flexibility?</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&display=swap');
+    
+    :root {
+      --navy: #0f172a;
+      --navy-light: #1e293b;
+      --orange: #ff9d22;
+      --cream: #fff9ed;
+      --green: #10b981;
+      --red: #ef4444;
+      --blue: #3b82f6;
+      --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+      --bend-y: 0px;
+    }
+    
+    * {
+      box-sizing: border-box;
+    }
+    
+    body {
+      margin: 0;
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
+      color: #1e293b;
+      min-height: 100vh;
+      line-height: 1.5;
+    }
+    
+    button, select, input {
+      font: inherit;
+    }
+    
+    .wrap {
+      max-width: 980px;
+      margin: auto;
+      padding: 24px;
+    }
+    
+    .hero {
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: white;
+      border-radius: 24px;
+      padding: 35px 30px;
+      box-shadow: 0 15px 35px rgba(15, 23, 42, 0.15);
+      position: relative;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle, rgba(99, 102, 241, 0.1) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    
+    .hero:after {
+      content: "🔬";
+      position: absolute;
+      right: 24px;
+      top: 10px;
+      font-size: 100px;
+      opacity: .15;
+      user-select: none;
+      pointer-events: none;
+    }
+    
+    .hero h1 {
+      margin: 0;
+      font-size: clamp(2.2rem, 6vw, 3.8rem);
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      margin: 10px 0 0;
+      max-width: 700px;
+      color: #94a3b8;
+    }
+    
+    .mute-btn {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      color: white;
+      border-radius: 12px;
+      padding: 8px 14px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      z-index: 10;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .mute-btn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      transform: translateY(-1px);
+    }
+    .mute-btn.muted {
+      background: rgba(239, 68, 68, 0.25);
+      border-color: rgba(239, 68, 68, 0.4);
+    }
+    
+    .tabs-nav {
+      display: flex;
+      background: white;
+      border-radius: 18px;
+      padding: 6px;
+      margin: 24px 0;
+      box-shadow: 0 4px 15px rgba(15, 23, 42, 0.03);
+      border: 1px solid #e2e8f0;
+      gap: 6px;
+    }
+    
+    .tab-btn {
+      flex: 1;
+      border: 0;
+      border-radius: 14px;
+      padding: 14px 18px;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      background: transparent;
+      color: #64748b;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    .tab-btn:hover {
+      color: var(--navy);
+      background: #f8fafc;
+    }
+    
+    .tab-btn.active {
+      background: var(--navy);
+      color: white;
+      box-shadow: 0 4px 12px rgba(15, 23, 42, 0.15);
+    }
+    
+    .card {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 24px;
+      padding: 24px;
+      margin-top: 24px;
+      box-shadow: var(--shadow);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    
+    .card:hover {
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05), 0 10px 10px -5px rgba(0, 0, 0, 0.02);
+    }
+    
+    h2 {
+      margin: 0 0 16px;
+      font-size: 1.6rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .instruction {
+      background: #fffbeb;
+      border-left: 4px solid var(--orange);
+      padding: 16px;
+      border-radius: 12px;
+      font-weight: 600;
+      color: #78350f;
+      font-size: 0.95rem;
+      box-shadow: 0 2px 8px rgba(251, 191, 36, 0.08);
+      margin-bottom: 20px;
+    }
+    
+    .controls {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: end;
+      margin: 20px 0;
+    }
+    
+    .flex-controls {
+      grid-template-columns: 1fr 1.2fr;
+    }
+    
+    label {
+      font-weight: 800;
+      display: block;
+      margin-bottom: 8px;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #64748b;
+    }
+    
+    select {
+      width: 100%;
+      padding: 14px;
+      border: 2px solid #cbd5e1;
+      border-radius: 14px;
+      background: white;
+      outline: none;
+      transition: all 0.2s;
+      font-weight: 600;
+      color: var(--navy);
+      cursor: pointer;
+    }
+    
+    select:focus {
+      border-color: var(--blue);
+      box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15);
+    }
+    
+    input[type="range"] {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 10px;
+      background: #e2e8f0;
+      border-radius: 8px;
+      outline: none;
+      cursor: pointer;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--orange);
+      border: 3px solid white;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+      transition: transform 0.1s ease;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+    
+    input[type="range"]::-webkit-slider-thumb:active {
+      transform: scale(0.95);
+    }
+    
+    .lab {
+      min-height: 340px;
+      background: #141b25;
+      border: 4px solid #2d3748;
+      border-radius: 20px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 4px 20px rgba(0, 0, 0, 0.5), var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .lab-svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+    
+    .strip-line {
+      fill: none;
+      transition: stroke 0.3s ease;
+    }
+    
+    .strip-half-group, .flex-half-group {
+      transition: transform 0.8s cubic-bezier(0.25, 1.25, 0.5, 1.15);
+    }
+    
+    .flex-half-group.broken-drop {
+      transition: transform 0.6s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+    }
+    
+    #svg-weight-assembly {
+      transform: translateY(var(--bend-y));
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      pointer-events: none;
+    }
+    
+    #svg-weight-assembly.falling {
+      transition: transform 0.35s cubic-bezier(0.6, 0.04, 0.98, 0.335);
+    }
+    
+    #svg-weight-assembly-inner {
+      transform-origin: 300px 80px;
+    }
+    
+    @keyframes weight-bounce {
+      0% { transform: translateY(0); }
+      40% { transform: translateY(-10px); }
+      70% { transform: translateY(0); }
+      90% { transform: translateY(-3px); }
+      100% { transform: translateY(0); }
+    }
+    
+    .bounce-active {
+      animation: weight-bounce 0.4s ease-out;
+    }
+    
+    @keyframes shake-chamber {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      20% { transform: translate(-3px, 2px) rotate(-0.5deg); }
+      40% { transform: translate(3px, -1px) rotate(0.5deg); }
+      60% { transform: translate(-2px, -2px) rotate(-0.2deg); }
+      80% { transform: translate(2px, 1px) rotate(0.2deg); }
+      100% { transform: translate(0, 0) rotate(0deg); }
+    }
+    
+    .shake-active {
+      animation: shake-chamber 0.25s ease-in-out;
+    }
+    
+    .svg-particle {
+      animation: svg-explode 0.6s cubic-bezier(0.1, 0.8, 0.3, 1) forwards;
+      transform-box: fill-box;
+      transform-origin: center;
+    }
+    
+    @keyframes svg-explode {
+      0% {
+        transform: translate(0, 0) scale(1);
+        opacity: 1;
+      }
+      100% {
+        transform: translate(var(--dx), var(--dy)) scale(0);
+        opacity: 0;
+      }
+    }
+    
+    .status {
+      position: absolute;
+      left: 18px;
+      bottom: 18px;
+      background: rgba(15, 23, 42, 0.6);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 14px;
+      padding: 10px 16px;
+      font-weight: 700;
+      color: #f1f5f9;
+      box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+      font-size: 0.9rem;
+      pointer-events: none;
+      max-width: 85%;
+    }
+    
+    .actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    
+    .btn {
+      border: 0;
+      border-radius: 14px;
+      padding: 13px 20px;
+      font-weight: 700;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+    }
+    
+    .primary {
+      background: linear-gradient(135deg, #ff9d22 0%, #e67e00 100%);
+      color: white;
+      box-shadow: 0 4px 14px rgba(230, 126, 0, 0.25);
+    }
+    
+    .primary:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(230, 126, 0, 0.35);
+    }
+    
+    .secondary {
+      background: #f1f5f9;
+      color: var(--navy);
+      border: 1px solid #cbd5e1;
+    }
+    
+    .secondary:hover:not(:disabled) {
+      background: #e2e8f0;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.05);
+    }
+    
+    .danger {
+      background: #fef2f2;
+      color: #991b1b;
+      border: 1px solid #fee2e2;
+    }
+    
+    .danger:hover:not(:disabled) {
+      background: #fee2e2;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 12px rgba(239, 68, 68, 0.08);
+    }
+    
+    .btn:active:not(:disabled) {
+      transform: translateY(1px);
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    .btn:disabled {
+      opacity: .45;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+    
+    .counter {
+      font-size: 1.15rem;
+      font-weight: 800;
+      padding: 12px 18px;
+      background: #ecfdf5;
+      border: 2px solid #a7f3d0;
+      color: #065f46;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    
+    .results {
+      width: 100%;
+      border-collapse: separate;
+      border-spacing: 0;
+      margin-top: 16px;
+      border-radius: 16px;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    
+    .results th, .results td {
+      padding: 14px 18px;
+      text-align: left;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    
+    .results th {
+      background: #f1f5f9;
+      font-weight: 700;
+      color: #475569;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .results tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .results td {
+      background: white;
+      font-weight: 600;
+    }
+    
+    .word-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 10px;
+    }
+    
+    .word {
+      border: 2px solid #e2e8f0;
+      padding: 20px;
+      border-radius: 18px;
+      transition: all 0.3s ease;
+    }
+    
+    .word.strength {
+      border-color: #cbd5e1;
+      background: linear-gradient(135deg, #f0f7ff 0%, #e0f2fe 100%);
+      color: #0369a1;
+    }
+    
+    .word.strong {
+      border-color: #cbd5e1;
+      background: linear-gradient(135deg, #f0fdf4 0%, #dcfce7 100%);
+      color: #15803d;
+    }
+    
+    .word h3 {
+      font-size: 1.6rem;
+      font-weight: 800;
+      margin: 0 0 12px;
+      letter-spacing: -0.5px;
+    }
+    
+    .word p {
+      margin: 8px 0;
+      font-size: 0.95rem;
+      line-height: 1.5;
+    }
+    
+    .quiz-item {
+      border-top: 2px dashed #e2e8f0;
+      padding: 20px 0;
+    }
+    
+    .quiz-item:first-child {
+      border-top: none;
+      padding-top: 0;
+    }
+    
+    .quiz-item b {
+      font-size: 1.05rem;
+      color: var(--navy);
+      display: block;
+      margin-bottom: 12px;
+    }
+    
+    .options {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 10px;
+    }
+    
+    .option {
+      border: 2px solid #cbd5e1;
+      background: white;
+      border-radius: 14px;
+      padding: 11px 18px;
+      font-weight: 700;
+      cursor: pointer;
+      color: #475569;
+      transition: all 0.2s;
+    }
+    
+    .option:hover:not(:disabled) {
+      border-color: #94a3b8;
+      background: #f8fafc;
+      transform: translateY(-2px);
+    }
+    
+    .option.correct {
+      border-color: var(--green);
+      background: #f0fdf4;
+      color: #166534;
+    }
+    
+    .option.wrong {
+      border-color: var(--red);
+      background: #fef2f2;
+      color: #991b1b;
+    }
+    
+    .feedback {
+      min-height: 25px;
+      margin-top: 10px;
+      font-weight: 700;
+      font-size: 0.95rem;
+    }
+    
+    .summary {
+      text-align: center;
+      background: linear-gradient(135deg, var(--navy) 0%, var(--navy-light) 100%);
+      color: white;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    
+    .summary h2 {
+      justify-content: center;
+    }
+    
+    .summary strong {
+      color: #fbbf24;
+    }
+    
+    .hidden {
+      display: none !important;
+    }
+    
+    @media (max-width: 650px) {
+      .controls, .word-grid {
+        grid-template-columns: 1fr;
+      }
+      .lab {
+        min-height: 360px;
+      }
+      .hero {
+        padding: 24px;
+      }
+      .card {
+        padding: 18px;
+      }
+      .wrap {
+        padding: 12px;
+      }
+      .btn {
+        width: 100%;
+      }
+      .counter {
+        width: 100%;
+        justify-content: center;
+      }
+      .mute-btn {
+        position: relative;
+        top: 0;
+        right: 0;
+        margin-top: 14px;
+        width: 100%;
+        justify-content: center;
+      }
+      .hero:after {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero">
+    <h1>Primary 3 Science Lab</h1>
+    <p>Distinguish between scientific properties and their describing words through interactive experiments!</p>
+    <button id="mute-btn" class="mute-btn" onclick="toggleMute()" aria-label="Toggle Sound">🔊 Sound On</button>
+  </section>
+
+  <div class="tabs-nav">
+    <button class="tab-btn active" onclick="switchTab('strength')">🏋️‍♂️ Strength or Strong?</button>
+    <button class="tab-btn" onclick="switchTab('flexibility')">🍃 Flexibility or Flexible?</button>
+  </div>
+
+  <!-- TAB 1: STRENGTH OR STRONG -->
+  <section id="tab-strength" class="tab-content">
+    <div class="card">
+      <h2>🔬 Strength Investigation</h2>
+      <p class="instruction">Choose a material. Add weights one at a time until it breaks. Record how many weights it held.</p>
+      <div class="controls">
+        <div>
+          <label for="material">Material strip</label>
+          <select id="material">
+            <option value="paper">Paper</option>
+            <option value="fabric">Fabric</option>
+            <option value="plastic">Plastic</option>
+            <option value="metal">Metal</option>
+          </select>
+        </div>
+        <div class="counter">
+          Weights: <span id="count">0</span>
+        </div>
+      </div>
+      
+      <div class="lab" id="strength-lab" aria-live="polite">
+        <svg class="lab-svg" viewBox="0 0 600 300">
+          <defs>
+            <linearGradient id="metal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="#475569" />
+              <stop offset="35%" stop-color="#cbd5e1" />
+              <stop offset="50%" stop-color="#f8fafc" />
+              <stop offset="65%" stop-color="#cbd5e1" />
+              <stop offset="100%" stop-color="#334155" />
+            </linearGradient>
+            <linearGradient id="clamp-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#64748b" />
+              <stop offset="50%" stop-color="#475569" />
+              <stop offset="100%" stop-color="#1e293b" />
+            </linearGradient>
+            <linearGradient id="weight-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#4b5563" />
+              <stop offset="20%" stop-color="#9ca3af" />
+              <stop offset="50%" stop-color="#374151" />
+              <stop offset="100%" stop-color="#111827" />
+            </linearGradient>
+            <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+              <path d="M 30 0 L 0 0 0 30" fill="none" stroke="rgba(255, 255, 255, 0.05)" stroke-width="1"/>
+            </pattern>
+          </defs>
+
+          <rect width="100%" height="100%" fill="url(#grid)" />
+          <rect class="stand-base" x="40" y="260" width="520" height="20" rx="8" fill="url(#metal-grad)" stroke="#0f172a" stroke-width="2" />
+          <rect class="stand-pillar" x="80" y="65" width="16" height="195" fill="url(#metal-grad)" stroke="#0f172a" stroke-width="1.5" />
+          <rect class="stand-pillar" x="504" y="65" width="16" height="195" fill="url(#metal-grad)" stroke="#0f172a" stroke-width="1.5" />
+          <rect class="stand-top" x="60" y="55" width="480" height="15" rx="4" fill="url(#metal-grad)" stroke="#0f172a" stroke-width="1.5" />
+          
+          <g id="svg-weight-assembly">
+            <g id="svg-weight-assembly-inner">
+              <line x1="300" y1="80" x2="300" y2="120" stroke="url(#metal-grad)" stroke-width="4" />
+              <circle cx="300" cy="80" r="8" fill="none" stroke="url(#metal-grad)" stroke-width="3" />
+              <path d="M 294,120 C 294,128 306,128 306,120 C 306,115 303,115 303,115" fill="none" stroke="url(#metal-grad)" stroke-width="4" stroke-linecap="round" />
+              <g id="svg-weights-list"></g>
+            </g>
+          </g>
+          
+          <path id="strip-path" class="strip-line" d="M 88,80 C 180,80 240,80 300,80 C 360,80 420,80 512,80" fill="none" stroke-width="12" stroke-linecap="round" />
+
+          <g id="g-left" class="strip-half-group" style="display: none;">
+            <path id="strip-left" class="strip-line" d="" fill="none" stroke-width="12" stroke-linecap="round" />
+          </g>
+          <g id="g-right" class="strip-half-group" style="display: none;">
+            <path id="strip-right" class="strip-line" d="" fill="none" stroke-width="12" stroke-linecap="round" />
+          </g>
+
+          <g class="clamp-group left">
+            <rect x="73" y="65" width="30" height="30" rx="4" fill="url(#clamp-grad)" stroke="#0f172a" stroke-width="2" />
+            <circle cx="88" cy="80" r="4" fill="#0f172a" />
+          </g>
+          <g class="clamp-group right">
+            <rect x="497" y="65" width="30" height="30" rx="4" fill="url(#clamp-grad)" stroke="#0f172a" stroke-width="2" />
+            <circle cx="512" cy="80" r="4" fill="#0f172a" />
+          </g>
+
+          <g id="svg-particles"></g>
+        </svg>
+        
+        <div id="status" class="status">Ready to test paper.</div>
+      </div>
+      
+      <div class="actions" style="margin-top:20px">
+        <button id="add" class="btn primary">＋ Add one weight</button>
+        <button id="record" class="btn secondary" disabled>Record result</button>
+        <button id="reset" class="btn danger">↻ Reset test</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>📋 Results</h2>
+      <table class="results">
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Weights held before breaking</th>
+          </tr>
+        </thead>
+        <tbody id="results">
+          <tr>
+            <td colspan="2">No results recorded yet.</td>
+          </tr>
+        </tbody>
+      </table>
+      <p id="conclusion" class="instruction hidden" style="margin-top:16px"></p>
+    </div>
+
+    <div class="card">
+      <h2>🧠 What is the difference?</h2>
+      <div class="word-grid">
+        <div class="word strength">
+          <h3>STRENGTH</h3>
+          <p>The <b>name of the physical property</b>.</p>
+          <p>It is a material's ability to be pushed or pulled without breaking or tearing.</p>
+        </div>
+        <div class="word strong">
+          <h3>STRONG</h3>
+          <p>A <b>word that describes a material</b>.</p>
+          <p>A strong material does not break or tear easily.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>✅ Check your understanding</h2>
+      <div id="quiz"></div>
+      <div class="actions" style="margin-top:16px">
+        <button id="retry" class="btn secondary">Try quiz again</button>
+      </div>
+    </div>
+    
+    <section class="card summary">
+      <h2>Memory Tip</h2>
+      <p><strong>STRENGTH</strong> names the property. <strong>STRONG</strong> describes the material.</p>
+    </section>
+  </section>
+
+  <!-- TAB 2: FLEXIBILITY OR FLEXIBLE -->
+  <section id="tab-flexibility" class="tab-content hidden">
+    <div class="card">
+      <h2>🔬 Flexibility Investigation</h2>
+      <p class="instruction">Choose a material. Use the slider to apply bending force. Watch if it bends or breaks!</p>
+      
+      <div class="controls flex-controls">
+        <div>
+          <label for="flex-material">Material strip/tube</label>
+          <select id="flex-material">
+            <option value="rubber">Rubber</option>
+            <option value="fabric">Fabric</option>
+            <option value="plastic">Plastic</option>
+            <option value="metal">Metal</option>
+            <option value="ceramic">Ceramic</option>
+          </select>
+        </div>
+        <div>
+          <label for="force-slider">Bending Force: <span id="force-val">0</span>%</label>
+          <input type="range" id="force-slider" min="0" max="100" value="0" />
+        </div>
+      </div>
+      
+      <div class="lab" id="flex-lab" aria-live="polite">
+        <svg class="lab-svg" id="flex-svg" viewBox="0 0 600 300">
+          <rect width="100%" height="100%" fill="url(#grid)" />
+          <rect x="70" y="80" width="16" height="180" fill="url(#metal-grad)" stroke="#0f172a" stroke-width="1.5" />
+          <rect x="40" y="260" width="520" height="20" rx="8" fill="url(#metal-grad)" stroke="#0f172a" stroke-width="2" />
+          <path id="flex-strip-path" class="strip-line" d="M 86,150 L 120,150 C 220,150 320,150 420,150" fill="none" stroke-width="14" stroke-linecap="round" />
+          
+          <path id="flex-strip-left" class="strip-line" d="" fill="none" stroke-width="14" stroke-linecap="round" style="display: none;" />
+          <g id="g-flex-right" class="flex-half-group" style="display: none;">
+            <path id="flex-strip-right" class="strip-line" d="" fill="none" stroke-width="14" stroke-linecap="round" />
+          </g>
+          
+          <g class="clamp-group left">
+            <rect x="63" y="130" width="30" height="40" rx="4" fill="url(#clamp-grad)" stroke="#0f172a" stroke-width="2" />
+            <circle cx="78" cy="150" r="4" fill="#0f172a" />
+          </g>
+          <g id="flex-particles"></g>
+        </svg>
+        
+        <div id="flex-status" class="status">Ready to test rubber. Use the slider to bend it!</div>
+      </div>
+      
+      <div class="actions" style="margin-top:20px">
+        <button id="flex-record" class="btn primary" disabled>Record result</button>
+        <button id="flex-reset" class="btn danger">↻ Reset test</button>
+        <button id="flex-restart" class="btn secondary">↻ Restart Activity</button>
+      </div>
+    </div>
+    
+    <div class="card">
+      <h2>📋 Results</h2>
+      <table class="results">
+        <thead>
+          <tr>
+            <th>Material</th>
+            <th>Bending Force</th>
+            <th>Amount Bent</th>
+            <th>Did it break?</th>
+            <th>Relative Flexibility</th>
+          </tr>
+        </thead>
+        <tbody id="flex-results">
+          <tr>
+            <td colspan="5">No results recorded yet.</td>
+          </tr>
+        </tbody>
+      </table>
+      <div id="flex-comparison" class="instruction hidden" style="margin-top:16px"></div>
+    </div>
+
+    <div class="card">
+      <h2>🧠 What is the difference?</h2>
+      <div class="word-grid">
+        <div class="word strength">
+          <h3>FLEXIBILITY</h3>
+          <p>The <b>name of the physical property</b>.</p>
+          <p>It is a material’s ability to bend without breaking.</p>
+          <hr style="border: 0; border-top: 1px dashed rgba(3, 105, 161, 0.3); margin: 12px 0;" />
+          <p style="font-weight: 700; margin: 0 0 6px;">Sentence Pattern:</p>
+          <p style="background: rgba(255, 255, 255, 0.6); padding: 8px 12px; border-radius: 8px; margin: 0; font-size: 0.9rem;">
+            “The property being tested is <b>FLEXIBILITY</b>.”
+          </p>
+        </div>
+        <div class="word strong">
+          <h3>FLEXIBLE</h3>
+          <p>A <b>word that describes a material</b>.</p>
+          <p>A flexible material can bend easily without breaking.</p>
+          <hr style="border: 0; border-top: 1px dashed rgba(21, 128, 61, 0.3); margin: 12px 0;" />
+          <p style="font-weight: 700; margin: 0 0 6px;">Sentence Pattern:</p>
+          <p style="background: rgba(255, 255, 255, 0.6); padding: 8px 12px; border-radius: 8px; margin: 0; font-size: 0.9rem;">
+            “The rubber is <b>FLEXIBLE</b> because it bends easily without breaking.”
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>🙋‍♀️ Question Guide</h2>
+      <div style="display: grid; grid-template-columns: 1fr; gap: 12px;">
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 14px; padding: 16px;">
+          <p style="margin: 0; font-weight: 700; color: var(--blue); font-size: 0.95rem;">❓ If the question asks:</p>
+          <p style="margin: 4px 0 8px; font-weight: 600; font-size: 0.95rem;">“What physical property allows the material to bend?”</p>
+          <p style="margin: 0; font-weight: 700; color: #166534; background: #f0fdf4; display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 0.9rem;">👉 Answer: Flexibility</p>
+        </div>
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 14px; padding: 16px;">
+          <p style="margin: 0; font-weight: 700; color: var(--blue); font-size: 0.95rem;">❓ If the question asks:</p>
+          <p style="margin: 4px 0 8px; font-weight: 600; font-size: 0.95rem;">“How would you describe the material?”</p>
+          <p style="margin: 0; font-weight: 700; color: #166534; background: #f0fdf4; display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 0.9rem;">👉 Answer: Flexible</p>
+        </div>
+        <div style="background: #f8fafc; border: 1px solid #cbd5e1; border-radius: 14px; padding: 16px;">
+          <p style="margin: 0; font-weight: 700; color: var(--blue); font-size: 0.95rem;">❓ If the question asks:</p>
+          <p style="margin: 4px 0 8px; font-weight: 600; font-size: 0.95rem;">“Why can the bag be rolled up?”</p>
+          <p style="margin: 0; font-weight: 700; color: #166534; background: #f0fdf4; display: inline-block; padding: 4px 10px; border-radius: 8px; font-size: 0.9rem;">👉 Answer: The bag is flexible and can bend without breaking.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>✅ Check your understanding</h2>
+      <div id="flex-quiz"></div>
+      <div class="actions" style="margin-top:16px">
+        <button id="flex-retry" class="btn secondary">Try quiz again</button>
+      </div>
+    </div>
+    
+    <section class="card summary" style="background: linear-gradient(135deg, #065f46 0%, #047857 100%);">
+      <h2>Memory Tip</h2>
+      <p><strong>FLEXIBILITY</strong> = the name of the property</p>
+      <p><strong>FLEXIBLE</strong> = a word that describes the material</p>
+      <hr style="border: 0; border-top: 1px dashed rgba(255,255,255,0.2); margin: 12px 0;" />
+      <p style="margin: 0; font-size: 1.1rem; font-weight: 700;">Final Summary:</p>
+      <p style="margin: 6px 0 0; color: #fbbf24;">"Rubber has flexibility. Rubber is flexible because it bends easily without breaking."</p>
+    </section>
+  </section>
+</main>
+
+<script>
+let audioCtx = null;
+let audioMuted = false;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+}
+
+function playSound(type, pitchModifier = 1) {
+  if (audioMuted) return;
+  try {
+    initAudio();
+    if (audioCtx.state === 'suspended') {
+      audioCtx.resume();
+    }
+    const now = audioCtx.currentTime;
+    
+    if (type === 'click') {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(1000 * pitchModifier, now);
+      gain.gain.setValueAtTime(0.08, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.05);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.05);
+    } 
+    else if (type === 'creak') {
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'triangle';
+      osc.frequency.setValueAtTime(120 + pitchModifier * 70, now);
+      gain.gain.setValueAtTime(0.06, now);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start(now);
+      osc.stop(now + 0.12);
+    } 
+    else if (type === 'snap') {
+      const bufferSize = audioCtx.sampleRate * 0.15;
+      const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < bufferSize; i++) {
+        data[i] = Math.random() * 2 - 1;
+      }
+      const noise = audioCtx.createBufferSource();
+      noise.buffer = buffer;
+      
+      const filter = audioCtx.createBiquadFilter();
+      filter.type = 'bandpass';
+      filter.frequency.value = 750;
+      filter.Q.value = 2.5;
+      
+      const osc = audioCtx.createOscillator();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(280, now);
+      osc.frequency.exponentialRampToValueAtTime(60, now + 0.14);
+      
+      const noiseGain = audioCtx.createGain();
+      noiseGain.gain.setValueAtTime(0.2, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.12);
+      
+      const oscGain = audioCtx.createGain();
+      oscGain.gain.setValueAtTime(0.25, now);
+      oscGain.gain.exponentialRampToValueAtTime(0.001, now + 0.15);
+      
+      noise.connect(filter);
+      filter.connect(noiseGain);
+      noiseGain.connect(audioCtx.destination);
+      
+      osc.connect(oscGain);
+      oscGain.connect(audioCtx.destination);
+      
+      noise.start(now);
+      osc.start(now);
+      noise.stop(now + 0.15);
+      osc.stop(now + 0.15);
+    } 
+    else if (type === 'success') {
+      const notes = [523.25, 659.25, 783.99, 1046.50];
+      notes.forEach((freq, idx) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + idx * 0.08);
+        gain.gain.setValueAtTime(0.08, now + idx * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.08 + 0.25);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now + idx * 0.08);
+        osc.stop(now + idx * 0.08 + 0.25);
+      });
+    } 
+    else if (type === 'error') {
+      [0, 0.12].forEach((delay) => {
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sawtooth';
+        osc.frequency.setValueAtTime(140, now + delay);
+        gain.gain.setValueAtTime(0.08, now + delay);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + delay + 0.1);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start(now + delay);
+        osc.stop(now + delay + 0.1);
+      });
+    }
+  } catch (e) {
+    console.warn("AudioContext initialization failed:", e);
+  }
+}
+
+function toggleMute() {
+  audioMuted = !audioMuted;
+  const btn = document.getElementById('mute-btn');
+  if (audioMuted) {
+    btn.classList.add('muted');
+    btn.innerHTML = '🔇 Muted';
+  } else {
+    btn.classList.remove('muted');
+    btn.innerHTML = '🔊 Sound On';
+    playSound('click');
+  }
+}
+
+function switchTab(tabId) {
+  playSound('click');
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+  
+  if (tabId === 'strength') {
+    document.querySelector('.tab-btn:nth-child(1)').classList.add('active');
+    document.getElementById('tab-strength').classList.remove('hidden');
+    setup();
+  } else {
+    document.querySelector('.tab-btn:nth-child(2)').classList.add('active');
+    document.getElementById('tab-flexibility').classList.remove('hidden');
+    setupFlex();
+  }
+}
+
+/* --- TAB 1: STRENGTH OR STRONG --- */
+const materials = {
+  paper: { limit: 2, color: '#f5d38a', elasticity: 6 },
+  fabric: { limit: 4, color: '#be7bf2', elasticity: 15 },
+  plastic: { limit: 6, color: '#5eb4f5', elasticity: 9 },
+  metal: { limit: 8, color: '#b2c0cc', elasticity: 3.5 }
+};
+
+const material = document.querySelector('#material'),
+      stripPath = document.querySelector('#strip-path'),
+      stripLeft = document.querySelector('#strip-left'),
+      stripRight = document.querySelector('#strip-right'),
+      gLeft = document.querySelector('#g-left'),
+      gRight = document.querySelector('#g-right'),
+      weightAssembly = document.querySelector('#svg-weight-assembly'),
+      weightAssemblyInner = document.querySelector('#svg-weight-assembly-inner'),
+      weightsList = document.querySelector('#svg-weights-list'),
+      particlesGroup = document.getElementById('svg-particles'),
+      countEl = document.querySelector('#count'),
+      statusEl = document.querySelector('#status'),
+      addBtn = document.querySelector('#add'),
+      recordBtn = document.querySelector('#record'),
+      resultsBody = document.querySelector('#results'),
+      conclusion = document.querySelector('#conclusion'),
+      labContainer = document.querySelector('#strength-lab');
+
+let count = 0, broken = false, records = {};
+
+function setup() {
+  count = 0;
+  broken = false;
+  weightsList.innerHTML = '';
+  countEl.textContent = '0';
+  
+  weightAssembly.classList.remove('falling');
+  weightAssembly.style.setProperty('--bend-y', '0px');
+  weightAssemblyInner.classList.remove('bounce-active');
+  
+  gLeft.style.display = 'none';
+  gRight.style.display = 'none';
+  gLeft.classList.remove('broken');
+  gRight.classList.remove('broken');
+  gLeft.style.transform = '';
+  gRight.style.transform = '';
+  
+  stripPath.style.display = 'block';
+  
+  const color = materials[material.value].color;
+  stripPath.style.stroke = color;
+  stripLeft.style.stroke = color;
+  stripRight.style.stroke = color;
+  
+  stripPath.setAttribute('d', 'M 88,80 C 180,80 240,80 300,80 C 360,80 420,80 512,80');
+  particlesGroup.innerHTML = '';
+  
+  statusEl.textContent = `Ready to test ${material.value}.`;
+  addBtn.disabled = false;
+  recordBtn.disabled = true;
+}
+
+function updateBendingPath(bend) {
+  const d = `M 88,80 C 180,80 240,${80 + bend} 300,${80 + bend} C 360,${80 + bend} 420,80 512,80`;
+  stripPath.setAttribute('d', d);
+  weightAssembly.style.setProperty('--bend-y', `${bend}px`);
+}
+
+function addWeight() {
+  if (broken) return;
+  count++;
+  countEl.textContent = count;
+  playSound('creak', count);
+  
+  let weightsHTML = '';
+  for (let i = 1; i <= count; i++) {
+    const yOffset = 120 + (count - i) * 12;
+    weightsHTML += `
+      <g class="svg-weight" transform="translate(300, ${yOffset})">
+        <rect x="-35" y="0" width="70" height="14" rx="3" fill="url(#weight-grad)" stroke="#0f172a" stroke-width="1.5" />
+        <rect x="-35" y="4" width="10" height="6" fill="#141b25" />
+        <text x="0" y="11" text-anchor="middle" fill="#fff" font-size="10" font-family="'Outfit', sans-serif" font-weight="bold">${i}</text>
+      </g>
+    `;
+  }
+  weightsList.innerHTML = weightsHTML;
+  
+  const m = materials[material.value];
+  const limit = m.limit;
+  const elasticity = m.elasticity;
+  
+  if (count > limit) {
+    broken = true;
+    addBtn.disabled = true;
+    
+    const maxBend = (limit + 0.5) * elasticity;
+    updateBendingPath(maxBend);
+    statusEl.textContent = `The ${material.value} is at its limit...`;
+    
+    setTimeout(() => {
+      playSound('snap');
+      stripPath.style.display = 'none';
+      
+      const dLeft = `M 88,80 C 180,80 240,${80 + maxBend} 300,${80 + maxBend}`;
+      const dRight = `M 300,${80 + maxBend} C 360,${80 + maxBend} 420,80 512,80`;
+      stripLeft.setAttribute('d', dLeft);
+      stripRight.setAttribute('d', dRight);
+      
+      gLeft.style.display = 'block';
+      gRight.style.display = 'block';
+      gLeft.style.transformOrigin = '88px 80px';
+      gRight.style.transformOrigin = '512px 80px';
+      gLeft.offsetHeight;
+      
+      gLeft.classList.add('broken');
+      gRight.classList.add('broken');
+      gLeft.style.transform = 'rotate(75deg)';
+      gRight.style.transform = 'rotate(-75deg)';
+      
+      weightAssembly.classList.add('falling');
+      const landY = 270 - (122 + count * 12);
+      weightAssembly.style.setProperty('--bend-y', `${landY}px`);
+      
+      statusEl.textContent = `The ${material.value} broke! It held ${count - 1} weight${count - 1 === 1 ? '' : 's'} before breaking.`;
+      recordBtn.disabled = false;
+    }, 150);
+    
+  } else {
+    const bend = count * elasticity;
+    updateBendingPath(bend);
+    statusEl.textContent = `The ${material.value} is still holding ${count} weight${count === 1 ? '' : 's'}.`;
+  }
+}
+
+weightAssembly.addEventListener('transitionend', (e) => {
+  if (e.propertyName === 'transform' && weightAssembly.classList.contains('falling')) {
+    weightAssembly.classList.remove('falling');
+    weightAssemblyInner.classList.add('bounce-active');
+    labContainer.classList.add('shake-active');
+    createParticles();
+    
+    weightAssemblyInner.addEventListener('animationend', () => {
+      weightAssemblyInner.classList.remove('bounce-active');
+    }, { once: true });
+    
+    labContainer.addEventListener('animationend', () => {
+      labContainer.classList.remove('shake-active');
+    }, { once: true });
+  }
+});
+
+function createParticles() {
+  particlesGroup.innerHTML = '';
+  const color = materials[material.value].color;
+  const count = 18;
+  
+  for (let i = 0; i < count; i++) {
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    p.setAttribute('cx', '300');
+    p.setAttribute('cy', '270');
+    
+    const r = 2 + Math.random() * 3;
+    p.setAttribute('r', r);
+    p.setAttribute('fill', color);
+    
+    const angle = (200 + Math.random() * 140) * Math.PI / 180;
+    const speed = 2 + Math.random() * 5;
+    const dx = Math.cos(angle) * speed * 14;
+    const dy = Math.sin(angle) * speed * 14;
+    
+    p.style.setProperty('--dx', `${dx}px`);
+    p.style.setProperty('--dy', `${dy}px`);
+    p.classList.add('svg-particle');
+    
+    particlesGroup.appendChild(p);
+  }
+}
+
+function record() {
+  playSound('click');
+  records[material.value] = count - 1;
+  renderResults();
+  recordBtn.disabled = true;
+  statusEl.textContent = 'Result recorded! Choose another material or reset the test.';
+}
+
+function renderResults() {
+  const entries = Object.entries(records);
+  resultsBody.innerHTML = entries.map(([m, n]) => `<tr><td>${m[0].toUpperCase() + m.slice(1)}</td><td>${n}</td></tr>`).join('');
+  if (entries.length >= 2) {
+    const best = entries.sort((a, b) => b[1] - a[1])[0];
+    conclusion.classList.remove('hidden');
+    conclusion.textContent = `Conclusion: ${best[0][0].toUpperCase() + best[0].slice(1)} has the greatest strength in these results. It is the strongest material tested.`;
+  }
+}
+
+material.addEventListener('change', () => { playSound('click'); setup(); });
+addBtn.addEventListener('click', addWeight);
+recordBtn.addEventListener('click', record);
+document.querySelector('#reset').addEventListener('click', () => { playSound('click'); setup(); });
+
+const questions = [
+  { q: 'The ability of a material to be pushed or pulled without breaking is called _____.', a: 'strength', choices: ['strong', 'strength'] },
+  { q: 'A metal strip does not break easily. The metal is _____.', a: 'strong', choices: ['strength', 'strong'] },
+  { q: 'A material that holds more weights before breaking has greater _____.', a: 'strength', choices: ['strong', 'strength'] },
+  { q: 'Metal held more weights than paper. Metal is _____ than paper.', a: 'stronger', choices: ['greater strength', 'stronger'] }
+];
+
+function drawQuiz() {
+  const host = document.querySelector('#quiz');
+  host.innerHTML = '';
+  questions.forEach((item, i) => {
+    const box = document.createElement('div');
+    box.className = 'quiz-item';
+    box.innerHTML = `<b>${i + 1}. ${item.q}</b><div class="options"></div><div class="feedback" aria-live="polite"></div>`;
+    item.choices.forEach(choice => {
+      const b = document.createElement('button');
+      b.className = 'option';
+      b.textContent = choice;
+      b.onclick = () => {
+        box.querySelectorAll('button').forEach(x => x.disabled = true);
+        const ok = choice === item.a;
+        b.classList.add(ok ? 'correct' : 'wrong');
+        
+        const feedbackEl = box.querySelector('.feedback');
+        feedbackEl.style.color = ok ? 'var(--green)' : 'var(--red)';
+        if (ok) {
+          playSound('success');
+          feedbackEl.textContent = 'Excellent! Strength names the property, while strong describes the material.';
+        } else {
+          playSound('error');
+          feedbackEl.textContent = `Try again. The correct answer is “${item.a}”.`;
+        }
+      };
+      box.querySelector('.options').appendChild(b);
+    });
+    host.appendChild(box);
+  });
+}
+
+document.querySelector('#retry').addEventListener('click', () => { playSound('click'); drawQuiz(); });
+
+/* --- TAB 2: FLEXIBILITY OR FLEXIBLE --- */
+const flexMaterials = {
+  rubber: { elasticity: 0.95, limit: 100, color: '#fca5a5', name: 'Rubber', score: 100, rating: 'Very High (Bends heavily)' },
+  fabric: { elasticity: 0.8, limit: 100, color: '#be7bf2', name: 'Fabric', score: 85, rating: 'High (Bends heavily)' },
+  plastic: { elasticity: 0.45, limit: 100, color: '#38bdf8', name: 'Plastic', score: 50, rating: 'Medium (Bends moderately)' },
+  metal: { elasticity: 0.08, limit: 100, color: '#94a3b8', name: 'Metal', score: 10, rating: 'Low (Bends slightly)' },
+  ceramic: { elasticity: 0.22, limit: 40, color: '#f59e0b', name: 'Ceramic', score: 5, rating: 'Rigid / Very Low (Broke)' }
+};
+
+const flexMaterial = document.querySelector('#flex-material'),
+      forceSlider = document.querySelector('#force-slider'),
+      forceVal = document.querySelector('#force-val'),
+      flexStripPath = document.querySelector('#flex-strip-path'),
+      flexStripLeft = document.querySelector('#flex-strip-left'),
+      flexStripRight = document.querySelector('#flex-strip-right'),
+      gFlexRight = document.querySelector('#g-flex-right'),
+      flexStatus = document.querySelector('#flex-status'),
+      flexRecordBtn = document.querySelector('#flex-record'),
+      flexResetBtn = document.querySelector('#flex-reset'),
+      flexRestartBtn = document.querySelector('#flex-restart'),
+      flexResultsBody = document.querySelector('#flex-results'),
+      flexComparison = document.querySelector('#flex-comparison'),
+      flexParticlesGroup = document.getElementById('flex-particles'),
+      flexLabContainer = document.querySelector('#flex-lab');
+
+let flexBroke = false, flexRecords = {};
+
+function setupFlex() {
+  flexBroke = false;
+  forceSlider.value = 0;
+  forceSlider.disabled = false;
+  forceVal.textContent = '0';
+  
+  flexStripPath.style.display = 'block';
+  flexStripLeft.style.display = 'none';
+  gFlexRight.style.display = 'none';
+  gFlexRight.classList.remove('broken-drop');
+  gFlexRight.style.transform = '';
+  
+  const color = flexMaterials[flexMaterial.value].color;
+  flexStripPath.style.stroke = color;
+  flexStripLeft.style.stroke = color;
+  flexStripRight.style.stroke = color;
+  
+  flexStripPath.setAttribute('d', 'M 86,150 L 120,150 C 220,150 320,150 420,150');
+  flexParticlesGroup.innerHTML = '';
+  
+  flexStatus.textContent = `Ready to test ${flexMaterials[flexMaterial.value].name}. Drag the slider to bend it!`;
+  flexRecordBtn.disabled = true;
+}
+
+function handleBending(e) {
+  if (flexBroke) return;
+  const force = parseInt(e.target.value);
+  forceVal.textContent = force;
+  
+  const m = flexMaterials[flexMaterial.value];
+  
+  if (force > 0 && force % 4 === 0) {
+    playSound('creak', force / 20);
+  }
+  
+  if (force > m.limit) {
+    flexBroke = true;
+    forceSlider.disabled = true;
+    playSound('snap');
+    
+    const breakBend = m.limit * m.elasticity;
+    flexStripPath.style.display = 'none';
+    
+    const dLeft = `M 86,150 L 120,150 C 160,150 190,152 220,165`;
+    const dRight = `M 220,165 C 280,165 340,${150 + breakBend} ${420 - breakBend * 0.1},${150 + breakBend}`;
+    
+    flexStripLeft.setAttribute('d', dLeft);
+    flexStripRight.setAttribute('d', dRight);
+    
+    flexStripLeft.style.display = 'block';
+    gFlexRight.style.display = 'block';
+    gFlexRight.style.transformOrigin = '220px 165px';
+    gFlexRight.offsetHeight;
+    
+    gFlexRight.classList.add('broken-drop');
+    gFlexRight.style.transform = 'translate(10px, 85px) rotate(60deg)';
+    
+    flexLabContainer.classList.add('shake-active');
+    createFlexParticles();
+    
+    flexLabContainer.addEventListener('animationend', () => {
+      flexLabContainer.classList.remove('shake-active');
+    }, { once: true });
+    
+    flexStatus.innerHTML = `<span style="color:var(--red);">Ceramic snapped!</span> It does not bend easily and is less flexible.`;
+    flexRecordBtn.disabled = false;
+  } else {
+    const bend = force * m.elasticity;
+    const d = `M 86,150 L 120,150 C 220,150 320,${150 + bend} ${420 - bend * 0.1},${150 + bend}`;
+    flexStripPath.setAttribute('d', d);
+    
+    let bendDesc = "hardly bends";
+    if (bend >= 60) bendDesc = "bends heavily";
+    else if (bend >= 30) bendDesc = "bends moderately";
+    else if (bend >= 8) bendDesc = "bends slightly";
+    
+    flexStatus.textContent = `Bending ${m.name}: ${bendDesc} (Force: ${force}%)`;
+    
+    if (force > 0) {
+      flexRecordBtn.disabled = false;
+    }
+  }
+}
+
+function createFlexParticles() {
+  flexParticlesGroup.innerHTML = '';
+  const color = flexMaterials[flexMaterial.value].color;
+  
+  for (let i = 0; i < 15; i++) {
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+    p.setAttribute('cx', '220');
+    p.setAttribute('cy', '165');
+    
+    const r = 2 + Math.random() * 3;
+    p.setAttribute('r', r);
+    p.setAttribute('fill', color);
+    
+    const angle = (200 + Math.random() * 140) * Math.PI / 180;
+    const speed = 2 + Math.random() * 4;
+    const dx = Math.cos(angle) * speed * 12;
+    const dy = Math.sin(angle) * speed * 12;
+    
+    p.style.setProperty('--dx', `${dx}px`);
+    p.style.setProperty('--dy', `${dy}px`);
+    p.classList.add('svg-particle');
+    
+    flexParticlesGroup.appendChild(p);
+  }
+}
+
+function recordFlex() {
+  playSound('click');
+  const mVal = flexMaterial.value;
+  const m = flexMaterials[mVal];
+  const forceValInt = parseInt(forceSlider.value);
+  
+  let amtBent = "Hardly Bends";
+  const finalBend = forceValInt * m.elasticity;
+  if (finalBend >= 60) amtBent = "Bends Heavily";
+  else if (finalBend >= 30) amtBent = "Bends Moderately";
+  else if (finalBend >= 8) amtBent = "Bends Slightly";
+  
+  flexRecords[mVal] = {
+    name: m.name,
+    force: forceValInt + "%",
+    amtBent: amtBent,
+    broke: flexBroke ? "Yes (Broke!)" : "No",
+    flexRating: m.rating,
+    score: m.score
+  };
+  
+  renderFlexResults();
+  flexRecordBtn.disabled = true;
+  flexStatus.textContent = 'Result recorded! Test another material or reset the test.';
+}
+
+function renderFlexResults() {
+  const entries = Object.entries(flexRecords);
+  flexResultsBody.innerHTML = entries.map(([k, r]) => `
+    <tr>
+      <td>${r.name}</td>
+      <td>${r.force}</td>
+      <td>${r.amtBent}</td>
+      <td>${r.broke}</td>
+      <td>${r.flexRating}</td>
+    </tr>
+  `).join('');
+  
+  if (entries.length >= 2) {
+    const sorted = entries.map(([k, r]) => r).sort((a, b) => b.score - a.score);
+    const best = sorted[0];
+    const other = sorted[sorted.length - 1];
+    
+    flexComparison.classList.remove('hidden');
+    flexComparison.innerHTML = `
+      <p style="margin:0 0 6px;"><b>“${best.name} has greater flexibility than ${other.name}.”</b></p>
+      <p style="margin:0;"><b>“${best.name} is more flexible than ${other.name}.”</b></p>
+    `;
+  }
+}
+
+function restartFlexActivity() {
+  playSound('click');
+  flexRecords = {};
+  flexResultsBody.innerHTML = '<tr><td colspan="5">No results recorded yet.</td></tr>';
+  flexComparison.classList.add('hidden');
+  setupFlex();
+  drawFlexQuiz();
+}
+
+flexMaterial.addEventListener('change', () => { playSound('click'); setupFlex(); });
+forceSlider.addEventListener('input', handleBending);
+flexRecordBtn.addEventListener('click', recordFlex);
+flexResetBtn.addEventListener('click', () => { playSound('click'); setupFlex(); });
+flexRestartBtn.addEventListener('click', restartFlexActivity);
+
+const flexQuestions = [
+  { q: 'The ability of a material to bend without breaking is called ______.', a: 'flexibility', choices: ['flexible', 'flexibility'] },
+  { q: 'Rubber bends easily without breaking. Rubber is ______.', a: 'flexible', choices: ['flexibility', 'flexible'] },
+  { q: 'A fabric bag can be rolled up without breaking. What property allows it to do this?', a: 'flexibility', choices: ['flexible', 'flexibility'] },
+  { q: 'Describe the fabric bag.', a: 'flexible', choices: ['flexibility', 'flexible'] },
+  { q: 'Plastic bends more than metal without breaking. Plastic has greater ______ than metal.', a: 'flexibility', choices: ['flexible', 'flexibility'] },
+  { q: 'Plastic is more ______ than metal.', a: 'flexible', choices: ['flexibility', 'flexible'] }
+];
+
+function drawFlexQuiz() {
+  const host = document.querySelector('#flex-quiz');
+  host.innerHTML = '';
+  flexQuestions.forEach((item, i) => {
+    const box = document.createElement('div');
+    box.className = 'quiz-item';
+    box.innerHTML = `<b>${i + 1}. ${item.q}</b><div class="options"></div><div class="feedback" aria-live="polite"></div>`;
+    
+    item.choices.forEach(choice => {
+      const b = document.createElement('button');
+      b.className = 'option';
+      b.textContent = choice;
+      b.onclick = () => {
+        box.querySelectorAll('button').forEach(x => x.disabled = true);
+        const ok = choice === item.a;
+        b.classList.add(ok ? 'correct' : 'wrong');
+        
+        const feedbackEl = box.querySelector('.feedback');
+        feedbackEl.style.color = ok ? 'var(--green)' : 'var(--red)';
+        if (ok) {
+          playSound('success');
+          feedbackEl.textContent = 'Excellent! Flexibility names the property, while flexible describes the material.';
+        } else {
+          playSound('error');
+          feedbackEl.textContent = 'Try again. Is the question asking you to name the property or describe the material?';
+        }
+      };
+      box.querySelector('.options').appendChild(b);
+    });
+    host.appendChild(box);
+  });
+}
+
+document.querySelector('#flex-retry').addEventListener('click', () => { playSound('click'); drawFlexQuiz(); });
+
+setup();
+drawQuiz();
+setupFlex();
+drawFlexQuiz();
+</script>
+</body>
+</html>
