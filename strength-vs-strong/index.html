@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Strength or Strong?</title>
+  <style>
+    :root{--navy:#17324d;--orange:#ff9d22;--cream:#fff9ed;--green:#1f9d72;--red:#d9534f;--blue:#4a86e8;--shadow:0 8px 24px #17324d20}
+    *{box-sizing:border-box} body{margin:0;font-family:Arial,"Helvetica Neue",sans-serif;background:linear-gradient(145deg,#e8f7ff,#fff4d9);color:var(--navy)}
+    button,select{font:inherit}.wrap{max-width:980px;margin:auto;padding:18px}.hero{background:var(--navy);color:white;border-radius:24px;padding:25px;box-shadow:var(--shadow);position:relative;overflow:hidden}.hero:after{content:"🔎";position:absolute;right:18px;top:4px;font-size:90px;opacity:.2}.hero h1{margin:0;font-size:clamp(2rem,6vw,3.7rem)}.hero p{font-size:1.15rem;margin:8px 0 0;max-width:700px}.card{background:#fff;border-radius:22px;padding:20px;margin-top:18px;box-shadow:var(--shadow)}h2{margin:0 0 12px;font-size:1.55rem}.instruction{background:#fff3cd;border-left:6px solid var(--orange);padding:12px;border-radius:10px;font-weight:700}.controls{display:grid;grid-template-columns:1fr auto;gap:12px;align-items:end;margin:16px 0}label{font-weight:800;display:block;margin-bottom:6px}select{width:100%;padding:13px;border:3px solid #bad6f6;border-radius:13px;background:white}.lab{min-height:330px;background:linear-gradient(#dff5ff 0 66%,#d9c39b 66%);border:4px solid #b9dcf1;border-radius:18px;position:relative;overflow:hidden}.stand{position:absolute;left:8%;right:8%;top:76px;height:18px;background:#6f7c86;border-radius:8px}.clamp{position:absolute;top:57px;width:36px;height:56px;background:#40515e;border-radius:8px}.clamp.left{left:8%}.clamp.right{right:8%}.strip{position:absolute;left:12%;right:12%;top:90px;height:16px;border-radius:8px;transition:.35s;transform-origin:center}.strip.bending{transform:translateY(18px);border-radius:0 0 50% 50%}.strip.broken{left:12%;right:52%;transform:rotate(12deg) translateY(32px)}.hook{position:absolute;left:calc(50% - 2px);top:105px;width:4px;height:72px;background:#555}.weights{position:absolute;left:50%;top:174px;transform:translateX(-50%);display:flex;flex-direction:column-reverse;align-items:center}.weight{width:76px;height:25px;background:#495057;color:white;border:2px solid #222;border-radius:5px;text-align:center;font-weight:bold;line-height:21px;margin-top:-2px}.status{position:absolute;left:12px;bottom:12px;background:#ffffffdf;border-radius:12px;padding:10px 14px;font-weight:800}.actions{display:flex;gap:10px;flex-wrap:wrap}.btn{border:0;border-radius:13px;padding:13px 17px;font-weight:800;cursor:pointer;box-shadow:0 4px 0 #0002}.btn:active{transform:translateY(2px);box-shadow:0 2px 0 #0002}.primary{background:var(--orange);color:#222}.secondary{background:#dfeeff;color:var(--navy)}.danger{background:#ffe1df;color:#8d221f}.btn:disabled{opacity:.45;cursor:not-allowed}.counter{font-size:1.2rem;font-weight:900;padding:11px 14px;background:#eaf8f2;border-radius:12px}.results{width:100%;border-collapse:collapse;margin-top:12px}.results th,.results td{border:2px solid #c9dae7;padding:10px;text-align:left}.results th{background:#dceeff}.word-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.word{border:3px solid;padding:16px;border-radius:16px}.word.strength{border-color:var(--blue);background:#edf5ff}.word.strong{border-color:var(--green);background:#eaf9f3}.word h3{font-size:1.7rem;margin:0}.quiz-item{border-top:2px dashed #cbd8e2;padding:16px 0}.options{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}.option{border:3px solid #b8cee0;background:white;border-radius:13px;padding:11px 18px;font-weight:800;cursor:pointer}.option.correct{border-color:var(--green);background:#dcf6eb}.option.wrong{border-color:var(--red);background:#ffe5e4}.feedback{min-height:25px;margin-top:8px;font-weight:800}.summary{text-align:center;background:var(--navy);color:white}.summary strong{color:#ffd166}.hidden{display:none}@media(max-width:650px){.controls,.word-grid{grid-template-columns:1fr}.lab{min-height:360px}.hero{padding:20px}.card{padding:16px}.wrap{padding:10px}}
+  </style>
+</head>
+<body>
+<main class="wrap">
+  <section class="hero"><h1>Strength or Strong?</h1><p>Welcome, Materials Detective! Test materials, collect evidence and choose the correct scientific word.</p></section>
+
+  <section class="card">
+    <h2>🔬 Investigation</h2>
+    <p class="instruction">Choose a material. Add weights one at a time until it breaks. Record how many weights it held.</p>
+    <div class="controls">
+      <div><label for="material">Material strip</label><select id="material"><option value="paper">Paper</option><option value="fabric">Fabric</option><option value="plastic">Plastic</option><option value="metal">Metal</option></select></div>
+      <div class="counter">Weights: <span id="count">0</span></div>
+    </div>
+    <div class="lab" aria-live="polite">
+      <div class="stand"></div><div class="clamp left"></div><div class="clamp right"></div>
+      <div id="strip" class="strip"></div><div class="hook"></div><div id="weights" class="weights"></div>
+      <div id="status" class="status">Ready to test paper.</div>
+    </div>
+    <div class="actions" style="margin-top:14px"><button id="add" class="btn primary">＋ Add one weight</button><button id="record" class="btn secondary" disabled>Record result</button><button id="reset" class="btn danger">↻ Reset test</button></div>
+  </section>
+
+  <section class="card"><h2>📋 Results</h2><table class="results"><thead><tr><th>Material</th><th>Weights held before breaking</th></tr></thead><tbody id="results"><tr><td colspan="2">No results recorded yet.</td></tr></tbody></table><p id="conclusion" class="instruction hidden"></p></section>
+
+  <section class="card"><h2>🧠 What is the difference?</h2><div class="word-grid"><div class="word strength"><h3>STRENGTH</h3><p>The <b>name of the physical property</b>.</p><p>It is a material's ability to be pushed or pulled without breaking or tearing.</p></div><div class="word strong"><h3>STRONG</h3><p>A <b>word that describes a material</b>.</p><p>A strong material does not break or tear easily.</p></div></div></section>
+
+  <section class="card"><h2>✅ Check your understanding</h2><div id="quiz"></div><div class="actions"><button id="retry" class="btn secondary">Try quiz again</button></div></section>
+  <section class="card summary"><h2>Memory Tip</h2><p><strong>STRENGTH</strong> names the property. <strong>STRONG</strong> describes the material.</p></section>
+</main>
+<script>
+const materials={paper:{limit:2,color:'#f2d38a'},fabric:{limit:4,color:'#a66ad1'},plastic:{limit:6,color:'#53a7e8'},metal:{limit:8,color:'#aeb8bf'}};
+const material=document.querySelector('#material'),strip=document.querySelector('#strip'),weights=document.querySelector('#weights'),countEl=document.querySelector('#count'),statusEl=document.querySelector('#status'),addBtn=document.querySelector('#add'),recordBtn=document.querySelector('#record'),resultsBody=document.querySelector('#results'),conclusion=document.querySelector('#conclusion');
+let count=0,broken=false,records={};
+function setup(){count=0;broken=false;weights.innerHTML='';countEl.textContent='0';strip.className='strip';strip.style.background=materials[material.value].color;statusEl.textContent=`Ready to test ${material.value}.`;addBtn.disabled=false;recordBtn.disabled=true}
+function addWeight(){if(broken)return;count++;countEl.textContent=count;weights.insertAdjacentHTML('beforeend',`<div class="weight">${count}</div>`);strip.classList.add('bending');if(count>materials[material.value].limit){broken=true;strip.classList.add('broken');statusEl.textContent=`The ${material.value} broke! It held ${count-1} weight${count-1===1?'':'s'} before breaking.`;addBtn.disabled=true;recordBtn.disabled=false}else statusEl.textContent=`The ${material.value} is still holding ${count} weight${count===1?'':'s'}.`}
+function record(){records[material.value]=count-1;renderResults();recordBtn.disabled=true;statusEl.textContent='Result recorded! Choose another material or reset the test.'}
+function renderResults(){const entries=Object.entries(records);resultsBody.innerHTML=entries.map(([m,n])=>`<tr><td>${m[0].toUpperCase()+m.slice(1)}</td><td>${n}</td></tr>`).join('');if(entries.length>=2){const best=entries.sort((a,b)=>b[1]-a[1])[0];conclusion.classList.remove('hidden');conclusion.textContent=`Conclusion: ${best[0][0].toUpperCase()+best[0].slice(1)} has the greatest strength in these results. It is the strongest material tested.`}}
+material.addEventListener('change',setup);addBtn.addEventListener('click',addWeight);recordBtn.addEventListener('click',record);document.querySelector('#reset').addEventListener('click',setup);
+const questions=[
+ {q:'The ability of a material to be pushed or pulled without breaking is called _____.',a:'strength',choices:['strong','strength']},
+ {q:'A metal strip does not break easily. The metal is _____.',a:'strong',choices:['strength','strong']},
+ {q:'A material that holds more weights before breaking has greater _____.',a:'strength',choices:['strong','strength']},
+ {q:'Metal held more weights than paper. Metal is _____ than paper.',a:'stronger',choices:['greater strength','stronger']}
+];
+function drawQuiz(){const host=document.querySelector('#quiz');host.innerHTML='';questions.forEach((item,i)=>{const box=document.createElement('div');box.className='quiz-item';box.innerHTML=`<b>${i+1}. ${item.q}</b><div class="options"></div><div class="feedback" aria-live="polite"></div>`;item.choices.forEach(choice=>{const b=document.createElement('button');b.className='option';b.textContent=choice;b.onclick=()=>{box.querySelectorAll('button').forEach(x=>x.disabled=true);const ok=choice===item.a;b.classList.add(ok?'correct':'wrong');box.querySelector('.feedback').textContent=ok?'Excellent! You selected the correct scientific word.':`Not quite. The correct answer is “${item.a}”.`};box.querySelector('.options').appendChild(b)});host.appendChild(box)})}
+document.querySelector('#retry').addEventListener('click',drawQuiz);setup();drawQuiz();
+</script>
+</body>
+</html>
