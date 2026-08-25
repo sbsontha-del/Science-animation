@@ -1205,6 +1205,3883 @@
           </div>
           <p id="digestStatus" style="margin-top:12px;text-align:center" class="small">Press start to run the chemical digestion test.</p>
 
+          <!-- Phase 2 Transition CTA (Initially Hidden) -->
+          <div id="q17-phase2-cta" class="hidden" style="margin-top:16px; padding:16px; border-radius:12px; background:linear-gradient(135deg, rgba(0, 242, 254, 0.08), rgba(155, 81, 224, 0.08)); border:1px dashed var(--accent-cyan); text-align:center; animation: fadeIn 0.5s ease-out">
+            <p style="font-size:13px; color:var(--text-primary); margin-bottom:12px; font-weight:600">🎉 Part 1 Complete! You are ready for Part 2.</p>
+            <button onclick="switchToQ17Phase2()" style="box-shadow: 0 0 15px rgba(0, 242, 254, 0.4); border-color:var(--accent-cyan)">Start Part 2: Test Biscuit Size ➔</button>
+          </div>
+
+          <!-- Biscuit Digestion Data Table -->
+          <table class="results-table" style="margin-top:20px; font-size:12px">
+            <thead>
+              <tr>
+                <th>Biscuit</th>
+                <th>Amount of digestive juices added (ml)</th>
+                <th>Time taken for the biscuits to be fully digested (hours)</th>
+              </tr>
+            </thead>
+            <tbody id="digestion-logs-body">
+              <tr class="placeholder-row"><td colspan="3" style="text-align:center;color:var(--text-muted)">Press "Start Digestion" to observe and record results.</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Right: Questions -->
+      <div>
+        <!-- Question Stem Card -->
+        <div style="background:rgba(255,255,255,0.03); border:1px dashed var(--border-glass); border-radius:12px; padding:16px; margin-bottom:20px; font-size:13px; line-height:1.4">
+          <strong style="color:#63b3ed">Question 17 Scenario (Question Stem):</strong><br>
+          Joel set up an experiment to find out how the <strong>amount of digestive juices</strong> and the <strong>size of the biscuit pieces</strong> affect the time taken for digestion to be completed. He placed three biscuits of the same mass, but in different sizes: a whole biscuit (X), halved biscuit (Y), and crushed biscuit (Z), into three separate beakers. He then poured different amounts of digestive juices into each beaker.<br><br>
+          He recorded the time taken for the biscuits to be completely digested in the table below (Press "Start Digestion" to run the experiment and fill in the table).
+        </div>
+
+        <h3>Question 17(a) <span class="marks">[1 Mark]</span></h3>
+        <p style="margin-bottom:12px">Based on his results, state the relationship between the amount of digestive juices and the time taken for the biscuits to be fully digested.</p>
+        <input id="q17a" type="text" placeholder="e.g. As the amount of digestive juices increases, the...">
+        <button onclick="check17a()" style="margin-top:10px">Check Answer</button>
+        <div id="q17aFb" class="feedback hidden"></div>
+
+        <hr>
+
+        <h3>Question 17(b) <span class="marks">[1 Mark]</span></h3>
+        <p style="margin-bottom:12px">Other than the size and mass of biscuits, state one other variable to be kept constant to ensure a fair experiment.</p>
+        
+        <input id="q17b" type="text" placeholder="State one controlled variable..." oninput="updateKeywords('q17b', 'q17b-checklist')">
+
+        <!-- Scaffolding Panel -->
+        <div class="scaffold-panel">
+          <div class="scaffold-header">💡 Writing Scaffold (Check as you type)</div>
+          <div class="checklist-row" id="q17b-checklist">
+            <span class="kw-tag" data-word="temperature">temperature of surroundings</span>
+            <span class="kw-tag" data-word="type of digestive|concentration|brand of digestive|type of juice|concentration of juice">type of digestive juices</span>
+            <span class="kw-tag" data-word="brand of biscuit|type of biscuit|shape of biscuit">brand/type of biscuits</span>
+          </div>
+        </div>
+
+        <button onclick="check17b()" style="margin-top:10px">Check Answer</button>
+        <div id="q17bFb" class="feedback hidden"></div>
+
+        <hr>
+
+        <!-- Lock Notice for Q17c / Phase 2 -->
+        <div id="q17c-lock-msg" style="color:var(--accent-gold); background:rgba(204,164,59,0.05); border:1px dashed rgba(204,164,59,0.15); padding:14px; border-radius:12px; margin-top:20px; margin-bottom:20px; font-size:13px; line-height:1.4">
+          🔒 <strong>Question 17(c) and Part 2 (Biscuit Size Test) are locked.</strong><br>
+          Please attempt and check your answers for both <strong>Question 17(a)</strong> and <strong>Question 17(b)</strong> to unlock the next phase of the experiment.
+        </div>
+
+        <div id="q17c-wrapper" class="disabled-scaffold">
+          <h3>Question 17(c) <span class="marks">[2 Marks]</span></h3>
+          <p style="margin-bottom:12px">Other than the amount of digestive juices added, what could Joel do to make the digestion of biscuits in both beakers faster? Explain your answer.</p>
+          
+          <input id="q17c" type="text" placeholder="Explain what to do to the biscuit..." oninput="updateKeywords('q17c', 'q17c-checklist')">
+
+          <!-- Scaffolding Panel -->
+          <div class="scaffold-panel">
+            <div class="scaffold-header">💡 Writing Scaffold (Check as you type)</div>
+            <div style="font-size: 11px; color: var(--accent-cyan); padding: 6px 10px; margin-bottom: 8px; border-left: 2px solid var(--accent-cyan); background: rgba(0,242,254,0.04); border-radius: 4px; line-height: 1.4">
+              ℹ️ <strong>Key Concept:</strong> Smaller pieces of biscuits increase the exposed surface area of the biscuit to the digestive juices, so enzymes can digest it faster.
+            </div>
+            <div class="sentence-starters-row">
+              <button class="starter-btn" onclick="insertStarter('q17c', 'Joel can crush the biscuit into smaller pieces. This increases the...')">Sentence Starter</button>
+            </div>
+            <div class="checklist-row" id="q17c-checklist">
+              <span class="kw-tag" data-word="crush|break|chop|grind">crush / break</span>
+              <span class="kw-tag" data-word="smaller">smaller pieces</span>
+              <span class="kw-tag" data-word="surface area">increased surface area</span>
+              <span class="kw-tag" data-word="digestive juice|enzyme|contact">expose to juices</span>
+            </div>
+          </div>
+
+          <button onclick="check17c()" style="margin-top:10px">Check Answer</button>
+          <div id="q17cFb" class="feedback hidden"></div>
+        </div>
+
+        <div class="navrow" style="margin-top:32px"><button class="secondary" onclick="goHome()">← Back to Missions</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION 5: AIR OCCUPIES SPACE -->
+  <section id="mission5" class="hidden">
+    <div class="card lab-grid">
+      <!-- Left: Simulation -->
+      <div>
+        <h2 class="section-title">Mission 5: Air Occupies Space (Q18)</h2>
+        <div class="simbox">
+          <h3 class="control-label" style="margin-bottom:12px">Fluid Pouring</h3>
+          
+          <div class="svg-container">
+            <svg id="q18-svg" viewBox="0 0 600 350" class="interactive-svg">
+              <rect width="600" height="350" rx="12" fill="rgba(0,0,0,0.15)"/>
+              
+              <!-- Catch basin water level -->
+              <rect x="180" y="270" width="240" height="80" fill="rgba(66, 153, 225, 0.2)" stroke="#4299e1" stroke-width="2"/>
+              <rect id="basin-fill" x="181" y="310" width="238" height="39" fill="rgba(66,153,225,0.4)"/>
+              
+              <!-- Tilted Tin can (Hidden in SVG, fully drawn in Canvas for aspect ratio coordinate alignment) -->
+              <g id="q18-tin-g" transform="translate(300, 130) rotate(-45)" style="transform-origin:0px 0px; transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); display: none;">
+                <!-- Can body -->
+                <rect x="-40" y="-70" width="80" height="120" fill="#cbd5e0" stroke="#4a5568" stroke-width="3" rx="4"/>
+                <line x1="-40" y1="-70" x2="40" y2="-70" stroke="#1a202c" stroke-width="6"/>
+                
+                <!-- Can water content (drawn on canvas for horizontal realism) -->
+                <rect id="q18-can-water" x="-37" y="-20" width="74" height="67" fill="rgba(66,153,225,0.7)" style="display: none;"/>
+
+                <!-- Hole 1 (Bottom side of tilted can) -->
+                <circle cx="37" cy="40" r="5" fill="#1a202c" stroke="#ff3366" stroke-width="1.5" />
+                
+                <!-- Hole 2 (Top side of tilted can) -->
+                <circle id="q18-hole2" cx="-37" cy="-40" r="5" fill="#1a202c" stroke="#00e676" stroke-width="1.5" class="hidden"/>
+              </g>
+            </svg>
+            <canvas id="q18-canvas" class="canvas-overlay" width="600" height="350"></canvas>
+          </div>
+
+          <div class="navrow" style="justify-content:center">
+            <button id="btnPunchHole" onclick="punchHole()">Punch 2nd Hole</button>
+            <button class="secondary" onclick="resetTinLab()">Reset Experiment</button>
+          </div>
+          <p id="tinStatus" style="margin-top:12px;text-align:center" class="small">State 1: Can has only 1 hole. Water flows out very slowly.</p>
+        </div>
+      </div>
+
+      <!-- Right: Questions -->
+      <div>
+        <h3>Question 18 <span class="marks">[2 Marks]</span></h3>
+        <p style="margin-bottom:12px">Explain why the water flowed out faster from the first hole, after punching the second hole into the tin.</p>
+        
+        <textarea id="q18" placeholder="Write your explanation..." oninput="updateKeywords('q18', 'q18-checklist')"></textarea>
+
+        <!-- Scaffolding Panel -->
+        <div class="scaffold-panel">
+          <div class="scaffold-header">💡 Writing Scaffold (Check as you type)</div>
+          <div class="sentence-starters-row">
+            <button class="starter-btn" onclick="insertStarter('q18', 'The second hole allows air to enter the tin to occupy the space as water flows out. With only one hole...')">Sentence Starter</button>
+          </div>
+          <div class="checklist-row" id="q18-checklist">
+            <span class="kw-tag" data-word="air">air enters</span>
+            <span class="kw-tag" data-word="second|another|hole 2">second hole</span>
+            <span class="kw-tag" data-word="occupy|take.*place|take.*space">occupy escaping water's space</span>
+            <span class="kw-tag" data-word="one hole|1 hole|first hole">with only one hole</span>
+            <span class="kw-tag" data-word="same hole|same opening">air enters through same hole</span>
+          </div>
+        </div>
+
+        <button onclick="check18()" style="margin-top:10px">Check Answer</button>
+        <div id="q18Fb" class="feedback hidden"></div>
+
+        <div class="navrow" style="margin-top:32px"><button class="secondary" onclick="goHome()">← Back to Missions</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION 6: ELECTRICAL CIRCUITS -->
+  <section id="mission6" class="hidden">
+    <div class="card lab-grid">
+      <!-- Left: Simulation -->
+      <div>
+        <h2 class="section-title">Mission 6: Electrical Circuits (Q13)</h2>
+        <div class="simbox">
+          <h3 class="control-label" style="margin-bottom:12px">Interactive Switch & Bulbs Lab</h3>
+          
+          <div class="svg-container" style="max-height:350px">
+            <svg id="q13-svg" viewBox="0 0 600 350" class="interactive-svg">
+              <defs>
+                <!-- Bulb glowing gradient -->
+                <radialGradient id="glow-grad" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#fffde7" />
+                  <stop offset="30%" stop-color="#fff59d" />
+                  <stop offset="70%" stop-color="#fbc02d" opacity="0.4" />
+                  <stop offset="100%" stop-color="#fbc02d" opacity="0" />
+                </radialGradient>
+                <!-- Battery gradient -->
+                <linearGradient id="metal-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#718096" />
+                  <stop offset="50%" stop-color="#cbd5e0" />
+                  <stop offset="100%" stop-color="#4a5568" />
+                </linearGradient>
+              </defs>
+              <rect width="600" height="350" rx="12" fill="rgba(0,0,0,0.15)"/>
+              
+              <!-- Circuit wires (base paths) -->
+              <path d="M 350,140 H 390 M 430,100 H 450 M 510,100 H 550 V 300" stroke="#718096" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 140,240 H 50 V 300 H 180 M 210,300 H 280 M 320,300 H 550" stroke="#718096" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+              <path d="M 350,220 H 550" stroke="#718096" stroke-width="2.5" fill="none"/>
+              <path d="M 350,140 V 100 H 390" stroke="#718096" stroke-width="2.5" fill="none"/>
+
+              <!-- Contact Points X and Y -->
+              <circle cx="350" cy="140" r="4.5" fill="#e2e8f0" stroke="#4a5568" stroke-width="2"/>
+              <text x="365" y="143" fill="#cbd5e0" font-size="11" font-weight="bold">X</text>
+              
+              <circle cx="350" cy="220" r="4.5" fill="#e2e8f0" stroke="#4a5568" stroke-width="2"/>
+              <text x="365" y="223" fill="#cbd5e0" font-size="11" font-weight="bold">Y</text>
+
+              <!-- Glowing Current flow (Top series loop) -->
+              <path id="q13-flow-top" class="current-flow-anim hidden" d="M 140,240 H 50 V 300 H 180 M 210,300 H 280 M 320,300 H 550 V 100 H 510 M 450,100 H 430 M 390,100 H 350 V 140" stroke="#00e676" stroke-width="3" stroke-dasharray="6,6" fill="none"/>
+              
+              <!-- Glowing Current flow (Bottom loop only) -->
+              <path id="q13-flow-bottom" class="current-flow-anim hidden" d="M 140,240 H 50 V 300 H 180 M 210,300 H 280 M 320,300 H 550 V 220 H 350" stroke="#00e676" stroke-width="3" stroke-dasharray="6,6" fill="none"/>
+
+              <!-- Pivot stand -->
+              <polygon points="245,192 255,192 250,180" fill="#718096" stroke="#4a5568" stroke-width="1.5"/>
+
+              <!-- Spring -->
+              <path id="q13-spring" stroke="#a0aec0" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+
+              <!-- Tilted Metal Rod Group -->
+              <g id="q13-rod-g" transform="translate(250, 180) rotate(12)" style="transform-origin: 0px 0px; cursor: pointer;" onclick="toggleQ13Button()">
+                <!-- Rod body -->
+                <rect x="-110" y="-4" width="220" height="8" fill="url(#metal-grad)" stroke="#4a5568" stroke-width="1.5" rx="2"/>
+                <!-- Button cap -->
+                <rect x="-110" y="-12" width="20" height="8" fill="#e53e3e" stroke="#742a2a" stroke-width="1.5" rx="1"/>
+                <!-- Contact tip -->
+                <circle cx="110" cy="0" r="4.5" fill="#f6ad55" stroke="#dd6b20" stroke-width="1.5"/>
+              </g>
+
+              <!-- Label for Button and Rod -->
+              <text x="140" y="152" fill="#cbd5e0" font-size="10" font-weight="bold" text-anchor="middle">button</text>
+              <text x="250" y="152" fill="#cbd5e0" font-size="10" font-weight="bold" text-anchor="middle">metal rod</text>
+              <text x="100" y="215" fill="#cbd5e0" font-size="9" font-weight="bold" text-anchor="middle">metal spring</text>
+
+              <!-- Bulb A (Top Loop) -->
+              <g transform="translate(410, 100)">
+                <!-- Yellow Glow (lit) -->
+                <circle id="bulb-a-glow" cx="0" cy="0" r="24" fill="url(#glow-grad)" class="hidden"/>
+                <!-- Bulb base and filament -->
+                <circle cx="0" cy="0" r="12" fill="rgba(255,255,255,0.05)" stroke="#cbd5e0" stroke-width="2"/>
+                <line x1="-8.5" y1="-8.5" x2="8.5" y2="8.5" stroke="#cbd5e0" stroke-width="2"/>
+                <line x1="8.5" y1="-8.5" x2="-8.5" y2="8.5" stroke="#cbd5e0" stroke-width="2"/>
+                <text x="0" y="-18" fill="#cbd5e0" font-size="10" font-weight="bold" text-anchor="middle">A</text>
+              </g>
+
+              <!-- Bulb B (Bottom Loop) -->
+              <g transform="translate(300, 300)">
+                <!-- Yellow Glow (lit) -->
+                <circle id="bulb-b-glow" cx="0" cy="0" r="24" fill="url(#glow-grad)" class="hidden"/>
+                <!-- Bulb base and filament -->
+                <circle cx="0" cy="0" r="12" fill="rgba(255,255,255,0.05)" stroke="#cbd5e0" stroke-width="2"/>
+                <line x1="-8.5" y1="-8.5" x2="8.5" y2="8.5" stroke="#cbd5e0" stroke-width="2"/>
+                <line x1="8.5" y1="-8.5" x2="-8.5" y2="8.5" stroke="#cbd5e0" stroke-width="2"/>
+                <text x="0" y="-18" fill="#cbd5e0" font-size="10" font-weight="bold" text-anchor="middle">B</text>
+              </g>
+
+              <!-- Top Batteries (4 cells in series) -->
+              <g transform="translate(455, 90)">
+                <!-- Cell 1 -->
+                <line x1="0" y1="0" x2="0" y2="20" stroke="#a0aec0" stroke-width="3"/>
+                <line x1="5" y1="5" x2="5" y2="15" stroke="#cbd5e0" stroke-width="1.5"/>
+                <!-- Cell 2 -->
+                <line x1="10" y1="0" x2="10" y2="20" stroke="#a0aec0" stroke-width="3"/>
+                <line x1="15" y1="5" x2="15" y2="15" stroke="#cbd5e0" stroke-width="1.5"/>
+                <!-- Cell 3 -->
+                <line x1="20" y1="0" x2="20" y2="20" stroke="#a0aec0" stroke-width="3"/>
+                <line x1="25" y1="5" x2="25" y2="15" stroke="#cbd5e0" stroke-width="1.5"/>
+                <!-- Cell 4 -->
+                <line x1="30" y1="0" x2="30" y2="20" stroke="#a0aec0" stroke-width="3"/>
+                <line x1="35" y1="5" x2="35" y2="15" stroke="#cbd5e0" stroke-width="1.5"/>
+                <!-- Connect wires -->
+                <line x1="-5" y1="10" x2="0" y2="10" stroke="#718096" stroke-width="2.5"/>
+                <line x1="35" y1="10" x2="55" y2="10" stroke="#718096" stroke-width="2.5"/>
+              </g>
+
+              <!-- Bottom Battery (1 cell) -->
+              <g transform="translate(185, 290)">
+                <line x1="0" y1="0" x2="0" y2="20" stroke="#a0aec0" stroke-width="3"/>
+                <line x1="5" y1="5" x2="5" y2="15" stroke="#cbd5e0" stroke-width="1.5"/>
+                <line x1="-5" y1="10" x2="0" y2="10" stroke="#718096" stroke-width="2.5"/>
+                <line x1="5" y1="10" x2="25" y2="10" stroke="#718096" stroke-width="2.5"/>
+              </g>
+            </svg>
+          </div>
+
+          <div class="navrow" style="justify-content:center">
+            <button id="btnToggleQ13" onclick="toggleQ13Button()">Press Button (Touch X)</button>
+          </div>
+          <p id="q13Status" style="margin-top:12px;text-align:center" class="small">Button released. Metal rod touches Y. Only Bulb B is lit.</p>
+        </div>
+      </div>
+
+      <!-- Right: Questions -->
+      <div>
+        <!-- Question Stem Card -->
+        <div style="background:rgba(255,255,255,0.03); border:1px dashed var(--border-glass); border-radius:12px; padding:16px; margin-bottom:20px; font-size:13px; line-height:1.4">
+          <strong style="color:#63b3ed">Question 13 Scenario (Question Stem):</strong><br>
+          Study the following circuit carefully. All the bulbs and batteries are identical and in good working condition. When the button is pressed, the metal rod will move upwards and touch part X. When the button is released, the metal rod will move downwards and touch part Y.
+        </div>
+
+        <h3>Question 13(a)(i) <span class="marks">[1 Mark]</span></h3>
+        <p style="margin-bottom:12px">If the metal rod touches <strong>Point X</strong>, which bulb(s) will light up?</p>
+        <input id="q13ai" type="text" placeholder="e.g. Bulb A and Bulb B">
+        <button onclick="check13ai()" style="margin-top:10px">Check Answer</button>
+        <div id="q13aiFb" class="feedback hidden"></div>
+
+        <hr>
+
+        <h3>Question 13(a)(ii) <span class="marks">[1 Mark]</span></h3>
+        <p style="margin-bottom:12px">If the metal rod touches <strong>Point Y</strong>, which bulb(s) will light up?</p>
+        <input id="q13aii" type="text" placeholder="e.g. Only Bulb B">
+        <button onclick="check13aii()" style="margin-top:10px">Check Answer</button>
+        <div id="q13aiiFb" class="feedback hidden"></div>
+
+        <hr>
+
+        <h3>Question 13(b) <span class="marks">[1 Mark]</span></h3>
+        <p style="margin-bottom:12px">Jane added more batteries to the electric circuit to make the bulbs brighter. However, when she continued adding more batteries, the bulb no longer lit up. What happened to the bulb?</p>
+        
+        <input id="q13b" type="text" placeholder="Write your explanation..." oninput="updateKeywords('q13b', 'q13b-checklist')">
+
+        <!-- Scaffolding Panel -->
+        <div class="scaffold-panel">
+          <div class="scaffold-header">💡 Writing Scaffold (Check as you type)</div>
+          <div class="checklist-row" id="q13b-checklist">
+            <span class="kw-tag" data-word="blown|fuse|melt|broke|burn">blown / fused / filament broke</span>
+          </div>
+        </div>
+
+        <button onclick="check13b()" style="margin-top:10px">Check Answer</button>
+        <div id="q13bFb" class="feedback hidden"></div>
+
+        <div class="navrow" style="margin-top:32px"><button class="secondary" onclick="goHome()">← Back to Missions</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TEACHER ANSWER KEY PANEL -->
+  <section id="teacherPanel" class="hidden">
+    <div class="card teacher">
+      <h2>🔑 Teacher Portal & Marking Guide</h2>
+      <p style="margin-bottom:12px" class="small">National Primary Science examination key. Standard responses can be reviewed here.</p>
+      
+      <div id="answerDump"></div>
+      <div class="navrow"><button class="secondary" onclick="hideTeacher()">Close Portal</button></div>
+    </div>
+  </section>
+
+  <div class="card" style="margin-top:24px;border-color:rgba(255, 51, 102, 0.15)">
+    <div class="navrow" style="justify-content:center">
+      <button class="danger" onclick="resetLesson()">🔄 Reset Entire Lab Course</button>
+    </div>
+  </div>
+</main>
+
+<script>
+// ANSWER KEY CONFIGURATION
+const ANSWER_KEY = {
+  q14a: { accepted: ["solid", "liquid"], marks: 1 },
+  q14b1: { correct: "True", marks: 1 },
+  q14b2: { correct: "False", marks: 1 },
+  q15a: { correct: "Roots → Stem → Leaves & Fruits", marks: 1 },
+  q15b: { marks: 2 },
+  q16a: { marks: 2 },
+  q16b: { marks: 1 },
+  q17a: { accepted: ["decrease"], marks: 1 },
+  q17b: { marks: 1 },
+  q17c: { marks: 2 },
+  q18: { marks: 2 },
+  q13ai: { marks: 1 },
+  q13aii: { marks: 1 },
+  q13b: { marks: 1 }
+};
+
+// GLOBAL USER STATE
+let state = JSON.parse(localStorage.getItem("p5science_state") || '{"score":0,"awarded":{},"completed":{}}');
+
+// ANIMATION AND PARTICLE PHYSICS LOOPS
+const particles = {
+  q14Molecules: [],
+  q15Sap: [],
+  q15Water: [],
+  q16FieldParticles: [],
+  q16FluxOffset: 0,
+  q17DigestEnzymes: [],
+  q17DissolvingCrumbs: [],
+  q18WaterDrops: [],
+  q18AirBubbles: []
+};
+
+let lastTimestamp = 0;
+let animationFrameId = null;
+
+// DOM READY EVENT
+document.addEventListener("DOMContentLoaded", () => {
+  initCanvases();
+  updateScore();
+  updateState(0);
+  runMagnet();
+  initQ17Beakers();
+  updateDigestionTable();
+  updateQ13Visuals();
+  
+  // Start animation frame
+  function frame(timestamp) {
+    const dt = timestamp - lastTimestamp;
+    lastTimestamp = timestamp;
+    
+    tickQ14(dt);
+    tickQ15(dt);
+    tickQ16(dt);
+    tickQ17(dt);
+    tickQ18(dt);
+
+    animationFrameId = requestAnimationFrame(frame);
+  }
+  animationFrameId = requestAnimationFrame(frame);
+});
+
+// CANVAS INITIALIZER
+function initCanvases() {
+  // Safe default backing store resolutions matching design grid directly on load!
+  const canvasMap = {
+    'q14-beaker-canvas': { w: 220, h: 210 },
+    'q14-canvas': { w: 600, h: 135 },
+    'q16-canvas': { w: 600, h: 300 },
+    'beaker-canvas': { w: 450, h: 200 },
+    'q18-canvas': { w: 600, h: 350 }
+  };
+  for (let id in canvasMap) {
+    const cvs = document.getElementById(id);
+    if (cvs) {
+      cvs.width = canvasMap[id].w;
+      cvs.height = canvasMap[id].h;
+    }
+  }
+}
+
+function resizeCanvas(id) {
+  const cvs = document.getElementById(id);
+  if (cvs && cvs.parentElement) {
+    let offset = 0;
+    if (id === 'q14-beaker-canvas' || id === 'q14-canvas') {
+      offset = 35;
+    }
+    const pw = cvs.parentElement.clientWidth;
+    const ph = cvs.parentElement.clientHeight;
+    
+    // Only resize dynamically if container has fully rendered size
+    if (pw > 50 && ph > 50) {
+      cvs.width = pw;
+      cvs.height = ph - offset;
+    }
+  }
+}
+
+// ROUTING AND CORE INTERFACE LOGIC
+function openMission(n) {
+  document.querySelectorAll('section[id^="mission"]').forEach(s => s.classList.add("hidden"));
+  document.getElementById("home").classList.add("hidden");
+  document.getElementById("teacherPanel").classList.add("hidden");
+  
+  const targetId = "mission" + n;
+  document.getElementById(targetId).classList.remove("hidden");
+  
+  // Wait 60ms to let browser compute styling sizes layout
+  setTimeout(() => {
+    if (n === 1) {
+      resizeCanvas('q14-canvas');
+      resizeCanvas('q14-beaker-canvas');
+    }
+    else if (n === 3) resizeCanvas('q16-canvas');
+    else if (n === 4) resizeCanvas('beaker-canvas');
+    else if (n === 5) {
+      resizeCanvas('q18-canvas');
+      resetTinLab();
+    }
+    else if (n === 6) {
+      updateQ13Visuals();
+    }
+  }, 60);
+
+  state.completed["m" + n] = true;
+  saveProgress();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function goHome() {
+  document.querySelectorAll('section[id^="mission"]').forEach(s => s.classList.add("hidden"));
+  document.getElementById("teacherPanel").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+function saveProgress() {
+  localStorage.setItem("p5science_state", JSON.stringify(state));
+  updateScore();
+}
+
+function updateScore() {
+  document.getElementById("score").textContent = state.score || 0;
+  const totalMaxScore = Object.values(ANSWER_KEY).reduce((sum, item) => sum + (item.marks || 0), 0);
+  const maxScoreEl = document.getElementById("maxScore");
+  if (maxScoreEl) maxScoreEl.textContent = totalMaxScore;
+  const completed = Object.keys(state.completed || {}).length;
+  document.getElementById("progressFill").style.width = Math.min(100, (completed / 6) * 100) + "%";
+}
+
+function award(key, marks) {
+  const prev = state.awarded[key] || 0;
+  if (marks > prev) {
+    const diff = marks - prev;
+    state.awarded[key] = marks;
+    state.score = (state.score || 0) + diff;
+    saveProgress();
+  }
+}
+
+// UTILITIES
+function showFb(id, ok, html) {
+  const el = document.getElementById(id);
+  el.classList.remove("hidden", "good", "bad");
+  el.classList.add(ok ? "good" : "bad");
+  el.innerHTML = html;
+}
+
+function checkChoice(inputId, fbId, correct, marks, key) {
+  const v = document.getElementById(inputId).value;
+  if (v === correct) {
+    award(key, marks);
+    showFb(fbId, true, "✅ Correct! <div class='explain'>" + modelFor(key) + "</div>");
+  } else {
+    showFb(fbId, false, "❌ Try again. Study the diagram and trace the pathways.");
+  }
+}
+
+function checkContainsAll(inputId, fbId, terms, marks, key) {
+  const v = document.getElementById(inputId).value.toLowerCase();
+  const ok = terms.every(t => v.includes(t));
+  if (ok) {
+    award(key, marks);
+    showFb(fbId, true, "✅ Correct! <div class='explain'>" + modelFor(key) + "</div>");
+  } else {
+    showFb(fbId, false, "❌ Try again. Ensure you include the key science terms.");
+  }
+}
+
+function modelFor(key) {
+  const models = {
+    q14a: "At 0-2 minutes, Z is melting, so it exists as a mixture of both solid and liquid states.",
+    q14b1: "Melting (B to C) requires continuous heat gain from the surroundings.",
+    q14b2: "False. Boiling (C to D) still requires heat gain, even though temperature remains fixed.",
+    q15a: "Water is absorbed by roots, travels up water-carrying tubes in the stem, and branches to leaves and fruits.",
+    q17a: "Increased concentration of enzymes (digestive juices) increases the rate of digestion, reducing the time."
+  };
+  return models[key] || "";
+}
+
+// SCAFFOLDING FUNCTIONS
+function insertStarter(textareaId, starterText) {
+  const txt = document.getElementById(textareaId);
+  txt.value = starterText + txt.value;
+  txt.focus();
+  const checklistId = textareaId + "-checklist";
+  updateKeywords(textareaId, checklistId);
+}
+
+function updateKeywords(textareaId, checklistId) {
+  const val = document.getElementById(textareaId).value.toLowerCase();
+  const checklist = document.getElementById(checklistId);
+  if (!checklist) return;
+
+  const tags = checklist.querySelectorAll('.kw-tag');
+  tags.forEach(tag => {
+    const pattern = tag.getAttribute('data-word');
+    const words = pattern.split('|');
+    const matched = words.some(w => val.includes(w));
+    if (matched) {
+      tag.classList.add('checked');
+    } else {
+      tag.classList.remove('checked');
+    }
+  });
+}
+
+
+// ==========================================
+// MISSION 1: MOLECULAR CRYSTAL LATICE BONDS
+// ==========================================
+let q14Time = 0;
+let q14FlameFlicker = 0;
+const q14BoilBubbles = [];
+
+function updateState(t) {
+  q14Time = parseFloat(t);
+  document.getElementById("timeLabel").textContent = q14Time.toFixed(1);
+  
+  const tracker = document.getElementById('graph-tracker');
+  let tx = 50, ty = 120;
+  if (q14Time <= 2) {
+    tx = 50 + (q14Time / 2) * 54;
+    ty = 120;
+  } else if (q14Time <= 6) {
+    tx = 104 + ((q14Time - 2) / 4) * 108;
+    ty = 120 - ((q14Time - 2) / 4) * 70;
+  } else {
+    tx = 212 + ((q14Time - 6) / 4) * 108;
+    ty = 50;
+  }
+  tracker.setAttribute("cx", tx);
+  tracker.setAttribute("cy", ty);
+
+  let txt = "";
+  if(q14Time <= 2) txt = "<strong>Phase A-B: Ice is Melting (0°C)</strong><br>• Ice is gaining heat from the flame to melt into liquid water.<br>• Temperature remains constant at 0°C because all the heat gained is used to melt the ice, not raise the temperature.";
+  else if(q14Time < 6) txt = "<strong>Phase B-C: Water is Heating Up (0°C to 100°C)</strong><br>• Liquid water continues to gain heat.<br>• Temperature rises steadily because all substance Z has melted.";
+  else txt = "<strong>Phase C-D: Water is Boiling (100°C)</strong><br>• Liquid water continues to gain heat to turn into gas (steam).<br>• Temperature remains constant at 100°C because all the heat gained is used to change liquid into gas.";
+  document.getElementById("stateBox").innerHTML = txt;
+
+  initMolecularParticles();
+}
+
+function initMolecularParticles() {
+  const cvs = document.getElementById('q14-canvas');
+  if (!cvs) return;
+  
+  particles.q14Molecules = [];
+  const density = 60;
+  const w = cvs.width || 600;
+  const h = cvs.height || 135;
+  
+  if (q14Time <= 2) {
+    const meltedRatio = q14Time / 2;
+    const latticeCols = 8;
+    const startX = (w - latticeCols * 18) / 2;
+    const startY = h - 90;
+
+    for (let i = 0; i < density; i++) {
+      const isMelted = i > (density * (1 - meltedRatio));
+      if (!isMelted) {
+        const col = i % latticeCols;
+        const row = Math.floor(i / latticeCols);
+        particles.q14Molecules.push({
+          x: startX + col * 18,
+          y: startY + row * 14,
+          homeX: startX + col * 18,
+          homeY: startY + row * 14,
+          vx: 0,
+          vy: 0,
+          type: 'solid',
+          color: '#cbd5e0'
+        });
+      } else {
+        particles.q14Molecules.push({
+          x: 20 + Math.random() * (w - 40),
+          y: h - 20 - Math.random() * 20,
+          vx: (Math.random() - 0.5) * 1.5,
+          vy: (Math.random() - 0.5) * 1.5,
+          type: 'liquid',
+          color: '#00f2fe'
+        });
+      }
+    }
+  } else if (q14Time < 6) {
+    for (let i = 0; i < density; i++) {
+      particles.q14Molecules.push({
+        x: 20 + Math.random() * (w - 40),
+        y: h - 20 - Math.random() * 50,
+        vx: (Math.random() - 0.5) * 2.2,
+        vy: (Math.random() - 0.5) * 2.2,
+        type: 'liquid',
+        color: '#00e676'
+      });
+    }
+  } else {
+    const boilingRatio = (q14Time - 6) / 4;
+    for (let i = 0; i < density; i++) {
+      const isGas = i < (density * boilingRatio);
+      particles.q14Molecules.push({
+        x: 20 + Math.random() * (w - 40),
+        y: isGas ? (Math.random() * (h - 50)) : (h - 20 - Math.random() * 40),
+        vx: (Math.random() - 0.5) * (isGas ? 4 : 2),
+        vy: isGas ? (-1.5 - Math.random() * 2) : ((Math.random() - 0.5) * 1.5),
+        type: isGas ? 'gas' : 'liquid',
+        color: isGas ? '#ff3366' : '#00e676'
+      });
+    }
+  }
+}
+
+function tickQ14(dt) {
+  const cvs = document.getElementById('q14-canvas');
+  const ctx = cvs ? cvs.getContext('2d') : null;
+  if (!ctx) return;
+
+  const w = cvs.width || 600;
+  const h = cvs.height || 135;
+
+  ctx.fillStyle = '#04050a';
+  ctx.fillRect(0,0,w,h);
+
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.12)';
+  ctx.lineWidth = 1.5;
+  for (let i = 0; i < particles.q14Molecules.length; i++) {
+    const p1 = particles.q14Molecules[i];
+    if (p1.type !== 'solid') continue;
+    
+    for (let j = i + 1; j < particles.q14Molecules.length; j++) {
+      const p2 = particles.q14Molecules[j];
+      if (p2.type !== 'solid') continue;
+
+      const dx = p2.x - p1.x;
+      const dy = p2.y - p1.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      
+      if (dist < 22) {
+        ctx.beginPath();
+        ctx.moveTo(p1.x, p1.y);
+        ctx.lineTo(p2.x, p2.y);
+        ctx.stroke();
+      }
+    }
+  }
+
+  particles.q14Molecules.forEach(p => {
+    if (p.type === 'solid') {
+      const maxJiggle = 0.5 + (q14Time * 0.8);
+      p.x = p.homeX + (Math.random() - 0.5) * maxJiggle;
+      p.y = p.homeY + (Math.random() - 0.5) * maxJiggle;
+    } else if (p.type === 'liquid') {
+      p.x += p.vx;
+      p.y += p.vy;
+      
+      if (p.x < 12) { p.x = 12; p.vx *= -1; }
+      if (p.x > w - 12) { p.x = w - 12; p.vx *= -1; }
+      if (p.y < h - 70) { p.y = h - 70; p.vy *= -1; }
+      if (p.y > h - 12) { p.y = h - 12; p.vy *= -1; }
+    } else {
+      p.x += p.vx;
+      p.y += p.vy;
+      
+      if (p.x < 12 || p.x > w - 12) p.vx *= -1;
+      if (p.y < -10) {
+        p.y = h - 65;
+        p.x = 20 + Math.random() * (w - 40);
+        p.vy = -1.5 - Math.random() * 2;
+      }
+    }
+
+    ctx.save();
+    let grad = ctx.createRadialGradient(p.x - 2, p.y - 2, 1, p.x, p.y, 6);
+    grad.addColorStop(0, '#ffffff');
+    grad.addColorStop(0.3, p.color);
+    grad.addColorStop(1, '#06070d');
+    
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 6, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  });
+
+  // Render macro physical beaker heating
+  tickQ14PhysicalBeaker();
+}
+
+function tickQ14PhysicalBeaker() {
+  const cvs = document.getElementById('q14-beaker-canvas');
+  const ctx = cvs ? cvs.getContext('2d') : null;
+  if (!ctx) return;
+
+  const w = cvs.width || 220;
+  const h = cvs.height || 210;
+
+  ctx.fillStyle = '#04050a';
+  ctx.fillRect(0, 0, w, h);
+
+  const cx = w / 2;
+  const cy = 90;
+
+  // 1. Draw Bunsen Burner flame at bottom (always on to show continuous heat gain!)
+  q14FlameFlicker += 0.25;
+  ctx.save();
+  const flameHeight = 25 + Math.sin(q14FlameFlicker) * 4;
+  let grad = ctx.createLinearGradient(cx, h - 35, cx, h - 35 - flameHeight);
+  grad.addColorStop(0, '#ff3366');
+  grad.addColorStop(0.5, '#ffa000');
+  grad.addColorStop(1, 'rgba(0, 242, 254, 0)');
+  ctx.fillStyle = grad;
+  ctx.beginPath();
+  ctx.moveTo(cx - 15, h - 35);
+  ctx.quadraticCurveTo(cx, h - 35 - flameHeight * 0.7, cx, h - 35 - flameHeight);
+  ctx.quadraticCurveTo(cx, h - 35 - flameHeight * 0.7, cx + 15, h - 35);
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+
+  // Bunsen Burner metal nozzle
+  ctx.fillStyle = '#4a5568';
+  ctx.fillRect(cx - 6, h - 36, 12, 12);
+  ctx.fillStyle = '#2d3748';
+  ctx.fillRect(cx - 12, h - 24, 24, 6);
+
+  // 2. Draw Beaker
+  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
+  ctx.lineWidth = 3;
+  ctx.beginPath();
+  ctx.moveTo(cx - 40, cy - 40);
+  ctx.lineTo(cx - 40, cy + 70);
+  ctx.lineTo(cx + 40, cy + 70);
+  ctx.lineTo(cx + 40, cy - 40);
+  ctx.stroke();
+
+  // 3. Draw Water Liquid level
+  let liquidHt = 0;
+  if (q14Time <= 2) {
+    liquidHt = 20 + (q14Time / 2) * 22;
+  } else if (q14Time < 6) {
+    liquidHt = 42;
+  } else {
+    liquidHt = 42 - ((q14Time - 6) / 4) * 8;
+  }
+  ctx.fillStyle = 'rgba(0, 242, 254, 0.28)';
+  ctx.fillRect(cx - 38, cy + 69 - liquidHt, 76, liquidHt);
+
+  // 4. Draw Ice Cubes (A-B melting stage)
+  if (q14Time <= 2) {
+    const meltScale = 1 - (q14Time / 2);
+    ctx.save();
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+    ctx.strokeStyle = '#00f2fe';
+    ctx.lineWidth = 1.5;
+
+    const size = 18 * meltScale;
+    if (size > 1) {
+      // Cube 1
+      ctx.fillRect(cx - 24, cy + 69 - size, size, size);
+      ctx.strokeRect(cx - 24, cy + 69 - size, size, size);
+      // Cube 2
+      ctx.fillRect(cx + 4, cy + 69 - size, size, size);
+      ctx.strokeRect(cx + 4, cy + 69 - size, size, size);
+      // Cube 3
+      ctx.fillRect(cx - 10, cy + 69 - size - 4, size, size);
+      ctx.strokeRect(cx - 10, cy + 69 - size - 4, size, size);
+    }
+    ctx.restore();
+  }
+
+  // 5. Draw Bubbles and Steam (C-D boiling stage)
+  if (q14Time >= 6) {
+    if (Math.random() > 0.4) {
+      q14BoilBubbles.push({
+        x: cx - 30 + Math.random() * 60,
+        y: cy + 65,
+        r: 1.5 + Math.random() * 2.5,
+        speed: 1.5 + Math.random() * 2
+      });
+    }
+
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    q14BoilBubbles.forEach((b, idx) => {
+      b.y -= b.speed;
+      if (b.y < cy + 69 - liquidHt) {
+        q14BoilBubbles.splice(idx, 1);
+        return;
+      }
+      ctx.beginPath();
+      ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+      ctx.fill();
+    });
+
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.08)';
+    for (let i = 0; i < 4; i++) {
+      const sx = cx + (Math.random() - 0.5) * 50;
+      const sy = cy + 69 - liquidHt - 10 - Math.random() * 35;
+      ctx.beginPath();
+      ctx.arc(sx, sy, 8 + Math.random() * 6, 0, Math.PI*2);
+      ctx.fill();
+    }
+  }
+
+  // 6. Draw Thermometer on the side of beaker
+  const tx = cx - 62;
+  const ty = cy - 25;
+  ctx.strokeStyle = '#a0aec0';
+  ctx.lineWidth = 3;
+  ctx.fillStyle = '#2d3748';
+  // thermometer tube base
+  ctx.beginPath();
+  ctx.arc(tx, ty + 85, 8, 0, Math.PI*2);
+  ctx.fill();
+  ctx.stroke();
+
+  // thermometer long stem
+  ctx.strokeRect(tx - 3, ty, 6, 80);
+  ctx.fillStyle = '#1a202c';
+  ctx.fillRect(tx - 2, ty, 4, 80);
+
+  // Red mercury level calculation
+  let tempPercent = 0;
+  if (q14Time <= 2) {
+    tempPercent = 0;
+  } else if (q14Time <= 6) {
+    tempPercent = (q14Time - 2) / 4;
+  } else {
+    tempPercent = 1;
+  }
+
+  ctx.fillStyle = '#ff3366';
+  ctx.beginPath();
+  ctx.arc(tx, ty + 85, 6, 0, Math.PI*2);
+  ctx.fill();
+  
+  const redHeight = 10 + tempPercent * 60;
+  ctx.fillRect(tx - 1.5, ty + 80 - redHeight, 3, redHeight);
+
+  // Markers
+  ctx.fillStyle = '#cbd5e0';
+  ctx.font = 'bold 8px Outfit';
+  ctx.fillText("100°C", tx + 10, ty + 12);
+  ctx.fillText("0°C", tx + 10, ty + 72);
+
+  // Label showing heat gain
+  ctx.fillStyle = 'var(--accent-cyan)';
+  ctx.font = 'bold 9px Outfit';
+  ctx.fillText("Flame: Gaining Heat", cx - 44, h - 8);
+}
+
+function check14b() {
+  const b1 = document.getElementById('q14b1').value;
+  const b2 = document.getElementById('q14b2').value;
+
+  if (b1 === "True" && b2 === "False") {
+    award("q14b1", 1);
+    award("q14b2", 1);
+    showFb("q14bFb", true, "✅ Correct! Substance Z gains heat during both melting (B-C) and boiling (C-D).");
+  } else {
+    showFb("q14bFb", false, "❌ Incorrect. Remember: during a state change, temperature is constant but heat is still gained.");
+  }
+}
+
+
+// ==========================================
+// MISSION 2: PLANT TRANSPORT & GIRDLING
+// ==========================================
+let q15IsGirdled = false;
+let q15Days = 0;
+
+function girdlePlant() {
+  q15IsGirdled = true;
+  document.getElementById('bark-girdle-overlay').classList.add('hidden');
+  document.getElementById('exposed-wood-core').classList.remove('hidden');
+  document.getElementById('cut-lip-left').classList.remove('hidden');
+  document.getElementById('cut-lip-right').classList.remove('hidden');
+  document.getElementById('cut-pointer').classList.remove('hidden');
+  document.getElementById('cut-callout-text').classList.remove('hidden');
+  
+  document.getElementById('btnGirdle').textContent = "Food-carrying tubes cut ✓";
+  document.getElementById('btnGirdle').disabled = true;
+  document.getElementById('daysSlider').disabled = false;
+  
+  updateGirdleDays(0);
+}
+
+function resetPlant() {
+  q15IsGirdled = false;
+  q15Days = 0;
+  
+  document.getElementById('bark-girdle-overlay').classList.remove('hidden');
+  document.getElementById('exposed-wood-core').classList.add('hidden');
+  document.getElementById('cut-lip-left').classList.add('hidden');
+  document.getElementById('cut-lip-right').classList.add('hidden');
+  document.getElementById('cut-pointer').classList.add('hidden');
+  document.getElementById('cut-callout-text').classList.add('hidden');
+  document.getElementById('bark-swell-svg').classList.add('hidden');
+  
+  document.getElementById('btnGirdle').textContent = "Cut Bark (Food-carrying tubes) on Branch X";
+  document.getElementById('btnGirdle').disabled = false;
+  document.getElementById('daysSlider').disabled = true;
+  document.getElementById('daysSlider').value = 0;
+  document.getElementById('daysLabel').textContent = "0";
+  
+  particles.q15Sap = [];
+  
+  updateGirdleDays(0);
+}
+
+function updateGirdleDays(days) {
+  q15Days = parseInt(days);
+  document.getElementById('daysLabel').textContent = q15Days;
+
+  const fruitX = document.getElementById('fruitX-svg');
+  const fruitY = document.getElementById('fruitY-svg');
+  const swell = document.getElementById('bark-swell-svg');
+
+  if (q15IsGirdled) {
+    const r = 14 + (q15Days * 1.5);
+    fruitX.setAttribute("r", r);
+    fruitY.setAttribute("r", 14 + (q15Days * 0.2));
+    
+    // Scale gloss highlight
+    const shine = document.getElementById('fruitX-shine');
+    if (shine) {
+      shine.setAttribute("cx", 15 + r * 0.28 - 7); // Adjust relative to fruit translate
+      shine.setAttribute("cy", 38 - r * 0.28 + 7);
+      shine.setAttribute("r", r * 0.28);
+    }
+
+    if (swell) {
+      swell.classList.remove('hidden');
+      const bulge = q15Days * 2.8;
+      // Animate organic swelling path bulge above the cut
+      swell.setAttribute("d", `M 380,143 C ${380 - bulge * 0.3},${143 - bulge * 0.95} ${395 + bulge * 0.25},${138 - bulge * 0.95} 400,138 L 400,138 Q 390,140 380,143 Z`);
+    }
+  } else {
+    fruitX.setAttribute("r", 14);
+    fruitY.setAttribute("r", 14);
+    const shine = document.getElementById('fruitX-shine');
+    if (shine) {
+      shine.setAttribute("cx", 11);
+      shine.setAttribute("cy", 34);
+      shine.setAttribute("r", 4);
+    }
+    if (swell) swell.classList.add('hidden');
+  }
+}
+
+function check15b() {
+  const v = document.getElementById('q15b').value.toLowerCase().trim();
+  
+  let p1_score = 0; // Pathway blockage & comparison (max 1.0)
+  let p2_score = 0; // Accumulation of more food (max 1.0)
+  
+  // Point 1 check: Food on Branch X cannot go to other parts / roots / stem
+  const hasBranchX = v.includes("branch x") || v.includes("cut");
+  const hasBlocked = v.includes("cannot") || v.includes("blocked") || v.includes("prevent") || v.includes("unable") || v.includes("stop") || v.includes("no longer") || v.includes("would not");
+  const hasOtherParts = v.includes("other parts") || v.includes("roots") || v.includes("stem") || v.includes("rest of the plant") || v.includes("all parts");
+  
+  if (hasBranchX && hasBlocked && hasOtherParts) {
+    p1_score += 0.5;
+  }
+  
+  // Point 1 comparison check: Branch Y food can go to other parts / roots / stem
+  const hasBranchY = v.includes("branch y") || v.includes("normal branch") || v.includes("other branch");
+  const hasYTravels = v.includes("can ") || v.includes("transport") || v.includes("travel") || v.includes("go") || v.includes("reach") || v.includes("is transported");
+  
+  if (hasBranchY && (hasYTravels || v.includes("transported to other parts")) && hasOtherParts) {
+    p1_score += 0.5;
+  }
+  
+  // Alternative 1 Mark for Point 1: stating food from Branch X only goes to Fruit X while Branch Y goes to whole plant
+  const hasOnlyX = v.includes("only") && (v.includes("fruit x") || v.includes("branch x"));
+  if (hasOnlyX && hasBranchY) {
+    p1_score = 1.0;
+  }
+
+  // Point 2 check: More food / excess food / greater amount / all food accumulated in Fruit X
+  const hasMoreFood = v.includes("more food") || v.includes("excess food") || v.includes("greater amount") || v.includes("all the food") || v.includes("more sugar") || v.includes("accumulate") || v.includes("piles up") || v.includes("collected") || v.includes("stored more");
+  const hasFruitX = v.includes("fruit x");
+  
+  if (hasMoreFood && hasFruitX) {
+    p2_score = 1.0;
+  }
+  
+  const totalMarks = p1_score + p2_score;
+  
+  if (totalMarks === 2.0) {
+    award("q15b", 2);
+    showFb("q15bFb", true, `✅ <strong>2/2 Marks (Excellent!)</strong><br>
+      • <strong>Pathway (1.0 Mark):</strong> You correctly stated that food on Branch X cannot be transported to other parts (like roots) [½m], while food on Branch Y can [½m].<br>
+      • <strong>Accumulation (1.0 Mark):</strong> You explained that a greater amount of food accumulated at Fruit X, causing it to grow larger [1m].`);
+  } else if (totalMarks === 1.5) {
+    award("q15b", 1.5);
+    let advice = "";
+    if (p1_score < 1.0) {
+      advice = "Add a comparison for Branch Y (e.g., stating that food on Branch Y can still be transported to all other parts of the plant).";
+    } else {
+      advice = "Ensure you explicitly state that <strong>more</strong>, <strong>excess</strong>, or a <strong>greater amount</strong> of food accumulated at Fruit X (not just 'food').";
+    }
+    showFb("q15bFb", false, `🟡 <strong>1.5/2 Marks (Almost there!)</strong><br>
+      • <strong>Advice:</strong> ${advice}`);
+  } else if (totalMarks === 1.0) {
+    award("q15b", 1.0);
+    let advice = [];
+    if (p1_score === 0.5) advice.push("Add a comparison for Branch Y (explain that food on Branch Y continues to travel to other parts).");
+    if (p1_score === 0.0) advice.push("Explain that the food on Branch X cannot travel past the cut to other parts of the plant.");
+    if (p2_score === 0.0) advice.push("Explain that <strong>more/excess</strong> food accumulated in Fruit X because it could not flow to the roots.");
+    showFb("q15bFb", false, `🟡 <strong>1/2 Marks (On the right track)</strong><br>
+      • <strong>Next steps:</strong><br>${advice.map(a => " - " + a).join("<br>")}`);
+  } else if (totalMarks === 0.5) {
+    award("q15b", 0.5);
+    showFb("q15bFb", false, `🟡 <strong>0.5/2 Marks (Keep going!)</strong><br>
+      • <strong>Next steps:</strong> You mentioned that food is blocked, but you need to explain that it cannot reach other parts/roots of the plant, and compare it to Branch Y, and explain that a <strong>greater amount of food</strong> accumulated in Fruit X.`);
+  } else {
+    showFb("q15bFb", false, `❌ <strong>0/2 Marks (Try again!)</strong><br>
+      • <strong>Tips:</strong> Where does food make by leaves go? Can food flow past the cut on Branch X to the roots? What happens to the food at Fruit X? Compare this with the normal Branch Y.`);
+  }
+}
+
+function tickQ15(dt) {
+  const cvs = document.getElementById('q15-canvas');
+  const ctx = cvs ? cvs.getContext('2d') : null;
+  if (!ctx) return;
+
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+
+  if (particles.q15Water.length === 0) {
+    for (let i = 0; i < 25; i++) {
+      particles.q15Water.push({
+        x: 295,
+        y: 220 + Math.random() * 120,
+        offsetX: (Math.random() - 0.5) * 12,
+        branch: Math.random() < 0.5 ? 'left' : 'right',
+        speed: 0.8 + Math.random() * 0.6,
+        radius: 1.5 + Math.random() * 1.0
+      });
+    }
+  }
+  
+  if (particles.q15Sap.length === 0) {
+    // Left branch food sap
+    for (let i = 0; i < 15; i++) {
+      particles.q15Sap.push({
+        branch: 'left',
+        x: 195,
+        y: 138 + Math.random() * 10,
+        offsetX: (Math.random() - 0.5) * 5,
+        speed: 0.4 + Math.random() * 0.4
+      });
+    }
+    // Right branch food sap
+    for (let i = 0; i < 15; i++) {
+      particles.q15Sap.push({
+        branch: 'right',
+        x: 395,
+        y: 138 + Math.random() * 5,
+        offsetX: (Math.random() - 0.5) * 5,
+        speed: 0.4 + Math.random() * 0.4
+      });
+    }
+  }
+
+  // Water transport (blue dots going up center xylem)
+  ctx.fillStyle = 'rgba(0, 242, 254, 0.85)';
+  particles.q15Water.forEach(p => {
+    p.y -= p.speed;
+    
+    if (p.y > 220) {
+      // Inside the main trunk
+      p.x = 295 + p.offsetX;
+    } else {
+      // Inside the branches (follow the curved wood xylem)
+      const ratio = Math.min(1, Math.max(0, (220 - p.y) / (220 - 138)));
+      if (p.branch === 'left') {
+        p.x = 295 - (ratio * 85 + ratio * ratio * 15) + p.offsetX;
+      } else {
+        p.x = 295 + (ratio * 85 + ratio * ratio * 15) + p.offsetX;
+      }
+    }
+    
+    // Reset at the top (leaves)
+    if (p.y < 138) {
+      p.y = 340;
+      p.x = 295 + p.offsetX;
+      p.branch = Math.random() < 0.5 ? 'left' : 'right';
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+    ctx.fill();
+  });
+
+  // Food transport (green sugar sap going down food-carrying tubes)
+  ctx.fillStyle = 'rgba(0, 230, 118, 0.85)';
+  particles.q15Sap.forEach(p => {
+    p.y += p.speed;
+
+    if (p.branch === 'left') {
+      const ratio = Math.min(1, Math.max(0, (p.y - 138) / (220 - 138)));
+      if (p.y < 220) {
+        p.x = 195 + ratio * 75 + p.offsetX;
+      } else {
+        p.x = 270 + p.offsetX; // Left phloem trunk
+      }
+      
+      if (p.y > 340) {
+        p.y = 138;
+        p.x = 195 + p.offsetX;
+      }
+    } else { // right branch
+      if (q15IsGirdled) {
+        // Cut is at Y = 143. Blocked!
+        if (p.y >= 143) {
+          // Accumulate above the cut and jiggle
+          p.x = 380 + (Math.random() - 0.5) * 5 + p.offsetX;
+          p.y = 143 + (Math.random() - 0.5) * 4;
+        } else {
+          const ratio = Math.min(1, Math.max(0, (p.y - 138) / (143 - 138)));
+          p.x = 395 - ratio * 15 + p.offsetX;
+        }
+      } else {
+        const ratio = Math.min(1, Math.max(0, (p.y - 138) / (220 - 138)));
+        if (p.y < 220) {
+          p.x = 395 - ratio * 75 + p.offsetX;
+        } else {
+          p.x = 320 + p.offsetX; // Right phloem trunk
+        }
+      }
+      
+      if (!q15IsGirdled && p.y > 340) {
+        p.y = 138;
+        p.x = 395 + p.offsetX;
+      }
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 2.5, 0, Math.PI * 2);
+    ctx.fill();
+  });
+}
+
+
+// ==========================================
+// MISSION 3: ELECTROMAGNETIC FIELD FLUX
+// ==========================================
+let q16Logs = [];
+let q16SwitchClosed = false;
+let q16Tried12cm = false;
+let q16Phase = 1;
+
+function toggleMagnetSwitch() {
+  q16SwitchClosed = !q16SwitchClosed;
+  const lever = document.getElementById('mag-switch-lever');
+  const glow = document.getElementById('mag-current-glow');
+  if (lever) {
+    if (q16SwitchClosed) {
+      lever.setAttribute("x2", "220");
+      lever.setAttribute("y2", "240");
+      lever.setAttribute("stroke", "var(--accent-green)");
+      if (glow) glow.classList.remove('hidden');
+    } else {
+      lever.setAttribute("x2", "235");
+      lever.setAttribute("y2", "215");
+      lever.setAttribute("stroke", "#cca43b");
+      if (glow) glow.classList.add('hidden');
+    }
+  }
+  runMagnet();
+}
+
+function runMagnet() {
+  const cells = parseInt(document.getElementById("batRange").value);
+  const turns = parseInt(document.getElementById("turns").value);
+  const core = document.getElementById("core").value;
+  const dist = parseInt(document.getElementById("distance").value);
+
+  // Adjust core rod color depending on core material selection
+  const coreRod = document.getElementById('mag-core-rod');
+  if (coreRod) {
+    if (core === 'Plastic') {
+      coreRod.setAttribute("fill", "#e2e8f0");
+      coreRod.setAttribute("stroke", "#cbd5e0");
+    } else {
+      coreRod.setAttribute("fill", "#4a5568");
+      coreRod.setAttribute("stroke", "#718096");
+    }
+  }
+
+  const windings = document.getElementById('mag-windings-g');
+  if (windings) {
+    windings.innerHTML = '';
+    const step = 120 / (turns + 1);
+    for (let i = 1; i <= turns; i++) {
+      const x = 220 + (i * step);
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("d", `M ${x}, 126 C ${x+4}, 140 ${x+4}, 160 ${x}, 174`);
+      path.setAttribute("stroke", "#cca43b");
+      path.setAttribute("stroke-width", "3");
+      windings.appendChild(path);
+    }
+  }
+
+
+
+  // Draw batteries inside holder
+  const batG = document.getElementById('mag-batteries-g');
+  if (batG) {
+    batG.innerHTML = '';
+    for (let i = 0; i < cells; i++) {
+      const rect = document.createElementNS("http://www.w3.org/2000/svg", "rect");
+      rect.setAttribute("x", i * 15);
+      rect.setAttribute("y", "-10");
+      rect.setAttribute("width", "10");
+      rect.setAttribute("height", "20");
+      rect.setAttribute("fill", "var(--accent-gold)");
+      rect.setAttribute("stroke", "#cbd5e0");
+      rect.setAttribute("rx", "1");
+      batG.appendChild(rect);
+    }
+  }
+
+  // Draw spring to bridge battery to right contact
+  const springStart = 100 + (cells * 15);
+  const springEnd = 180;
+  const spring = document.getElementById('mag-spring-path');
+  if (spring) {
+    const width = springEnd - springStart;
+    if (width > 0) {
+      const loops = Math.max(3, Math.floor(width / 6));
+      const step = width / loops;
+      let path = `M ${springStart},240 `;
+      for (let i = 0; i < loops; i++) {
+        const lx1 = springStart + (i * step) + step * 0.25;
+        const lx2 = springStart + (i * step) + step * 0.75;
+        const nextX = springStart + (i * step) + step;
+        path += `L ${lx1},232 L ${lx2},248 L ${nextX},240 `;
+      }
+      spring.setAttribute("d", path);
+      spring.classList.remove('hidden');
+    } else {
+      spring.classList.add('hidden');
+    }
+  }
+
+  const isIron = core === 'Iron';
+  const force = isIron ? (cells * turns) : 0;
+  
+  let threshold = 999;
+  if (dist === 5) threshold = 5;
+  else if (dist === 8) threshold = 15;
+  else if (dist === 12) threshold = 30;
+
+  const attracted = force >= threshold;
+  const string = document.getElementById('mag-nail-string');
+
+  // Only attract if Switch is CLOSED and electromagnet has sufficient force
+  const currentFlows = q16SwitchClosed;
+  const actualAttracted = currentFlows && attracted;
+
+  if (string) {
+    if (actualAttracted) {
+      let swingAngle = 48;
+      if (dist === 5) swingAngle = 24.6;
+      else if (dist === 8) swingAngle = 41.8;
+      else if (dist === 12) swingAngle = 90;
+      string.style.transform = `translate(0px, 8px) rotate(${swingAngle}deg)`;
+      document.getElementById('magnetFb').textContent = "✅ The steel nail moves towards the core and sticks!";
+    } else if (currentFlows) {
+      // Show weak magnetic pull wiggle towards the core (positive angle swings left)
+      const angle = force > 0 ? 3.5 * (force / threshold) : 0;
+      string.style.transform = `translate(0px, 8px) rotate(${angle}deg)`;
+      document.getElementById('magnetFb').textContent = "❌ The electromagnet force is too weak to attract the nail.";
+    } else {
+      // Switch is open - hangs straight down
+      string.style.transform = 'translate(0px, 8px) rotate(0deg)';
+      document.getElementById('magnetFb').textContent = "🔌 The switch is open. Close the switch to run the circuit.";
+    }
+  }
+
+  const linePx = dist * 15; // scaled from 10 to 15 to space the nail better
+  const distG = document.getElementById('mag-dist-g');
+  if (distG) {
+    const lines = distG.querySelectorAll('line');
+    lines[0].setAttribute("x1", 350);
+    lines[0].setAttribute("x2", 350 + linePx);
+    lines[2].setAttribute("x1", 350 + linePx);
+    lines[2].setAttribute("x2", 350 + linePx);
+    
+    const lbl = document.getElementById('mag-dist-lbl');
+    lbl.setAttribute("x", 350 + (linePx/2));
+    lbl.textContent = `${dist} cm`;
+  }
+
+  const nailG = document.getElementById('mag-nail-g');
+  if (nailG) {
+    nailG.setAttribute("transform", `translate(${350 + linePx}, 40)`);
+  }
+
+  // Only log to table if switch is closed and test is run
+  if (q16SwitchClosed) {
+    const key = `${dist}cm-${core}-${cells}c-${turns}t`;
+    const exists = q16Logs.some(l => l.key === key);
+    if (!exists) {
+      q16Logs.unshift({
+        key,
+        dist,
+        core,
+        cells,
+        turns,
+        attracted: attracted ? "Yes" : "No"
+      });
+      if (q16Logs.length > 5) q16Logs.pop();
+      updateMagnetLogTable();
+    }
+  }
+
+  // Enforce lock/unlock based on table log entries completion (tested 5cm, 8cm, and 12cm)
+  const batRange = document.getElementById("batRange");
+  const turnsSelect = document.getElementById("turns");
+  const coreSelect = document.getElementById("core");
+  const distSelect = document.getElementById("distance");
+  const lockCover = document.getElementById('q16-locked-cover');
+  const card = document.getElementById('q16-questions-card');
+  const lockTxt = document.getElementById('q16-locked-text');
+  const inst = document.getElementById('mag-instructions');
+
+  const tested5 = q16Logs.some(l => l.dist === 5);
+  const tested8 = q16Logs.some(l => l.dist === 8);
+  const tested12 = q16Logs.some(l => l.dist === 12);
+  const distanceTableDone = tested5 && tested8 && tested12;
+
+  if (q16Phase === 1) {
+    // Keep variables locked in Phase 1
+    if (batRange) { batRange.value = 1; batRange.disabled = true; }
+    if (turnsSelect) { turnsSelect.value = "15"; turnsSelect.disabled = true; }
+    if (coreSelect) { coreSelect.value = "Iron"; coreSelect.disabled = true; }
+    if (distSelect) distSelect.disabled = false;
+
+    if (distanceTableDone) {
+      // Unlock questions
+      if (lockCover) lockCover.classList.add('hidden');
+      if (card) card.classList.remove('disabled-scaffold');
+
+      if (inst) {
+        inst.innerHTML = `🎉 <strong>Phase 1 Complete!</strong> All distances tested. The questions are now unlocked on the right!<br>
+        <button class="glow-btn" onclick="startPhase2Magnet()" style="margin-top:10px; display:inline-block; background:var(--accent-green); color:#06070d; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; cursor:pointer; box-shadow: 0 0 15px var(--accent-green); transition: transform 0.2s ease;">Start Phase 2: Test Batteries (Reset Table)</button>`;
+      }
+    } else {
+      // Keep questions locked
+      if (lockCover) lockCover.classList.remove('hidden');
+      if (card) card.classList.add('disabled-scaffold');
+
+      let missing = [];
+      if (!tested5) missing.push("5 cm");
+      if (!tested8) missing.push("8 cm");
+      if (!tested12) missing.push("12 cm");
+
+      if (inst) {
+        inst.innerHTML = `🎯 <strong>Phase 1: Distance Test</strong><br>Test how distance affects magnetic force. Select a distance (5 cm, 8 cm, 12 cm) below and click the SWITCH to log it.<br>Remaining: <span style="color:var(--accent-cyan); font-weight:bold">${missing.join(', ')}</span>`;
+      }
+      if (lockTxt) {
+        lockTxt.innerHTML = `Test all distances (5 cm, 8 cm, 12 cm) in the table using the switch to unlock the questions.<br>Remaining: <strong>${missing.join(', ')}</strong>`;
+      }
+    }
+  } else if (q16Phase === 2) {
+    // Phase 2: Batteries Test (Distance fixed at 12cm, Turns fixed at 15, Core fixed at Iron)
+    if (distSelect) { distSelect.value = "12"; distSelect.disabled = true; }
+    if (turnsSelect) { turnsSelect.value = "15"; turnsSelect.disabled = true; }
+    if (coreSelect) { coreSelect.value = "Iron"; coreSelect.disabled = true; }
+    if (batRange) batRange.disabled = false; // Only battery cells slider unlocked!
+
+    // Keep questions unlocked
+    if (lockCover) lockCover.classList.add('hidden');
+    if (card) card.classList.remove('disabled-scaffold');
+
+    const testedBatteriesChange = q16Logs.some(l => l.cells > 1 && l.dist === 12);
+
+    if (testedBatteriesChange) {
+      if (inst) {
+        inst.innerHTML = `🎉 <strong>Phase 2 Complete!</strong> You tested how increasing batteries increases strength at 12 cm.<br>
+        <button class="glow-btn" onclick="startPhase3Magnet()" style="margin-top:10px; display:inline-block; background:var(--accent-cyan); color:#06070d; border:none; padding:8px 16px; border-radius:6px; font-weight:bold; cursor:pointer; box-shadow: 0 0 15px var(--accent-cyan); transition: transform 0.2s ease;">Start Phase 3: Test Coils (Reset Table)</button>`;
+      }
+    } else {
+      if (inst) {
+        inst.innerHTML = `🔋 <strong>Phase 2: Batteries Test</strong><br>Keep wire turns at 15. Change the <strong>Battery Cells slider to 2 or more</strong>, and click the SWITCH to see if it attracts at 12 cm!`;
+      }
+    }
+  } else if (q16Phase === 3) {
+    // Phase 3: Wire Turns Test (Distance fixed at 12cm, Batteries fixed at 1, Core fixed at Iron)
+    if (distSelect) { distSelect.value = "12"; distSelect.disabled = true; }
+    if (batRange) { batRange.value = "1"; batRange.disabled = true; }
+    if (coreSelect) { coreSelect.value = "Iron"; coreSelect.disabled = true; }
+    if (turnsSelect) turnsSelect.disabled = false; // Only turns select unlocked!
+
+    // Keep questions unlocked
+    if (lockCover) lockCover.classList.add('hidden');
+    if (card) card.classList.remove('disabled-scaffold');
+
+    const testedTurnsChange = q16Logs.some(l => l.turns === 30 && l.dist === 12);
+
+    if (testedTurnsChange) {
+      if (inst) {
+        inst.innerHTML = `🎉 <strong>All Investigations Complete!</strong> You have successfully investigated how distance, batteries, and coils affect the strength of an electromagnet. Review your answers on the right.`;
+      }
+    } else {
+      if (inst) {
+        inst.innerHTML = `🌀 <strong>Phase 3: Wire Turns Test</strong><br>Keep batteries at 1 cell. Change the <strong>Wire Turns dropdown to High (30 Turns)</strong>, and click the SWITCH to see if it attracts at 12 cm!`;
+      }
+    }
+  }
+}
+
+function updateMagnetLogTable() {
+  const tbody = document.getElementById('magnet-logs-body');
+  if (tbody) {
+    if (q16Logs.length === 0) {
+      tbody.innerHTML = `<tr class="placeholder-row"><td colspan="5" style="text-align:center;color:var(--text-muted)">Close switch/run tests to populate table log.</td></tr>`;
+    } else {
+      tbody.innerHTML = q16Logs.map(log => `
+        <tr>
+          <td>${log.dist} cm</td>
+          <td>${log.core}</td>
+          <td>${log.cells} cells</td>
+          <td>${log.turns} turns</td>
+          <td style="color:${log.attracted === 'Yes' ? 'var(--accent-green)' : 'var(--accent-red)'}"><strong>${log.attracted}</strong></td>
+        </tr>
+      `).join('');
+    }
+  }
+}
+
+function startPhase2Magnet() {
+  q16Phase = 2;
+  q16Logs = [];
+  updateMagnetLogTable();
+  document.getElementById("distance").value = "12";
+  document.getElementById("turns").value = "15";
+  document.getElementById("core").value = "Iron";
+  document.getElementById("batRange").value = 1;
+  runMagnet();
+}
+
+function startPhase3Magnet() {
+  q16Phase = 3;
+  q16Logs = [];
+  updateMagnetLogTable();
+  document.getElementById("distance").value = "12";
+  document.getElementById("turns").value = "15";
+  document.getElementById("core").value = "Iron";
+  document.getElementById("batRange").value = 1;
+  runMagnet();
+}
+
+function clearMagnetLogs() {
+  q16Phase = 1;
+  q16Logs = [];
+  updateMagnetLogTable();
+  document.getElementById("distance").value = "5";
+  document.getElementById("turns").value = "15";
+  document.getElementById("core").value = "Iron";
+  document.getElementById("batRange").value = 1;
+  runMagnet();
+}
+
+function check16a() {
+  const choice = document.getElementById("q16a").value;
+  const exp = document.getElementById("q16aExp").value.toLowerCase().trim();
+  
+  let changeMark = 0;
+  let expMark = 0;
+  
+  // 1. Check Suggested Change (1 Mark)
+  if (choice === "Increase number of batteries" || choice === "Increase number of turns of wire") {
+    changeMark = 1;
+  }
+  
+  // 2. Check Explanation (1 Mark) - Must state that the electromagnet/magnetic strength/force is stronger/increases
+  const hasMagneticTerm = exp.includes("electromagnet") || exp.includes("magnetic") || exp.includes("magnetism") || exp.includes("magnet");
+  const hasStrongerTerm = exp.includes("strong") || exp.includes("increase") || exp.includes("more") || exp.includes("greater") || exp.includes("pull") || exp.includes("force");
+  
+  // STRICT RULE: "Iron rod stronger" instead of "magnetic strength stronger" is 0m
+  const isRodStrongerOnly = (exp.includes("rod") || exp.includes("iron")) && exp.includes("strong") && !exp.includes("magnet") && !exp.includes("force");
+  const isAddWires = exp.includes("add more wires") || exp.includes("add wires");
+
+  if (hasMagneticTerm && hasStrongerTerm && !isRodStrongerOnly && !isAddWires) {
+    expMark = 1;
+  }
+  
+  const total = changeMark + expMark;
+  
+  if (total === 2) {
+    award("q16a", 2);
+    showFb("q16aFb", true, `&nbsp;<strong>2/2 Marks (Excellent!)</strong><br>
+      • <strong>Suggested Change (1 Mark):</strong> Correct change selected.<br>
+      • <strong>Explanation (1 Mark):</strong> Correctly explained that the electromagnet's magnetic strength (or force) will become stronger to attract the nail from 12 cm.`);
+  } else if (changeMark === 1 && expMark === 0) {
+    award("q16a", 1);
+    let reason = "Your suggested change is correct. However, your explanation is missing or incorrect.";
+    if (isRodStrongerOnly) {
+      reason += "<br>⚠️ <em>Note:</em> The iron rod itself does not become physically stronger. State that the <strong>electromagnet's magnetic strength</strong> (or magnetic force) becomes stronger.";
+    } else if (exp.includes("strong") && !hasMagneticTerm) {
+      reason += "<br>⚠️ <em>Note:</em> Be specific. State that the <strong>electromagnet</strong> or the <strong>magnetic force/strength</strong> is stronger (not just 'it' or 'the rod').";
+    } else {
+      reason += "<br>💡 <em>Tip:</em> Explain how your change affects the strength/force of the electromagnet.";
+    }
+    showFb("q16aFb", false, `🟡 <strong>1/2 Marks</strong><br>${reason}`);
+  } else {
+    showFb("q16aFb", false, `❌ <strong>0/2 Marks</strong><br>
+      • Choose a correct change to increase force, and explain that it increases the electromagnet's strength.`);
+  }
+}
+
+function check16b() {
+  const v = document.getElementById('q16b').value.toLowerCase().trim();
+  let marks = 0;
+  
+  const hasNo = v.startsWith("no") || v.includes("no,") || v.includes("no because") || v.includes("would not") || v.includes("cannot");
+  const hasNonMagnetic = v.includes("non-magnetic") || v.includes("not magnetic") || v.includes("non magnetic");
+  const hasMagnetized = v.includes("magneti") || v.includes("conduct magnetism") || v.includes("attract");
+  const hasInsulator = v.includes("insulator") || v.includes("conduct electricity") || v.includes("conduct electric current") || v.includes("pass through");
+
+  if (hasNo && hasNonMagnetic) {
+    marks += 0.5;
+  }
+  if (hasMagnetized) {
+    marks += 0.5;
+  }
+  
+  if (marks === 1.0) {
+    award("q16b", 1);
+    showFb("q16bFb", true, "✅ <strong>1/1 Mark (Correct!)</strong><br>Plastic is a non-magnetic material and cannot be magnetized to attract the steel nail.");
+  } else if (hasInsulator) {
+    award("q16b", 0.5);
+    showFb("q16bFb", false, "🟡 <strong>0.5/1 Mark (Factual, but incomplete)</strong><br>Although plastic is an electrical insulator, the core doesn't need to conduct electricity (current flows through the wire coil). For full marks, explain that plastic is a <strong>non-magnetic material</strong> and therefore <strong>cannot be magnetized</strong>.");
+  } else if (marks === 0.5) {
+    award("q16b", 0.5);
+    showFb("q16bFb", false, "🟡 <strong>0.5/1 Mark (Almost there)</strong><br>Specify that plastic is a <strong>non-magnetic material</strong> and that it <strong>cannot be magnetized</strong>.");
+  } else {
+    showFb("q16bFb", false, "❌ <strong>0/1 Mark</strong><br>Remember to state that plastic is a non-magnetic material and cannot be magnetized.");
+  }
+}
+
+function tickQ16(dt) {
+  const cvs = document.getElementById('q16-canvas');
+  const ctx = cvs ? cvs.getContext('2d') : null;
+  if (!ctx) return;
+
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+
+  const core = document.getElementById("core").value;
+  if (core !== 'Iron') return;
+
+  const cells = parseInt(document.getElementById("batRange").value);
+  const turns = parseInt(document.getElementById("turns").value);
+  const strength = cells * turns;
+  const numLines = Math.min(3 + Math.floor(strength/10), 7);
+
+  particles.q16FluxOffset += 0.4;
+  if (particles.q16FluxOffset > 40) particles.q16FluxOffset = 0;
+
+  ctx.strokeStyle = 'rgba(0, 242, 254, 0.16)';
+  ctx.lineWidth = 1.5;
+  ctx.setLineDash([8, 12]);
+  ctx.lineDashOffset = -particles.q16FluxOffset;
+
+  for (let i = 1; i <= numLines; i++) {
+    ctx.beginPath();
+    ctx.ellipse(315, 150, 65 + i * 22, 20 + i * 11, 0, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+  ctx.setLineDash([]);
+}
+
+
+// ==========================================
+// MISSION 4: CHEMICAL DIGESTION RATES
+// ==========================================
+let q17DigestRunning = false;
+let q17Progress = 0;
+let q17Phase = 1; // Phase 1: Juice amount test, Phase 2: Biscuit size test
+let q17aAttempted = false;
+let q17bAttempted = false;
+
+const beakersBiscuits = {
+  X: { x: 72.5, y: 155, width: 45, height: 18, color: '#c7924d', state: 'whole' },
+  Y: [],
+  Z: []
+};
+
+function initQ17Beakers() {
+  if (q17Phase === 1) {
+    // Phase 1: All beakers have a Whole biscuit
+    beakersBiscuits.X = { x: 72.5, y: 155, width: 45, height: 18, color: '#c7924d', state: 'whole' };
+    beakersBiscuits.Y = [
+      { x: 207.5, y: 155, width: 45, height: 18, color: '#c7924d', state: 'whole' }
+    ];
+    beakersBiscuits.Z = [
+      { x: 342.5, y: 155, width: 45, height: 18, color: '#c7924d', state: 'whole' }
+    ];
+  } else {
+    // Phase 2: X has Whole, Y has Halves, Z has Crushed crumbs
+    beakersBiscuits.X = { x: 72.5, y: 155, width: 45, height: 18, color: '#c7924d', state: 'whole' };
+    beakersBiscuits.Y = [
+      { x: 195, y: 155, width: 20, height: 18, color: '#c7924d', state: 'half' },
+      { x: 220, y: 155, width: 20, height: 18, color: '#c7924d', state: 'half' }
+    ];
+    beakersBiscuits.Z = [];
+    for (let i = 0; i < 28; i++) {
+      beakersBiscuits.Z.push({
+        x: 323 + (i % 6) * 7 + Math.random() * 2,
+        y: 150 + Math.floor(i / 6) * 6 + Math.random() * 2,
+        size: 2.5 + Math.random() * 1.5,
+        color: '#c7924d',
+        active: true
+      });
+    }
+  }
+}
+
+function startDigestion() {
+  if (q17DigestRunning) return;
+  q17DigestRunning = true;
+  q17Progress = 0;
+  document.getElementById('btnDigest').disabled = true;
+
+  particles.q17DigestEnzymes = [];
+  particles.q17DissolvingCrumbs = [];
+
+  if (q17Phase === 1) {
+    generateEnzymes('X', 12, 38, 107, 148, 192);
+    generateEnzymes('Y', 24, 173, 242, 108, 192);
+    generateEnzymes('Z', 45, 308, 377, 78, 192);
+  } else {
+    // Phase 2: Constant juice levels (300ml) means 45 enzymes inside all beakers (minY = 78)
+    generateEnzymes('X', 45, 38, 107, 78, 192);
+    generateEnzymes('Y', 45, 173, 242, 78, 192);
+    generateEnzymes('Z', 45, 308, 377, 78, 192);
+  }
+  
+  updateDigestionTable();
+}
+
+function generateEnzymes(beakerName, qty, leftX, rightX, minY, maxY) {
+  for (let i = 0; i < qty; i++) {
+    particles.q17DigestEnzymes.push({
+      beaker: beakerName,
+      x: leftX + Math.random() * (rightX - leftX),
+      y: minY + Math.random() * (maxY - minY),
+      vx: (Math.random() - 0.5) * 1.5,
+      vy: (Math.random() - 0.5) * 1.5,
+      targetX: 0,
+      targetY: 0
+    });
+  }
+}
+
+function resetDigestion() {
+  q17DigestRunning = false;
+  q17Progress = 0;
+  document.getElementById('btnDigest').disabled = false;
+  
+  if (q17Phase === 1) {
+    document.getElementById('digestStatus').textContent = "Phase 1: Biscuit size is kept constant (Whole biscuits) to test the effect of changing the juice volume (100ml, 200ml, 300ml).";
+  } else {
+    document.getElementById('digestStatus').textContent = "Phase 2: Biscuit size is changed (Whole, Halves, Crushed). All other variables (including juice volume = 300ml) are kept constant.";
+  }
+  
+  initQ17Beakers();
+  particles.q17DigestEnzymes = [];
+  particles.q17DissolvingCrumbs = [];
+  
+  updateDigestionTable();
+}
+
+function checkQ17Unlock() {
+  if (q17aAttempted && q17bAttempted && q17Phase === 1) {
+    const cta = document.getElementById("q17-phase2-cta");
+    if (cta) cta.classList.remove("hidden");
+  }
+}
+
+function switchToQ17Phase2() {
+  q17Phase = 2;
+  
+  const cta = document.getElementById("q17-phase2-cta");
+  if (cta) cta.classList.add("hidden");
+  
+  const lockMsg = document.getElementById("q17c-lock-msg");
+  if (lockMsg) {
+    lockMsg.innerHTML = "🔓 <strong>Part 2 (Biscuit Size Test) Active:</strong> Joel is keeping the juice amount constant (300ml) in all beakers, and changing the biscuit sizes to test the effect of surface area.";
+    lockMsg.style.borderColor = "var(--accent-green)";
+    lockMsg.style.background = "rgba(0, 230, 118, 0.03)";
+    lockMsg.style.color = "var(--accent-green)";
+  }
+  
+  const wrapper = document.getElementById("q17c-wrapper");
+  if (wrapper) wrapper.classList.remove("disabled-scaffold");
+  
+  resetDigestion();
+}
+
+function check17a() {
+  const v = document.getElementById('q17a').value.toLowerCase().trim();
+  
+  const hasJuice = v.includes("juice") || v.includes("amount") || v.includes("water");
+  const hasTime = v.includes("time") || v.includes("hour");
+  const hasIncrease = v.includes("increase") || v.includes("more") || v.includes("greater") || v.includes("higher");
+  const hasDecrease = v.includes("decrease") || v.includes("reduce") || v.includes("less") || v.includes("lower") || v.includes("shorter") || v.includes("goes down");
+
+  q17aAttempted = true;
+  checkQ17Unlock();
+
+  if (hasIncrease && hasDecrease && hasJuice && hasTime) {
+    award("q17a", 1);
+    showFb("q17aFb", true, `✅ <strong>1/1 Mark (Correct!)</strong><br>As the amount of digestive juices increases, the time taken for the biscuits to be fully digested decreases.`);
+  } else if (hasDecrease && (v.includes("decrease") || v.includes("shorter") || v.includes("goes down") || v.includes("reduce") || v.includes("less")) && v.length < 15) {
+    award("q17a", 0.5);
+    showFb("q17aFb", false, `🟡 <strong>0.5/1 Mark (Incomplete)</strong><br>You got the correct trend (decreases), but you must write the full relationship stating how changing the <strong>amount of digestive juices</strong> affects the <strong>time taken</strong>.`);
+  } else {
+    showFb("q17aFb", false, `❌ <strong>0/1 Mark</strong><br>Write the relationship in the format: <em>"As the amount of digestive juices increases, the time taken for the biscuits to be fully digested decreases."</em>`);
+  }
+}
+
+function check17b() {
+  const v = document.getElementById('q17b').value.toLowerCase().trim();
+  
+  const hasSizeMassBiscuit = (v.includes("size") && v.includes("biscuit")) || (v.includes("mass") && v.includes("biscuit")) || v.includes("amount of biscuit");
+  const hasBeaker = v.includes("beaker");
+  const hasLocation = v.includes("location") || v.includes("place");
+  const hasStir = v.includes("stir") || v.includes("shake") || v.includes("stirring");
+  
+  const hasTemp = v.includes("temperature");
+  const hasJuice = v.includes("type of digestive") || v.includes("concentration") || v.includes("brand of digestive") || v.includes("type of juice") || v.includes("brand of juice") || v.includes("concentration of juice");
+  const hasBiscuitType = v.includes("brand of biscuit") || v.includes("type of biscuit") || v.includes("shape of biscuit") || v.includes("ingredient");
+
+  q17bAttempted = true;
+  checkQ17Unlock();
+
+  if (hasSizeMassBiscuit) {
+    showFb("q17bFb", false, "❌ <strong>0/1 Mark</strong><br>The question says <em>'Other than the size and mass of biscuits'</em>, so you cannot use biscuit size or mass as your constant variable.");
+  } else if (hasBeaker) {
+    showFb("q17bFb", false, "❌ <strong>0/1 Mark (Not Accepted)</strong><br>The size, shape, or material of the beaker is not accepted as a valid controlled variable for this experiment.");
+  } else if (hasLocation) {
+    showFb("q17bFb", false, "❌ <strong>0/1 Mark (Not Accepted)</strong><br>The location of the experiment is not accepted as a valid controlled variable.");
+  } else if (hasStir) {
+    showFb("q17bFb", false, "❌ <strong>0/1 Mark (Not Accepted)</strong><br>There is no stirring involved in this experiment setup, so the rate of stirring cannot be a controlled variable.");
+  } else if (hasTemp || hasJuice || hasBiscuitType) {
+    award("q17b", 1);
+    showFb("q17bFb", true, "✅ <strong>1/1 Mark (Correct!)</strong><br>Keeping constant variables like the <strong>temperature of surroundings</strong>, <strong>type of digestive juices</strong>, or <strong>brand of biscuits</strong> ensures a fair test.");
+  } else {
+    showFb("q17bFb", false, "❌ <strong>0/1 Mark</strong><br>Suggest a valid constant variable from the answer key, such as <em>temperature of surroundings</em> or <em>type of digestive juices</em>.");
+  }
+}
+
+function check17c() {
+  const v = document.getElementById('q17c').value.toLowerCase().trim();
+  
+  let methodMark = 0;
+  let explanationMark = 0;
+  
+  // 1. Check method (crush, grind, break, crumble, chop)
+  const hasMethod = v.includes("crush") || v.includes("break") || v.includes("grind") || v.includes("crumble") || v.includes("chop") || v.includes("smaller pieces");
+  if (hasMethod) {
+    methodMark = 1;
+  }
+  
+  // 2. Check explanation (exposed surface area + contact/digest faster)
+  const hasSurfaceArea = v.includes("surface area") || v.includes("exposed area");
+  const hasContactOrFaster = v.includes("digest") || v.includes("breakdown") || v.includes("break down") || v.includes("react") || v.includes("dissolve") || v.includes("contact") || v.includes("faster") || v.includes("speed up") || v.includes("rate");
+  
+  if (hasSurfaceArea && hasContactOrFaster) {
+    explanationMark = 1;
+  }
+  
+  const total = methodMark + explanationMark;
+  award("q17c", total);
+  
+  if (total === 2) {
+    showFb("q17cFb", true, `✅ 2/2 Marks! Joel can crush the biscuit into smaller pieces (1m). This increases the exposed surface area of the biscuit to the digestive juices, allowing the juices/enzymes to digest the biscuit faster (1m).`);
+  } else if (total === 1) {
+    if (methodMark === 1) {
+      showFb("q17cFb", false, `⚠️ 1/2 Marks. You correctly suggested crushing the biscuit (1m), but you need to explain why (e.g. "increases the exposed surface area so enzymes can digest it faster").`);
+    } else {
+      showFb("q17cFb", false, `⚠️ 1/2 Marks. You mentioned surface area or faster digestion (1m), but you must state the action Joel should perform first (e.g., "crush the biscuit").`);
+    }
+  } else {
+    showFb("q17cFb", false, `❌ 0/2 Marks. Suggest what Joel can do to the biscuit (e.g., crush it) and explain how this affects the exposed surface area and rate of digestion.`);
+  }
+}
+
+function tickQ17(dt) {
+  const cvs = document.getElementById('beaker-canvas');
+  const ctx = cvs ? cvs.getContext('2d') : null;
+  if (!ctx) return;
+
+  ctx.fillStyle = '#04050a';
+  ctx.fillRect(0, 0, cvs.width, cvs.height);
+
+  const hX = (q17Phase === 1) ? 50 : 120;
+  const hY = (q17Phase === 1) ? 90 : 120;
+  const hZ = 120;
+
+  const beakers = [
+    { name: 'Beaker X', lx: 35, rx: 110, liquidHeight: hX },
+    { name: 'Beaker Y', lx: 170, rx: 245, liquidHeight: hY },
+    { name: 'Beaker Z', lx: 305, rx: 380, liquidHeight: hZ }
+  ];
+
+  beakers.forEach((b, idx) => {
+    ctx.strokeStyle = '#4a5568';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.moveTo(b.lx, 40);
+    ctx.lineTo(b.lx, 195);
+    ctx.lineTo(b.rx, 195);
+    ctx.lineTo(b.rx, 40);
+    ctx.stroke();
+
+    let progressRatio = 0;
+    if (idx === 0) progressRatio = Math.min(1, q17Progress / 100);
+    else if (idx === 1) progressRatio = Math.min(1, q17Progress / 66.6);
+    else progressRatio = Math.min(1, q17Progress / 33.3);
+
+    const color = lerpColor('rgba(66, 153, 225, 0.15)', 'rgba(230, 180, 0, 0.3)', progressRatio);
+    ctx.fillStyle = color;
+    ctx.fillRect(b.lx + 2, 194 - b.liquidHeight, (b.rx - b.lx) - 4, b.liquidHeight);
+
+    ctx.fillStyle = '#cbd5e0';
+    ctx.font = 'bold 9px Outfit';
+    ctx.fillText(b.name, b.lx + 6, 188);
+  });
+
+  if (q17DigestRunning) {
+    q17Progress += 0.55;
+    
+    if (Math.random() > 0.6) {
+      if (q17Progress < 100) {
+        particles.q17DissolvingCrumbs.push({ x: 70 + (Math.random()-0.5)*30, y: 155, vx: (Math.random()-0.5)*1, vy: 0.5 + Math.random(), size: 2, alpha: 1 });
+      }
+      if (q17Progress < 66.6) {
+        particles.q17DissolvingCrumbs.push({ x: 210 + (Math.random()-0.5)*30, y: 155, vx: (Math.random()-0.5)*1, vy: 0.5 + Math.random(), size: 2, alpha: 1 });
+      }
+    }
+
+    const p1 = Math.min(1, (q17Progress / 33.3));
+    const p2 = Math.min(1, (q17Progress / 66.6));
+    const p3 = Math.min(1, (q17Progress / 100.0));
+
+    beakersBiscuits.X.width = 45 * (1 - p3);
+    beakersBiscuits.X.height = 18 * (1 - p3);
+    beakersBiscuits.X.y = 155 + (18 * p3) / 2;
+
+    if (q17Phase === 1) {
+      if (beakersBiscuits.Y[0]) {
+        beakersBiscuits.Y[0].width = 45 * (1 - p2);
+        beakersBiscuits.Y[0].height = 18 * (1 - p2);
+        beakersBiscuits.Y[0].y = 155 + (18 * p2) / 2;
+      }
+      if (beakersBiscuits.Z[0]) {
+        beakersBiscuits.Z[0].width = 45 * (1 - p1);
+        beakersBiscuits.Z[0].height = 18 * (1 - p1);
+        beakersBiscuits.Z[0].y = 155 + (18 * p1) / 2;
+      }
+    } else {
+      if (beakersBiscuits.Y[0]) beakersBiscuits.Y[0].width = 20 * (1 - p2);
+      if (beakersBiscuits.Y[1]) beakersBiscuits.Y[1].width = 20 * (1 - p2);
+      beakersBiscuits.Z.forEach(c => {
+        if (Math.random() < p1 * 0.05) c.active = false;
+      });
+    }
+
+    const status = document.getElementById('digestStatus');
+    const hrs = (q17Progress * 0.03).toFixed(1);
+    status.textContent = `⏳ Chemical Digestion: ${hrs} Hours elapsed.`;
+
+    updateDigestionTable();
+
+    if (q17Progress >= 100) {
+      q17DigestRunning = false;
+      if (q17Phase === 1) {
+        status.innerHTML = "✅ <strong>Phase 1 Test Complete!</strong> Beaker Z (300ml) digested fastest (1h) because it had the most digestive juices, followed by Y (200ml, 2h) and X (100ml, 3h). Attempt Questions 17a and 17b.";
+      } else {
+        status.innerHTML = "✅ <strong>Phase 2 Test Complete!</strong> Beaker Z (Crushed crumbs) digested fastest (1h) because it had the largest exposed surface area, followed by Y (Halves, 2h) and X (Whole, 3h). Attempt Question 17c.";
+      }
+    }
+  }
+
+  if (beakersBiscuits.X.width > 1) {
+    ctx.fillStyle = beakersBiscuits.X.color;
+    ctx.fillRect(beakersBiscuits.X.x - beakersBiscuits.X.width/2, beakersBiscuits.X.y, beakersBiscuits.X.width, beakersBiscuits.X.height);
+  }
+  beakersBiscuits.Y.forEach(b => {
+    if (b.width > 1) {
+      ctx.fillStyle = b.color;
+      ctx.fillRect(b.x - b.width/2, b.y, b.width, b.height);
+    }
+  });
+
+  beakersBiscuits.Z.forEach(c => {
+    if (c.state === 'whole') {
+      if (c.width > 1) {
+        ctx.fillStyle = c.color;
+        ctx.fillRect(c.x - c.width/2, c.y, c.width, c.height);
+      }
+    } else {
+      if (c.active) {
+        ctx.fillStyle = c.color;
+        ctx.beginPath();
+        ctx.arc(c.x, c.y, c.size, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+  });
+
+  particles.q17DigestEnzymes.forEach(p => {
+    let bx = 72.5, by = 170;
+    let minX = 38, maxX = 107, minY = 148, maxY = 192;
+    
+    if (q17Phase === 1) {
+      if (p.beaker === 'Y') {
+        bx = 207.5; by = 150;
+        minX = 173; maxX = 242; minY = 108; maxY = 192;
+      } else if (p.beaker === 'Z') {
+        bx = 342.5; by = 135;
+        minX = 308; maxX = 377; minY = 78; maxY = 192;
+      }
+    } else {
+      minY = 78;
+      if (p.beaker === 'X') {
+        bx = 72.5; by = 135;
+        minX = 38; maxX = 107;
+      } else if (p.beaker === 'Y') {
+        bx = 207.5; by = 135;
+        minX = 173; maxX = 242;
+      } else if (p.beaker === 'Z') {
+        bx = 342.5; by = 135;
+        minX = 308; maxX = 377;
+      }
+    }
+
+    const dx = bx - p.x;
+    const dy = by - p.y;
+    
+    p.vx += dx * 0.002 + (Math.random() - 0.5) * 0.5;
+    p.vy += dy * 0.002 + (Math.random() - 0.5) * 0.5;
+
+    const speed = Math.sqrt(p.vx*p.vx + p.vy*p.vy);
+    if (speed > 2.5) {
+      p.vx = (p.vx / speed) * 2.5;
+      p.vy = (p.vy / speed) * 2.5;
+    }
+
+    p.x += p.vx;
+    p.y += p.vy;
+
+    // Trapped boundary checks to keep enzymes inside fluid of respective beaker
+    if (p.x < minX) { p.x = minX; p.vx = -p.vx * 0.8; }
+    if (p.x > maxX) { p.x = maxX; p.vx = -p.vx * 0.8; }
+    if (p.y < minY) { p.y = minY; p.vy = -p.vy * 0.8; }
+    if (p.y > maxY) { p.y = maxY; p.vy = -p.vy * 0.8; }
+
+    ctx.fillStyle = 'rgba(230, 200, 0, 0.8)';
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 2, 0, Math.PI*2);
+    ctx.fill();
+  });
+
+  particles.q17DissolvingCrumbs.forEach((c, idx) => {
+    c.x += c.vx;
+    c.y += c.vy;
+    c.alpha -= 0.025;
+    if (c.alpha <= 0 || c.y > 190) {
+      particles.q17DissolvingCrumbs.splice(idx, 1);
+      return;
+    }
+    ctx.save();
+    ctx.globalAlpha = c.alpha;
+    ctx.fillStyle = '#d9aa6a';
+    ctx.beginPath();
+    ctx.arc(c.x, c.y, c.size, 0, Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+  });
+}
+
+function lerpColor(c1, c2, r) {
+  return r < 0.5 ? c1 : c2;
+}
+
+function updateDigestionTable() {
+  const tbody = document.getElementById('digestion-logs-body');
+  if (!tbody) return;
+  
+  let rowsHtml = '';
+  if (q17Progress === 0 && !q17DigestRunning) {
+    rowsHtml = `<tr class="placeholder-row"><td colspan="3" style="text-align:center;color:var(--text-muted)">Press "Start Digestion" to observe and record results.</td></tr>`;
+  } else {
+    const elapsed = q17Progress * 0.03;
+    
+    if (q17Phase === 1) {
+      // Phase 1: Size is kept constant (Whole)
+      if (elapsed >= 1.0) {
+        rowsHtml += `
+          <tr style="animation: fadeIn 0.3s ease-out forwards">
+            <td><strong>Beaker Z (Whole)</strong></td>
+            <td>300 ml</td>
+            <td>1 hour</td>
+          </tr>`;
+      }
+      if (elapsed >= 2.0) {
+        rowsHtml += `
+          <tr style="animation: fadeIn 0.3s ease-out forwards">
+            <td><strong>Beaker Y (Whole)</strong></td>
+            <td>200 ml</td>
+            <td>2 hours</td>
+          </tr>`;
+      }
+      if (elapsed >= 3.0 || q17Progress >= 100) {
+        rowsHtml += `
+          <tr style="animation: fadeIn 0.3s ease-out forwards">
+            <td><strong>Beaker X (Whole)</strong></td>
+            <td>100 ml</td>
+            <td>3 hours</td>
+          </tr>`;
+      }
+    } else {
+      // Phase 2: Biscuit size changes, all other variables (juice volume = 300ml) are constant
+      if (elapsed >= 1.0) {
+        rowsHtml += `
+          <tr style="animation: fadeIn 0.3s ease-out forwards">
+            <td><strong>Beaker Z (Crushed)</strong></td>
+            <td>300 ml</td>
+            <td>1 hour</td>
+          </tr>`;
+      }
+      if (elapsed >= 2.0) {
+        rowsHtml += `
+          <tr style="animation: fadeIn 0.3s ease-out forwards">
+            <td><strong>Beaker Y (Halved)</strong></td>
+            <td>300 ml</td>
+            <td>2 hours</td>
+          </tr>`;
+      }
+      if (elapsed >= 3.0 || q17Progress >= 100) {
+        rowsHtml += `
+          <tr style="animation: fadeIn 0.3s ease-out forwards">
+            <td><strong>Beaker X (Whole)</strong></td>
+            <td>300 ml</td>
+            <td>3 hours</td>
+          </tr>`;
+      }
+    }
+    
+    if (rowsHtml === '') {
+      rowsHtml = `<tr><td colspan="3" style="text-align:center;color:var(--accent-cyan);font-weight:bold">Digesting... (Waiting for first result)</td></tr>`;
+    }
+  }
+  tbody.innerHTML = rowsHtml;
+}
+
+
+// ==========================================
+// MISSION 5: TILT TIN POUR & GLUGGING BUBBLES
+// ==========================================
+let q18IsTilted = true;
+let q18HasHole2 = false;
+let q18WaterLevel = 100;
+let q18GlugTimer = 0;
+let q18GlugChoked = false;
+
+function punchHole() {
+  q18HasHole2 = true;
+  const hole2 = document.getElementById('q18-hole2');
+  if (hole2) hole2.classList.remove('hidden');
+  
+  const btn = document.getElementById('btnPunchHole');
+  if (btn) btn.disabled = true;
+  
+  const status = document.getElementById('tinStatus');
+  status.textContent = "State 2: Second hole punched! Air enters Hole 2, allowing water to flow out rapidly from Hole 1.";
+}
+
+function resetTinLab() {
+  q18HasHole2 = false;
+  const hole2 = document.getElementById('q18-hole2');
+  if (hole2) hole2.classList.add('hidden');
+  
+  const btn = document.getElementById('btnPunchHole');
+  if (btn) btn.disabled = false;
+  
+  q18WaterLevel = 100;
+  q18GlugTimer = 0;
+  
+  const basinFill = document.getElementById('basin-fill');
+  if (basinFill) {
+    basinFill.setAttribute("height", 39);
+    basinFill.setAttribute("y", 310);
+  }
+  
+  const status = document.getElementById('tinStatus');
+  status.textContent = "State 1: Can has only 1 hole. Water flows out very slowly.";
+}
+
+function check18() {
+  const v = document.getElementById('q18').value.toLowerCase().trim();
+  let marks = 0.0;
+  
+  // Point 1 (0.5 Marks): Air enters through the second hole
+  const hasAirEnter = v.includes("air") && (v.includes("enter") || v.includes("inflow") || v.includes("go in") || v.includes("rush in")) && (v.includes("second") || v.includes("another") || v.includes("hole 2") || v.includes("other"));
+  if (hasAirEnter) marks += 0.5;
+
+  // Point 2 (0.5 Marks): To occupy the space of escaping water
+  const hasOccupySpace = (v.includes("occupy") || v.includes("take the place") || v.includes("take its place") || v.includes("fill the space") || v.includes("take up the space")) && (v.includes("space") || v.includes("place") || v.includes("vacuum") || v.includes("volume"));
+  if (hasOccupySpace) marks += 0.5;
+
+  // Point 3 (1.0 Marks): 1-Hole case (air entering through same hole as escaping water)
+  const hasOneHoleSame = (v.includes("one hole") || v.includes("1 hole") || v.includes("single hole") || v.includes("first hole") || v.includes("before")) && (v.includes("same hole") || v.includes("share the same") || v.includes("where water") || v.includes("same opening") || v.includes("exit and enter") || v.includes("blocking") || v.includes("fight"));
+  if (hasOneHoleSame) marks += 1.0;
+
+  if (marks === 2.0) {
+    award("q18", 2);
+    showFb("q18Fb", true, "✅ <strong>2/2 Marks (Full Credit!)</strong><br>• The second hole allows air to enter the tin [½m] to occupy the space of the escaping water [½m].<br>• With only one hole, air must enter through the same hole where water is flowing out [1m], slowing it down.");
+  } else if (marks === 1.5) {
+    award("q18", 1.5);
+    if (!hasOneHoleSame) {
+      showFb("q18Fb", false, "🟡 <strong>1.5/2 Marks (Excellent!)</strong><br>You explained the 2-hole case perfectly [1m]. To get the final 0.5 mark, explain the 1-hole comparison: with only one hole, air has to enter using the same hole where water is flowing out.");
+    } else {
+      showFb("q18Fb", false, "🟡 <strong>1.5/2 Marks (Excellent!)</strong><br>You explained the 1-hole case [1m] but missed either that air enters the second hole [½m] or that it occupies the escaping water's space [½m].");
+    }
+  } else if (marks === 1.0) {
+    award("q18", 1.0);
+    if (hasOneHoleSame) {
+      showFb("q18Fb", false, "🟡 <strong>1/2 Marks</strong><br>You explained the 1-hole case (air entering the same hole) [1m]. To get the remaining 1.0 mark, explain that the second hole allows air to enter to occupy the space of the escaping water.");
+    } else {
+      showFb("q18Fb", false, "🟡 <strong>1/2 Marks</strong><br>You explained the 2-hole case (air enters to occupy space) [1m]. To get the remaining 1.0 mark, explain the 1-hole case: with only one hole, air must enter using the same hole where water is flowing out.");
+    }
+  } else if (marks === 0.5) {
+    award("q18", 0.5);
+    showFb("q18Fb", false, "🟡 <strong>0.5/2 Marks</strong><br>You only explained that air enters the second hole [½m]. Expand your answer by explaining both: (1) that this air occupies the space of escaping water [½m], and (2) how with only one hole, air must enter through the same hole water exits from [1m].");
+  } else {
+    showFb("q18Fb", false, "❌ <strong>0/2 Marks</strong><br>Provide a complete comparison explaining both states:<br>1. The second hole allows air to enter the tin to occupy the space of the escaping water [1m].<br>2. With only one hole, air must enter the tin using the same hole where water is flowing out [1m].");
+  }
+}
+
+// ==========================================
+// MISSION 6: ELECTRICAL CIRCUITS (Q13)
+// ==========================================
+let q13ButtonPressed = false;
+
+function updateQ13Visuals() {
+  const angle = q13ButtonPressed ? -12 : 12;
+  const angleRad = angle * Math.PI / 180;
+  
+  // 1. Rotate the rod
+  const rod = document.getElementById('q13-rod-g');
+  if (rod) {
+    rod.setAttribute("transform", `translate(250, 180) rotate(${angle})`);
+  }
+  
+  // 2. Animate the spring
+  const spring = document.getElementById('q13-spring');
+  if (spring) {
+    // Left end of rod coordinate in screen space
+    const startX = 250 - 110 * Math.cos(angleRad);
+    const startY = 180 - 110 * Math.sin(angleRad);
+    const endX = 140;
+    const endY = 240;
+    
+    let path = `M ${startX},${startY} `;
+    const coils = 6;
+    const h = endY - startY;
+    const stepY = h / coils;
+    
+    for (let i = 0; i < coils; i++) {
+      const cy1 = startY + i * stepY + stepY * 0.25;
+      const cy2 = startY + i * stepY + stepY * 0.75;
+      const nextY = startY + (i + 1) * stepY;
+      const nextX = startX + ((i + 1) / coils) * (endX - startX);
+      
+      // Alternate bulge left and right
+      const bulgeX = (i % 2 === 0) ? -10 : 10;
+      const c1x = startX + (i / coils) * (endX - startX) + bulgeX;
+      const c2x = startX + ((i + 1) / coils) * (endX - startX) + bulgeX;
+      
+      path += `C ${c1x},${cy1} ${c2x},${cy2} ${nextX},${nextY} `;
+    }
+    spring.setAttribute("d", path);
+  }
+  
+  // 3. Update Bulb glow and Current flow
+  const bulbA = document.getElementById('bulb-a-glow');
+  const bulbB = document.getElementById('bulb-b-glow');
+  const flowTop = document.getElementById('q13-flow-top');
+  const flowBottom = document.getElementById('q13-flow-bottom');
+  const status = document.getElementById('q13Status');
+  const btn = document.getElementById('btnToggleQ13');
+  
+  if (q13ButtonPressed) {
+    // Pressed: both bulbs lit
+    if (bulbA) bulbA.classList.remove('hidden');
+    if (bulbB) bulbB.classList.remove('hidden');
+    if (flowTop) flowTop.classList.remove('hidden');
+    if (flowBottom) flowBottom.classList.add('hidden');
+    if (status) status.textContent = "Button pressed. Metal rod touches X. Bulbs A and B are lit (in series).";
+    if (btn) btn.textContent = "Release Button (Touch Y)";
+  } else {
+    // Released: only Bulb B lit
+    if (bulbA) bulbA.classList.add('hidden');
+    if (bulbB) bulbB.classList.remove('hidden');
+    if (flowTop) flowTop.classList.add('hidden');
+    if (flowBottom) flowBottom.classList.remove('hidden');
+    if (status) status.textContent = "Button released. Metal rod touches Y. Only Bulb B is lit.";
+    if (btn) btn.textContent = "Press Button (Touch X)";
+  }
+}
+
+function toggleQ13Button() {
+  q13ButtonPressed = !q13ButtonPressed;
+  updateQ13Visuals();
+}
+
+function check13ai() {
+  const v = document.getElementById('q13ai').value.toLowerCase().trim();
+  const isCorrect = v.includes("both") || (v.includes("a") && v.includes("b"));
+  
+  if (isCorrect) {
+    award("q13ai", 1);
+    showFb("q13aiFb", true, "✅ <strong>1/1 Mark (Correct!)</strong><br>Both <strong>Bulb A and Bulb B</strong> light up. Current flows through the entire series loop.");
+  } else {
+    showFb("q13aiFb", false, "❌ <strong>0/1 Mark</strong><br>Look closely at the closed loop when the metal rod touches point X. Trace the wire path from the batteries.");
+  }
+}
+
+function check13aii() {
+  const v = document.getElementById('q13aii').value.toLowerCase().trim();
+  const isCorrect = (v.includes("b") && !v.includes("a")) || v === "only b" || v === "only bulb b" || v === "b only";
+  
+  if (isCorrect) {
+    award("q13aii", 1);
+    showFb("q13aiiFb", true, "✅ <strong>1/1 Mark (Correct!)</strong><br>Only <strong>Bulb B</strong> lights up. The top loop with Bulb A is disconnected at Point X.");
+  } else {
+    showFb("q13aiiFb", false, "❌ <strong>0/1 Mark</strong><br>Look at the circuit when the rod touches point Y. Is the top branch connected or disconnected?");
+  }
+}
+
+function check13b() {
+  const v = document.getElementById('q13b').value.toLowerCase().trim();
+  const isCorrect = v.includes("blown") || v.includes("fuse") || v.includes("melt") || v.includes("broke") || v.includes("burn");
+  
+  if (isCorrect) {
+    award("q13b", 1);
+    showFb("q13bFb", true, "✅ <strong>1/1 Mark (Correct!)</strong><br>The bulb has <strong>blown / fused / the filament melted</strong> due to excessive electric current.");
+  } else {
+    showFb("q13bFb", false, "❌ <strong>0/1 Mark</strong><br>Think about what happens to a bulb's filament when too much electric current flows through it.");
+  }
+}
+
+function tickQ18(dt) {
+  const cvs = document.getElementById('q18-canvas');
+  const ctx = cvs ? cvs.getContext('2d') : null;
+  if (!ctx) return;
+
+  ctx.clearRect(0,0,cvs.width,cvs.height);
+
+  // 1. Draw Can Body, Horizontal Water, and Holes inside (all on Canvas for perfect alignment)
+  ctx.save();
+  ctx.translate(300, 130);
+  const angle = q18IsTilted ? -45 : 0;
+  ctx.rotate(angle * Math.PI / 180);
+  
+  // Draw solid can metal background
+  ctx.fillStyle = '#cbd5e0';
+  ctx.beginPath();
+  ctx.rect(-40, -70, 80, 120);
+  ctx.fill();
+  
+  // Draw horizontal water (clipped inside can)
+  ctx.save();
+  ctx.beginPath();
+  ctx.rect(-38.5, -68.5, 77, 117);
+  ctx.clip();
+  
+  // Reset transform to draw horizontal water level in screen space
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  
+  const screenWaterY = q18IsTilted ? (190 - 80 * (q18WaterLevel / 100)) : (180 - 116 * (q18WaterLevel / 100));
+  ctx.fillStyle = 'rgba(66, 153, 225, 0.75)';
+  ctx.fillRect(0, screenWaterY, 600, 400); // cover the whole width
+  ctx.restore(); // back to local coordinates
+  
+  // Draw can stroke outlines
+  ctx.lineWidth = 3;
+  ctx.strokeStyle = '#4a5568';
+  ctx.beginPath();
+  ctx.rect(-40, -70, 80, 120);
+  ctx.stroke();
+  
+  // Draw lid line
+  ctx.lineWidth = 6;
+  ctx.strokeStyle = '#1a202c';
+  ctx.beginPath();
+  ctx.moveTo(-40, -70);
+  ctx.lineTo(40, -70);
+  ctx.stroke();
+  
+  // Draw Hole 1 (bottom right, cx = 37, cy = 40)
+  ctx.fillStyle = '#1a202c';
+  ctx.strokeStyle = '#ff3366';
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(37, 40, 5, 0, Math.PI*2);
+  ctx.fill();
+  ctx.stroke();
+  
+  // Draw Hole 2 (top left, cx = -37, cy = -40) if punched
+  if (q18HasHole2) {
+    ctx.fillStyle = '#1a202c';
+    ctx.strokeStyle = '#00e676';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(-37, -40, 5, 0, Math.PI*2);
+    ctx.fill();
+    ctx.stroke();
+  }
+  
+  ctx.restore(); // back to screen space
+
+  // If not tilted, clear arrays and return early
+  if (!q18IsTilted) {
+    particles.q18WaterDrops = [];
+    particles.q18AirBubbles = [];
+    return;
+  }
+
+  // Tilted pouring logic:
+  if (q18WaterLevel <= 8) {
+    const status = document.getElementById('tinStatus');
+    status.textContent = "✅ Empty! Water flow has stopped.";
+    particles.q18WaterDrops = [];
+    return;
+  }
+
+  q18GlugTimer += 0.02;
+  q18GlugChoked = false;
+  if (!q18HasHole2) {
+    const cycle = q18GlugTimer % 1.5;
+    if (cycle < 0.45) {
+      q18GlugChoked = true;
+    }
+  }
+
+  let depletion = 0.045;
+  if (q18HasHole2) depletion = 0.16;
+  else if (q18GlugChoked) depletion = 0.002;
+  else depletion = 0.015; // Slow trickling depletion
+
+  q18WaterLevel -= depletion;
+  if (q18WaterLevel < 8) q18WaterLevel = 8; // clamp
+
+  // Update SVG elements for basin fill level
+  const basinH = 39 + (100 - q18WaterLevel) * 0.35;
+  const basinFill = document.getElementById('basin-fill');
+  if (basinFill) {
+    basinFill.setAttribute("height", basinH);
+    basinFill.setAttribute("y", 349 - basinH);
+  }
+
+  const timestamp = Date.now();
+  
+  // 2. Draw water stream if not choked
+  if (!q18GlugChoked || q18HasHole2) {
+    if (q18HasHole2) {
+      // Base blue stream (Fast & Thick)
+      ctx.strokeStyle = '#4299e1';
+      ctx.lineWidth = 6.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.beginPath();
+      ctx.moveTo(354, 132);
+      ctx.quadraticCurveTo(385, 170, 320, 310);
+      ctx.stroke();
+      
+      // Fast moving highlights
+      ctx.strokeStyle = '#90cdf4';
+      ctx.lineWidth = 2.5;
+      ctx.setLineDash([12, 18]);
+      ctx.lineDashOffset = -timestamp * 0.18;
+      ctx.beginPath();
+      ctx.moveTo(354, 132);
+      ctx.quadraticCurveTo(385, 170, 320, 310);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    } else {
+      // Slow trickle (Thin & Interrupted drips)
+      ctx.strokeStyle = 'rgba(66, 153, 225, 0.75)';
+      ctx.lineWidth = 2.0;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.setLineDash([4, 12]);
+      ctx.lineDashOffset = -timestamp * 0.05;
+      ctx.beginPath();
+      ctx.moveTo(354, 132);
+      ctx.quadraticCurveTo(385, 170, 320, 310);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    
+    // Spawn splash particles at the landing point in the basin
+    const splashQty = q18HasHole2 ? 3 : 1;
+    for (let i = 0; i < splashQty; i++) {
+      if (Math.random() > (q18HasHole2 ? 0.2 : 0.6)) {
+        particles.q18WaterDrops.push({
+          x: 320 + (Math.random() - 0.5) * 12,
+          y: 310,
+          vx: (Math.random() - 0.5) * 3,
+          vy: q18HasHole2 ? (-1.5 - Math.random() * 2.5) : (-0.8 - Math.random() * 1.5),
+          life: 1.0
+        });
+      }
+    }
+  }
+
+  // 3. Draw and update splash particles
+  ctx.fillStyle = '#68c7f1';
+  particles.q18WaterDrops.forEach((p, idx) => {
+    p.x += p.vx;
+    p.y += p.vy;
+    p.vy += 0.12; // gravity pulls splash down
+    p.life -= 0.025; // fade out splash
+
+    if (p.life <= 0 || p.y > 340) {
+      particles.q18WaterDrops.splice(idx, 1);
+      return;
+    }
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 3 * p.life, 0, Math.PI*2);
+    ctx.fill();
+  });
+
+  // 4. Spawn air bubbles
+  if (!q18HasHole2) {
+    // Air bubble enters Hole 1 inside the can when choked
+    if (q18GlugChoked && Math.random() > 0.7) {
+      particles.q18AirBubbles.push({
+        localX: 37,
+        localY: 40,
+        localVX: (Math.random() - 0.5) * 0.8,
+        localVY: -1.5 - Math.random() * 1.5,
+        size: 3.5 + Math.random() * 2.5,
+        type: 'glug'
+      });
+    }
+  } else {
+    // Inflow air molecules enter Hole 2 (approx 245.5, 127.9)
+    if (Math.random() > 0.3) {
+      particles.q18AirBubbles.push({
+        x: 245.5 - 25 - Math.random() * 15,
+        y: 127.9 - 25 - Math.random() * 15,
+        targetX: 245.5,
+        targetY: 127.9,
+        size: 1.5 + Math.random() * 2,
+        type: 'inflow'
+      });
+    }
+  }
+
+  // 5. Draw and update air bubbles
+  ctx.strokeStyle = 'rgba(255, 255, 255, 0.7)';
+  ctx.lineWidth = 1.0;
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.2)';
+
+  particles.q18AirBubbles.forEach((p, idx) => {
+    if (p.type === 'inflow') {
+      const dx = p.targetX - p.x;
+      const dy = p.targetY - p.y;
+      p.x += dx * 0.15;
+      p.y += dy * 0.15;
+      if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
+        particles.q18AirBubbles.splice(idx, 1);
+        return;
+      }
+      
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+      ctx.fill();
+      ctx.stroke();
+    } else if (p.type === 'glug') {
+      p.localX += p.localVX;
+      p.localY += p.localVY;
+      
+      const h = 67 * (q18WaterLevel / 100);
+      const waterLevelY = 47 - h;
+      
+      // Pop bubble if it rises above the internal liquid surface
+      if (p.localY <= waterLevelY) {
+        particles.q18AirBubbles.splice(idx, 1);
+        return;
+      }
+      
+      // Calculate rotated screen coordinates
+      const rad = -45 * Math.PI / 180;
+      const xRot = p.localX * Math.cos(rad) - p.localY * Math.sin(rad);
+      const yRot = p.localX * Math.sin(rad) + p.localY * Math.cos(rad);
+      const screenX = 300 + xRot;
+      const screenY = 130 + yRot;
+      
+      ctx.beginPath();
+      ctx.arc(screenX, screenY, p.size, 0, Math.PI*2);
+      ctx.fill();
+      ctx.stroke();
+    }
+  });
+}
+
+
+// ==========================================
+// TEACHER VIEWS & UTILITIES
+// ==========================================
+function showTeacher() {
+  const code = prompt("Enter Teacher Password Code:");
+  if (code !== "admin") {
+    alert("Incorrect password.");
+    return;
+  }
+  document.getElementById("home").classList.add("hidden");
+  document.querySelectorAll('section[id^="mission"]').forEach(s => s.classList.add("hidden"));
+  document.getElementById("teacherPanel").classList.remove("hidden");
+
+  document.getElementById("answerDump").innerHTML = `
+    <div style="margin-top:16px;font-size:13px;line-height:1.6">
+      <h3 style="margin-bottom:8px">Revision Key Index</h3>
+      <p><strong>Q14(a) Mixtures:</strong> Solid and liquid [1m]</p>
+      <p><strong>Q14(b):</strong> (i) True [1m], (ii) False [1m]</p>
+      <p><strong>Q15(a) Plant Path:</strong> Roots → Stem → Leaves & Fruits [1m]</p>
+      <p><strong>Q15(b) Girdling:</strong> [2m Total]<br>
+      • Food on Branch X cannot be transported to other parts (like roots) [½m] while food on Branch Y can [½m].<br>
+      • More/excess food accumulated at Fruit X, causing it to grow larger [1m].</p>
+      <p><strong>Q16(a) Electromagnet:</strong> Add battery cells or wire turns to increase magnetic force [2m].</p>
+      <p><strong>Q16(b) Core:</strong> No, plastic is non-magnetic and cannot be magnetized [1m]. <em>Note: Writing 'insulator' only awards 0.5m as the core does not need to conduct electricity.</em></p>
+      <p><strong>Q17(a) Digestion:</strong> As the amount of digestive juices increases, the time taken for the biscuits to be fully digested decreases [1m]. <em>Note: Typing 'decreased' alone awards 0.5m.</em></p>
+      <p><strong>Q17(b) Variables:</strong> Temperature of surroundings, type of digestive juices, or brand of biscuits [1m]. <em>Note: Biscuit size/mass/type, beaker properties, location, and stirring rate are unacceptable.</em></p>
+      <p><strong>Q17(c) Methods:</strong> Crush/break the biscuit [1m]. This increases the exposed surface area of the biscuit to the digestive juices, so enzymes digest it faster [1m].</p>
+      <p><strong>Q18 Air displacement:</strong> [2m Total]<br>
+      • Second hole allows air to enter [½m] to occupy the space of the escaping water [½m].<br>
+      • With only one hole, air must enter using the same hole where water is flowing out [1m], slowing the flow.</p>
+      <p><strong>Q13(a) Circuit bulbs:</strong><br>
+      • Point X: Bulb A and Bulb B [1m]<br>
+      • Point Y: Only Bulb B [1m]</p>
+      <p><strong>Q13(b) Excess Batteries:</strong> The bulb has blown / fused / filament melted [1m].</p>
+    </div>
+  `;
+}
+
+function hideTeacher() {
+  document.getElementById("teacherPanel").classList.add("hidden");
+  document.getElementById("home").classList.remove("hidden");
+}
+
+function resetLesson() {
+  if (confirm("Are you sure you want to clear all progress logs and scores?")) {
+    localStorage.removeItem("p5science_state");
+    location.reload();
+  }
+}
+
+// Orientation & Window Resize Responsive Adapters
+window.addEventListener("resize", () => {
+  resizeCanvas('q14-canvas');
+  resizeCanvas('q14-beaker-canvas');
+  resizeCanvas('q16-canvas');
+  resizeCanvas('beaker-canvas');
+  resizeCanvas('q18-canvas');
+});
+
+window.addEventListener("orientationchange", () => {
+  setTimeout(() => {
+    resizeCanvas('q14-canvas');
+    resizeCanvas('q14-beaker-canvas');
+    resizeCanvas('q16-canvas');
+    resizeCanvas('beaker-canvas');
+    resizeCanvas('q18-canvas');
+  }, 100);
+});
+</script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>P5 Science Interactive Revision Lab</title>
+  <!-- Google Fonts for premium typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* CSS VARIABLES & DESIGN TOKENS */
+    :root {
+      --font-primary: 'Outfit', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+
+      --bg-app: #06070d;
+      --bg-sidebar: #0b0c16;
+      --bg-card: rgba(15, 18, 38, 0.75);
+      --bg-card-hover: rgba(22, 27, 56, 0.9);
+      
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --text-primary: #f7fafc;
+      --text-secondary: #a0aec0;
+      --text-muted: #64748b;
+
+      --accent-cyan: #00f2fe;
+      --accent-purple: #9b51e0;
+      --accent-green: #00e676;
+      --accent-red: #ff3366;
+      --accent-gold: #cca43b;
+
+      --shadow-main: 0 8px 32px 0 rgba(0, 0, 0, 0.5);
+      --blur-glass: 16px;
+      --transition-fast: 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      --transition-normal: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      font-family: var(--font-primary);
+      background-color: var(--bg-app);
+      color: var(--text-primary);
+      min-height: 100vh;
+      overflow-x: hidden;
+      background-image: radial-gradient(circle at 85% 15%, rgba(155, 81, 224, 0.12) 0%, transparent 45%),
+                        radial-gradient(circle at 15% 85%, rgba(0, 242, 254, 0.1) 0%, transparent 45%);
+    }
+
+    header {
+      border-bottom: 1px solid var(--border-glass);
+      padding: 24px 0;
+      background: rgba(8, 9, 20, 0.6);
+      backdrop-filter: blur(12px);
+    }
+
+    .wrap {
+      max-width: 1200px;
+      margin: auto;
+      padding: 0 24px;
+    }
+
+    .header-layout {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    header h1 {
+      font-size: 30px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent-cyan), var(--accent-purple));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 30px rgba(0, 242, 254, 0.15);
+    }
+
+    header p {
+      color: var(--text-secondary);
+      font-size: 14px;
+      margin-top: 4px;
+      letter-spacing: 0.5px;
+    }
+
+    .topbar {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin: 24px 0;
+    }
+
+    .pill {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 999px;
+      padding: 10px 20px;
+      font-weight: 700;
+      color: var(--text-primary);
+      box-shadow: var(--shadow-main);
+      backdrop-filter: blur(8px);
+    }
+
+    .pill span {
+      color: var(--accent-cyan);
+      text-shadow: 0 0 10px rgba(0, 242, 254, 0.5);
+    }
+
+    .progress-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .progress-shell {
+      height: 10px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 999px;
+      overflow: hidden;
+      width: 180px;
+      border: 1px solid var(--border-glass);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0;
+      background: linear-gradient(to right, var(--accent-cyan), var(--accent-green));
+      transition: width var(--transition-normal);
+    }
+
+    /* GRID & CARDS */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glass);
+      border-radius: 24px;
+      padding: 24px;
+      box-shadow: var(--shadow-main);
+      backdrop-filter: blur(var(--blur-glass));
+    }
+
+    .mission-card {
+      cursor: pointer;
+      transition: transform var(--transition-normal), border-color var(--transition-normal), background-color var(--transition-normal);
+    }
+
+    .mission-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(0, 242, 254, 0.3);
+      background-color: var(--bg-card-hover);
+      box-shadow: 0 12px 40px rgba(0, 242, 254, 0.15);
+    }
+
+    .mission-card h3 {
+      margin: 12px 0 8px;
+      font-size: 18px;
+    }
+
+    .mission-card p {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: rgba(0, 242, 254, 0.08);
+      color: var(--accent-cyan);
+      font-weight: 700;
+      border: 1px solid rgba(0, 242, 254, 0.2);
+    }
+
+    /* BUTTONS */
+    button {
+      border: 1px solid transparent;
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-family: var(--font-primary);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 14px;
+      transition: var(--transition-fast);
+      background: var(--accent-cyan);
+      color: #0c0d1e;
+      box-shadow: 0 4px 16px rgba(0, 242, 254, 0.25);
+    }
+
+    button:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(0, 242, 254, 0.4);
+    }
+
+    button.secondary {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-primary);
+      border-color: var(--border-glass);
+      box-shadow: none;
+    }
+
+    button.secondary:hover {
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    button.danger {
+      background: var(--accent-red);
+      color: var(--text-primary);
+      box-shadow: 0 4px 16px rgba(255, 51, 102, 0.25);
+    }
+
+    button.danger:hover {
+      box-shadow: 0 6px 20px rgba(255, 51, 102, 0.4);
+    }
+
+    button:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    /* FORMS */
+    input[type="text"], textarea, select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1px solid var(--border-glass);
+      border-radius: 10px;
+      font-size: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-primary);
+      font-family: var(--font-primary);
+      outline: none;
+      transition: border-color var(--transition-fast);
+    }
+
+    input[type="text"]:focus, textarea:focus, select:focus {
+      border-color: var(--accent-cyan);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    /* FEEDBACK & CASE CARDS */
+    .feedback {
+      margin-top: 14px;
+      padding: 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border-glass);
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .feedback.good {
+      background: rgba(0, 230, 118, 0.05);
+      border-color: rgba(0, 230, 118, 0.2);
+      color: var(--accent-green);
+    }
+
+    .feedback.bad {
+      background: rgba(255, 51, 102, 0.05);
+      border-color: rgba(255, 51, 102, 0.2);
+      color: var(--accent-red);
+    }
+
+    .explain {
+      margin-top: 8px;
+      color: var(--text-secondary);
+      border-top: 1px solid rgba(255,255,255,0.05);
+      padding-top: 8px;
+      font-size: 13px;
+    }
+
+    .section-title {
+      font-size: 24px;
+      margin-bottom: 20px;
+      border-left: 4px solid var(--accent-cyan);
+      padding-left: 12px;
+    }
+
+    .navrow {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .simbox {
+      background: #04050a;
+      border: 1px solid var(--border-glass);
+      border-radius: 20px;
+      padding: 24px;
+      margin: 20px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* SCAFFOLDING STYLES */
+    .scaffold-panel {
+      margin-top: 10px;
+      padding: 14px;
+      border: 1px dashed rgba(0, 242, 254, 0.25);
+      background: rgba(0, 242, 254, 0.02);
+      border-radius: 12px;
+    }
+
+    .scaffold-header {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--accent-cyan);
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    .sentence-starters-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 12px;
+    }
+
+    .starter-btn {
+      font-size: 11px;
+      padding: 6px 10px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--text-secondary);
+      border: 1px solid var(--border-glass);
+      cursor: pointer;
+    }
+
+    .starter-btn:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+    }
+
+    .checklist-row {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .kw-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 4px 8px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.02);
+      color: var(--text-muted);
+      border: 1px solid var(--border-glass);
+      transition: var(--transition-fast);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .kw-tag.checked {
+      background: rgba(0, 230, 118, 0.1);
+      color: var(--accent-green);
+      border-color: rgba(0, 230, 118, 0.3);
+      box-shadow: 0 0 10px rgba(0, 230, 118, 0.1);
+    }
+
+    .clue-box {
+      font-size: 12px;
+      color: var(--accent-gold);
+      background: rgba(204, 164, 59, 0.05);
+      border: 1px solid rgba(204, 164, 59, 0.15);
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+      line-height: 1.4;
+    }
+
+    /* LAB WORKSPACES (MISSION-SPECIFIC LAYOUTS) */
+    .lab-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 28px;
+    }
+
+    @media (max-width: 900px) {
+      .lab-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .svg-container {
+      width: 100%;
+      height: auto;
+      aspect-ratio: 600 / 350;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 16px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--border-glass);
+    }
+
+    .interactive-svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    .canvas-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    /* HEATING GRAPH & MOLECULES GRID */
+    .graph-sim {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 20px;
+    }
+    
+    @media (max-width: 850px) {
+      .graph-sim {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    #q14-graph-svg {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .beaker-visual-box {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      height: 250px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .molecular-box {
+      background: rgba(0,0,0,0.3);
+      border: 1px solid var(--border-glass);
+      border-radius: 16px;
+      display: flex;
+      flex-direction: column;
+      height: 170px;
+      overflow: hidden;
+      margin-top: 16px;
+    }
+
+    .molecular-title {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      padding: 8px 12px;
+      border-bottom: 1px solid var(--border-glass);
+      color: var(--accent-purple);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .molecular-canvas {
+      flex-grow: 1;
+      width: 100%;
+      height: 100%;
+      background: #04050a;
+    }
+
+    .beaker-canvas-q14 {
+      width: 100%;
+      height: 100%;
+      background: #04050a;
+    }
+
+    .statebox {
+      padding: 14px;
+      border-radius: 12px;
+      background: rgba(155, 81, 224, 0.08);
+      border: 1px solid rgba(155, 81, 224, 0.2);
+      margin-top: 14px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    /* ELECTROMAGNET RESULTS TABLE */
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      margin-top: 14px;
+    }
+
+    .results-table th, .results-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .results-table th {
+      background: rgba(0, 0, 0, 0.3);
+      color: var(--text-secondary);
+    }
+
+    /* BEAKERS DIGESTION */
+    .beaker-lab-container {
+      position: relative;
+      width: 100%;
+      height: 260px;
+      background: #04050a;
+      border-radius: 16px;
+      border: 1px solid var(--border-glass);
+      overflow: hidden;
+    }
+
+    .beaker-canvas {
+      width: 100%;
+      height: 100%;
+    }
+
+    /* RANGE SLIDER */
+    .slider {
+      -webkit-appearance: none;
+      width: 100%;
+      height: 6px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, 0.1);
+      outline: none;
+      margin: 12px 0;
+    }
+
+    .slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: var(--accent-cyan);
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0, 242, 254, 0.8);
+      transition: transform 0.1s;
+    }
+
+    .slider::-webkit-slider-thumb:hover {
+      transform: scale(1.2);
+    }
+
+    /* TEACHER PANEL STYLE */
+    .teacher {
+      background: rgba(252, 211, 77, 0.05);
+      border-color: rgba(252, 211, 77, 0.2);
+      border-left: 4px solid var(--accent-gold);
+    }
+
+    .marks {
+      font-weight: 700;
+      color: var(--accent-gold);
+    }
+
+    .disabled-scaffold {
+      opacity: 0.3;
+      pointer-events: none;
+      filter: blur(1.5px);
+      transition: all 0.4s ease;
+    }
+    
+    @keyframes crawlCurrent {
+      to {
+        stroke-dashoffset: -20;
+      }
+    }
+    .current-flow-anim {
+      animation: crawlCurrent 0.8s linear infinite;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(4px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* UTILS */
+    hr {
+      border: none;
+      border-top: 1px solid var(--border-glass);
+      margin: 24px 0;
+    }
+
+    /* MOBILE AND IPAD ADJUSTMENTS */
+    @media (max-width: 600px) {
+      .wrap {
+        padding: 0 12px;
+      }
+      header {
+        padding: 16px 0;
+      }
+      header h1 {
+        font-size: 22px;
+      }
+      header p {
+        font-size: 12px;
+      }
+      .section-title {
+        font-size: 18px;
+        margin-bottom: 14px;
+      }
+      .topbar {
+        margin: 16px 0;
+        gap: 12px;
+      }
+      .pill {
+        padding: 6px 12px;
+        font-size: 12px;
+      }
+      .progress-shell {
+        width: 120px;
+        height: 8px;
+      }
+      .simbox {
+        padding: 14px;
+        margin: 12px 0;
+      }
+      .card {
+        padding: 14px;
+      }
+      .grid {
+        gap: 12px;
+        margin-bottom: 24px;
+      }
+      input[type="text"], textarea, select {
+        padding: 10px 12px;
+        font-size: 14px;
+      }
+      button {
+        padding: 10px 16px;
+        font-size: 14px;
+      }
+      .graph-sim {
+        gap: 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap header-layout">
+    <div>
+      <h1>🔬 P5 Science Interactive Revision Lab</h1>
+      <p>Analyze • Experiment • Answer • Succeed</p>
+    </div>
+    <button class="secondary" onclick="showTeacher()">🔑 Teacher Panel</button>
+  </div>
+</header>
+
+<main class="wrap">
+  <div class="topbar">
+    <div class="pill">Accumulated Score: <span id="score">0</span> / <span id="maxScore">13</span> Marks</div>
+    <div class="progress-container">
+      <span class="small" style="font-weight:600">Lab Progress</span>
+      <div class="progress-shell"><div id="progressFill" class="progress-fill"></div></div>
+    </div>
+  </div>
+
+  <!-- HOME MODULE SELECTOR -->
+  <section id="home">
+    <div class="grid">
+      <!-- M1 -->
+      <div class="card mission-card" onclick="openMission(1)">
+        <span class="badge">Mission 1</span>
+        <h3>🔥 Heating & States</h3>
+        <p>Explore heat gain, temperature plateaus, and molecular movement during phase changes (Q14).</p>
+      </div>
+      <!-- M2 -->
+      <div class="card mission-card" onclick="openMission(2)">
+        <span class="badge">Mission 2</span>
+        <h3>🌿 Transport in Plants</h3>
+        <p>Trace water-carrying tubes and run girdling timeline experiments to block food transport (Q15).</p>
+      </div>
+      <!-- M3 -->
+      <div class="card mission-card" onclick="openMission(3)">
+        <span class="badge">Mission 3</span>
+        <h3>🧲 Electromagnets</h3>
+        <p>Configure electromagnet parameters (coils, core, battery cells) to attract steel nails from variable distances (Q16).</p>
+      </div>
+      <!-- M4 -->
+      <div class="card mission-card" onclick="openMission(4)">
+        <span class="badge">Mission 4</span>
+        <h3>🍪 Digestion Rates</h3>
+        <p>Simulate digestive enzyme reactions on whole vs crushed biscuits to demonstrate active surface area (Q17).</p>
+      </div>
+      <!-- M5 -->
+      <div class="card mission-card" onclick="openMission(5)">
+        <span class="badge">Mission 5</span>
+        <h3>💨 Air Occupies Space</h3>
+        <p>Tilt container tins and punch holes to inspect how air occupies space and affects fluid flow rates (Q18).</p>
+      </div>
+      <!-- M6 -->
+      <div class="card mission-card" onclick="openMission(6)">
+        <span class="badge" style="background:var(--accent-pink)">Mission 6</span>
+        <h3>⚡ Electrical Circuits</h3>
+        <p>Analyze how switch-rod positions toggle series-parallel flows and light up bulbs (Q13).</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION 1: HEATING & STATES -->
+  <section id="mission1" class="hidden">
+    <div class="card lab-grid">
+      <!-- Left: Simulation -->
+      <div>
+        <h2 class="section-title">Mission 1: Heating and Changes of State (Q14)</h2>
+        <div class="simbox">
+          <h3 class="control-label" style="margin-bottom:12px">Heating Lab & Molecular Simulation</h3>
+          <div class="graph-sim">
+            <!-- SVG Graph -->
+            <svg id="q14-graph-svg" viewBox="0 0 350 250" style="background:#04050a; border-radius:12px; border:1px solid var(--border-glass)">
+              <defs>
+                <filter id="glow-lamp" x="-30%" y="-30%" width="160%" height="160%">
+                  <feGaussianBlur stdDeviation="6" result="blur" />
+                  <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                </filter>
+              </defs>
+              <line x1="50" y1="50" x2="320" y2="50" stroke="#1e293b" stroke-dasharray="2,2"/>
+              <line x1="50" y1="120" x2="320" y2="120" stroke="#1e293b" stroke-dasharray="2,2"/>
+              <line x1="50" y1="200" x2="320" y2="200" stroke="#1e293b" stroke-dasharray="2,2"/>
+              <line x1="104" y1="50" x2="104" y2="210" stroke="#1e293b" stroke-dasharray="2,2"/>
+              <line x1="212" y1="50" x2="212" y2="210" stroke="#1e293b" stroke-dasharray="2,2"/>
+              
+              <!-- Axes -->
+              <line x1="50" y1="30" x2="50" y2="210" stroke="#cbd5e0" stroke-width="2"/>
+              <line x1="50" y1="210" x2="330" y2="210" stroke="#cbd5e0" stroke-width="2"/>
+              
+              <!-- Labels -->
+              <text x="15" y="125" fill="#a0aec0" font-size="9" transform="rotate(-90 15 125)">Temperature (°C)</text>
+              <text x="180" y="235" fill="#a0aec0" font-size="10" text-anchor="middle">Time (Minutes)</text>
+              <text x="35" y="204" fill="#a0aec0" font-size="9">0</text>
+              <text x="30" y="124" fill="#a0aec0" font-size="9">Melting (0°C)</text>
+              <text x="30" y="54" fill="#a0aec0" font-size="9">Boiling (100°C)</text>
+              
+              <!-- Plot Curve (A -> B -> C -> D) -->
+              <path d="M 50,120 L 104,120 L 212,50 L 320,50" fill="none" stroke="#9b51e0" stroke-width="3" />
+              
+              <!-- Phase text markers -->
+              <text x="77" y="110" fill="#a0aec0" font-size="9" text-anchor="middle">A-B (Melting)</text>
+              <text x="158" y="75" fill="#a0aec0" font-size="9" text-anchor="middle">B-C (Liquid)</text>
+              <text x="266" y="40" fill="#a0aec0" font-size="9" text-anchor="middle">C-D (Boiling)</text>
+
+              <!-- Glow marker indicator (controlled by slider) -->
+              <circle id="graph-tracker" cx="50" cy="120" r="6" fill="#00f2fe" filter="url(#glow-lamp)"/>
+            </svg>
+
+            <!-- Physical Beaker Simulator -->
+            <div class="beaker-visual-box">
+              <div class="molecular-title">Beaker & Flame view</div>
+              <canvas id="q14-beaker-canvas" class="beaker-canvas-q14" width="220" height="210"></canvas>
+            </div>
+          </div>
+
+          <!-- Molecular zoom view -->
+          <div class="molecular-box">
+            <div class="molecular-title">🔬 ZOOM-IN: Molecular Particle View (Substance Z)</div>
+            <canvas id="q14-canvas" class="molecular-canvas" width="600" height="135"></canvas>
+          </div>
+
+          <label style="margin-top:14px;display:block" class="control-label">Move time slider: <span id="timeLabel" style="color:var(--accent-cyan);font-family:var(--font-mono)">0</span> min</label>
+          <input type="range" min="0" max="10" step="0.1" value="0" class="slider" oninput="updateState(this.value)">
+          <div id="stateBox" class="statebox"></div>
+        </div>
+      </div>
+
+      <!-- Right: Questions -->
+      <div>
+        <h3>Question 1(a) <span class="marks">[1 Mark]</span></h3>
+        <p style="margin-bottom:12px">During the first minute (part A-B), what state(s) of matter is substance Z in?</p>
+        <input id="q14a" type="text" placeholder="e.g. solid, liquid, gas">
+        <button onclick="checkContainsAll('q14a','q14aFb',['solid','liquid'],1,'q14a')" style="margin-top:10px">Check Answer</button>
+        <div id="q14aFb" class="feedback hidden"></div>
+
+        <hr>
+
+        <h3>Question 1(b) <span class="marks">[2 Marks]</span></h3>
+        <p style="margin-bottom:12px">State whether the statements about substance Z are True or False:</p>
+        
+        <label class="control-label">(i) From B to C, substance Z is gaining heat.</label>
+        <select id="q14b1" style="margin-bottom:12px"><option value="">Choose</option><option>True</option><option>False</option></select>
+        
+        <label class="control-label">(ii) From C to D, substance Z is not gaining heat.</label>
+        <select id="q14b2" style="margin-bottom:12px"><option value="">Choose</option><option>True</option><option>False</option></select>
+        
+        <button onclick="check14b()" style="margin-top:10px">Check Answer</button>
+        <div id="q14bFb" class="feedback hidden"></div>
+
+        <div class="navrow" style="margin-top:32px"><button class="secondary" onclick="goHome()">← Back to Missions</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION 2: TRANSPORT IN PLANTS -->
+  <section id="mission2" class="hidden">
+    <div class="card lab-grid">
+      <!-- Left: Simulation -->
+      <div>
+        <h2 class="section-title">Mission 2: Transport in Plants (Q15)</h2>
+        <div class="simbox">
+          <h3 class="control-label" style="margin-bottom:12px">Interactive Transport Diagram</h3>
+          <div class="svg-container" style="max-height:350px">
+            <svg id="q15-svg" viewBox="0 0 600 350" class="interactive-svg">
+              <defs>
+                <!-- Soil gradient -->
+                <linearGradient id="soil-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+                  <stop offset="0%" stop-color="#4e3629" />
+                  <stop offset="100%" stop-color="#1c120c" />
+                </linearGradient>
+                <!-- Bark gradient -->
+                <linearGradient id="bark-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+                  <stop offset="0%" stop-color="#3d261c" />
+                  <stop offset="50%" stop-color="#5c3a21" />
+                  <stop offset="100%" stop-color="#2d1b13" />
+                </linearGradient>
+                <!-- Leaf gradient -->
+                <radialGradient id="leaf-grad" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stop-color="#4caf50" />
+                  <stop offset="100%" stop-color="#1b5e20" />
+                </radialGradient>
+              </defs>
+              <rect width="600" height="350" rx="12" fill="rgba(0,0,0,0.15)"/>
+              
+              <!-- Roots/Soil Mound -->
+              <path d="M 120,350 Q 300,310 480,350 Z" fill="url(#soil-grad)" />
+              <path d="M 285,340 Q 260,370 230,380" stroke="#3d271d" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+              <path d="M 315,340 Q 345,368 375,378" stroke="#3d271d" stroke-width="4.5" fill="none" stroke-linecap="round"/>
+
+              <!-- Inner wood core (runs from bottom to branches, visible inside bark cut) -->
+              <path d="M 285,350 V 220 C 285,190 245,172 205,166 L 208,154 C 248,160 295,180 295,215 C 295,180 342,160 382,154 L 385,166 C 345,172 305,190 305,220 V 350 Z" fill="#d7ccc8" />
+
+              <!-- Outer Bark Left side -->
+              <path d="M 270,350 C 270,300 280,260 280,220 C 280,180 230,165 190,158 L 195,142 C 245,150 295,170 295,210" fill="none" stroke="url(#bark-grad)" stroke-width="12" stroke-linecap="round"/>
+              
+              <!-- Outer Bark Right side (Branch X) -->
+              <path d="M 310,220 C 310,260 320,300 320,350" fill="none" stroke="url(#bark-grad)" stroke-width="12" stroke-linecap="round"/>
+              <path d="M 295,210 C 295,170 345,150 395,142" fill="none" stroke="url(#bark-grad)" stroke-width="12" stroke-linecap="round"/>
+
+              <!-- Right branch outer bark segment 1 (from trunk to cut) -->
+              <path id="bark-right-seg1" d="M 310,220 C 310,180 350,154 350,154" fill="none" stroke="url(#bark-grad)" stroke-width="12" stroke-linecap="round"/>
+              
+              <!-- Exposed inner wood core highlight (shown when bark is cut) -->
+              <path id="exposed-wood-core" d="M 350,154 C 365,148 372,145 380,143" fill="none" stroke="#fcefe3" stroke-width="9" stroke-linecap="butt" class="hidden"/>
+              
+              <!-- Right branch outer bark segment 2 (over the girdled section, hidden when cut) -->
+              <path id="bark-girdle-overlay" d="M 350,154 C 365,148 372,145 380,143" fill="none" stroke="url(#bark-grad)" stroke-width="12" stroke-linecap="round"/>
+              
+              <!-- Right branch outer bark segment 3 (from cut to leaves) -->
+              <path id="bark-right-seg2" d="M 380,143 C 380,143 390,140 400,138" fill="none" stroke="url(#bark-grad)" stroke-width="12" stroke-linecap="round"/>
+
+              <!-- Sliced bark cut lips (dark borders at cut ends) -->
+              <ellipse id="cut-lip-left" cx="350" cy="154" rx="3.5" ry="7" fill="#1c120c" transform="rotate(-25 350 154)" class="hidden"/>
+              <ellipse id="cut-lip-right" cx="380" cy="143" rx="3.5" ry="7" fill="#1c120c" transform="rotate(-25 380 143)" class="hidden"/>
+
+              <!-- Callout Pointer & Label for the Cut -->
+              <path id="cut-pointer" d="M 365,148 L 365,185 H 330" stroke="#ff3366" stroke-width="1.5" stroke-dasharray="2,2" class="hidden"/>
+              <text id="cut-callout-text" x="320" y="189" fill="#ff3366" font-size="10" font-weight="bold" text-anchor="end" class="hidden">Outer Ring of Bark Removed</text>
+
+              <!-- Swelling bark above cut (grows in updateGirdleDays) -->
+              <path id="bark-swell-svg" d="M 380,143 Q 380,143 380,143" fill="#8d6e63" stroke="#2d1b13" stroke-width="2" class="hidden"/>
+
+              <!-- Fruit Y (Left, Normal) hanging from branch -->
+              <g transform="translate(180, 160)">
+                <path d="M 0,0 Q -10,15 -15,25" stroke="#5c4033" stroke-width="2.5" fill="none"/>
+                <circle id="fruitY-svg" cx="-15" cy="38" r="14" fill="#e53e3e"/>
+                <circle cx="-19" cy="34" r="4" fill="#ff8a80" opacity="0.6"/>
+                <text x="-35" y="62" fill="#cbd5e0" font-size="10" font-weight="bold">Fruit Y</text>
+              </g>
+
+              <!-- Fruit X (Right, Girdled) hanging from branch -->
+              <g transform="translate(410, 140)">
+                <path d="M 0,0 Q 10,15 15,25" stroke="#5c4033" stroke-width="2.5" fill="none"/>
+                <circle id="fruitX-svg" cx="15" cy="38" r="14" fill="#e53e3e"/>
+                <circle id="fruitX-shine" cx="11" cy="34" r="4" fill="#ff8a80" opacity="0.6"/>
+                <text x="-5" y="62" fill="#cbd5e0" font-size="10" font-weight="bold">Fruit X</text>
+              </g>
+
+              <!-- Leaf Clusters Left (Canopy) -->
+              <g transform="translate(150, 110)">
+                <ellipse cx="10" cy="20" rx="35" ry="18" fill="#1b5e20" opacity="0.8" transform="rotate(-15 10 20)"/>
+                <ellipse cx="-15" cy="10" rx="28" ry="15" fill="#2e7d32" opacity="0.8" transform="rotate(20 -15 10)"/>
+                <ellipse cx="25" cy="15" rx="30" ry="16" fill="#4caf50" opacity="0.9"/>
+                <ellipse cx="0" cy="5" rx="26" ry="14" fill="#81c784" opacity="0.95"/>
+                <text x="-40" y="-12" fill="#cbd5e0" font-size="10" font-weight="bold">Leaves (Make Food)</text>
+              </g>
+
+              <!-- Leaf Clusters Right (Canopy) -->
+              <g transform="translate(420, 100)">
+                <ellipse cx="-10" cy="20" rx="35" ry="18" fill="#1b5e20" opacity="0.8" transform="rotate(15 -10 20)"/>
+                <ellipse cx="15" cy="10" rx="28" ry="15" fill="#2e7d32" opacity="0.8" transform="rotate(-20 15 10)"/>
+                <ellipse cx="-25" cy="15" rx="30" ry="16" fill="#4caf50" opacity="0.9"/>
+                <ellipse cx="0" cy="5" rx="26" ry="14" fill="#81c784" opacity="0.95"/>
+              </g>
+              
+              <!-- Labels -->
+              <text x="245" y="325" fill="#cbd5e0" font-size="10" font-weight="bold">Roots (Absorb Water)</text>
+              <text x="235" y="245" fill="#cbd5e0" font-size="10" font-weight="bold">Stem</text>
+            </svg>
+            <canvas id="q15-canvas" class="canvas-overlay" width="600" height="350"></canvas>
+          </div>
+
+          <div class="navrow">
+            <button onclick="girdlePlant()" id="btnGirdle">Cut Bark (Food-carrying tubes) on Branch X</button>
+            <button class="secondary" onclick="resetPlant()">Reset Experiment</button>
+          </div>
+          
+          <label style="margin-top:14px;display:block" class="control-label">Girdling Timeline: <span id="daysLabel" style="color:var(--accent-cyan);font-family:var(--font-mono)">0</span> Days Passed</label>
+          <input id="daysSlider" type="range" min="0" max="14" step="1" value="0" class="slider" disabled oninput="updateGirdleDays(this.value)">
+        </div>
+      </div>
+
+      <!-- Right: Questions -->
+      <div>
+        <h3>Question 2(a) <span class="marks">[1 Mark]</span></h3>
+        <p style="margin-bottom:12px">Complete the pathway of water transport in a flowering plant:</p>
+        <select id="q15a">
+          <option value="">Choose a pathway</option>
+          <option>Roots → Stem → Leaves & Fruits</option>
+          <option>Leaves → Stem → Roots & Fruits</option>
+          <option>Fruits → Stem → Leaves & Roots</option>
+        </select>
+        <button onclick="checkChoice('q15a','q15aFb','Roots → Stem → Leaves & Fruits',1,'q15a')" style="margin-top:10px">Check Answer</button>
+        <div id="q15aFb" class="feedback hidden"></div>
+
+        <hr>
+
+        <h3>Question 2(b) <span class="marks">[2 Marks]</span></h3>
+        <p style="margin-bottom:12px">Explain why Fruit X grew slightly bigger than Fruit Y after several days. Mention the specific tissues removed and the transport paths.</p>
+        
+        <textarea id="q15b" placeholder="Write your explanation..." oninput="updateKeywords('q15b', 'q15b-checklist')"></textarea>
+
+        <!-- Scaffolding Panel -->
+        <div class="scaffold-panel">
+          <div class="scaffold-header">💡 Writing Scaffold (Check as you type)</div>
+          <div class="sentence-starters-row">
+            <button class="starter-btn" onclick="insertStarter('q15b', 'The food-carrying tubes on Branch X were removed, so the food made by the...')">Sentence Starter</button>
+          </div>
+          <div class="checklist-row" id="q15b-checklist">
+            <span class="kw-tag" data-word="branch x|cut">Branch X path blocked</span>
+            <span class="kw-tag" data-word="other parts|roots|stem|rest of the plant">cannot go to roots/other parts</span>
+            <span class="kw-tag" data-word="branch y|normal branch|other branch">Branch Y compared</span>
+            <span class="kw-tag" data-word="more food|excess food|greater amount|all the food">more/excess food</span>
+            <span class="kw-tag" data-word="accumulated in fruit x|stored in fruit x|only to fruit x">accumulated at Fruit X</span>
+          </div>
+          <div class="clue-box">
+            🎯 <strong>P5 Scoring Guidelines (2 Marks):</strong><br>
+            • State that food made by leaves on Branch X <strong>cannot</strong> be transported to other parts (like roots) [½ Mark] but food on Branch Y <strong>can</strong> [½ Mark].<br>
+            • Explain that a <strong>greater amount / more food</strong> accumulated in Fruit X than before [1 Mark].
+          </div>
+        </div>
+
+        <button onclick="check15b()" style="margin-top:10px">Check Answer</button>
+        <div id="q15bFb" class="feedback hidden"></div>
+
+        <div class="navrow" style="margin-top:32px"><button class="secondary" onclick="goHome()">← Back to Missions</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION 3: ELECTROMAGNETS -->
+  <section id="mission3" class="hidden">
+    <div class="card lab-grid">
+      <!-- Left: Simulation -->
+      <div>
+        <h2 class="section-title">Mission 3: Electromagnet Strength (Q16)</h2>
+        <div class="simbox">
+            <h3 class="control-label" style="margin-bottom:12px">Electromagnet Apparatus Rig</h3>
+            
+            <!-- Glowing instruction bar -->
+            <div id="mag-instructions" style="background: rgba(0, 242, 254, 0.08); border-left: 4px solid var(--accent-cyan); padding: 12px 16px; border-radius: 6px; margin-bottom: 16px; font-size: 13px; line-height: 1.5; font-weight: 500; transition: all 0.3s ease;">
+              🎯 <strong style="color:var(--accent-cyan)">Step 1:</strong> Change the <strong>Distance x to 12 cm</strong> using the dropdown menu below.
+            </div>
+
+            <div class="svg-container" style="max-height:300px">
+              <svg id="q16-svg" viewBox="0 0 600 300" class="interactive-svg">
+                <rect width="600" height="300" rx="12" fill="rgba(0,0,0,0.15)"/>
+                
+                <!-- Core Rod -->
+                <rect id="mag-core-rod" x="220" y="130" width="130" height="40" rx="4" fill="#4a5568" stroke="#718096" stroke-width="2"/>
+                
+                <!-- Coils (wound around core) -->
+                <g id="mag-windings-g" stroke="#cca43b" stroke-width="4" fill="none"></g>
+
+                <!-- Connection wires with switch gap -->
+                <!-- Left side circuit -->
+                <path d="M 220,150 H 60 V 240 H 100" stroke="#4a5568" stroke-width="3" fill="none"/>
+                <!-- Battery to Switch contact -->
+                <path d="M 180,240 H 220" stroke="#4a5568" stroke-width="3" fill="none"/>
+                <!-- Switch pivot to right side circuit -->
+                <path d="M 260,240 H 380 V 150 H 350" stroke="#4a5568" stroke-width="3" fill="none"/>
+                
+                <!-- Switch contact points (circles) -->
+                <circle cx="220" cy="240" r="4" fill="#a0aec0" stroke="#4a5568" stroke-width="1.5"/>
+                <circle cx="260" cy="240" r="4" fill="#a0aec0" stroke="#4a5568" stroke-width="1.5"/>
+
+                <!-- Switch Lever Group (Clickable) -->
+                <g onclick="toggleMagnetSwitch()" style="cursor:pointer">
+                  <!-- Click helper box -->
+                  <rect x="210" y="205" width="60" height="45" fill="transparent" />
+                  <line id="mag-switch-lever" x1="260" y1="240" x2="235" y2="215" stroke="#cca43b" stroke-width="4.5" stroke-linecap="round" />
+                  <text x="240" y="262" fill="#cbd5e0" font-size="8" font-weight="bold" text-anchor="middle">SWITCH (CLICK TO TOGGLE)</text>
+                </g>
+
+                <!-- Glowing current lines (visible when switch is closed) -->
+                <g id="mag-current-glow" class="hidden">
+                  <path d="M 220,150 H 60 V 240 H 100 M 180,240 H 220 M 260,240 H 380 V 150 H 350" stroke="#00e676" stroke-width="3.5" stroke-dasharray="6,6" fill="none" class="current-flow-anim"/>
+                </g>
+
+                <!-- Battery Holder Box -->
+                <rect x="98" y="225" width="84" height="30" rx="3" fill="rgba(255,255,255,0.03)" stroke="#4a5568" stroke-width="1.5"/>
+                <line x1="98" y1="240" x2="100" y2="240" stroke="#718096" stroke-width="4"/>
+                <line x1="180" y1="240" x2="182" y2="240" stroke="#718096" stroke-width="4"/>
+                
+                <!-- Compression spring to bridge the gap -->
+                <path id="mag-spring-path" stroke="#a0aec0" stroke-width="2.5" fill="none"/>
+
+                <!-- Batteries -->
+                <g id="mag-batteries-g" transform="translate(100, 240)"></g>
+
+                <!-- Hanging Steel Nail -->
+                <g id="mag-nail-g" transform="translate(500, 40)" style="transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)">
+                  <!-- Ceiling support -->
+                  <rect x="-20" y="0" width="40" height="8" fill="#4a5568"/>
+                  <!-- Thread + Nail Rotated -->
+                  <g id="mag-nail-string" style="transform: translate(0px, 8px); transition: transform 0.5s cubic-bezier(0.25, 0.8, 0.25, 1)">
+                     <line x1="0" y1="0" x2="0" y2="120" stroke="#e2e8f0" stroke-width="1.5" />
+                     <g transform="translate(0, 120)">
+                       <ellipse cx="0" cy="0" rx="8" ry="2.5" fill="#90cdf4" stroke="#4299e1"/>
+                       <path d="M -2.5,0 L -1.5,50 L 0,60 L 1.5,50 L 2.5,0 Z" fill="#90cdf4" stroke="#4299e1"/>
+                     </g>
+                  </g>
+                </g>
+
+                <!-- Distance Line -->
+                <g id="mag-dist-g">
+                  <line x1="350" y1="210" x2="470" y2="210" stroke="#ff3366" stroke-dasharray="3,3" stroke-width="1.5"/>
+                  <line x1="350" y1="200" x2="350" y2="220" stroke="#ff3366" stroke-width="1.5"/>
+                  <line x1="470" y1="200" x2="470" y2="220" stroke="#ff3366" stroke-width="1.5"/>
+                  <text id="mag-dist-lbl" x="410" y="195" fill="#ff3366" font-size="11" text-anchor="middle" font-weight="bold">12 cm</text>
+                </g>
+              </svg>
+              <canvas id="q16-canvas" class="canvas-overlay" width="600" height="300"></canvas>
+            </div>
+
+            <div class="grid" style="margin-top:16px">
+              <label class="control-label">Battery Cells
+                <input id="batRange" type="range" min="1" max="5" value="1" class="slider" oninput="runMagnet()">
+              </label>
+              <label class="control-label">Wire Turns
+                <select id="turns" onchange="runMagnet()">
+                  <option value="5">Low (5 Turns)</option>
+                  <option value="15" selected>Medium (15 Turns)</option>
+                  <option value="30">High (30 Turns)</option>
+                </select>
+              </label>
+              <label class="control-label">Core Material
+                <select id="core" onchange="runMagnet()"><option>Iron</option><option>Plastic</option></select>
+              </label>
+              <label class="control-label">Distance x
+                <select id="distance" onchange="runMagnet()">
+                  <option value="5" selected>5 cm</option>
+                  <option value="8">8 cm</option>
+                  <option value="12">12 cm</option>
+                </select>
+              </label>
+            </div>
+            <p id="magnetFb" style="margin-top:12px;font-weight:600" class="small"></p>
+
+            <table class="results-table">
+              <thead>
+                <tr>
+                  <th>x (cm)</th>
+                  <th>Core</th>
+                  <th>Cells</th>
+                  <th>Turns</th>
+                  <th>Nail Attracted?</th>
+                </tr>
+              </thead>
+              <tbody id="magnet-logs-body">
+                <tr class="placeholder-row"><td colspan="5" style="text-align:center;color:var(--text-muted)">Close switch/run tests to populate table log.</td></tr>
+              </tbody>
+            </table>
+            <div style="display: flex; justify-content: flex-end; margin-top: 10px;">
+              <button class="secondary" onclick="clearMagnetLogs()" style="font-size: 11px; padding: 6px 12px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.15); border-radius: 4px; color: #fff; cursor: pointer; transition: all 0.3s ease;">Reset Data Table</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Questions -->
+        <div style="position: relative;">
+          <!-- Locked Cover Overlay -->
+          <div id="q16-locked-cover" style="position: absolute; top:0; left:0; width:100%; height:100%; background: rgba(8, 9, 20, 0.85); backdrop-filter: blur(4px); border-radius: 12px; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; text-align: center; padding: 24px; border: 1px solid rgba(255,255,255,0.08); transition: all 0.4s ease;">
+            <span style="font-size: 3.2rem; margin-bottom: 16px; filter: drop-shadow(0 0 10px rgba(0, 242, 254, 0.3));">🔒</span>
+            <h3 style="color:#fff; margin-bottom: 8px;">Question Locked</h3>
+            <p id="q16-locked-text" style="font-size: 13px; color: var(--text-muted); max-width: 280px; line-height: 1.5">
+              Test all distances (5 cm, 8 cm, 12 cm) in the table using the switch to unlock the questions.
+            </p>
+          </div>
+
+          <div id="q16-questions-card" class="disabled-scaffold">
+            <h3>Question 3(a) <span class="marks">[2 Marks]</span></h3>
+            <p style="margin-bottom:12px">Without changing the steel nail, suggest a change in the set-up so that when x is 12cm, the steel nail moves towards the rod. Explain your answer.</p>
+            
+            <label class="control-label">Suggested Change:</label>
+            <select id="q16a" style="margin-bottom:12px">
+              <option value="">Choose</option>
+              <option>Increase number of batteries</option>
+              <option>Increase number of turns of wire</option>
+              <option>Decrease number of batteries</option>
+              <option>Replace iron rod with plastic</option>
+            </select>
+            
+            <label class="control-label">Explanation:</label>
+            <textarea id="q16aExp" placeholder="Explain why your change works..." oninput="updateKeywords('q16aExp', 'q16aExp-checklist')"></textarea>
+
+            <!-- Scaffolding Panel -->
+            <div class="scaffold-panel">
+              <div class="scaffold-header">💡 Writing Scaffold (Check as you type)</div>
+              <div class="sentence-starters-row">
+                <button class="starter-btn" onclick="insertStarter('q16aExp', 'This increases the electromagnet\'s magnetic strength, so that the...')">Sentence Starter</button>
+              </div>
+              <div class="checklist-row" id="q16aExp-checklist">
+                <span class="kw-tag" data-word="electromagnet|magnetic strength|magnetic force|magnetism|magnetic pull">electromagnet / magnetic strength</span>
+                <span class="kw-tag" data-word="stronger|increase|greater|more">stronger / increases</span>
+                <span class="kw-tag" data-word="attract">attract the nail</span>
+                <span class="kw-tag" data-word="12">at 12 cm</span>
+              </div>
+            </div>
+            
+            <button onclick="check16a()" style="margin-top:10px">Check Answer</button>
+            <div id="q16aFb" class="feedback hidden"></div>
+
+            <hr>
+
+            <h3>Question 3(b) <span class="marks">[1 Mark]</span></h3>
+            <p style="margin-bottom:12px">Would a plastic rod attract the steel nail? Explain why.</p>
+            
+            <textarea id="q16b" placeholder="Analyze plastic's magnetic properties..." oninput="updateKeywords('q16b', 'q16b-checklist')"></textarea>
+
+            <!-- Scaffolding Panel -->
+            <div class="scaffold-panel">
+              <div class="scaffold-header">💡 Writing Scaffold (Check as you type)</div>
+              <div class="sentence-starters-row">
+                <button class="starter-btn" onclick="insertStarter('q16b', 'No, because plastic is a...')">Sentence Starter</button>
+              </div>
+              <div class="checklist-row" id="q16b-checklist">
+                <span class="kw-tag" data-word="no">No</span>
+                <span class="kw-tag" data-word="non-magnetic|not magnetic">non-magnetic material</span>
+                <span class="kw-tag" data-word="cannot be magnet|cannot magnet|can't be magnet|cannot be magnetized">cannot be magnetized</span>
+              </div>
+            </div>
+
+            <button onclick="check16b()" style="margin-top:10px">Check Answer</button>
+            <div id="q16bFb" class="feedback hidden"></div>
+
+        <div class="navrow" style="margin-top:32px"><button class="secondary" onclick="goHome()">← Back to Missions</button></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MISSION 4: DIGESTION -->
+  <section id="mission4" class="hidden">
+    <div class="card lab-grid">
+      <!-- Left: Simulation -->
+      <div>
+        <h2 class="section-title">Mission 4: Digestion Rates (Q17)</h2>
+        <div class="simbox">
+          <h3 class="control-label" style="margin-bottom:12px">Joel's Digestion Apparatus Lab</h3>
+          
+          <div class="beaker-lab-container">
+            <canvas id="beaker-canvas" class="beaker-canvas" width="450" height="200"></canvas>
+          </div>
+          
+          <div class="navrow" style="justify-content:center">
+            <button onclick="startDigestion()" id="btnDigest">▶ Start Digestion</button>
+            <button class="secondary" onclick="resetDigestion()">🔄 Reset Beakers</button>
+          </div>
+          <p id="digestStatus" style="margin-top:12px;text-align:center" class="small">Press start to run the chemical digestion test.</p>
+
           <!-- Biscuit Digestion Data Table -->
           <table class="results-table" style="margin-top:20px; font-size:12px">
             <thead>
