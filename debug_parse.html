@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script>
+window.onerror = function(msg, src, line, col, err) {
+  document.body.innerHTML = '<div style="background:#ef4444;color:white;padding:20px;font-family:monospace;font-size:14px;white-space:pre-wrap">PARSE ERROR FOUND!\n\nMessage: ' + msg + '\nLine: ' + line + '\nCol: ' + col + '\n\nStack:\n' + (err ? err.stack : 'none') + '</div>';
+  return true;
+};
+</script>
+</head>
+<body>
+<p>Loading app_v2.js inline to detect parse error...</p>
+<script>
+fetch('app_v2.js?v=1.0.9')
+  .then(r => r.text())
+  .then(src => {
+    try {
+      new Function(src);
+      document.body.innerHTML = '<div style="background:green;color:white;padding:20px;font-family:monospace;font-size:16px">No parse error found! Script is syntactically valid.</div>';
+    } catch(e) {
+      document.body.innerHTML = '<div style="background:#ef4444;color:white;padding:20px;font-family:monospace;font-size:14px;white-space:pre-wrap">PARSE ERROR:\n\n' + e.message + '\n\nStack:\n' + e.stack + '</div>';
+    }
+  })
+  .catch(e => {
+    const xhr = new XMLHttpRequest();
+    xhr.open('GET', 'app_v2.js?v=1.0.9', true);
+    xhr.onload = function() {
+      try {
+        new Function(xhr.responseText);
+        document.body.innerHTML = '<div style="background:green;color:white;padding:20px;font-family:monospace;font-size:16px">No parse error found!</div>';
+      } catch(e2) {
+        document.body.innerHTML = '<div style="background:#ef4444;color:white;padding:20px;font-family:monospace;font-size:14px;white-space:pre-wrap">PARSE ERROR:\n\n' + e2.message + '\n\nStack:\n' + e2.stack + '</div>';
+      }
+    };
+    xhr.send();
+  });
+</script>
+</body>
+</html>

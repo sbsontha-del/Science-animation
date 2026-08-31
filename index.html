@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <script>
+    window.onerror = function(message, source, lineno, colno, error) {
+      const div = document.createElement('div');
+      div.style.position = 'fixed';
+      div.style.top = '0';
+      div.style.left = '0';
+      div.style.width = '100vw';
+      div.style.background = '#ef4444';
+      div.style.color = 'white';
+      div.style.padding = '15px';
+      div.style.zIndex = '999999';
+      div.style.fontFamily = 'monospace';
+      div.style.fontSize = '12px';
+      div.style.wordBreak = 'break-all';
+      div.style.textAlign = 'left';
+      div.innerHTML = '🚨 JS Error: ' + message + ' at ' + source + ':' + lineno + ':' + colno + (error ? '<br>' + error.stack : '');
+      document.body.appendChild(div);
+      return false;
+    };
+  </script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Primary Science Magnet Investigation Lab</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Game HUD Header -->
+  <header id="game-header" class="hidden">
+    <div class="hud-container">
+      <div class="hud-logo">
+        <span id="player-avatar-readout">🐻</span> <span id="player-name-readout">Guest Scientist</span>
+      </div>
+      
+      <!-- Top Navigation Tabs -->
+      <nav class="hud-tabs">
+        <button class="tab-btn active" data-tab="lobby-view">🏡 Lobby</button>
+        <button class="tab-btn" data-tab="workbench-view" id="tab-workbench-btn">🔬 Workbench</button>
+        <button class="tab-btn" data-tab="journal-view">📔 My Journal</button>
+        <button class="tab-btn" data-tab="badge-view">🏆 Badge Case</button>
+      </nav>
+
+      <!-- Action Controls -->
+      <div class="hud-actions">
+        <button class="btn btn-secondary btn-hud" id="mute-sound-btn">🔊 Sound: ON</button>
+        <button class="btn btn-secondary btn-hud" id="help-sprout-btn">🐻 Sprout Hint</button>
+        <div class="teacher-toggle-inline">
+          <button class="btn btn-secondary btn-hud" id="teacher-mode-btn" style="background:var(--accent-purple);color:white;font-size:11px;padding:4px 10px;">🔒 Teacher Mode</button>
+        </div>
+        <!-- Hidden teacher password / dashboard modal -->
+        <div id="teacher-pw-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.55);z-index:9999;align-items:center;justify-content:center;">
+          <div style="background:white;border-radius:20px;padding:28px 24px;max-width:440px;width:92%;text-align:center;box-shadow:0 25px 70px rgba(0,0,0,0.35);border:3px solid #6366f1;">
+            
+            <!-- Login View (when locked) -->
+            <div id="teacher-login-box">
+              <div style="font-size:2.4rem;margin-bottom:6px;">🔐</div>
+              <h3 style="font-weight:800;color:#3730a3;font-size:1.2rem;margin-bottom:4px;">Teacher Dashboard Access</h3>
+              <p style="font-size:12px;color:#64748b;margin-bottom:16px;">Enter the teacher password to manage active modules for today's lesson.</p>
+              <input type="password" id="teacher-pw-input" placeholder="Password (admin)" style="width:100%;border:2px solid #cbd5e1;border-radius:8px;padding:8px 12px;font-size:14px;outline:none;margin-bottom:8px;box-sizing:border-box;">
+              <p id="teacher-pw-error" style="color:#ef4444;font-size:11px;margin-bottom:12px;display:none;">❌ Incorrect password. Try again.</p>
+              <div style="display:flex;gap:10px;justify-content:center;">
+                <button id="teacher-pw-cancel" style="background:#f1f5f9;color:#475569;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;font-size:13px;">Cancel</button>
+                <button id="teacher-pw-submit" style="background:#6d28d9;color:white;border:none;border-radius:8px;padding:8px 20px;cursor:pointer;font-size:13px;font-weight:600;">Unlock Dashboard 🔓</button>
+              </div>
+            </div>
+
+            <!-- Management View (when unlocked) -->
+            <div id="teacher-manage-box" style="display:none;text-align:left;">
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid #e2e8f0;padding-bottom:8px;">
+                <h3 style="font-weight:800;color:#3730a3;font-size:1.1rem;margin:0;">📅 Active Modules Today</h3>
+                <span style="font-size:10px;background:#dcfce7;color:#15803d;padding:2px 8px;border-radius:12px;font-weight:700;">🔓 TEACHER MODE ON</span>
+              </div>
+              <p style="font-size:11px;color:#64748b;margin-bottom:12px;">Select which modules pupils can access during today's lesson:</p>
+              
+              <div style="display:flex;flex-direction:column;gap:6px;max-height:240px;overflow-y:auto;padding-right:4px;margin-bottom:12px;">
+                <label style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;cursor:pointer;font-size:12px;font-weight:600;color:#334155;">
+                  <span><input type="checkbox" class="teacher-module-toggle" data-gi="gi1" checked style="margin-right:8px;"> Exp 1: Push & Pull</span>
+                  <span style="font-size:10px;color:#6366f1;font-family:monospace;font-weight:700;">Code: PUSH</span>
+                </label>
+                <label style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;cursor:pointer;font-size:12px;font-weight:600;color:#334155;">
+                  <span><input type="checkbox" class="teacher-module-toggle" data-gi="gi2" style="margin-right:8px;"> Exp 2: Material Classification</span>
+                  <span style="font-size:10px;color:#6366f1;font-family:monospace;font-weight:700;">Code: CLASS</span>
+                </label>
+                <label style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;cursor:pointer;font-size:12px;font-weight:600;color:#334155;">
+                  <span><input type="checkbox" class="teacher-module-toggle" data-gi="gi3" style="margin-right:8px;"> Exp 3: Pull at Poles</span>
+                  <span style="font-size:10px;color:#6366f1;font-family:monospace;font-weight:700;">Code: POLES</span>
+                </label>
+                <label style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;cursor:pointer;font-size:12px;font-weight:600;color:#334155;">
+                  <span><input type="checkbox" class="teacher-module-toggle" data-gi="gi4" style="margin-right:8px;"> Exp 4: Floating Ring Magnets</span>
+                  <span style="font-size:10px;color:#6366f1;font-family:monospace;font-weight:700;">Code: RINGS</span>
+                </label>
+                <label style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;cursor:pointer;font-size:12px;font-weight:600;color:#334155;">
+                  <span><input type="checkbox" class="teacher-module-toggle" data-gi="gi5" style="margin-right:8px;"> Exp 5: Mystery Casings Test</span>
+                  <span style="font-size:10px;color:#6366f1;font-family:monospace;font-weight:700;">Code: MYSTERY</span>
+                </label>
+                <label style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;cursor:pointer;font-size:12px;font-weight:600;color:#334155;">
+                  <span><input type="checkbox" class="teacher-module-toggle" data-gi="gi6" style="margin-right:8px;"> Exp 6: Hanging & Floating</span>
+                  <span style="font-size:10px;color:#6366f1;font-family:monospace;font-weight:700;">Code: ALIGN</span>
+                </label>
+                <label style="display:flex;align-items:center;justify-content:space-between;background:#f8fafc;padding:8px 12px;border-radius:8px;border:1px solid #e2e8f0;cursor:pointer;font-size:12px;font-weight:600;color:#334155;">
+                  <span><input type="checkbox" class="teacher-module-toggle" data-gi="free" style="margin-right:8px;"> Exp 7: Free Play & Graphing</span>
+                  <span style="font-size:10px;color:#6366f1;font-family:monospace;font-weight:700;">Code: GRAPH</span>
+                </label>
+              </div>
+
+              <div style="display:flex;gap:8px;justify-content:space-between;align-items:center;border-top:1px solid #e2e8f0;padding-top:10px;margin-top:4px;">
+                <div style="display:flex;gap:6px;">
+                  <button id="teacher-enable-all-btn" style="background:#e0e7ff;color:#4338ca;border:none;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:700;cursor:pointer;">Enable All</button>
+                  <button id="teacher-disable-all-btn" style="background:#f1f5f9;color:#64748b;border:none;border-radius:6px;padding:6px 10px;font-size:11px;font-weight:600;cursor:pointer;">Exp 1 Only</button>
+                </div>
+                <button id="teacher-dashboard-done-btn" style="background:#4f46e5;color:white;border:none;border-radius:8px;padding:8px 16px;font-size:12px;font-weight:700;cursor:pointer;">Save & Close 🔒</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden Activity Password Unlock Modal -->
+        <div id="activity-pw-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.5);z-index:9999;align-items:center;justify-content:center;">
+          <div style="background:white;border-radius:16px;padding:32px 28px;max-width:360px;width:90%;text-align:center;box-shadow:0 20px 60px rgba(0,0,0,0.3);">
+            <div style="font-size:2.2rem;margin-bottom:8px;">🔒</div>
+            <h3 style="font-weight:700;color:#3730a3;margin-bottom:6px;" id="activity-pw-title">Experiment Locked</h3>
+            <p style="font-size:12px;color:#64748b;margin-bottom:16px;" id="activity-pw-desc">Enter your completion passcode from the previous experiment (or ask your teacher):</p>
+            <input type="text" id="activity-pw-input" placeholder="Enter Passcode (e.g. PULL-61B)" style="width:100%;border:2px solid #cbd5e1;border-radius:8px;padding:8px 12px;font-size:14px;outline:none;margin-bottom:8px;box-sizing:border-box;text-transform:uppercase;">
+            <p id="activity-pw-error" style="color:#ef4444;font-size:11px;margin-bottom:12px;display:none;">❌ Invalid passcode. Finish the previous experiment or ask your teacher.</p>
+            <div style="display:flex;gap:10px;justify-content:center;">
+              <button id="activity-pw-cancel" style="background:#f1f5f9;color:#475569;border:none;border-radius:8px;padding:8px 18px;cursor:pointer;font-size:13px;">Cancel</button>
+              <button id="activity-pw-submit" style="background:#4f46e5;color:white;border:none;border-radius:8px;padding:8px 18px;cursor:pointer;font-size:13px;font-weight:600;">Unlock Activity 🔓</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hidden Module Completion Celebration & Passcode Modal -->
+        <div id="completion-passcode-modal" style="display:none;position:fixed;top:0;left:0;width:100vw;height:100vh;background:rgba(0,0,0,0.55);z-index:9999;align-items:center;justify-content:center;">
+          <div style="background:white;border-radius:20px;padding:32px 28px;max-width:380px;width:92%;text-align:center;box-shadow:0 25px 70px rgba(79,70,229,0.35);border:3px solid #6366f1;animation:scaleBounce 0.4s ease;">
+            <div style="font-size:3rem;margin-bottom:4px;">🎉 🏆</div>
+            <h3 style="font-size:1.3rem;font-weight:800;color:#3730a3;margin-bottom:4px;" id="completion-title">Module Completed!</h3>
+            <p style="font-size:12px;color:#64748b;margin-bottom:14px;" id="completion-desc">Great job! You have unlocked the next experiment.</p>
+            
+            <div style="background:#e0e7ff;border:2px dashed #6366f1;border-radius:12px;padding:12px;margin-bottom:16px;">
+              <span style="font-size:11px;font-weight:700;color:#4338ca;text-transform:uppercase;display:block;margin-bottom:4px;" id="completion-passcode-label">🔑 Passcode for Next Module:</span>
+              <span style="font-size:1.6rem;font-weight:900;color:#1e1b4b;letter-spacing:3px;font-family:monospace;" id="completion-passcode-code">PULL-61B</span>
+            </div>
+            
+            <div style="display:flex;gap:10px;justify-content:center;">
+              <button id="completion-close-btn" style="background:#f1f5f9;color:#475569;border:none;border-radius:8px;padding:9px 18px;cursor:pointer;font-size:13px;font-weight:600;">Stay Here</button>
+              <button id="completion-go-next-btn" style="background:#4f46e5;color:white;border:none;border-radius:8px;padding:9px 20px;cursor:pointer;font-size:13px;font-weight:700;box-shadow:0 4px 12px rgba(79,70,229,0.3);">Go to Next Module 🔓</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    
+    <!-- WELCOME LOGIN SCREEN -->
+    <section id="welcome-screen" class="glass-panel text-center max-w-xl mx-auto my-12">
+      <div class="sprout-avatar-header justify-center mb-4">
+        <div class="sprout-avatar" style="width: 80px; height: 80px; font-size: 3rem;">🐻🧲</div>
+      </div>
+      <h1 class="font-bold text-2xl mb-2 text-indigo-800">Sprout Magnet Lab</h1>
+      <p class="text-slate-600 mb-6 text-sm">
+        Welcome, Junior Scientist! Choose your animal helper and enter your name to start investigating magnets!
+      </p>
+
+      <form id="login-form" class="flex flex-col gap-4 max-w-md mx-auto items-center">
+        <!-- Avatar Selector -->
+        <div class="w-full">
+          <label class="text-xs font-bold text-slate-500 uppercase block mb-2">Choose Your Helper Partner</label>
+          <div class="avatar-select-grid">
+            <div class="avatar-option-card selected" data-avatar="bear">
+              <span class="avatar-emoji">🐻</span>
+              <span class="avatar-label">Sprout Bear</span>
+            </div>
+            <div class="avatar-option-card" data-avatar="fox">
+              <span class="avatar-emoji">🦊</span>
+              <span class="avatar-label">Sparky Fox</span>
+            </div>
+            <div class="avatar-option-card" data-avatar="owl">
+              <span class="avatar-emoji">🦉</span>
+              <span class="avatar-label">Hoot Owl</span>
+            </div>
+            <div class="avatar-option-card" data-avatar="frog">
+              <span class="avatar-emoji">🐸</span>
+              <span class="avatar-label">Hopper Frog</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="w-full text-left mt-2">
+          <label class="text-xs font-bold text-slate-500 uppercase block mb-1">Enter Your Name</label>
+          <input type="text" id="pupil-name-input" class="journal-input w-full" placeholder="e.g. Isaac Newton" required style="border: 2px solid #cbd5e1;">
+        </div>
+        <button type="submit" class="btn btn-primary w-full mt-2">Start Science Adventure! 🚀</button>
+      </form>
+    </section>
+
+    <!-- TAB 1: LAB LOBBY VIEW -->
+    <section id="lobby-view" class="hidden">
+      <div class="lobby-grid">
+        <div class="lobby-welcome-card glass-panel">
+          <h2 class="text-2xl font-bold text-indigo-900 mb-2">Welcome to the Magnet Lab, <span id="lobby-player-name">Scientist</span>!</h2>
+          <p class="text-slate-600 text-sm mb-6">Here you can explore how magnets pull and push, test what objects are magnetic, and complete fun science challenges!</p>
+          
+          <div class="lobby-actions-grid">
+            <button class="lobby-link-card bg-sky-100 hover:bg-sky-200 border-sky-300" data-target="workbench-view">
+              <span class="link-icon">🔬</span>
+              <h3>Virtual Workbench</h3>
+              <p>Drag, snap, and play with magnets and materials.</p>
+            </button>
+            <button class="lobby-link-card bg-purple-100 hover:bg-purple-200 border-purple-300" data-target="journal-view">
+              <span class="link-icon">📔</span>
+              <h3>My Lab Journal</h3>
+              <p>Record observations and plot your trials graphs.</p>
+            </button>
+            <button class="lobby-link-card bg-amber-100 hover:bg-amber-200 border-amber-300" data-target="badge-view">
+              <span class="link-icon">🏆</span>
+              <h3>Badge Case</h3>
+              <p>Check the challenges and light up your star badges!</p>
+            </button>
+          </div>
+        </div>
+        
+        <!-- Helper Avatar Speech Box -->
+        <div class="lobby-helper-card glass-panel text-center">
+          <div class="helper-bubble-avatar" id="lobby-helper-emoji">🐻</div>
+          <h3 class="font-bold text-indigo-800 mt-2" id="lobby-helper-name">Professor Sprout</h3>
+          <div class="speech-bubble mt-3" id="lobby-speech-bubble">
+            Click on the <strong>Virtual Workbench</strong> tab at the top to start experimenting with magnets!
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TAB 2: VIRTUAL WORKBENCH VIEW -->
+    <section id="workbench-view" class="hidden">
+      <div class="workbench-layout-container">
+        
+        <!-- Left Side: Guided Slide Deck -->
+        <div class="workbench-left-guide glass-panel">
+          <h3 class="panel-header">🎯 Activity Guide</h3>
+          <div class="guided-selector-container">
+            <select id="guided-investigation-select" class="journal-input text-xs p-2 w-full">
+              <option value="gi1" selected>Experiment 1: Activity 6.1 (A) - Push & Pull</option>
+              <option value="gi2">🔒 Experiment 2: Activity 6.1 (B) - Material Classification</option>
+              <option value="gi3">🔒 Experiment 3: Activity 6.2 - Strongest Pull at Poles</option>
+              <option value="gi4">🔒 Experiment 4: Activity 6.3 (B) - Floating Ring Magnets</option>
+              <option value="gi5">🔒 Experiment 5: Activity 6.3 (C) - Mystery Casings Test</option>
+              <option value="gi6">🔒 Experiment 6: Activity 6.4 - Hanging & Floating Alignment</option>
+              <option value="free">🔒 Experiment 7: Free Play & Graphing</option>
+            </select>
+          </div>
+          <div class="guided-instructions-box mt-2" id="guided-instructions">
+            <!-- Populated dynamically -->
+          </div>
+        </div>
+
+        <!-- Center: Drag-and-Drop Workspace Canvas -->
+        <div class="workbench-center-area">
+          <div class="workspace-wrapper">
+            <!-- Alert bar for scientific observations -->
+            <div id="workspace-alert-bar" class="workspace-alert hidden">
+              Unlike poles attract!
+            </div>
+            
+            <!-- Main Sandbox Area -->
+            <div id="magnet-workspace" class="magnet-workspace">
+              <!-- Ruler Overlay (hidden by default) -->
+              <div id="workspace-ruler" class="workspace-ruler hidden">
+                <div class="ruler-ticks">
+                  <div class="ruler-tick" style="left: 0%"><span class="tick-label">0 cm</span></div>
+                  <div class="ruler-tick" style="left: 10%"><span class="tick-label">1 cm</span></div>
+                  <div class="ruler-tick" style="left: 20%"><span class="tick-label">2 cm</span></div>
+                  <div class="ruler-tick" style="left: 30%"><span class="tick-label">3 cm</span></div>
+                  <div class="ruler-tick" style="left: 40%"><span class="tick-label">4 cm</span></div>
+                  <div class="ruler-tick" style="left: 50%"><span class="tick-label">5 cm</span></div>
+                  <div class="ruler-tick" style="left: 60%"><span class="tick-label">6 cm</span></div>
+                  <div class="ruler-tick" style="left: 70%"><span class="tick-label">7 cm</span></div>
+                  <div class="ruler-tick" style="left: 80%"><span class="tick-label">8 cm</span></div>
+                  <div class="ruler-tick" style="left: 90%"><span class="tick-label">9 cm</span></div>
+                  <div class="ruler-tick" style="left: 100%"><span class="tick-label">10 cm</span></div>
+                </div>
+              </div>
+              
+              <!-- Floating Ring Magnet Rod Stand (Experiment 4) -->
+              <div id="workspace-ring-stand" class="workspace-ring-stand hidden">
+                <div class="stand-rod"></div>
+                <div class="stand-base"></div>
+              </div>
+
+              <!-- Suspended Hanging String Stand (Experiment 6) -->
+              <div id="workspace-suspended-stand" class="workspace-suspended-stand hidden">
+                <div class="suspension-beam"></div>
+                <div class="suspension-string" id="suspension-string-line"></div>
+                <div class="suspension-hook">🪝</div>
+              </div>
+
+              <!-- Water Basin (Experiment 6) -->
+              <div id="workspace-basin" class="workspace-basin hidden">
+                <div class="basin-water"></div>
+                <div class="foam-float" id="foam-boat">🛥️</div>
+              </div>
+
+              <!-- Canvas overlay for fields/barriers -->
+              <canvas id="workspace-canvas" class="workspace-canvas"></canvas>
+            </div>
+            
+            <!-- Selection Inspector Overlay -->
+            <div id="workspace-inspector" class="workspace-inspector hidden">
+              <span id="inspector-name" class="font-bold text-xs text-slate-700">Selected: Bar Magnet</span>
+              <div class="inspector-buttons">
+                <button class="btn btn-secondary btn-icon" id="inspect-rotate-left" title="Rotate Left">↩️</button>
+                <button class="btn btn-secondary btn-icon" id="inspect-rotate-right" title="Rotate Right">↪️</button>
+                <button class="btn btn-secondary btn-icon" id="inspect-copy" title="Copy">📋</button>
+                <button class="btn btn-secondary btn-icon hidden" id="inspect-flip-ring" title="Flip Ring Magnet" style="background:#ede9fe;color:#6d28d9;border-color:#c4b5fd;font-size:11px;padding:4px 8px;min-width:unset;width:auto;">🔄 Flip</button>
+                <button class="btn btn-secondary btn-icon" id="inspect-delete" title="Delete" style="color: #ef4444; border-color: #fca5a5;">🗑️</button>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Experiment Controls below workspace -->
+          <div class="workspace-controls-bar">
+            <div class="flex gap-2">
+              <button class="btn btn-secondary text-xs" id="control-undo-btn" disabled>↩️ Undo</button>
+              <button class="btn btn-secondary text-xs" id="control-clear-btn">🗑️ Clear Workspace</button>
+              <button class="btn btn-secondary text-xs" id="control-reset-btn">🔄 Reset Lab</button>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn btn-secondary text-xs" id="control-field-btn">🧬 Show Magnetic Field</button>
+              <button class="btn btn-secondary text-xs" id="control-ruler-btn">📏 Show Ruler</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right Side: Drawer Toggles & Inspector -->
+        <div class="workbench-right-drawers">
+          
+          <!-- Spawners Drawer Toggle Header -->
+          <div class="drawer-header-buttons">
+            <button class="btn btn-secondary drawer-toggle-btn active-drawer" id="toggle-magnets-drawer">🧲 Magnets</button>
+            <button class="btn btn-secondary drawer-toggle-btn" id="toggle-materials-drawer">📦 Test Objects</button>
+          </div>
+
+          <!-- Magnets Drawer Pane -->
+          <div class="glass-panel drawer-pane" id="magnets-drawer-pane">
+            <h3 class="panel-header">🧲 Spawners</h3>
+            <p class="panel-subheader">Click to spawn on bench:</p>
+            <div class="magnet-buttons-grid">
+              <button class="magnet-spawn-btn" id="spawn-bar-btn" data-type="bar" title="Bar Magnet">
+                <div class="magnet-preview bar-preview"><div class="n-pole">N</div><div class="s-pole">S</div></div>
+                <span class="text-[10px]">Bar Magnet</span>
+              </button>
+              <button class="magnet-spawn-btn" id="spawn-button-btn" data-type="button" title="Button Magnet">
+                <div class="magnet-preview button-preview"><div class="n-pole">N</div><div class="s-pole">S</div></div>
+                <span class="text-[10px]">Button Magnet</span>
+              </button>
+              <button class="magnet-spawn-btn" id="spawn-ring-btn" data-type="ring" title="Ring Magnet">
+                <div class="magnet-preview ring-preview"></div>
+                <span class="text-[10px]">Ring Magnet</span>
+              </button>
+              <button class="magnet-spawn-btn" id="spawn-rod-btn" data-type="rod" title="Rod Magnet">
+                <div class="magnet-preview rod-preview"><div class="n-pole">N</div><div class="s-pole">S</div></div>
+                <span class="text-[10px]">Rod Magnet</span>
+              </button>
+              <button class="magnet-spawn-btn" id="spawn-ushaped-btn" data-type="ushaped" title="U-shaped Magnet" style="grid-column: span 2;">
+                <div class="magnet-preview ushaped-preview"></div>
+                <span class="text-[10px]">U-shaped Magnet</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Materials Drawer Pane (hidden by default) -->
+          <div class="glass-panel drawer-pane hidden" id="materials-drawer-pane">
+            <h3 class="panel-header">📦 Test Materials</h3>
+            <p class="panel-subheader">Click to spawn on bench:</p>
+            <div class="materials-buttons-grid">
+              <!-- Magnetic -->
+              <button class="material-spawn-btn" data-type="iron_nail" title="Iron Nail">📌 Nail (Iron)</button>
+              <button class="material-spawn-btn" data-type="steel_paperclip" title="Steel Paper Clip">📎 Clip (Steel)</button>
+              <button class="material-spawn-btn" data-type="steel_screw" title="Steel Screw">🔩 Screw (Steel)</button>
+              <button class="material-spawn-btn" data-type="steel_washer" title="Steel Washer">⭕ Washer (Steel)</button>
+              <button class="material-spawn-btn" data-type="steel_safety_pin" title="Steel Safety Pin">🧷 Pin (Steel)</button>
+              <button class="material-spawn-btn" data-type="steel_can" title="Steel Can">🥫 Can (Steel)</button>
+              <!-- Non-magnetic -->
+              <button class="material-spawn-btn" data-type="wooden_stick" title="Wooden Stick">🥢 Wood</button>
+              <button class="material-spawn-btn" data-type="plastic_spoon" title="Plastic Spoon">🥄 Spoon</button>
+              <button class="material-spawn-btn" data-type="rubber_eraser" title="Rubber Eraser">🧼 Eraser</button>
+              <button class="material-spawn-btn" data-type="aluminium_foil" title="Aluminium Foil">🪞 Aluminium</button>
+              <button class="material-spawn-btn" data-type="copper_coin" title="Copper Coin">🪙 Copper</button>
+              <button class="material-spawn-btn" data-type="glass_marble" title="Glass Marble">🔮 Glass</button>
+              <button class="material-spawn-btn" data-type="paper" title="Paper Sheet">📄 Paper</button>
+              <button class="material-spawn-btn" data-type="fabric" title="Fabric Strip">👕 Fabric</button>
+              <button class="material-spawn-btn" data-type="ceramic_tile" title="Ceramic Tile">🧱 Tile</button>
+            </div>
+          </div>
+
+          <!-- Object Tester Dashboard -->
+          <div class="glass-panel" id="observation-testing-panel">
+            <h3 class="panel-header">🔬 Object Tester</h3>
+            <p class="panel-subheader">Observe & draw conclusions:</p>
+            <div class="testing-display bg-slate-50 border p-3 rounded-xl text-center">
+              <span id="testing-material-name" class="font-extrabold text-sm block mb-1 text-slate-700">No object selected</span>
+              <div class="text-xs text-slate-500 mb-2" id="testing-state-text">Waiting for test...</div>
+              <div class="flex flex-col gap-1.5 justify-center">
+                <button class="btn btn-secondary text-xs py-1.5 w-full" id="test-check-obs-btn" disabled>Check Observation</button>
+                <button class="btn btn-primary text-xs py-1.5 w-full" id="test-reveal-concl-btn" disabled style="background: var(--accent-purple);">Reveal Conclusion</button>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 3: MY LAB JOURNAL VIEW -->
+    <section id="journal-view" class="hidden">
+      <div class="journal-layout-grid" id="journal-panels-container">
+        
+        <!-- Editable Record Table Page -->
+        <div class="glass-panel journal-notebook-page" id="journal-record-table-panel">
+          <div class="flex justify-between items-center mb-3">
+            <h2 class="text-xl font-bold text-purple-950">📔 Experiment Record Table</h2>
+            <button class="btn btn-primary text-xs py-1.5 px-4" id="table-check-btn" style="margin:0; background: var(--accent-emerald); box-shadow: none;">Check My Work</button>
+          </div>
+          <div class="table-scroll-container">
+            <table class="data-table-form" id="magnet-record-table" style="margin: 0; width: 100%;">
+              <thead>
+                <tr class="bg-slate-50 border-b">
+                  <th style="width: 25%; padding: 8px;" class="text-xs font-bold text-slate-500">Material</th>
+                  <th style="width: 25%; padding: 8px;" class="text-xs font-bold text-slate-500">Prediction</th>
+                  <th style="width: 25%; padding: 8px;" class="text-xs font-bold text-slate-500">Observation</th>
+                  <th style="width: 25%; padding: 8px;" class="text-xs font-bold text-slate-500">Conclusion</th>
+                </tr>
+              </thead>
+              <tbody id="magnet-table-body">
+                <tr class="empty-row-placeholder">
+                  <td colspan="4" class="text-center text-xs text-slate-400 italic p-6">No materials tested yet. Go to the Workbench and test materials from the drawer!</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Dynamic Worksheet / Graphing Page -->
+        <div class="glass-panel journal-notebook-page" id="journal-worksheet-panel">
+          <h2 class="text-xl font-bold text-purple-950 mb-2" id="journal-worksheet-title">📊 Graph My Experiment</h2>
+          <div id="journal-graph-instructions" class="text-xs text-slate-600 mb-4">
+            Select "Experiment 7: Free Play" in the Activity Guide on the Workbench to input trials and generate a bar graph here!
+          </div>
+          <div id="journal-graph-workspace" class="hidden">
+            <!-- Aim and plots loaded dynamically by app.js when inside Ex 7 -->
+          </div>
+          
+          <!-- Experiment 2 Dropzone Classification Grids (hidden by default) -->
+          <div id="journal-classification-workspace" class="hidden">
+            <span class="text-xs font-bold text-slate-500 uppercase block mb-3">Sort test objects by dragging them into the boxes:</span>
+            
+            <div class="classification-tree-box mb-4">
+              <h4 class="text-xs font-bold text-indigo-900 bg-indigo-50 p-2 rounded-t-xl border border-indigo-100">Magnetic vs Non-Magnetic Classification</h4>
+              <div class="grid grid-cols-2 border-l border-r border-b rounded-b-xl" style="display: grid; grid-template-columns: 1fr 1fr; min-height: 120px;">
+                <div class="p-3 border-r target-classification-dropzone" data-type="magnetic" id="dropzone-class-magnetic">
+                  <span class="text-[10px] font-bold text-emerald-600 block mb-2 uppercase">Magnetic (Attracted)</span>
+                  <div class="drop-pill-list flex flex-wrap gap-1"></div>
+                </div>
+                <div class="p-3 target-classification-dropzone" data-type="non_magnetic" id="dropzone-class-nonmagnetic">
+                  <span class="text-[10px] font-bold text-slate-500 block mb-2 uppercase">Non-Magnetic (Not Attracted)</span>
+                  <div class="drop-pill-list flex flex-wrap gap-1"></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="classification-tree-box">
+              <h4 class="text-xs font-bold text-indigo-900 bg-indigo-50 p-2 rounded-t-xl border border-indigo-100">Metal vs Non-Metal Classification</h4>
+              <div class="grid grid-cols-2 border-l border-r border-b rounded-b-xl" style="display: grid; grid-template-columns: 1fr 1fr; min-height: 120px;">
+                <div class="p-3 border-r target-classification-dropzone" data-type="metal" id="dropzone-class-metal">
+                  <span class="text-[10px] font-bold text-amber-600 block mb-2 uppercase">Metals</span>
+                  <div class="drop-pill-list flex flex-wrap gap-1"></div>
+                </div>
+                <div class="p-3 target-classification-dropzone" data-type="non_metal" id="dropzone-class-nonmetal">
+                  <span class="text-[10px] font-bold text-blue-600 block mb-2 uppercase">Non-Metals</span>
+                  <div class="drop-pill-list flex flex-wrap gap-1"></div>
+                </div>
+              </div>
+            </div>
+            
+            <div class="flex justify-between items-center mt-4">
+              <span class="text-[10px] text-slate-500">Classify: Nail, Block, Strip, Spoon, Washer, Eraser, Fabric</span>
+              <button class="btn btn-primary text-xs py-1 px-4" id="class-check-btn" style="margin:0; box-shadow:none;">Check Classification</button>
+            </div>
+          </div>
+
+          <!-- Experiment 5 Mystery Casings Ticks Checksheet (hidden by default) -->
+          <div id="journal-mystery-workspace" class="hidden">
+            <span class="text-xs font-bold text-slate-500 uppercase block mb-3">Record Mystery Object Ticks:</span>
+            <table class="data-table-form" style="margin: 0; width: 100%;">
+              <thead>
+                <tr class="bg-slate-50 border-b">
+                  <th style="padding: 6px; font-size: 10px;">Object</th>
+                  <th style="padding: 6px; font-size: 10px; text-align: center;">Attracted to both poles</th>
+                  <th style="padding: 6px; font-size: 10px; text-align: center;">Attracted to one, repelled by other</th>
+                  <th style="padding: 6px; font-size: 10px; text-align: center;">Not attracted</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr data-obj="A">
+                  <td class="font-bold text-xs p-2">Object A</td>
+                  <td class="text-center p-2"><input type="checkbox" class="mystery-tick" data-col="both" style="transform: scale(1.2);"></td>
+                  <td class="text-center p-2"><input type="checkbox" class="mystery-tick" data-col="one" style="transform: scale(1.2);"></td>
+                  <td class="text-center p-2"><input type="checkbox" class="mystery-tick" data-col="none" style="transform: scale(1.2);"></td>
+                </tr>
+                <tr data-obj="B">
+                  <td class="font-bold text-xs p-2">Object B</td>
+                  <td class="text-center p-2"><input type="checkbox" class="mystery-tick" data-col="both" style="transform: scale(1.2);"></td>
+                  <td class="text-center p-2"><input type="checkbox" class="mystery-tick" data-col="one" style="transform: scale(1.2);"></td>
+                  <td class="text-center p-2"><input type="checkbox" class="mystery-tick" data-col="none" style="transform: scale(1.2);"></td>
+                </tr>
+                <tr data-obj="C">
+                  <td class="font-bold text-xs p-2">Object C</td>
+                  <td class="text-center p-2"><input type="checkbox" class="mystery-tick" data-col="both" style="transform: scale(1.2);"></td>
+                  <td class="text-center p-2"><input type="checkbox" class="mystery-tick" data-col="one" style="transform: scale(1.2);"></td>
+                  <td class="text-center p-2"><input type="checkbox" class="mystery-tick" data-col="none" style="transform: scale(1.2);"></td>
+                </tr>
+              </tbody>
+            </table>
+            
+            <div class="mt-4 bg-indigo-50 border p-3 rounded-xl flex flex-col gap-2">
+              <span class="text-xs font-bold text-indigo-900 block">Identify the Mystery Materials:</span>
+              <div class="grid grid-cols-3 gap-2" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px;">
+                <div>
+                  <label class="text-[9px] text-slate-500 font-bold block mb-0.5">Object A is a...</label>
+                  <select id="myst-id-a" class="journal-input text-[10px] p-1 w-full" style="padding: 4px;">
+                    <option value="">choose...</option>
+                    <option value="magnet">Magnet</option>
+                    <option value="magnetic">Magnetic Metal (Iron)</option>
+                    <option value="non_magnetic">Non-magnetic (Plastic)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-[9px] text-slate-500 font-bold block mb-0.5">Object B is a...</label>
+                  <select id="myst-id-b" class="journal-input text-[10px] p-1 w-full" style="padding: 4px;">
+                    <option value="">choose...</option>
+                    <option value="magnet">Magnet</option>
+                    <option value="magnetic">Magnetic Metal (Iron)</option>
+                    <option value="non_magnetic">Non-magnetic (Plastic)</option>
+                  </select>
+                </div>
+                <div>
+                  <label class="text-[9px] text-slate-500 font-bold block mb-0.5">Object C is a...</label>
+                  <select id="myst-id-c" class="journal-input text-[10px] p-1 w-full" style="padding: 4px;">
+                    <option value="">choose...</option>
+                    <option value="magnet">Magnet</option>
+                    <option value="magnetic">Magnetic Metal (Iron)</option>
+                    <option value="non_magnetic">Non-magnetic (Plastic)</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="flex justify-between items-center mt-4">
+              <span class="text-[10px] text-slate-400">Repulsion is the ONLY sure test for a magnet!</span>
+              <button class="btn btn-primary text-xs py-1.5 px-4" id="mystery-check-btn" style="margin: 0; box-shadow: none;">Check Identifications</button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- TAB 4: BADGE CASE VIEW -->
+    <section id="badge-view" class="hidden">
+      <div class="glass-panel text-center mb-6">
+        <h2 class="text-2xl font-bold text-indigo-900 mb-1">🏆 My Badge Case</h2>
+        <p class="text-xs text-slate-500">Complete challenges on the Virtual Workbench to unlock glowing golden badges!</p>
+      </div>
+
+      <div class="badge-grid-container">
+        <div class="challenge-badge-card" data-idx="0">
+          <div class="badge-icon-slot">🔒</div>
+          <div class="badge-title">Like Poles Repel</div>
+          <p class="badge-desc">Arrange two magnets to push each other away.</p>
+        </div>
+        <div class="challenge-badge-card" data-idx="1">
+          <div class="badge-icon-slot">🔒</div>
+          <div class="badge-title">Unlike Poles Attract</div>
+          <p class="badge-desc">Arrange two magnets to snap together.</p>
+        </div>
+        <div class="challenge-badge-card" data-idx="2">
+          <div class="badge-icon-slot">🔒</div>
+          <div class="badge-title">Metal Attracter</div>
+          <p class="badge-desc">Find and test 3 magnetic materials.</p>
+        </div>
+        <div class="challenge-badge-card" data-idx="3">
+          <div class="badge-icon-slot">🔒</div>
+          <div class="badge-title">Shield Explorer</div>
+          <p class="badge-desc">Find and test 3 non-magnetic materials.</p>
+        </div>
+        <div class="challenge-badge-card" data-idx="4">
+          <div class="badge-icon-slot">🔒</div>
+          <div class="badge-title">Ruler Snap Master</div>
+          <p class="badge-desc">Find the maximum distance of attraction using the ruler.</p>
+        </div>
+        <div class="challenge-badge-card" data-idx="5">
+          <div class="badge-icon-slot">🔒</div>
+          <div class="badge-title">Barrier Penetrator</div>
+          <p class="badge-desc">Attract a paper clip through paper or plastic sheets.</p>
+        </div>
+        <div class="challenge-badge-card" data-idx="6">
+          <div class="badge-icon-slot">🔒</div>
+          <div class="badge-title">Dual Magnet Expert</div>
+          <p class="badge-desc">Test objects with two magnets simultaneously on the bench.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- CONFETTI / BADGE CELEBRATION ELEMENT OVERLAY -->
+  <div id="badge-glow-overlay" class="hidden">
+    <div class="celebration-box">
+      <div class="celebration-stars">✨⭐✨</div>
+      <h2 class="text-xl font-bold text-white mb-2">Challenge Completed!</h2>
+      <p class="text-sm text-yellow-200" id="unlocked-badge-name">Like Poles Repel Badge Unlocked!</p>
+      <button class="btn btn-primary mt-4" id="close-celebration-btn" style="background:#ffffff; color:var(--accent-purple); box-shadow:none;">Awesome! 🌟</button>
+    </div>
+  </div>
+
+  <!-- SCRIPT FILES -->
+  <script src="app_v2.js?v=2.0.9"></script>
+</body>
+</html>
