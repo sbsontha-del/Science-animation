@@ -674,6 +674,11 @@ main {
 }
 
 /* WORKSPACE ELEMENTS */
+.secure-password-input {
+  -webkit-text-security: disc !important;
+  text-security: disc !important;
+}
+
 .workspace-element {
   position: absolute;
   user-select: none;
