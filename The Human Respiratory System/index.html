@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Activity 4.3 – Plants, Fish and Humans</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <header class="progress-bar">
+        <ul class="progress-steps">
+            <li id="step-plant" class="step active">Plant</li>
+            <li id="step-fish" class="step">Fish</li>
+            <li id="step-human" class="step">Human</li>
+            <li id="step-compare" class="step">Compare</li>
+            <li id="step-final" class="step">Final Challenge</li>
+        </ul>
+    </header>
+
+    <main id="app">
+        <!-- Home Screen -->
+        <section id="home-screen" class="screen active">
+            <div class="hero-card">
+                <span class="badge">Activity 4.3</span>
+                <h1 class="title">Plants, Fish and Humans</h1>
+                <p class="subtitle">How do plants, fish and humans take in oxygen and give out carbon dioxide?</p>
+                <div class="card-grid">
+                    <div class="organism-card">
+                        <span class="emoji">🌿</span>
+                        <h3>Plant</h3>
+                    </div>
+                    <div class="organism-card">
+                        <span class="emoji">🐟</span>
+                        <h3>Fish</h3>
+                    </div>
+                    <div class="organism-card">
+                        <span class="emoji">🫁</span>
+                        <h3>Human</h3>
+                    </div>
+                </div>
+                <button id="start-btn" class="primary-btn lg">START INVESTIGATION</button>
+            </div>
+        </section>
+
+        <!-- Mission 1: Plant -->
+        <section id="mission-plant" class="screen">
+            <div class="mission-header">
+                <h2>How do plants take in oxygen and give out carbon dioxide?</h2>
+            </div>
+            
+            <div class="mission-part card-box" id="plant-part-a">
+                <div class="part-badge">PART A – OBSERVE THE LEAF</div>
+                <p class="instruction">WATCH CAREFULLY</p>
+                <p class="sub-instruction">Observe what happens to the leaf in hot water.</p>
+                
+                <video id="video-plant-a" class="video-player" src="assets/videos/plant_bubbles.mp4" controls></video>
+                
+                <div class="action-row">
+                    <button class="primary-btn next-btn" data-next="plant-qa-a">Continue to Question</button>
+                </div>
+
+                <div class="qa-box" id="plant-qa-a" hidden>
+                    <h3>What did you observe?</h3>
+                    <div class="options-group">
+                        <button class="option-btn" data-correct="true">Bubbles can be seen leaving the leaf.</button>
+                        <button class="option-btn" data-correct="true">Bubbles can be seen on the surface of the leaf.</button>
+                        <button class="option-btn" data-correct="false">The leaf turns green.</button>
+                    </div>
+                    <div class="feedback-container" hidden>
+                        <p class="feedback-msg"></p>
+                        <p class="model-answer" hidden><strong>Model Answer:</strong> Bubbles can be seen leaving the leaf.</p>
+                        <button class="watch-again-btn secondary-btn" hidden>WATCH AGAIN</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mission-part card-box" id="plant-part-b" hidden>
+                <div class="part-badge">PART B – LOOK CLOSER</div>
+                <p class="instruction">Look carefully at the surface of the leaf.</p>
+                
+                <video id="video-plant-b" class="video-player" src="assets/videos/plant_microscope.mp4" controls></video>
+                
+                <div class="action-row">
+                    <button class="primary-btn next-btn" data-next="plant-qa-b">Continue to Question</button>
+                </div>
+
+                <div class="qa-box" id="plant-qa-b" hidden>
+                    <h3>What can you see on the surface of the leaf?</h3>
+                    <div class="options-group">
+                        <button class="option-btn" data-correct="true">tiny opening</button>
+                        <button class="option-btn" data-correct="false">large vein</button>
+                        <button class="option-btn" data-correct="false">spine</button>
+                    </div>
+                    <div class="feedback-container" hidden>
+                        <p class="feedback-msg"></p>
+                    </div>
+                </div>
+
+                <div class="qa-box completion-box" id="plant-completion-b" hidden>
+                    <h3>Complete the sentence:</h3>
+                    <div class="sentence-builder">
+                        Oxygen from the 
+                        <select id="plant-drop-1" class="custom-select">
+                            <option value="" disabled selected>-- select --</option>
+                            <option value="surrounding">surrounding</option>
+                            <option value="roots">roots</option>
+                            <option value="stem">stem</option>
+                        </select> 
+                        moves into the leaf through 
+                        <select id="plant-drop-2" class="custom-select">
+                            <option value="" disabled selected>-- select --</option>
+                            <option value="tiny openings">tiny openings</option>
+                            <option value="flowers">flowers</option>
+                            <option value="roots">roots</option>
+                        </select>.
+                    </div>
+                    <button id="plant-submit" class="primary-btn mt">Check Answer</button>
+                    <p class="feedback-msg" id="plant-final-feedback" hidden></p>
+                </div>
+            </div>
+
+            <div class="mission-banner" id="plant-mission-complete" hidden>
+                <span>🎉 Plant investigation completed!</span>
+                <button id="to-fish-btn" class="primary-btn lg">Continue to Fish Mission ➔</button>
+            </div>
+        </section>
+
+        <!-- Mission 2: Fish -->
+        <section id="mission-fish" class="screen">
+            <div class="mission-header">
+                <h2>How do fish take in oxygen and give out carbon dioxide?</h2>
+            </div>
+            
+            <div class="mission-part card-box" id="fish-part-a">
+                <div class="part-badge">PART A – FISH OBSERVATION</div>
+                <p class="instruction">Watch the video carefully.</p>
+                <video id="video-fish-a" class="video-player" src="assets/videos/fish_gills.mp4" controls></video>
+                
+                <div class="action-row">
+                    <button class="primary-btn next-btn" data-next="fish-qa-a">Continue to Question</button>
+                </div>
+
+                <div class="qa-box" id="fish-qa-a" hidden>
+                    <h3>Which part of the fish is involved in gaseous exchange?</h3>
+                    <div class="options-group">
+                        <button class="option-btn" data-correct="false">fins</button>
+                        <button class="option-btn" data-correct="true">gills</button>
+                        <button class="option-btn" data-correct="false">tail</button>
+                    </div>
+                    <div class="feedback-container" hidden>
+                        <p class="feedback-msg"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mission-part card-box" id="fish-part-b" hidden>
+                <div class="part-badge">PART B – GASEOUS EXCHANGE IN FISH</div>
+                <p class="instruction">Watch the gaseous exchange video.</p>
+                <video id="video-fish-b" class="video-player" src="assets/videos/fish_gaseous_exchange.mp4" controls></video>
+                
+                <div class="action-row">
+                    <button class="primary-btn next-btn" data-next="fish-qa-b">Continue to Question</button>
+                </div>
+
+                <div class="qa-box" id="fish-qa-b" hidden>
+                    <h3>Complete the sentence:</h3>
+                    <div class="sentence-builder">
+                        Oxygen in the water enters the fish through the 
+                        <select id="fish-select" class="custom-select">
+                            <option value="" disabled selected>-- select --</option>
+                            <option value="fins">fins</option>
+                            <option value="gills">gills</option>
+                            <option value="tail">tail</option>
+                        </select>.
+                    </div>
+                    <button id="fish-submit" class="primary-btn mt">Check Answer</button>
+                    <p class="feedback-msg" id="fish-final-feedback" hidden></p>
+                </div>
+
+                <div class="info-panel" id="fish-explanation" hidden>
+                    <h4>💡 How Fish Take In Oxygen:</h4>
+                    <ul>
+                        <li>Fish take in water with dissolved oxygen through the mouth.</li>
+                        <li>As oxygen-rich water passes over the gills, fish take in oxygen.</li>
+                        <li>Carbon dioxide from the fish then moves from the gills to the water.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="mission-banner" id="fish-mission-complete" hidden>
+                <span>🎉 Fish investigation completed!</span>
+                <button id="to-human-btn" class="primary-btn lg">Continue to Human Mission ➔</button>
+            </div>
+        </section>
+
+        <!-- Mission 3: Human -->
+        <section id="mission-human" class="screen">
+            <div class="mission-header">
+                <h2>How do humans take in oxygen and give out carbon dioxide?</h2>
+            </div>
+            
+            <div class="mission-part card-box" id="human-part-a">
+                <div class="part-badge">PART A – AIR PATHWAY</div>
+                <p class="instruction">Watch the pathway taken by air.</p>
+                <video id="video-human-a" class="video-player" src="assets/videos/The Human Respiratory System/human_air_pathway.mp4" controls></video>
+                
+                <div class="action-row">
+                    <button class="primary-btn next-btn" data-next="human-qa-a">Continue to Question</button>
+                </div>
+
+                <div class="qa-box" id="human-qa-a" hidden>
+                    <h3>Complete the sentence:</h3>
+                    <div class="sentence-builder">
+                        Air enters the lungs through the 
+                        <select id="human-select-a" class="custom-select">
+                            <option value="" disabled selected>-- select --</option>
+                            <option value="nose">nose</option>
+                            <option value="windpipe">windpipe</option>
+                            <option value="lungs">lungs</option>
+                        </select>.
+                    </div>
+                    <button id="human-submit-a" class="primary-btn mt">Check Answer</button>
+                    <p class="feedback-msg" id="human-feedback-a" hidden></p>
+                </div>
+
+                <div class="qa-box" id="human-qa-part2" hidden>
+                    <h3>Which part is involved in gaseous exchange in humans?</h3>
+                    <div class="options-group">
+                        <button class="option-btn" data-correct="false">nose</button>
+                        <button class="option-btn" data-correct="false">windpipe</button>
+                        <button class="option-btn" data-correct="true">lungs</button>
+                    </div>
+                    <div class="feedback-container" hidden>
+                        <p class="feedback-msg"></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mission-part card-box" id="human-part-b" hidden>
+                <div class="part-badge">PART B – GASEOUS EXCHANGE</div>
+                <p class="instruction">Watch carefully what happens in the lungs.</p>
+                <video id="video-human-b" class="video-player" src="assets/videos/The Human Respiratory System/human_gaseous_exchange.mp4" controls></video>
+                
+                <div class="action-row">
+                    <button class="primary-btn next-btn" data-next="human-qa-b">Continue to Question</button>
+                </div>
+
+                <div class="qa-box" id="human-qa-b" hidden>
+                    <h3>Where does gaseous exchange take place?</h3>
+                    <div class="options-group">
+                        <button class="option-btn" data-correct="true">lungs</button>
+                        <button class="option-btn" data-correct="false">windpipe</button>
+                        <button class="option-btn" data-correct="false">nose</button>
+                    </div>
+                    <div class="feedback-container" hidden>
+                        <p class="feedback-msg"></p>
+                    </div>
+                </div>
+
+                <div class="qa-box completion-box" id="human-completion-c" hidden>
+                    <h3>Complete the sentence:</h3>
+                    <div class="sentence-builder">
+                        Humans breathe out air through the 
+                        <select id="human-select-c" class="custom-select">
+                            <option value="" disabled selected>-- select --</option>
+                            <option value="nose">nose</option>
+                            <option value="windpipe">windpipe</option>
+                            <option value="lungs">lungs</option>
+                        </select>.
+                    </div>
+                    <button id="human-submit-c" class="primary-btn mt">Check Answer</button>
+                    <p class="feedback-msg" id="human-feedback-c" hidden></p>
+                </div>
+            </div>
+
+            <div class="mission-banner" id="human-mission-complete" hidden>
+                <span>🎉 Human investigation completed!</span>
+                <button id="to-compare-btn" class="primary-btn lg">Continue to Compare Mission ➔</button>
+            </div>
+        </section>
+
+        <!-- Mission 4: Compare -->
+        <section id="mission-compare" class="screen">
+            <div class="mission-header">
+                <h2>Compare Plants, Fish and Humans</h2>
+                <p class="subtitle">Match each living thing to its part involved in gaseous exchange.</p>
+            </div>
+
+            <div class="card-box">
+                <div class="draggable-pool" id="draggable-pool">
+                    <div class="drag-chip" draggable="true" data-label="tiny openings / stomata">tiny openings / stomata</div>
+                    <div class="drag-chip" draggable="true" data-label="gills">gills</div>
+                    <div class="drag-chip" draggable="true" data-label="lungs">lungs</div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="compare-table">
+                        <thead>
+                            <tr>
+                                <th>Living thing</th>
+                                <th>Part(s) involved in the exchange of gases</th>
+                                <th>How the exchange of gases takes place</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="table-emoji">🌿</span> <strong>Plant</strong></td>
+                                <td class="drop-target" data-expected="tiny openings / stomata">Tap or drag part here</td>
+                                <td class="explain-cell" hidden>Gases move freely through tiny openings.</td>
+                            </tr>
+                            <tr>
+                                <td><span class="table-emoji">🐟</span> <strong>Fish</strong></td>
+                                <td class="drop-target" data-expected="gills">Tap or drag part here</td>
+                                <td class="explain-cell" hidden>
+                                    Fish take in water with dissolved oxygen through the mouth.<br/>
+                                    As oxygen-rich water passes over the gills, fish take in oxygen.<br/>
+                                    Carbon dioxide from the fish then moves from the gills to the water.
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span class="table-emoji">🫁</span> <strong>Human</strong></td>
+                                <td class="drop-target" data-expected="lungs">Tap or drag part here</td>
+                                <td class="explain-cell" hidden>
+                                    Air enters the lungs through the windpipe.<br/>
+                                    Gaseous exchange takes place in the lungs.<br/>
+                                    Humans breathe out air through the nose.
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <button id="check-compare-btn" class="primary-btn mt lg">Verify Comparison</button>
+                <p class="feedback-msg" id="compare-feedback" hidden></p>
+            </div>
+
+            <div class="mission-banner" id="compare-mission-complete" hidden>
+                <span>🎉 Comparison completed!</span>
+                <button id="to-final-btn" class="primary-btn lg">Proceed to Final Challenge ➔</button>
+            </div>
+        </section>
+
+        <!-- Final Challenge -->
+        <section id="final-challenge" class="screen">
+            <div class="mission-header">
+                <h2>Final Challenge</h2>
+                <p class="subtitle">Put everything you learned together!</p>
+            </div>
+
+            <div class="card-box">
+                <h3>Complete the conclusion:</h3>
+                <div class="sentence-builder lg-text">
+                    Plants, fish and humans take in 
+                    <select id="final-drop-1" class="custom-select">
+                        <option value="" disabled selected>-- select gas --</option>
+                        <option value="oxygen">oxygen</option>
+                        <option value="carbon dioxide">carbon dioxide</option>
+                    </select> 
+                    and give out 
+                    <select id="final-drop-2" class="custom-select">
+                        <option value="" disabled selected>-- select gas --</option>
+                        <option value="oxygen">oxygen</option>
+                        <option value="carbon dioxide">carbon dioxide</option>
+                    </select> 
+                    differently.
+                </div>
+                <button id="final-submit" class="primary-btn mt lg">Submit Conclusion</button>
+                <p class="feedback-msg" id="final-feedback" hidden></p>
+
+                <div class="final-summary-card" id="final-matching" hidden>
+                    <h3>Summary Matching:</h3>
+                    <div class="match-grid">
+                        <div class="match-item">🌿 <strong>PLANT</strong> ➔ tiny openings / stomata</div>
+                        <div class="match-item">🐟 <strong>FISH</strong> ➔ gills</div>
+                        <div class="match-item">🫁 <strong>HUMAN</strong> ➔ lungs</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="celebration-card" id="final-complete" hidden>
+                <div class="trophy">🏆</div>
+                <h2>Investigation Complete!</h2>
+                <p>You have explored how plants, fish and humans take in oxygen and give out carbon dioxide.</p>
+                <button id="restart-btn" class="secondary-btn lg">RESTART LESSON</button>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>
