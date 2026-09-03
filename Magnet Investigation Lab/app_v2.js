@@ -43,6 +43,7 @@ class MagnetSimulation {
     
     this.initEvents();
     this.render();
+    this.updateInvestigationDropdown();
   }
 
   resizeCanvas() {
