@@ -2602,10 +2602,17 @@ class SproutMagnetApp {
         
         if (this.magnetSim) {
           this.magnetSim.completedChallenges = data.completedChallenges || [false, false, false, false, false, false, false];
-          if (data.unlockedActivities) {
-            this.magnetSim.unlockedActivities = Object.assign({ gi1: true, gi2: true, gi3: true, gi4: false, gi5: false, gi6: false, free: false }, data.unlockedActivities);
-            this.magnetSim.updateInvestigationDropdown();
-          }
+          const loaded = data.unlockedActivities || {};
+          this.magnetSim.unlockedActivities = {
+            gi1: true,
+            gi2: true,
+            gi3: true,
+            gi4: !!loaded.gi4,
+            gi5: !!loaded.gi5,
+            gi6: !!loaded.gi6,
+            free: !!loaded.free
+          };
+          this.magnetSim.updateInvestigationDropdown();
           this.magnetSim.updateChallengeCards();
         }
       }
