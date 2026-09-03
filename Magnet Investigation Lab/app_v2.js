@@ -1580,22 +1580,17 @@ class MagnetSimulation {
   }
 
   triggerModuleCompletion(completedGiId) {
-    const flow = {
-      gi1: { next: 'gi2', passcode: 'PULL-61B', expName: 'Experiment 1: Push & Pull', nextName: 'Experiment 2' },
-      gi2: { next: 'gi3', passcode: 'POLE-62A', expName: 'Experiment 2: Material Classification', nextName: 'Experiment 3' },
-      gi3: { next: 'gi4', passcode: 'RING-63B', expName: 'Experiment 3: Strongest Pull at Poles', nextName: 'Experiment 4' },
-      gi4: { next: 'gi5', passcode: 'CASE-63C', expName: 'Experiment 4: Floating Ring Magnets', nextName: 'Experiment 5' },
-      gi5: { next: 'gi6', passcode: 'ALIGN-64', expName: 'Experiment 5: Mystery Casings Test', nextName: 'Experiment 6' },
-      gi6: { next: 'free', passcode: 'SPROUT-FREE', expName: 'Experiment 6: Hanging & Floating Alignment', nextName: 'Experiment 7: Free Play' }
+    const names = {
+      gi1: 'Experiment 1: Push & Pull',
+      gi2: 'Experiment 2: Material Classification',
+      gi3: 'Experiment 3: Strongest Pull at Poles',
+      gi4: 'Experiment 4: Floating Ring Magnets',
+      gi5: 'Experiment 5: Mystery Casings Test',
+      gi6: 'Experiment 6: Hanging & Floating Alignment'
     };
-    
-    const info = flow[completedGiId];
-    if (!info) return;
-    
-    const isNextUnlockedByTeacher = this.isActivityUnlocked(info.next);
-    
+    const expName = names[completedGiId] || 'this experiment';
     if (this.app) {
-      this.app.showCompletionModal(info.expName, info.next, info.passcode, info.nextName, isNextUnlockedByTeacher);
+      this.app.showCompletionModal(expName);
     }
   }
 
@@ -3033,46 +3028,18 @@ class SproutMagnetApp {
     }
   }
 
-  showCompletionModal(expName, nextKey, passcode, nextName, canProceed) {
+  showCompletionModal(expName) {
     const modal = document.getElementById('completion-passcode-modal');
     const title = document.getElementById('completion-title');
     const desc  = document.getElementById('completion-desc');
-    const box   = document.getElementById('completion-passcode-box');
-    const label = document.getElementById('completion-passcode-label');
-    const code  = document.getElementById('completion-passcode-code');
-    const goNextBtn = document.getElementById('completion-go-next-btn');
     const closeBtn  = document.getElementById('completion-close-btn');
 
     if (!modal) return;
     if (title) title.textContent = "🎉 Module Completed!";
-
-    if (canProceed) {
-      if (desc)  desc.textContent = `Awesome job, Scientist! You completed ${expName}.`;
-      if (box)   box.style.display = 'block';
-      if (label) label.textContent = `🔑 Passcode for ${nextName}:`;
-      if (code)  code.textContent = passcode;
-      if (goNextBtn) goNextBtn.style.display = 'inline-block';
-      if (closeBtn) closeBtn.textContent = 'Stay Here';
-    } else {
-      if (desc)  desc.textContent = `Awesome job, Scientist! You completed ${expName}. Please wait for your teacher's instructions for the next experiment.`;
-      if (box)   box.style.display = 'none';
-      if (goNextBtn) goNextBtn.style.display = 'none';
-      if (closeBtn) closeBtn.textContent = 'Great!';
-    }
+    if (desc)  desc.textContent = `Awesome job, Scientist! You completed ${expName}.`;
 
     modal.style.display = 'flex';
     this.playSound('success');
-
-    if (goNextBtn) {
-      goNextBtn.onclick = () => {
-        modal.style.display = 'none';
-        if (this.magnetSim && nextKey) {
-          const select = document.getElementById('guided-investigation-select');
-          if (select) select.value = nextKey;
-          this.magnetSim.setGuidedInvestigation(nextKey);
-        }
-      };
-    }
 
     if (closeBtn) {
       closeBtn.onclick = () => {
