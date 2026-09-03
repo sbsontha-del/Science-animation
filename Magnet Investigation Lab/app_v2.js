@@ -1580,18 +1580,7 @@ class MagnetSimulation {
   }
 
   triggerModuleCompletion(completedGiId) {
-    const names = {
-      gi1: 'Experiment 1: Push & Pull',
-      gi2: 'Experiment 2: Material Classification',
-      gi3: 'Experiment 3: Strongest Pull at Poles',
-      gi4: 'Experiment 4: Floating Ring Magnets',
-      gi5: 'Experiment 5: Mystery Casings Test',
-      gi6: 'Experiment 6: Hanging & Floating Alignment'
-    };
-    const expName = names[completedGiId] || 'this experiment';
-    if (this.app) {
-      this.app.showCompletionModal(expName);
-    }
+    this.playSound('success');
   }
 
   updateInvestigationDropdown() {
@@ -3029,23 +3018,7 @@ class SproutMagnetApp {
   }
 
   showCompletionModal(expName) {
-    const modal = document.getElementById('completion-passcode-modal');
-    const title = document.getElementById('completion-title');
-    const desc  = document.getElementById('completion-desc');
-    const closeBtn  = document.getElementById('completion-close-btn');
-
-    if (!modal) return;
-    if (title) title.textContent = "🎉 Module Completed!";
-    if (desc)  desc.textContent = `Awesome job, Scientist! You completed ${expName}.`;
-
-    modal.style.display = 'flex';
-    this.playSound('success');
-
-    if (closeBtn) {
-      closeBtn.onclick = () => {
-        modal.style.display = 'none';
-      };
-    }
+    // Disabled completely
   }
 }
 
