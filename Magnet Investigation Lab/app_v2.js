@@ -1562,7 +1562,6 @@ class MagnetSimulation {
   }
 
   isActivityUnlocked(giId) {
-    if (this.app && this.app.teacherModeActive) return true;
     return !!this.unlockedActivities[giId];
   }
 
