@@ -1592,12 +1592,10 @@ class MagnetSimulation {
     const info = flow[completedGiId];
     if (!info) return;
     
-    // Auto-unlock next module for the pupil
-    this.unlockActivity(info.next);
+    const isNextUnlockedByTeacher = this.isActivityUnlocked(info.next);
     
-    // Show completion celebration modal
     if (this.app) {
-      this.app.showCompletionModal(info.expName, info.next, info.passcode, info.nextName);
+      this.app.showCompletionModal(info.expName, info.next, info.passcode, info.nextName, isNextUnlockedByTeacher);
     }
   }
 
@@ -3035,10 +3033,11 @@ class SproutMagnetApp {
     }
   }
 
-  showCompletionModal(expName, nextKey, passcode, nextName) {
+  showCompletionModal(expName, nextKey, passcode, nextName, canProceed) {
     const modal = document.getElementById('completion-passcode-modal');
     const title = document.getElementById('completion-title');
     const desc  = document.getElementById('completion-desc');
+    const box   = document.getElementById('completion-passcode-box');
     const label = document.getElementById('completion-passcode-label');
     const code  = document.getElementById('completion-passcode-code');
     const goNextBtn = document.getElementById('completion-go-next-btn');
@@ -3046,9 +3045,20 @@ class SproutMagnetApp {
 
     if (!modal) return;
     if (title) title.textContent = "🎉 Module Completed!";
-    if (desc)  desc.textContent = `Awesome job, Scientist! You completed ${expName}.`;
-    if (label) label.textContent = `🔑 Passcode for ${nextName}:`;
-    if (code)  code.textContent = passcode;
+
+    if (canProceed) {
+      if (desc)  desc.textContent = `Awesome job, Scientist! You completed ${expName}.`;
+      if (box)   box.style.display = 'block';
+      if (label) label.textContent = `🔑 Passcode for ${nextName}:`;
+      if (code)  code.textContent = passcode;
+      if (goNextBtn) goNextBtn.style.display = 'inline-block';
+      if (closeBtn) closeBtn.textContent = 'Stay Here';
+    } else {
+      if (desc)  desc.textContent = `Awesome job, Scientist! You completed ${expName}. Please wait for your teacher's instructions for the next experiment.`;
+      if (box)   box.style.display = 'none';
+      if (goNextBtn) goNextBtn.style.display = 'none';
+      if (closeBtn) closeBtn.textContent = 'Great!';
+    }
 
     modal.style.display = 'flex';
     this.playSound('success');
