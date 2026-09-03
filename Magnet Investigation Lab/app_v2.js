@@ -1582,6 +1582,64 @@ class MagnetSimulation {
 
   triggerModuleCompletion(completedGiId) {
     this.playSound('success');
+    
+    const flow = {
+      gi1: { next: 'gi2', nextName: 'Experiment 2: Material Classification' },
+      gi2: { next: 'gi3', nextName: 'Experiment 3: Strongest Pull at Poles' },
+      gi3: { next: 'gi4', nextName: 'Experiment 4: Floating Ring Magnets' },
+      gi4: { next: 'gi5', nextName: 'Experiment 5: Mystery Casings Test' },
+      gi5: { next: 'gi6', nextName: 'Experiment 6: Hanging & Floating Alignment' },
+      gi6: { next: 'free', nextName: 'Experiment 7: Free Play' }
+    };
+
+    const info = flow[completedGiId];
+    if (!info) return;
+
+    const instructions = document.getElementById('guided-instructions');
+    if (!instructions) return;
+
+    let banner = instructions.querySelector('#gi-completion-banner');
+    if (!banner) {
+      banner = document.createElement('div');
+      banner.id = 'gi-completion-banner';
+      banner.className = 'mt-3 p-3 bg-emerald-50 border-2 border-emerald-300 rounded-xl text-emerald-900 text-xs font-bold shadow-sm';
+      instructions.appendChild(banner);
+    }
+
+    const isNextUnlocked = this.isActivityUnlocked(info.next);
+
+    if (isNextUnlocked) {
+      banner.innerHTML = `
+        <div class="flex items-start gap-2">
+          <span class="text-xl">✅</span>
+          <div class="flex-1">
+            <div class="text-emerald-900 font-extrabold text-xs mb-0.5">All Answers Entered Correctly!</div>
+            <div class="text-emerald-700 text-[11px] font-normal mb-2">Great job! You have completed this experiment. Click below to proceed to the next experiment:</div>
+            <button id="gi-proceed-next-btn" class="btn btn-primary text-xs py-1.5 px-3 w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold border-none rounded-lg shadow-sm cursor-pointer">
+              Proceed to ${info.nextName} ➡️
+            </button>
+          </div>
+        </div>
+      `;
+      const btn = banner.querySelector('#gi-proceed-next-btn');
+      if (btn) {
+        btn.onclick = () => {
+          const select = document.getElementById('guided-investigation-select');
+          if (select) select.value = info.next;
+          this.setGuidedInvestigation(info.next);
+        };
+      }
+    } else {
+      banner.innerHTML = `
+        <div class="flex items-start gap-2">
+          <span class="text-xl">✅</span>
+          <div>
+            <div class="text-emerald-900 font-extrabold text-xs mb-0.5">All Answers Entered Correctly!</div>
+            <div class="text-emerald-700 text-[11px] font-normal">Great job! You have completed this experiment. Please wait for your teacher's instructions for the next experiment.</div>
+          </div>
+        </div>
+      `;
+    }
   }
 
   updateInvestigationDropdown() {
