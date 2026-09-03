@@ -2848,10 +2848,23 @@ class SproutMagnetApp {
       }
     };
 
+    const saveDashboardCheckboxes = () => {
+      if (!this.magnetSim) return;
+      document.querySelectorAll('.teacher-module-toggle').forEach(chk => {
+        const gi = chk.dataset.gi;
+        this.magnetSim.unlockedActivities[gi] = chk.checked;
+      });
+      this.magnetSim.updateInvestigationDropdown();
+      this.saveStateToStorage();
+    };
+
     if (teacherBtn)    teacherBtn.addEventListener('click', openTeacherModal);
     if (teacherCancel) teacherCancel.addEventListener('click', closeTeacherModal);
     if (teacherSubmit) teacherSubmit.addEventListener('click', submitTeacherPassword);
-    if (teacherDoneBtn) teacherDoneBtn.addEventListener('click', closeTeacherModal);
+    if (teacherDoneBtn) teacherDoneBtn.addEventListener('click', () => {
+      saveDashboardCheckboxes();
+      closeTeacherModal();
+    });
 
     if (teacherInput)  teacherInput.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') submitTeacherPassword();
@@ -2860,12 +2873,7 @@ class SproutMagnetApp {
 
     document.querySelectorAll('.teacher-module-toggle').forEach(chk => {
       chk.addEventListener('change', () => {
-        const gi = chk.dataset.gi;
-        if (this.magnetSim) {
-          this.magnetSim.unlockedActivities[gi] = chk.checked;
-          this.magnetSim.updateInvestigationDropdown();
-          this.saveStateToStorage();
-        }
+        saveDashboardCheckboxes();
       });
     });
 
