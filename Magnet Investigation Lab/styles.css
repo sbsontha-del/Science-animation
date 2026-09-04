@@ -599,11 +599,54 @@ main {
 }
 
 .ring-preview {
+  position: relative;
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  border: 7px solid #cbd5e1;
-  background: conic-gradient(#f43f5e 50%, #3b82f6 50%);
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
+.ring-preview .n-pole {
+  background: #f43f5e;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 3px;
+  font-size: 8px;
+  font-weight: 800;
+  color: white;
+}
+
+.ring-preview .s-pole {
+  background: #3b82f6;
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 3px;
+  font-size: 8px;
+  font-weight: 800;
+  color: white;
+}
+
+.ring-preview::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.25);
+  z-index: 2;
 }
 
 .materials-buttons-grid {
@@ -800,17 +843,81 @@ main {
   height: 100%;
 }
 
-/* ===== RING MAGNET — flat oval disc side-view ===== */
-/* JS already sets left = x - width/2, top = y - height/2 so NO extra margins needed */
+/* ===== RING MAGNET — Standalone circular doughnut ===== */
 .type-ring {
-  border-radius: 50% / 50% !important;
+  border-radius: 50% !important;
   overflow: visible !important;
   background: transparent !important;
-  z-index: 5 !important;   /* sit above the pole visual */
+  z-index: 5 !important;
 }
-.ring-magnet-inner {
+
+.type-ring:not(.on-stand) .ring-magnet-inner {
   display: flex;
-  flex-direction: column; /* Top half N (red), Bottom half S (blue) = flat horizontal disc */
+  flex-direction: row;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  overflow: hidden;
+  box-shadow:
+    0 5px 16px rgba(0,0,0,0.22),
+    inset 0 0 0 1.5px rgba(255,255,255,0.4);
+}
+
+.type-ring:not(.on-stand) .ring-magnet-inner .pole-n {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 9px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  background: linear-gradient(135deg, #fb7185, #f43f5e 50%, #be123c);
+}
+
+.type-ring:not(.on-stand) .ring-magnet-inner .pole-s {
+  flex: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 9px;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: white;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+  background: linear-gradient(135deg, #60a5fa, #3b82f6 50%, #1d4ed8);
+}
+
+.type-ring:not(.on-stand) .ring-hole {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: #f8fafc;
+  border: 2.5px solid #cbd5e1;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.22), 0 0 0 1px rgba(255,255,255,0.8);
+  z-index: 3;
+}
+
+.type-ring:not(.on-stand).ring-flipped .pole-n {
+  background: linear-gradient(135deg, #60a5fa, #3b82f6 50%, #1d4ed8);
+}
+
+.type-ring:not(.on-stand).ring-flipped .pole-s {
+  background: linear-gradient(135deg, #fb7185, #f43f5e 50%, #be123c);
+}
+
+/* ===== RING MAGNET — Floating magnet on stand (Ex 4 side-view flat oval disc) ===== */
+.type-ring.on-stand .ring-magnet-inner {
+  display: flex;
+  flex-direction: column;
   position: relative;
   width: 100%;
   height: 100%;
@@ -821,8 +928,8 @@ main {
     inset 0 -3px 6px rgba(0,0,0,0.25),
     inset 0 3px 6px rgba(255,255,255,0.25);
 }
-/* Top half (red/rose) */
-.ring-magnet-inner .pole-n {
+
+.type-ring.on-stand .ring-magnet-inner .pole-n {
   width: 100%;
   flex: 1;
   display: flex;
@@ -835,8 +942,8 @@ main {
   background: linear-gradient(180deg, #fb7185, #f43f5e 50%, #be123c);
   padding-bottom: 2px;
 }
-/* Bottom half (blue) */
-.ring-magnet-inner .pole-s {
+
+.type-ring.on-stand .ring-magnet-inner .pole-s {
   width: 100%;
   flex: 1;
   display: flex;
@@ -849,21 +956,8 @@ main {
   background: linear-gradient(180deg, #60a5fa, #3b82f6 50%, #1d4ed8);
   padding-top: 2px;
 }
-/* Top highlight to give 3D disc depth */
-.ring-magnet-inner::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 45%;
-  background: linear-gradient(180deg, rgba(255,255,255,0.35) 0%, transparent 100%);
-  border-radius: 50% 50% 0 0 / 60% 60% 0 0;
-  pointer-events: none;
-  z-index: 4;
-}
-/* Ring hole — oval punch-through showing the pole */
-.ring-hole {
+
+.type-ring.on-stand .ring-hole {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -875,7 +969,7 @@ main {
   z-index: 2;
   box-shadow: inset 1px 0 3px rgba(0,0,0,0.3), inset -1px 0 3px rgba(0,0,0,0.2);
 }
-/* Rod overlay — not needed separately, pole shows through hole */
+
 .ring-rod-overlay {
   display: none;
 }
@@ -883,12 +977,12 @@ main {
   display: none;
 }
 .threaded-on-rod .ring-hole {
-  /* keep showing the wood-coloured rod through the hole */
   background: linear-gradient(90deg, #b45309 0%, #d97706 20%, #fbbf24 40%, #d97706 65%, #92400e 100%);
   border: none;
 }
-.ring-flipped .pole-n { background: linear-gradient(180deg, #60a5fa, #3b82f6 50%, #1d4ed8); }
-.ring-flipped .pole-s { background: linear-gradient(180deg, #fb7185, #f43f5e 50%, #be123c); }
+
+.type-ring.on-stand.ring-flipped .pole-n { background: linear-gradient(180deg, #60a5fa, #3b82f6 50%, #1d4ed8); }
+.type-ring.on-stand.ring-flipped .pole-s { background: linear-gradient(180deg, #fb7185, #f43f5e 50%, #be123c); }
 
 /* Material element styling */
 .element-material {

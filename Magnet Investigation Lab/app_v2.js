@@ -222,8 +222,13 @@ class MagnetSimulation {
         height = 70;
         name = 'Button Magnet';
       } else if (subType === 'ring') {
-        width = 120;
-        height = 32;
+        if (this.activeInvestigation === 'gi4') {
+          width = 120;
+          height = 32;
+        } else {
+          width = 70;
+          height = 70;
+        }
         name = 'Ring Magnet';
       } else if (subType === 'rod') {
         width = 120;
@@ -368,6 +373,9 @@ class MagnetSimulation {
           </div>
         `;
       } else if (obj.subType === 'ring') {
+        if (this.activeInvestigation === 'gi4' || obj.onStand || obj.width === 120) {
+          el.classList.add('on-stand');
+        }
         el.innerHTML = `
           <div class="ring-magnet-inner">
             <div class="pole-n">N</div>
