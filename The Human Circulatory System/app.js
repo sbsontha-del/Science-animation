@@ -131,9 +131,18 @@ function initTabNavigation() {
     const errorMsg = document.getElementById('teacher-login-error-msg');
 
     if (modal) {
-      if (loginView) loginView.classList.remove('hidden');
-      if (dashView) dashView.classList.add('hidden');
-      if (errorMsg) errorMsg.classList.add('hidden');
+      if (loginView) {
+        loginView.classList.remove('hidden');
+        loginView.style.display = 'block';
+      }
+      if (dashView) {
+        dashView.classList.add('hidden');
+        dashView.style.display = 'none';
+      }
+      if (errorMsg) {
+        errorMsg.classList.add('hidden');
+        errorMsg.style.display = 'none';
+      }
       if (input) {
         input.value = '';
         setTimeout(() => input.focus(), 100);
@@ -145,12 +154,10 @@ function initTabNavigation() {
 
   window.closeTeacherLoginModal = function() {
     const modal = document.getElementById('teacher-login-modal');
-    const errorMsg = document.getElementById('teacher-login-error-msg');
     if (modal) {
       modal.classList.add('hidden');
-      modal.style.display = '';
+      modal.style.display = 'none';
     }
-    if (errorMsg) errorMsg.classList.add('hidden');
   };
 
   window.processTeacherMasterLogin = function() {
@@ -162,11 +169,23 @@ function initTabNavigation() {
     const validMasterPasses = ['teacher', 'teacher123', 'admin', 'master'];
 
     if (validMasterPasses.includes(pass)) {
-      if (loginView) loginView.classList.add('hidden');
-      if (dashView) dashView.classList.remove('hidden');
-      if (errorMsg) errorMsg.classList.add('hidden');
+      if (loginView) {
+        loginView.classList.add('hidden');
+        loginView.style.display = 'none';
+      }
+      if (dashView) {
+        dashView.classList.remove('hidden');
+        dashView.style.display = 'block';
+      }
+      if (errorMsg) {
+        errorMsg.classList.add('hidden');
+        errorMsg.style.display = 'none';
+      }
     } else {
-      if (errorMsg) errorMsg.classList.remove('hidden');
+      if (errorMsg) {
+        errorMsg.classList.remove('hidden');
+        errorMsg.style.display = 'block';
+      }
       if (input) {
         input.focus();
         input.select();

@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=3.0">
+  <link rel="stylesheet" href="styles.css?v=5.0">
   <script>
     function openTeacherLoginModal() {
       var modal = document.getElementById('teacher-login-modal');
@@ -20,9 +20,18 @@
       var input = document.getElementById('input-teacher-master-pass');
 
       if (modal) {
-        if (loginView) loginView.classList.remove('hidden');
-        if (dashView) dashView.classList.add('hidden');
-        if (errorMsg) errorMsg.classList.add('hidden');
+        if (loginView) {
+          loginView.classList.remove('hidden');
+          loginView.style.display = 'block';
+        }
+        if (dashView) {
+          dashView.classList.add('hidden');
+          dashView.style.display = 'none';
+        }
+        if (errorMsg) {
+          errorMsg.classList.add('hidden');
+          errorMsg.style.display = 'none';
+        }
         if (input) {
           input.value = '';
           setTimeout(function() { input.focus(); }, 100);
@@ -36,7 +45,7 @@
       var modal = document.getElementById('teacher-login-modal');
       if (modal) {
         modal.classList.add('hidden');
-        modal.style.display = '';
+        modal.style.display = 'none';
       }
     }
 
@@ -48,11 +57,23 @@
       var pass = (input && input.value ? input.value : '').trim().toLowerCase();
 
       if (["teacher", "teacher123", "admin", "master"].indexOf(pass) !== -1) {
-        if (loginView) loginView.classList.add('hidden');
-        if (dashView) dashView.classList.remove('hidden');
-        if (errorMsg) errorMsg.classList.add('hidden');
+        if (loginView) {
+          loginView.classList.add('hidden');
+          loginView.style.display = 'none';
+        }
+        if (dashView) {
+          dashView.classList.remove('hidden');
+          dashView.style.display = 'block';
+        }
+        if (errorMsg) {
+          errorMsg.classList.add('hidden');
+          errorMsg.style.display = 'none';
+        }
       } else {
-        if (errorMsg) errorMsg.classList.remove('hidden');
+        if (errorMsg) {
+          errorMsg.classList.remove('hidden');
+          errorMsg.style.display = 'block';
+        }
         if (input) {
           input.focus();
           input.select();
@@ -1334,13 +1355,13 @@
           <input type="password" id="input-teacher-master-pass" class="blank-input lock-pass-input" placeholder="Enter admin password..." style="text-align: center;">
           <button class="btn btn-primary" id="btn-submit-teacher-login" onclick="processTeacherMasterLogin()">🔓 Login to View Passwords</button>
         </div>
-        <div id="teacher-login-error-msg" class="lock-error-msg hidden" style="color: #fca5a5; font-size: 0.85rem; font-weight: 600; margin-top: 0.75rem;">
+        <div id="teacher-login-error-msg" class="lock-error-msg hidden" style="display: none; color: #fca5a5; font-size: 0.85rem; font-weight: 600; margin-top: 0.75rem;">
           ❌ Incorrect Password. Default Master Password is: <code>admin</code>
         </div>
       </div>
 
       <!-- VIEW 2: TEACHER DASHBOARD (Password List) -->
-      <div id="teacher-dashboard-view" class="modal-body hidden" style="text-align: center;">
+      <div id="teacher-dashboard-view" class="modal-body hidden" style="display: none; text-align: center;">
         <div style="font-size: 2.5rem; margin-bottom: 0.25rem;">📋</div>
         <h3 style="color: #34d399; margin-top: 0.2rem;">Teacher Password Dashboard</h3>
         <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1rem;">
