@@ -13,26 +13,70 @@
   <link rel="stylesheet" href="styles.css?v=3.0">
   <script>
     function openTeacherLoginModal() {
-      var pass = prompt("🔑 Teacher Master Access:\nEnter Master Password to unlock ALL activities for your class:");
-      if (pass && ["teacher", "teacher123", "admin", "master"].indexOf(pass.trim().toLowerCase()) !== -1) {
-        var tabBtns = document.querySelectorAll('.tab-btn');
-        tabBtns.forEach(function(b) {
-          b.setAttribute('data-locked', 'false');
-          b.classList.remove('locked');
-          var icon = b.querySelector('.lock-status-icon');
-          if (icon) icon.textContent = '🔓';
-        });
-        var btn = document.getElementById('btn-teacher-login');
-        if (btn) {
-          btn.innerHTML = '🔓 Teacher Mode (All Unlocked)';
-          btn.style.background = 'rgba(16, 185, 129, 0.35)';
-          btn.style.borderColor = '#10b981';
-          btn.style.color = '#a7f3d0';
+      var modal = document.getElementById('teacher-login-modal');
+      var loginView = document.getElementById('teacher-login-view');
+      var dashView = document.getElementById('teacher-dashboard-view');
+      var errorMsg = document.getElementById('teacher-login-error-msg');
+      var input = document.getElementById('input-teacher-master-pass');
+
+      if (modal) {
+        if (loginView) loginView.classList.remove('hidden');
+        if (dashView) dashView.classList.add('hidden');
+        if (errorMsg) errorMsg.classList.add('hidden');
+        if (input) {
+          input.value = '';
+          setTimeout(function() { input.focus(); }, 100);
         }
-        alert('✨ Success! All activities (4.5, 4.6, 4.7, Quiz) are now unlocked.');
-      } else if (pass) {
-        alert('❌ Incorrect Teacher Password. Default password is: admin');
+        modal.classList.remove('hidden');
+        modal.style.display = 'flex';
       }
+    }
+
+    function closeTeacherLoginModal() {
+      var modal = document.getElementById('teacher-login-modal');
+      if (modal) {
+        modal.classList.add('hidden');
+        modal.style.display = '';
+      }
+    }
+
+    function processTeacherMasterLogin() {
+      var input = document.getElementById('input-teacher-master-pass');
+      var errorMsg = document.getElementById('teacher-login-error-msg');
+      var loginView = document.getElementById('teacher-login-view');
+      var dashView = document.getElementById('teacher-dashboard-view');
+      var pass = (input && input.value ? input.value : '').trim().toLowerCase();
+
+      if (["teacher", "teacher123", "admin", "master"].indexOf(pass) !== -1) {
+        if (loginView) loginView.classList.add('hidden');
+        if (dashView) dashView.classList.remove('hidden');
+        if (errorMsg) errorMsg.classList.add('hidden');
+      } else {
+        if (errorMsg) errorMsg.classList.remove('hidden');
+        if (input) {
+          input.focus();
+          input.select();
+        }
+      }
+    }
+
+    function unlockAllFromDashboard() {
+      var tabBtns = document.querySelectorAll('.tab-btn');
+      tabBtns.forEach(function(b) {
+        b.setAttribute('data-locked', 'false');
+        b.classList.remove('locked');
+        var icon = b.querySelector('.lock-status-icon');
+        if (icon) icon.textContent = '🔓';
+      });
+      var btn = document.getElementById('btn-teacher-login');
+      if (btn) {
+        btn.innerHTML = '🔓 Teacher Mode (All Unlocked)';
+        btn.style.background = 'rgba(16, 185, 129, 0.35)';
+        btn.style.borderColor = '#10b981';
+        btn.style.color = '#a7f3d0';
+      }
+      alert('✨ Success! All activities (4.5, 4.6, 4.7, Quiz) are now unlocked for your class session.');
+      closeTeacherLoginModal();
     }
   </script>
 </head>
@@ -1270,24 +1314,75 @@
     </div>
   <!-- Teacher Master Login Modal -->
   <div class="modal-backdrop hidden" id="teacher-login-modal">
-    <div class="modal-content lock-modal-content">
+    <div class="modal-content lock-modal-content" style="max-width: 520px;">
       <div class="modal-header">
-        <h2>🔑 Teacher Master Login</h2>
+        <h2>🔑 Teacher Master Login & Dashboard</h2>
         <button class="btn-close-modal" id="btn-close-teacher-login" onclick="closeTeacherLoginModal()">✖</button>
       </div>
-      <div class="modal-body text-center" style="text-align: center;">
-        <div class="lock-avatar-icon" style="font-size: 3rem; margin-bottom: 0.5rem;">🔑</div>
+
+      <!-- VIEW 1: LOGIN FORM -->
+      <div id="teacher-login-view" class="modal-body text-center" style="text-align: center;">
+        <div class="lock-avatar-icon" style="font-size: 3rem; margin-bottom: 0.5rem;">🔐</div>
         <h3 style="color: #f0abfc; margin-top: 0.2rem;">Teacher Master Access</h3>
-        <p style="color: #d8b4fe; font-size: 0.9rem; margin-bottom: 1.25rem;">Enter your Master Password to unlock ALL activities at once for your class:</p>
+        <p style="color: #d8b4fe; font-size: 0.9rem; margin-bottom: 1.25rem;">
+          Enter Master Password (<code>admin</code>) to view activity passwords and manage your class session:
+        </p>
         
         <div class="lock-input-group" style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 320px; margin: 0 auto;">
-          <input type="password" id="input-teacher-master-pass" class="blank-input lock-pass-input" placeholder="Enter Teacher Password (e.g. teacher)...">
-          <button class="btn btn-primary" id="btn-submit-teacher-login" onclick="processTeacherMasterLogin()">🔓 Unlock All Activities</button>
+          <input type="password" id="input-teacher-master-pass" class="blank-input lock-pass-input" placeholder="Enter admin password..." style="text-align: center;">
+          <button class="btn btn-primary" id="btn-submit-teacher-login" onclick="processTeacherMasterLogin()">🔓 Login to View Passwords</button>
         </div>
-        <div id="teacher-login-error-msg" class="lock-error-msg hidden" style="color: #fca5a5; font-size: 0.85rem; font-weight: 600; margin-top: 0.75rem;">❌ Incorrect Teacher Password. Default password is <code>teacher</code></div>
+        <div id="teacher-login-error-msg" class="lock-error-msg hidden" style="color: #fca5a5; font-size: 0.85rem; font-weight: 600; margin-top: 0.75rem;">
+          ❌ Incorrect Password. Default Master Password is: <code>admin</code>
+        </div>
       </div>
+
+      <!-- VIEW 2: TEACHER DASHBOARD (Password List) -->
+      <div id="teacher-dashboard-view" class="modal-body hidden" style="text-align: center;">
+        <div style="font-size: 2.5rem; margin-bottom: 0.25rem;">📋</div>
+        <h3 style="color: #34d399; margin-top: 0.2rem;">Teacher Password Dashboard</h3>
+        <p style="color: #94a3b8; font-size: 0.85rem; margin-bottom: 1rem;">
+          Here are the passwords for each activity. Share these with pupils as they progress:
+        </p>
+
+        <!-- PASSWORD GRID -->
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem; margin-bottom: 1rem; text-align: left;">
+          <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid #3b82f6; border-radius: 8px; padding: 0.75rem;">
+            <div style="font-size: 0.75rem; color: #93c5fd; font-weight: 700; text-transform: uppercase;">Activity 4.5</div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: #f8fafc; margin-bottom: 0.35rem;">Plant vs Human Transport</div>
+            <div style="background: #0f172a; border: 1px solid #1e293b; padding: 0.35rem 0.5rem; border-radius: 4px; font-family: monospace; font-size: 0.95rem; color: #60a5fa; font-weight: 700; text-align: center; letter-spacing: 0.5px;">plant45 <span style="font-weight:400; color:#64748b; font-size:0.75rem;">(or 4500)</span></div>
+          </div>
+
+          <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid #10b981; border-radius: 8px; padding: 0.75rem;">
+            <div style="font-size: 0.75rem; color: #6ee7b7; font-weight: 700; text-transform: uppercase;">Activity 4.6</div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: #f8fafc; margin-bottom: 0.35rem;">Pulse & Breathing Rate</div>
+            <div style="background: #0f172a; border: 1px solid #1e293b; padding: 0.35rem 0.5rem; border-radius: 4px; font-family: monospace; font-size: 0.95rem; color: #34d399; font-weight: 700; text-align: center; letter-spacing: 0.5px;">pulse46 <span style="font-weight:400; color:#64748b; font-size:0.75rem;">(or 4600)</span></div>
+          </div>
+
+          <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid #f59e0b; border-radius: 8px; padding: 0.75rem;">
+            <div style="font-size: 0.75rem; color: #fcd34d; font-weight: 700; text-transform: uppercase;">Activity 4.7</div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: #f8fafc; margin-bottom: 0.35rem;">Comic Strip Flipbook</div>
+            <div style="background: #0f172a; border: 1px solid #1e293b; padding: 0.35rem 0.5rem; border-radius: 4px; font-family: monospace; font-size: 0.95rem; color: #fbbf24; font-weight: 700; text-align: center; letter-spacing: 0.5px;">story47 <span style="font-weight:400; color:#64748b; font-size:0.75rem;">(or 4700)</span></div>
+          </div>
+
+          <div style="background: rgba(30, 41, 59, 0.8); border: 1px solid #ec4899; border-radius: 8px; padding: 0.75rem;">
+            <div style="font-size: 0.75rem; color: #f472b6; font-weight: 700; text-transform: uppercase;">Activity 5.0 (Quiz)</div>
+            <div style="font-size: 0.85rem; font-weight: 600; color: #f8fafc; margin-bottom: 0.35rem;">Knowledge Check Quiz</div>
+            <div style="background: #0f172a; border: 1px solid #1e293b; padding: 0.35rem 0.5rem; border-radius: 4px; font-family: monospace; font-size: 0.95rem; color: #f472b6; font-weight: 700; text-align: center; letter-spacing: 0.5px;">quiz50 <span style="font-weight:400; color:#64748b; font-size:0.75rem;">(or 5000)</span></div>
+          </div>
+        </div>
+
+        <div style="background: rgba(139, 92, 246, 0.15); border: 1px solid #8b5cf6; border-radius: 8px; padding: 0.6rem 0.75rem; margin-bottom: 1.25rem; font-size: 0.85rem; color: #ddd6fe; text-align: center;">
+          🔑 <strong>Master Password:</strong> <code style="background:#0f172a; padding:2px 6px; border-radius:4px; color:#c084fc; font-weight:700;">admin</code>
+        </div>
+
+        <div style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;">
+          <button class="btn btn-primary" style="background: linear-gradient(135deg, #10b981, #059669); border: none;" onclick="unlockAllFromDashboard()">🔓 Unlock All Activities Now</button>
+        </div>
+      </div>
+
       <div class="modal-footer" style="justify-content: center;">
-        <button class="btn btn-secondary" id="btn-cancel-teacher-login" onclick="closeTeacherLoginModal()">Cancel</button>
+        <button class="btn btn-secondary" id="btn-cancel-teacher-login" onclick="closeTeacherLoginModal()">Close</button>
       </div>
     </div>
   </div>

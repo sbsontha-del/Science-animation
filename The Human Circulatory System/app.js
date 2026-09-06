@@ -125,25 +125,21 @@ function initTabNavigation() {
 
   window.openTeacherLoginModal = function() {
     const modal = document.getElementById('teacher-login-modal');
+    const loginView = document.getElementById('teacher-login-view');
+    const dashView = document.getElementById('teacher-dashboard-view');
     const input = document.getElementById('input-teacher-master-pass');
     const errorMsg = document.getElementById('teacher-login-error-msg');
 
     if (modal) {
-      modal.classList.remove('hidden');
-      modal.style.display = 'flex';
+      if (loginView) loginView.classList.remove('hidden');
+      if (dashView) dashView.classList.add('hidden');
       if (errorMsg) errorMsg.classList.add('hidden');
       if (input) {
         input.value = '';
         setTimeout(() => input.focus(), 100);
       }
-    } else {
-      const pass = prompt('Enter Teacher Password (e.g. teacher):');
-      if (pass && ['teacher', 'teacher123', 'admin', 'master'].includes(pass.trim().toLowerCase())) {
-        window.unlockAllTabs();
-        alert('✨ All activities unlocked for your class session!');
-      } else if (pass) {
-        alert('❌ Incorrect Teacher Password.');
-      }
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
     }
   };
 
@@ -160,12 +156,15 @@ function initTabNavigation() {
   window.processTeacherMasterLogin = function() {
     const input = document.getElementById('input-teacher-master-pass');
     const errorMsg = document.getElementById('teacher-login-error-msg');
+    const loginView = document.getElementById('teacher-login-view');
+    const dashView = document.getElementById('teacher-dashboard-view');
     const pass = (input?.value || '').trim().toLowerCase();
     const validMasterPasses = ['teacher', 'teacher123', 'admin', 'master'];
 
     if (validMasterPasses.includes(pass)) {
-      window.unlockAllTabs();
-      window.closeTeacherLoginModal();
+      if (loginView) loginView.classList.add('hidden');
+      if (dashView) dashView.classList.remove('hidden');
+      if (errorMsg) errorMsg.classList.add('hidden');
     } else {
       if (errorMsg) errorMsg.classList.remove('hidden');
       if (input) {
@@ -173,6 +172,12 @@ function initTabNavigation() {
         input.select();
       }
     }
+  };
+
+  window.unlockAllFromDashboard = function() {
+    window.unlockAllTabs();
+    alert('✨ All activities (4.5, 4.6, 4.7, Quiz) are now unlocked for your class session!');
+    window.closeTeacherLoginModal();
   };
 
   const btnTeacherLogin = document.getElementById('btn-teacher-login');
