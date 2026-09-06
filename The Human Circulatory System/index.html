@@ -1,0 +1,1227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Human Respiratory & Circulatory Systems (Activities 4.4 - 4.7)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-area">
+        <div class="logo-icon">🫀</div>
+        <div>
+          <h1>Interactive Science Lab</h1>
+          <p class="subtitle">The Human Respiratory and Circulatory Systems (Activities 4.4 – 4.7)</p>
+        </div>
+      </div>
+      <div class="header-actions">
+        <span class="badge answer-key-badge">🏛️ Socratic Learning Mode</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Navigation Tabs -->
+  <nav class="nav-tabs-container">
+    <div class="nav-tabs" role="tablist">
+      <button class="tab-btn active" data-tab="tab-4-4" role="tab" aria-selected="true" id="tab-4-4-btn">
+        <span class="tab-num">4.4</span>
+        <span class="tab-text">Circulatory System & Role-Play</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-4-5" role="tab" aria-selected="false" id="tab-4-5-btn">
+        <span class="tab-num">4.5</span>
+        <span class="tab-text">Plants vs Humans Transport</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-4-6" role="tab" aria-selected="false" id="tab-4-6-btn">
+        <span class="tab-num">4.6</span>
+        <span class="tab-text">All In This Together</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-4-7" role="tab" aria-selected="false" id="tab-4-7-btn">
+        <span class="tab-num">4.7</span>
+        <span class="tab-text">Journey of a Drop of Blood</span>
+      </button>
+      <button class="tab-btn" data-tab="tab-understanding" role="tab" aria-selected="false" id="tab-understanding-btn">
+        <span class="tab-num">Check</span>
+        <span class="tab-text">Understanding Quiz</span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Main Content Container -->
+  <main class="main-content">
+
+    <!-- ==================== ACTIVITY 4.4 ==================== -->
+    <section id="tab-4-4" class="tab-content active" role="tabpanel">
+      <div class="activity-header">
+        <div class="activity-tag">Activity 4.4</div>
+        <h2>Knowing the Human Circulatory System</h2>
+        <p class="aim"><strong>Aim:</strong> To learn about the functions of the different parts of the human circulatory system using an interactive role-play model (Organ Panels & Coloured Blood Vessels).</p>
+      </div>
+
+      <!-- Drag & Drop Roleplay Builder -->
+      <div class="card roleplay-card">
+        <div class="card-header">
+          <h3><span class="icon">🧩</span> Part 1: Drag & Drop Coloured Blood Vessels & Organ Panels</h3>
+          <p>Drag the <strong>Organ Panels</strong> and <strong>Coloured Blood Vessels</strong> (Red for oxygenated blood, Blue for deoxygenated blood) onto the diagram. Click <strong>"Run Role-Play Simulation"</strong> to watch blood flow inside the coloured arrows!</p>
+        </div>
+
+        <div class="roleplay-workspace">
+          <!-- Toolbox Palette -->
+          <div class="toolbox">
+            <h4>Items Toolbox</h4>
+            <p class="toolbox-hint">Drag items into diagram slots or click to auto-place.</p>
+            
+            <div class="toolbox-group">
+              <label>1. Organ & Body Panels</label>
+              <div class="draggable-items">
+                <div class="drag-item panel-item pink-panel-drag" draggable="true" data-type="panel" data-id="panel-lungs">
+                  <span class="item-icon">🫁</span>
+                  <span class="item-label">LUNGS Panel</span>
+                </div>
+                <div class="drag-item panel-item pink-panel-drag" draggable="true" data-type="panel" data-id="panel-heart">
+                  <span class="item-icon">🫀</span>
+                  <span class="item-label">HEART Panel</span>
+                </div>
+                <div class="drag-item panel-item pink-panel-drag" draggable="true" data-type="panel" data-id="panel-body">
+                  <span class="item-icon">🧠🦵</span>
+                  <span class="item-label">OTHER PARTS OF THE BODY Panel</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="toolbox-group">
+              <label>2. Coloured Blood Vessels</label>
+              <div class="draggable-items">
+                <div class="drag-item connector-item red-vessel-drag" draggable="true" data-type="connector" data-id="vessel-red-top-1">
+                  <span class="item-icon">🔴</span>
+                  <span class="item-label">Red Vessel (Lungs → Heart)</span>
+                </div>
+                <div class="drag-item connector-item red-vessel-drag" draggable="true" data-type="connector" data-id="vessel-red-top-2">
+                  <span class="item-icon">🔴</span>
+                  <span class="item-label">Red Vessel (Heart → Body)</span>
+                </div>
+                <div class="drag-item connector-item blue-vessel-drag" draggable="true" data-type="connector" data-id="vessel-blue-bot-1">
+                  <span class="item-icon">🔵</span>
+                  <span class="item-label">Blue Vessel (Body → Heart)</span>
+                </div>
+                <div class="drag-item connector-item blue-vessel-drag" draggable="true" data-type="connector" data-id="vessel-blue-bot-2">
+                  <span class="item-icon">🔵</span>
+                  <span class="item-label">Blue Vessel (Heart → Lungs)</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="roleplay-controls">
+              <button id="btn-auto-assemble" class="btn btn-secondary">⚡ Auto-Assemble Diagram</button>
+              <button id="btn-run-simulation" class="btn btn-primary" disabled>▶️ Run Role-Play Simulation</button>
+              <button id="btn-reset-roleplay" class="btn btn-danger">🔄 Reset</button>
+            </div>
+          </div>
+
+          <!-- Diagram Assembly Board -->
+          <div class="diagram-board" id="diagram-board">
+            <div class="board-title">Human Circulatory System Role-Play Diagram</div>
+            
+            <div class="diagram-interactive-canvas">
+
+              <!-- SVG COLOURED ARROWS OVERLAY LAYER -->
+              <svg id="vessels-svg-layer" class="vessels-svg-layer" viewBox="0 0 800 420" preserveAspectRatio="none">
+                <defs>
+                  <marker id="arrow-head-red" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#ef4444" />
+                  </marker>
+                  <marker id="arrow-head-blue" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#2563eb" />
+                  </marker>
+                  <marker id="arrow-head-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="9" markerHeight="9" orient="auto">
+                    <path d="M 0 0 L 10 5 L 0 10 z" fill="#94a3b8" />
+                  </marker>
+                </defs>
+
+                <path id="svg-arrow-top-left" class="vessel-arrow-path red-arrow inactive" d="M 140,170 C 140,50 330,50 330,170" marker-end="url(#arrow-head-gray)" />
+                <path id="svg-flow-top-left" class="vessel-flow-pulse red-pulse hidden" d="M 140,170 C 140,50 330,50 330,170" />
+
+                <path id="svg-arrow-top-right" class="vessel-arrow-path red-arrow inactive" d="M 430,170 C 430,50 660,50 660,170" marker-end="url(#arrow-head-gray)" />
+                <path id="svg-flow-top-right" class="vessel-flow-pulse red-pulse hidden" d="M 430,170 C 430,50 660,50 660,170" />
+
+                <path id="svg-arrow-bot-right" class="vessel-arrow-path blue-arrow inactive" d="M 660,250 C 660,370 430,370 430,250" marker-end="url(#arrow-head-gray)" />
+                <path id="svg-flow-bot-right" class="vessel-flow-pulse blue-pulse hidden" d="M 660,250 C 660,370 430,370 430,250" />
+
+                <path id="svg-arrow-bot-left" class="vessel-arrow-path blue-arrow inactive" d="M 330,250 C 330,370 140,370 140,250" marker-end="url(#arrow-head-gray)" />
+                <path id="svg-flow-bot-left" class="vessel-flow-pulse blue-pulse hidden" d="M 330,250 C 330,370 140,370 140,250" />
+              </svg>
+
+              <div class="top-vessels-layer">
+                <div class="vessel-slot-box top-left-vessel" data-slot="slot-vessel-top-left" data-expected="vessel-red-top-1">
+                  <div class="vessel-label-text red-label">oxygenated blood</div>
+                  <div class="slot-placeholder">Drop Red Vessel (Lungs → Heart)</div>
+                </div>
+
+                <div class="vessel-slot-box top-right-vessel" data-slot="slot-vessel-top-right" data-expected="vessel-red-top-2">
+                  <div class="vessel-label-text red-label">oxygenated blood</div>
+                  <div class="slot-placeholder">Drop Red Vessel (Heart → Body)</div>
+                </div>
+              </div>
+
+              <div class="panels-horizontal-layer">
+                <div class="drop-slot pink-panel-slot" data-slot="slot-panel-lungs" data-expected="panel-lungs">
+                  <div class="slot-placeholder">Drop LUNGS Panel</div>
+                </div>
+
+                <div class="drop-slot pink-panel-slot" data-slot="slot-panel-heart" data-expected="panel-heart">
+                  <div class="slot-placeholder">Drop HEART Panel</div>
+                </div>
+
+                <div class="drop-slot pink-panel-slot large-body-slot" data-slot="slot-panel-body" data-expected="panel-body">
+                  <div class="slot-placeholder">Drop OTHER PARTS OF THE BODY Panel</div>
+                </div>
+              </div>
+
+              <div class="bottom-vessels-layer">
+                <div class="vessel-slot-box bottom-left-vessel" data-slot="slot-vessel-bot-left" data-expected="vessel-blue-bot-2">
+                  <div class="vessel-label-text blue-label">deoxygenated blood</div>
+                  <div class="slot-placeholder">Drop Blue Vessel (Heart → Lungs)</div>
+                </div>
+
+                <div class="vessel-slot-box bottom-right-vessel" data-slot="slot-vessel-bot-right" data-expected="vessel-blue-bot-1">
+                  <div class="vessel-label-text blue-label">deoxygenated blood</div>
+                  <div class="slot-placeholder">Drop Blue Vessel (Body → Heart)</div>
+                </div>
+              </div>
+
+              <div id="sim-blood-cell-node" class="sim-blood-cell-node hidden">
+                <span class="cell-icon">🩸</span>
+                <span id="cell-label-gas" class="cell-gas">O₂</span>
+              </div>
+
+            </div>
+
+            <div id="sim-banner-status" class="sim-banner-status hidden">
+              <div id="sim-banner-text">Role-Play Simulation Ready.</div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- Activity 4.4 Socratic Reflection Questions -->
+      <div class="card questions-card">
+        <div class="card-header">
+          <h3><span class="icon">🏛️</span> Part 2: Reflect & Think (Socratic Guided Inquiry)</h3>
+          <p>Observe your role-play simulation and write your scientific explanations below. Use the Socratic hints to guide your thinking!</p>
+        </div>
+
+        <div class="question-list">
+          <!-- Question 2a -->
+          <div class="question-box" data-qid="q4-4-2a">
+            <label class="q-label">2a. What does blood contain?</label>
+            <div class="q-input-group">
+              <textarea class="answer-input" id="input-4-4-2a" rows="2" placeholder="Write what substances blood carries..."></textarea>
+              <div class="btn-group">
+                <button class="btn btn-socratic" data-target="input-4-4-2a">🤔 Check & Guide My Thinking</button>
+              </div>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-4-2a"></div>
+          </div>
+
+          <!-- Question 2b -->
+          <div class="question-box" data-qid="q4-4-2b">
+            <label class="q-label">2b. What is the function of the heart?</label>
+            <div class="q-input-group">
+              <textarea class="answer-input" id="input-4-4-2b" rows="2" placeholder="Explain the main action of the heart..."></textarea>
+              <div class="btn-group">
+                <button class="btn btn-socratic" data-target="input-4-4-2b">🤔 Check & Guide My Thinking</button>
+              </div>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-4-2b"></div>
+          </div>
+
+          <!-- Question 4 -->
+          <div class="question-box" data-qid="q4-4-4">
+            <label class="q-label">4. Describe how oxygen is transported from the lungs to the rest of the body.</label>
+            <div class="q-input-group">
+              <textarea class="answer-input" id="input-4-4-4" rows="3" placeholder="Trace the step-by-step pathway of oxygen..."></textarea>
+              <div class="btn-group">
+                <button class="btn btn-socratic" data-target="input-4-4-4">🤔 Check & Guide My Thinking</button>
+              </div>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-4-4"></div>
+          </div>
+
+          <!-- Question 5 -->
+          <div class="question-box" data-qid="q4-4-5">
+            <label class="q-label">5. Describe how carbon dioxide is removed from the body.</label>
+            <div class="q-input-group">
+              <textarea class="answer-input" id="input-4-4-5" rows="3" placeholder="Trace the step-by-step removal of carbon dioxide..."></textarea>
+              <div class="btn-group">
+                <button class="btn btn-socratic" data-target="input-4-4-5">🤔 Check & Guide My Thinking</button>
+              </div>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-4-5"></div>
+          </div>
+
+          <!-- Question 7 -->
+          <div class="question-box" data-qid="q4-4-7">
+            <label class="q-label">7. Suggest how the model, using panels and connectors, differs from the actual human circulatory system.</label>
+            <div class="q-input-group">
+              <textarea class="answer-input" id="input-4-4-7" rows="3" placeholder="Think about physical positions and gas transport..."></textarea>
+              <div class="btn-group">
+                <button class="btn btn-socratic" data-target="input-4-4-7">🤔 Check & Guide My Thinking</button>
+              </div>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-4-7"></div>
+          </div>
+
+          <!-- Let's Conclude 4.4 -->
+          <div class="conclude-box">
+            <h4>Let's Conclude (Activity 4.4)</h4>
+            <div class="fill-blank-sentence">
+              1. The human circulatory system is made up of 
+              <input type="text" class="blank-input" id="blank-4-4-1a" placeholder="organ">, 
+              <input type="text" class="blank-input" id="blank-4-4-1b" placeholder="tubes"> and 
+              <input type="text" class="blank-input" id="blank-4-4-1c" placeholder="fluid">. 
+              These parts work together to carry out different 
+              <input type="text" class="blank-input" id="blank-4-4-1d" placeholder="word">.
+            </div>
+            <div class="fill-blank-sentence mt-2">
+              2. Blood flows from the lungs to the 
+              <input type="text" class="blank-input" id="blank-4-4-2a" placeholder="organ">. 
+              Blood is then pumped by the heart to the rest of the body through the 
+              <input type="text" class="blank-input" id="blank-4-4-2b" placeholder="tubes">. 
+              From these body parts, blood then flows back to the 
+              <input type="text" class="blank-input" id="blank-4-4-2c" placeholder="organ">.
+            </div>
+            <div class="btn-group mt-3">
+              <button class="btn btn-check" id="btn-check-conclude-4-4">Check Blanks</button>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-conclude-4-4"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ACTIVITY 4.5 ==================== -->
+    <section id="tab-4-5" class="tab-content" role="tabpanel">
+      <div class="activity-header">
+        <div class="activity-tag">Activity 4.5</div>
+        <h2>Transporting Differently – Plants and Humans</h2>
+        <p class="aim"><strong>Aim:</strong> To compare how plants and humans transport substances.</p>
+      </div>
+
+      <div class="card questions-card">
+        <div class="card-header">
+          <h3><span class="icon">🌿</span> Let's Inquire: Plant vs Human Transport Systems</h3>
+        </div>
+
+        <div class="question-list">
+          <!-- Question 2 -->
+          <div class="question-box" data-qid="q4-5-2">
+            <label class="q-label">2. Why do you think transporting substances is important to plants and humans?</label>
+            <div class="q-input-group">
+              <textarea class="answer-input" id="input-4-5-2" rows="2" placeholder="Explain why survival depends on transport..."></textarea>
+              <div class="btn-group">
+                <button class="btn btn-socratic" data-target="input-4-5-2">🤔 Check & Guide My Thinking</button>
+              </div>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-5-2"></div>
+          </div>
+
+          <!-- Diagram Comparison Section for Activity 4.5 -->
+          <div class="card visual-diagrams-card mb-4 mt-4">
+            <div class="card-header">
+              <h3><span class="icon">🖼️</span> Visual Comparison: Plant Transport System vs Human Circulatory System</h3>
+              <p>Observe how substances move through plant tubes vs human blood vessels in these animated realistic models:</p>
+            </div>
+
+            <div class="transport-diagrams-grid">
+              
+              <!-- Plant Transport System Card -->
+              <div class="diagram-subcard plant-subcard">
+                <div class="subcard-title">🌱 Plant Transport System (System Y)</div>
+                <div class="svg-canvas-wrapper">
+                  <svg viewBox="0 0 360 420" class="transport-svg">
+                    <defs>
+                      <linearGradient id="soilGrad" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stop-color="#78350f" />
+                        <stop offset="100%" stop-color="#2d1202" />
+                      </linearGradient>
+                      <linearGradient id="leafGrad" x1="0" y1="0" x2="1" y2="1">
+                        <stop offset="0%" stop-color="#4ade80" />
+                        <stop offset="100%" stop-color="#15803d" />
+                      </linearGradient>
+                      <linearGradient id="stemOuter" x1="0" y1="0" x2="1" y2="0">
+                        <stop offset="0%" stop-color="#166534" />
+                        <stop offset="100%" stop-color="#22c55e" />
+                      </linearGradient>
+                      <filter id="glowBlue" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                      </filter>
+                      <filter id="glowGold" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                      </filter>
+                    </defs>
+
+                    <!-- Soil Ground Section -->
+                    <rect x="15" y="310" width="330" height="95" rx="12" fill="url(#soilGrad)" stroke="#b45309" stroke-width="1.5" />
+                    <text x="180" y="395" fill="#fde68a" font-size="11" font-weight="700" text-anchor="middle">SOIL (Water & Mineral Salts absorbed by Roots)</text>
+
+                    <!-- Branching Root System -->
+                    <g stroke="#f59e0b" stroke-width="3.5" stroke-linecap="round" fill="none">
+                      <path d="M 170,310 Q 150,335 125,375 M 125,350 Q 105,365 85,370" />
+                      <path d="M 170,310 Q 170,345 170,385 M 170,340 Q 150,360 140,375" />
+                      <path d="M 170,310 Q 190,335 215,375 M 215,350 Q 235,365 255,370" />
+                    </g>
+
+                    <!-- Stem Cross-Section Outer Body -->
+                    <rect x="145" y="90" width="50" height="220" rx="8" fill="url(#stemOuter)" stroke="#14532d" stroke-width="2" />
+
+                    <!-- Internal Vascular Tubes Channels -->
+                    <!-- Water Tube (Left Blue Channel) -->
+                    <rect x="150" y="95" width="18" height="210" rx="4" fill="rgba(2, 132, 199, 0.25)" stroke="#0284c7" stroke-width="1.5" />
+                    <!-- Food Tube (Right Yellow Channel) -->
+                    <rect x="172" y="95" width="18" height="210" rx="4" fill="rgba(234, 179, 8, 0.25)" stroke="#ca8a04" stroke-width="1.5" />
+
+                    <!-- Leaves Canopy -->
+                    <g fill="url(#leafGrad)" stroke="#14532d" stroke-width="2">
+                      <!-- Top Center Leaf -->
+                      <path d="M 170,90 C 130,30 110,60 160,85 Z" />
+                      <path d="M 170,90 C 210,30 230,60 180,85 Z" />
+                      <!-- Side Leaves Left -->
+                      <path d="M 145,140 C 70,90 50,140 135,160 Z" />
+                      <!-- Side Leaves Right -->
+                      <path d="M 195,140 C 270,90 290,140 205,160 Z" />
+                    </g>
+                    <text x="170" y="28" fill="#4ade80" font-size="12" font-weight="800" text-anchor="middle">LEAVES (Sugar / Food Made via Photosynthesis)</text>
+
+                    <!-- Flow Vessel Guide Paths (Hidden stroke, used for animateMotion) -->
+                    <path id="flow-path-water" d="M 159,370 L 159,95 Q 140,75 100,65" fill="none" stroke="rgba(56, 189, 248, 0.4)" stroke-width="2" stroke-dasharray="6,4" />
+                    <path id="flow-path-food" d="M 240,65 Q 181,75 181,95 L 181,370" fill="none" stroke="rgba(250, 204, 21, 0.4)" stroke-width="2" stroke-dasharray="6,4" />
+
+                    <!-- ANIMATED SUBSTANCE PARTICLES (SVG animateMotion) -->
+                    <!-- Moving Water Particles (UPWARD ↑) -->
+                    <g filter="url(#glowBlue)">
+                      <circle r="5" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5">
+                        <animateMotion path="M 159,370 L 159,95 Q 140,75 100,65" dur="2.4s" repeatCount="indefinite" />
+                      </circle>
+                      <circle r="5" fill="#0284c7" stroke="#e0f2fe" stroke-width="1.5">
+                        <animateMotion path="M 159,370 L 159,95 Q 140,75 100,65" dur="2.4s" begin="1.2s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    <!-- Moving Food Particles (DOWNWARD & ALL OVER ↓) -->
+                    <g filter="url(#glowGold)">
+                      <circle r="5" fill="#eab308" stroke="#fef9c3" stroke-width="1.5">
+                        <animateMotion path="M 240,65 Q 181,75 181,95 L 181,370" dur="2.8s" repeatCount="indefinite" />
+                      </circle>
+                      <circle r="5" fill="#eab308" stroke="#fef9c3" stroke-width="1.5">
+                        <animateMotion path="M 240,65 Q 181,75 181,95 L 181,370" dur="2.8s" begin="1.4s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    <!-- Callout Labels (Offset Cards with Leader Lines, Zero Overlap) -->
+                    <rect x="10" y="175" width="130" height="52" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#0284c7" stroke-width="1.5" />
+                    <text x="75" y="194" fill="#38bdf8" font-size="11" font-weight="800" text-anchor="middle">💧 Water-Carrying Tubes</text>
+                    <text x="75" y="214" fill="#cbd5e1" font-size="10" text-anchor="middle">Water & minerals UP ↑</text>
+                    <line x1="140" y1="200" x2="150" y2="200" stroke="#0284c7" stroke-width="2" />
+
+                    <rect x="220" y="175" width="130" height="52" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#ca8a04" stroke-width="1.5" />
+                    <text x="285" y="194" fill="#facc15" font-size="11" font-weight="800" text-anchor="middle">🍃 Food-Carrying Tubes</text>
+                    <text x="285" y="214" fill="#cbd5e1" font-size="10" text-anchor="middle">Food to ALL parts ↓</text>
+                    <line x1="220" y1="200" x2="190" y2="200" stroke="#ca8a04" stroke-width="2" />
+
+                  </svg>
+                </div>
+                <div class="subcard-footer">
+                  <div class="footer-badge pill-separate">⚡ SEPARATE TUBES (Food & Water Tubes)</div>
+                  <div class="footer-badge pill-nopump">🚫 NO PUMP required to move liquid</div>
+                </div>
+              </div>
+
+              <!-- Human Circulatory System Card -->
+              <div class="diagram-subcard human-subcard">
+                <div class="subcard-title">🫀 Human Circulatory System (System X)</div>
+                <div class="svg-canvas-wrapper">
+                  <svg viewBox="0 0 360 420" class="transport-svg">
+                    <defs>
+                      <filter id="glowRed" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                      </filter>
+                      <filter id="glowBlueHuman" x="-20%" y="-20%" width="140%" height="140%">
+                        <feGaussianBlur stdDeviation="3" result="blur" />
+                        <feComposite in="SourceGraphic" in2="blur" operator="over" />
+                      </filter>
+                    </defs>
+
+                    <!-- Anatomical Body Contour Silhouette -->
+                    <!-- Head -->
+                    <ellipse cx="170" cy="40" rx="26" ry="28" fill="rgba(30, 41, 59, 0.8)" stroke="#64748b" stroke-width="1.8" />
+                    <text x="170" y="44" fill="#cbd5e1" font-size="11" font-weight="800" text-anchor="middle">HEAD / BRAIN</text>
+
+                    <!-- Torso & Arms & Legs Contour -->
+                    <path d="M 144,65 C 120,75 95,100 75,145 L 95,153 C 110,115 125,95 140,90 L 140,240 L 120,380 L 150,380 L 165,250 L 175,250 L 190,380 L 220,380 L 200,240 L 200,90 C 215,95 230,115 245,153 L 265,145 C 245,100 220,75 196,65 Z" fill="rgba(30, 41, 59, 0.6)" stroke="#64748b" stroke-width="1.8" />
+
+                    <!-- Lungs Organs (Left & Right Pink Lobes in Chest) -->
+                    <g fill="rgba(244, 114, 182, 0.3)" stroke="#ec4899" stroke-width="2">
+                      <!-- Left Lung -->
+                      <path d="M 130,105 C 110,112 110,148 130,155 C 145,155 148,112 130,105 Z" />
+                      <!-- Right Lung -->
+                      <path d="M 210,105 C 230,112 230,148 210,155 C 195,155 192,112 210,105 Z" />
+                    </g>
+
+                    <!-- Anatomical Heart (Center Chest) -->
+                    <g class="pulse-anim" transform-origin="170 160">
+                      <circle cx="170" cy="160" r="22" fill="#dc2626" stroke="#ffffff" stroke-width="2.5" />
+                      <text x="170" y="166" fill="#ffffff" font-size="16" text-anchor="middle">🫀</text>
+                    </g>
+
+                    <!-- VASCULAR PATHS CONNECTING HEART, LUNGS & BODY -->
+                    <!-- 1. Heart -> Lungs (Blue Deoxygenated - Pulmonary Artery) -->
+                    <path id="path-heart-left-lung" d="M 162,148 C 150,138 140,132 130,125" fill="none" stroke="#2563eb" stroke-width="3" stroke-dasharray="4,3" />
+                    <path id="path-heart-right-lung" d="M 178,148 C 190,138 200,132 210,125" fill="none" stroke="#2563eb" stroke-width="3" stroke-dasharray="4,3" />
+
+                    <!-- 2. Lungs -> Heart (Red Oxygenated - Pulmonary Vein) -->
+                    <path id="path-left-lung-heart" d="M 130,135 Q 148,148 165,155" fill="none" stroke="#ef4444" stroke-width="3" />
+                    <path id="path-right-lung-heart" d="M 210,135 Q 192,148 175,155" fill="none" stroke="#ef4444" stroke-width="3" />
+
+                    <!-- 3. Head <-> Heart (Arterial & Venous) -->
+                    <path id="path-head-art" d="M 174,145 L 174,65" fill="none" stroke="#ef4444" stroke-width="3" />
+                    <path id="path-head-ven" d="M 166,65 L 166,145" fill="none" stroke="#2563eb" stroke-width="3" stroke-dasharray="4,3" />
+
+                    <!-- 4. Body / Legs <-> Heart (Arterial & Venous Loops) -->
+                    <path id="path-body-art" d="M 180,165 C 235,185 235,280 185,370" fill="none" stroke="#ef4444" stroke-width="3.5" />
+                    <path id="path-body-ven" d="M 155,370 C 105,280 105,185 160,165" fill="none" stroke="#2563eb" stroke-width="3.5" stroke-dasharray="5,3" />
+
+                    <!-- ANIMATED BLOOD CELL PARTICLES IN LUNGS & BODY (SVG animateMotion) -->
+
+                    <!-- A) BLUE Deoxygenated Drops -> HEART -> LUNGS -->
+                    <g filter="url(#glowBlueHuman)">
+                      <!-- Legs -> Heart -->
+                      <circle r="4.5" fill="#2563eb" stroke="#93c5fd" stroke-width="1.5">
+                        <animateMotion path="M 155,370 C 105,280 105,185 160,165" dur="2.8s" repeatCount="indefinite" />
+                      </circle>
+                      <!-- Head -> Heart -->
+                      <circle r="4.5" fill="#2563eb" stroke="#93c5fd" stroke-width="1.5">
+                        <animateMotion path="M 166,65 L 166,145" dur="1.8s" repeatCount="indefinite" />
+                      </circle>
+                      <!-- Heart -> LUNGS (Pulmonary Transport) -->
+                      <circle r="4.5" fill="#2563eb" stroke="#93c5fd" stroke-width="1.5">
+                        <animateMotion path="M 162,148 C 150,138 140,132 130,125" dur="1.6s" repeatCount="indefinite" />
+                      </circle>
+                      <circle r="4.5" fill="#2563eb" stroke="#93c5fd" stroke-width="1.5">
+                        <animateMotion path="M 178,148 C 190,138 200,132 210,125" dur="1.6s" begin="0.8s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    <!-- B) RED Oxygenated Drops LUNGS -> HEART -> BODY -->
+                    <g filter="url(#glowRed)">
+                      <!-- LUNGS -> Heart -->
+                      <circle r="4.5" fill="#ef4444" stroke="#fca5a5" stroke-width="1.5">
+                        <animateMotion path="M 130,135 Q 148,148 165,155" dur="1.6s" repeatCount="indefinite" />
+                      </circle>
+                      <circle r="4.5" fill="#ef4444" stroke="#fca5a5" stroke-width="1.5">
+                        <animateMotion path="M 210,135 Q 192,148 175,155" dur="1.6s" begin="0.8s" repeatCount="indefinite" />
+                      </circle>
+                      <!-- Heart -> Head -->
+                      <circle r="4.5" fill="#ef4444" stroke="#fca5a5" stroke-width="1.5">
+                        <animateMotion path="M 174,145 L 174,65" dur="1.8s" repeatCount="indefinite" />
+                      </circle>
+                      <!-- Heart -> Body/Legs -->
+                      <circle r="4.5" fill="#ef4444" stroke="#fca5a5" stroke-width="1.5">
+                        <animateMotion path="M 180,165 C 235,185 235,280 185,370" dur="2.8s" repeatCount="indefinite" />
+                      </circle>
+                    </g>
+
+                    <!-- Callout Labels & Offset Text Cards (Zero Overlap) -->
+                    <!-- Lungs Callout Left -->
+                    <rect x="5" y="110" width="105" height="38" rx="6" fill="rgba(15, 23, 42, 0.9)" stroke="#ec4899" stroke-width="1.5" />
+                    <text x="57" y="126" fill="#f472b6" font-size="10.5" font-weight="800" text-anchor="middle">🫁 LUNGS</text>
+                    <text x="57" y="140" fill="#cbd5e1" font-size="9" text-anchor="middle">O₂ absorbed / CO₂ out</text>
+                    <line x1="110" y1="129" x2="125" y2="129" stroke="#ec4899" stroke-width="1.5" />
+
+                    <!-- Heart Callout Right -->
+                    <rect x="250" y="142" width="105" height="38" rx="6" fill="rgba(15, 23, 42, 0.9)" stroke="#ef4444" stroke-width="1.5" />
+                    <text x="302" y="158" fill="#ef4444" font-size="10.5" font-weight="800" text-anchor="middle">🫀 HEART (PUMP)</text>
+                    <text x="302" y="172" fill="#cbd5e1" font-size="9" text-anchor="middle">Pumps blood through body</text>
+                    <line x1="250" y1="161" x2="195" y2="161" stroke="#ef4444" stroke-width="1.5" />
+
+                    <!-- Bottom Legend Cards -->
+                    <rect x="10" y="275" width="160" height="50" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#ef4444" stroke-width="1.5" />
+                    <text x="90" y="293" fill="#fca5a5" font-size="10.5" font-weight="800" text-anchor="middle">🔴 Oxygenated Blood</text>
+                    <text x="90" y="312" fill="#cbd5e1" font-size="9.5" text-anchor="middle">Carries O₂ from Lungs to Body</text>
+
+                    <rect x="190" y="275" width="160" height="50" rx="8" fill="rgba(15, 23, 42, 0.9)" stroke="#2563eb" stroke-width="1.5" />
+                    <text x="270" y="293" fill="#93c5fd" font-size="10.5" font-weight="800" text-anchor="middle">🔵 Deoxygenated Blood</text>
+                    <text x="270" y="312" fill="#cbd5e1" font-size="9.5" text-anchor="middle">Carries CO₂ from Body to Lungs</text>
+
+                  </svg>
+                </div>
+                <div class="subcard-footer">
+                  <div class="footer-badge pill-same">🩸 SAME TUBES (Blood Vessels) carry blood</div>
+                  <div class="footer-badge pill-pump">🫀 HEART ACTS AS A PUMP (Pumps to Lungs & Body)</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+
+          <!-- Question 3: Comparison Table -->
+          <div class="question-box" data-qid="q4-5-table">
+            <label class="q-label">3. Compare the plant transport system and the human circulatory system using the table below.</label>
+            
+            <div class="comparison-table-wrapper">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Feature / Aspect</th>
+                    <th>Plant Transport System</th>
+                    <th>Human Circulatory System</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr class="table-section-header">
+                    <td colspan="3"><strong>Similarities</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Substances Transported</td>
+                    <td colspan="2">
+                      <textarea class="answer-input" id="input-4-5-sim1" rows="2" placeholder="What essential substances do both transport?"></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Structure for Transport</td>
+                    <td colspan="2">
+                      <textarea class="answer-input" id="input-4-5-sim2" rows="2" placeholder="What structures do both use?"></textarea>
+                    </td>
+                  </tr>
+
+                  <tr class="table-section-header">
+                    <td colspan="3"><strong>Differences</strong></td>
+                  </tr>
+                  <tr>
+                    <td>Tubes</td>
+                    <td>
+                      <textarea class="answer-input" id="input-4-5-diff-plant-tubes" rows="3" placeholder="Are plant tubes separate or shared?"></textarea>
+                    </td>
+                    <td>
+                      <textarea class="answer-input" id="input-4-5-diff-human-tubes" rows="3" placeholder="What tubes do humans use?"></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Pump Requirement</td>
+                    <td>
+                      <textarea class="answer-input" id="input-4-5-diff-plant-pump" rows="2" placeholder="Do plants need a pump?"></textarea>
+                    </td>
+                    <td>
+                      <textarea class="answer-input" id="input-4-5-diff-human-pump" rows="2" placeholder="Do humans need a pump?"></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="btn-group mt-3">
+              <button class="btn btn-socratic" id="btn-check-4-5-table">🤔 Check Table & Guide My Thinking</button>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-5-table"></div>
+          </div>
+
+          <!-- Let's Conclude 4.5 -->
+          <div class="conclude-box">
+            <h4>Let's Conclude (Activity 4.5)</h4>
+            <div class="fill-blank-sentence">
+              1. The transport systems in both plants and humans involve the transport of substances such as 
+              <input type="text" class="blank-input" id="blank-4-5-1a" placeholder="substance 1"> and 
+              <input type="text" class="blank-input" id="blank-4-5-1b" placeholder="substance 2">.
+            </div>
+            <div class="fill-blank-sentence mt-2">
+              2. The tubes in plants that help to transport substances are the 
+              <input type="text" class="blank-input" id="blank-4-5-2a" placeholder="tube type 1"> and 
+              <input type="text" class="blank-input" id="blank-4-5-2b" placeholder="tube type 2">.
+            </div>
+            <div class="fill-blank-sentence mt-2">
+              3. The tubes in humans that help to transport substances are the 
+              <input type="text" class="blank-input" id="blank-4-5-3" placeholder="human tubes">.
+            </div>
+            <div class="fill-blank-sentence mt-2">
+              4. The transport systems in plants and in humans are important because they allow 
+              <input type="text" class="blank-input" id="blank-4-5-4" placeholder="word"> parts of the living thing to receive essential substances for survival.
+            </div>
+            <div class="btn-group mt-3">
+              <button class="btn btn-check" id="btn-check-conclude-4-5">Check Blanks</button>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-conclude-4-5"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ACTIVITY 4.6 ==================== -->
+    <section id="tab-4-6" class="tab-content" role="tabpanel">
+      <div class="activity-header">
+        <div class="activity-tag">Activity 4.6</div>
+        <h2>All In This Together</h2>
+        <p class="aim"><strong>Aims:</strong> To find out how heart rates and breathing rates change with different activities, and to recognize how different body systems work together.</p>
+      </div>
+
+      <!-- Virtual Lab Experiment -->
+      <div class="card sim-experiment-card">
+        <div class="card-header">
+          <h3><span class="icon">🧪</span> Part A: Virtual Heart Rate & Breathing Rate Lab</h3>
+          <p>Simulate measuring heart rate (bpm) and breathing rate (breaths/min) for 15 seconds during three activities!</p>
+        </div>
+
+        <div class="experiment-controls">
+          <div class="activity-selector">
+            <button class="btn exp-act-btn active" data-activity="sitting">🛋️ Sitting (Resting)</button>
+            <button class="btn exp-act-btn" data-activity="marching">🚶 Marching on the spot</button>
+            <button class="btn exp-act-btn" data-activity="jumping">🏃 Doing 15 jumps</button>
+          </div>
+
+          <div class="sim-display-grid">
+            <div class="sim-metric-card" id="card-heart-metric">
+              <div class="metric-icon pulse-anim" id="icon-heart-anim">❤️</div>
+              <div class="metric-val" id="disp-heart-rate">72</div>
+              <div class="metric-unit">beats per minute (BPM)</div>
+              <div class="metric-subcount" id="disp-heart-15s">18 beats in 15 seconds</div>
+            </div>
+
+            <div class="sim-metric-card" id="card-breath-metric">
+              <div class="metric-icon breath-anim" id="icon-breath-anim">🫁</div>
+              <div class="metric-val" id="disp-breath-rate">16</div>
+              <div class="metric-unit">breaths per minute</div>
+              <div class="metric-subcount" id="disp-breath-15s">4 breaths in 15 seconds</div>
+            </div>
+
+            <div class="sim-metric-card">
+              <div class="metric-icon">⏱️</div>
+              <div class="metric-val" id="disp-timer">15s</div>
+              <div class="metric-unit">Measurement Timer</div>
+              <button id="btn-start-exp" class="btn btn-sm btn-primary mt-2">Start 15s Test</button>
+            </div>
+          </div>
+
+          <div id="exp-result-banner" class="exp-result-banner mt-3 hidden">
+            <div id="exp-result-text"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Questions 4.6 Part A -->
+      <div class="card questions-card">
+        <div class="card-header">
+          <h3><span class="icon">📊</span> Analysis of Heart & Breathing Rates</h3>
+        </div>
+
+        <div class="question-list">
+          <!-- Question 8 -->
+          <div class="question-box" data-qid="q4-6-8">
+            <label class="q-label">8. Arrange the activities from the most vigorous to the least vigorous:</label>
+            <div class="arrange-items-container">
+              <div class="arrange-inputs">
+                <input type="text" class="blank-input" id="input-4-6-8-1" placeholder="Most vigorous"> 
+                <span>&gt;</span>
+                <input type="text" class="blank-input" id="input-4-6-8-2" placeholder="Moderate"> 
+                <span>&gt;</span>
+                <input type="text" class="blank-input" id="input-4-6-8-3" placeholder="Least vigorous">
+              </div>
+              <div class="btn-group mt-2">
+                <button class="btn btn-check" id="btn-check-4-6-8">Check Order</button>
+              </div>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-6-8"></div>
+          </div>
+
+          <!-- Question 9a, 9b, 9c, 9d -->
+          <div class="question-box" data-qid="q4-6-9">
+            <label class="q-label">9. Heart Rate Observations:</label>
+            <div class="sub-q mt-2">
+              <label>a) Which activity resulted in the highest heart rate?</label>
+              <input type="text" class="blank-input" id="input-4-6-9a" placeholder="Activity name">
+            </div>
+            <div class="sub-q mt-2">
+              <label>b) Which activity resulted in the lowest heart rate?</label>
+              <input type="text" class="blank-input" id="input-4-6-9b" placeholder="Activity name">
+            </div>
+            <div class="sub-q mt-2">
+              <label>c) State the relationship between the different activities and your heart rate:</label>
+              <textarea class="answer-input" id="input-4-6-9c" rows="2" placeholder="As activity becomes more vigorous..."></textarea>
+            </div>
+            <div class="sub-q mt-2">
+              <label>d) Explain how the different activities affect the heart rate:</label>
+              <textarea class="answer-input" id="input-4-6-9d" rows="3" placeholder="Why does the heart beat faster during exercise?"></textarea>
+            </div>
+
+            <div class="btn-group mt-3">
+              <button class="btn btn-socratic" id="btn-check-4-6-9">🤔 Check Q9 & Guide My Thinking</button>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-6-9"></div>
+          </div>
+
+          <!-- Question 10a, 10b, 10c, 10d -->
+          <div class="question-box" data-qid="q4-6-10">
+            <label class="q-label">10. Breathing Rate Observations:</label>
+            <div class="sub-q mt-2">
+              <label>a) Which activity resulted in the highest breathing rate?</label>
+              <input type="text" class="blank-input" id="input-4-6-10a" placeholder="Activity name">
+            </div>
+            <div class="sub-q mt-2">
+              <label>b) Which activity resulted in the lowest breathing rate?</label>
+              <input type="text" class="blank-input" id="input-4-6-10b" placeholder="Activity name">
+            </div>
+            <div class="sub-q mt-2">
+              <label>c) State the relationship between the different activities and your breathing rate:</label>
+              <textarea class="answer-input" id="input-4-6-10c" rows="2" placeholder="As activity becomes more vigorous..."></textarea>
+            </div>
+            <div class="sub-q mt-2">
+              <label>d) Explain how the different activities affect the breathing rate:</label>
+              <textarea class="answer-input" id="input-4-6-10d" rows="3" placeholder="Why is breathing faster during vigorous activity?"></textarea>
+            </div>
+
+            <div class="btn-group mt-3">
+              <button class="btn btn-socratic" id="btn-check-4-6-10">🤔 Check Q10 & Guide My Thinking</button>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-6-10"></div>
+          </div>
+
+          <!-- Question 11 -->
+          <div class="question-box" data-qid="q4-6-11">
+            <label class="q-label">11. How do the respiratory system and the circulatory system work together to help you carry out activities?</label>
+            <div class="q-input-group">
+              <textarea class="answer-input" id="input-4-6-11" rows="3" placeholder="Explain how these two systems cooperate..."></textarea>
+              <div class="btn-group">
+                <button class="btn btn-socratic" data-target="input-4-6-11">🤔 Check & Guide My Thinking</button>
+              </div>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-6-11"></div>
+          </div>
+
+          <!-- Part B: Systems Integration Table -->
+          <div class="question-box" data-qid="q4-6-partB">
+            <label class="q-label">Part B: We are all in this together! (Swimming & Dancing Functions)</label>
+            <p>Explain how each system plays an important role during swimming or dancing:</p>
+
+            <div class="comparison-table-wrapper mt-2">
+              <table class="comparison-table">
+                <thead>
+                  <tr>
+                    <th>Body System</th>
+                    <th>Explanation of Function (Swimming / Dancing)</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><strong>Respiratory system</strong></td>
+                    <td>
+                      <textarea class="answer-input" id="input-4-6-resp" rows="2" placeholder="Function of respiratory system..."></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Circulatory system</strong></td>
+                    <td>
+                      <textarea class="answer-input" id="input-4-6-circ" rows="2" placeholder="Function of circulatory system..."></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Digestive system</strong></td>
+                    <td>
+                      <textarea class="answer-input" id="input-4-6-dig" rows="2" placeholder="Function of digestive system..."></textarea>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><strong>Skeletal & Muscular systems</strong></td>
+                    <td>
+                      <textarea class="answer-input" id="input-4-6-skel" rows="2" placeholder="Function of skeletal/muscular systems..."></textarea>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="btn-group mt-3">
+              <button class="btn btn-socratic" id="btn-check-4-6-partB">🤔 Check Functions & Guide My Thinking</button>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-4-6-partB"></div>
+          </div>
+
+          <!-- Let's Conclude 4.6 -->
+          <div class="conclude-box">
+            <h4>Let's Conclude (Activity 4.6)</h4>
+            <div class="fill-blank-sentence">
+              1. Vigorous activities can cause my heart rate and breathing rate to 
+              <input type="text" class="blank-input" id="blank-4-6-1a" placeholder="increase/decrease">. 
+              This is because my body needs more 
+              <input type="text" class="blank-input" id="blank-4-6-1b" placeholder="gas"> and 
+              <input type="text" class="blank-input" id="blank-4-6-1c" placeholder="nutrient">.
+            </div>
+            <div class="fill-blank-sentence mt-2">
+              2. The human systems need to work 
+              <input type="text" class="blank-input" id="blank-4-6-2" placeholder="word"> for the human body to work well.
+            </div>
+            <div class="btn-group mt-3">
+              <button class="btn btn-check" id="btn-check-conclude-4-6">Check Blanks</button>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-conclude-4-6"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== ACTIVITY 4.7 ==================== -->
+    <section id="tab-4-7" class="tab-content" role="tabpanel">
+      <div class="activity-header">
+        <div class="activity-tag">Activity 4.7</div>
+        <h2>Journey of a Drop of Blood</h2>
+        <p class="aim"><strong>Aim:</strong> To create a story about the journey of a drop of blood starting from the heart.</p>
+      </div>
+
+      <!-- Activity 4.7 Comic Flipbook Creator -->
+      <div class="card story-card comic-creator-card">
+        <div class="card-header">
+          <h3><span class="icon">🎨</span> Interactive Comic Flipbook: Journey of a Drop of Blood</h3>
+          <p>Select your hero avatar, flip through 5 comic scenes, choose preset prompts or write free-text dialogue, and publish your storybook!</p>
+        </div>
+
+        <!-- 1. Animal Avatar Selector -->
+        <div class="avatar-selector-section" id="avatar-selector-section">
+          <div class="avatar-select-header" id="avatar-select-header">
+            <label class="q-label">🐾 Choose Your Animal Hero Avatar:</label>
+            <p style="color: #d8b4fe; font-size: 0.88rem;">Pick your favorite animal character to lead the blood drop's journey!</p>
+          </div>
+          
+          <div class="avatar-grid" id="avatar-grid">
+            <div class="avatar-card" data-avatar="pip">
+              <div class="avatar-icon">🦊</div>
+              <div class="avatar-name">Pip the Fox</div>
+              <div class="avatar-desc">Energetic Oxygen-Rich Blood Hero</div>
+            </div>
+            <div class="avatar-card" data-avatar="flipper">
+              <div class="avatar-icon">🐬</div>
+              <div class="avatar-name">Flipper the Dolphin</div>
+              <div class="avatar-desc">Swims Carbon Dioxide back to Lungs</div>
+            </div>
+            <div class="avatar-card" data-avatar="ollie">
+              <div class="avatar-icon">🦉</div>
+              <div class="avatar-name">Ollie the Owl</div>
+              <div class="avatar-desc">Wise Blood Scientist Guide</div>
+            </div>
+            <div class="avatar-card" data-avatar="joey">
+              <div class="avatar-icon">🦘</div>
+              <div class="avatar-name">Joey the Kangaroo</div>
+              <div class="avatar-desc">Super Jumper Delivering Oxygen</div>
+            </div>
+          </div>
+
+          <!-- Once chosen banner -->
+          <div class="avatar-chosen-banner hidden" id="avatar-chosen-banner">
+            <div class="chosen-avatar-info">
+              <span class="chosen-icon" id="chosen-avatar-icon">🦊</span>
+              <div>
+                <strong id="chosen-avatar-name" style="font-size: 1.05rem; color: #f0abfc;">Pip the Fox</strong>
+                <div id="chosen-avatar-desc" style="font-size: 0.82rem; color: #d8b4fe;">Selected Hero Avatar for Comic Flipbook</div>
+              </div>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-change-avatar">🔄 Change Hero Avatar</button>
+          </div>
+        </div>
+
+        <!-- 2. Flipbook Controls & Page Navigator -->
+        <div class="flipbook-nav-bar mt-4">
+          <button class="btn btn-secondary btn-flip-nav" id="btn-flip-prev">◀ Previous Scene</button>
+          <div class="flipbook-page-pills" id="flipbook-page-pills">
+            <button class="page-pill active" data-page="1">Page 1: Launch</button>
+            <button class="page-pill" data-page="2">Page 2: Delivery</button>
+            <button class="page-pill" data-page="3">Page 3: Return</button>
+            <button class="page-pill" data-page="4">Page 4: Lungs</button>
+            <button class="page-pill" data-page="5">Page 5: Ready</button>
+          </div>
+          <button class="btn btn-secondary btn-flip-nav" id="btn-flip-next">Next Scene ▶</button>
+        </div>
+
+        <!-- 3. Active Comic Panel Canvas & Editor -->
+        <div class="comic-panel-canvas mt-3">
+          <div class="comic-panel-header">
+            <span class="scene-title-badge" id="scene-title-badge">Page 1: Leaving the Heart (Engine Room)</span>
+            <span class="scene-counter" id="scene-counter">Scene 1 of 5</span>
+          </div>
+
+          <div class="comic-stage" id="comic-stage">
+            <!-- Visual Stage Backdrop & Character Graphics -->
+            <div class="stage-backdrop" id="stage-backdrop">
+              <div class="stage-avatar-wrapper" id="stage-avatar-wrapper">
+                <span class="stage-avatar-icon" id="stage-avatar-icon">🔴</span>
+                <span class="stage-avatar-label" id="stage-avatar-label">Benny Oxygen</span>
+              </div>
+              <div class="stage-speech-bubble" id="stage-speech-bubble">
+                "I am pumped out of the heart! I carry oxygen and digested food to body cells."
+              </div>
+              <div class="stage-stickers-layer" id="stage-stickers-layer">
+                <span class="stage-sticker-badge">🔴 Oxygen</span>
+                <span class="stage-sticker-badge">🍞 Digested Food</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Stickers & Substance Attachments -->
+          <div class="sticker-toolbar mt-3">
+            <span class="toolbar-label">🏷️ Attach Substance Badges to Scene:</span>
+            <button class="btn-sticker" data-sticker="O2">🔴 Oxygen (O₂)</button>
+            <button class="btn-sticker" data-sticker="Food">🍞 Digested Food</button>
+            <button class="btn-sticker" data-sticker="CO2">🔵 Carbon Dioxide (CO₂)</button>
+            <button class="btn-sticker" data-sticker="Waste">💨 Waste Products</button>
+            <button class="btn-sticker btn-clear-stickers" id="btn-clear-stickers">❌ Clear Badges</button>
+          </div>
+
+          <!-- Dual Writing Modes Switcher -->
+          <div class="writing-mode-box mt-4">
+            <div class="mode-header">
+              <label class="q-label">Writing Mode for Page <span id="mode-page-num">1</span>:</label>
+              <div class="mode-toggle-group">
+                <button class="btn-mode-toggle active" id="btn-mode-preset">💡 Preset Prompts (Guided)</button>
+                <button class="btn-mode-toggle" id="btn-mode-freetext">✍️ Free-Text Dialogue (Custom)</button>
+              </div>
+            </div>
+
+            <!-- Guided Preset Chips Container -->
+            <div class="preset-chips-box" id="preset-chips-box">
+              <div class="preset-chips-label">Click a preset dialogue starter to insert into your comic panel:</div>
+              <div class="preset-chips-list" id="preset-chips-list">
+                <!-- Injected dynamically per page -->
+              </div>
+            </div>
+
+            <!-- Text Area Input -->
+            <div class="dialogue-editor mt-2">
+              <textarea class="answer-input" id="input-comic-dialogue" rows="3" placeholder="Write dialogue or narration for this comic page..."></textarea>
+            </div>
+
+            <div class="target-keywords-bar" id="comic-keywords-bar">
+              <!-- Key word pills injected dynamically per scene -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Publish & Read Full Flipbook Button -->
+        <div class="publish-bar mt-4">
+          <button class="btn btn-success btn-large" id="btn-read-storybook">📖 Read My Completed Comic Flipbook</button>
+        </div>
+
+        <!-- Modal / Overlay for Reading Full Storybook -->
+        <div class="modal-backdrop hidden" id="storybook-modal">
+          <div class="modal-content storybook-modal-content">
+            <div class="modal-header">
+              <h2>📖 My Blood Circulation Comic Flipbook</h2>
+              <button class="btn-close-modal" id="btn-close-storybook">✖ Close</button>
+            </div>
+            <div class="modal-body" id="storybook-modal-body">
+              <!-- Full flipbook cards generated dynamically -->
+            </div>
+            <div class="modal-footer">
+              <button class="btn btn-primary" id="btn-print-comic" onclick="window.print()">🖨️ Print / Save Comic</button>
+              <button class="btn btn-secondary" id="btn-close-storybook-2">Close Reader</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Self-Assessment Rubric (From Page 31) -->
+      <div class="card rubric-card">
+        <div class="card-header">
+          <h3><span class="icon">🏆</span> Rubrics for the Journey of a Drop of Blood</h3>
+          <p>Assess your understanding based on the official Activity 4.7 rubric grid (Page 31):</p>
+        </div>
+
+        <div class="rubric-table-wrapper">
+          <table class="rubric-table">
+            <thead>
+              <tr>
+                <th>Area</th>
+                <th>Just started</th>
+                <th>Getting there</th>
+                <th>Got it!</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong>The human systems & parts</strong><br>
+                  <small>(respiratory, circulatory, digestive systems in blood drop journey)</small>
+                </td>
+                <td class="rubric-cell" data-row="1" data-col="1">
+                  <label><input type="radio" name="rubric-row1" value="1"> Describe only <strong>one</strong> human system and state parts.</label>
+                </td>
+                <td class="rubric-cell" data-row="1" data-col="2">
+                  <label><input type="radio" name="rubric-row1" value="2"> Describe <strong>two</strong> human systems and state parts of the two systems.</label>
+                </td>
+                <td class="rubric-cell" data-row="1" data-col="3">
+                  <label><input type="radio" name="rubric-row1" value="3"> Describe <strong>all three</strong> human systems and state parts of the three systems.</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Functions of the parts</strong><br>
+                  <small>(functions of respiratory, circulatory, digestive parts)</small>
+                </td>
+                <td class="rubric-cell" data-row="2" data-col="1">
+                  <label><input type="radio" name="rubric-row2" value="1"> Describe functions of parts of <strong>one</strong> human system.</label>
+                </td>
+                <td class="rubric-cell" data-row="2" data-col="2">
+                  <label><input type="radio" name="rubric-row2" value="2"> Describe functions of parts of <strong>two</strong> of the human systems.</label>
+                </td>
+                <td class="rubric-cell" data-row="2" data-col="3">
+                  <label><input type="radio" name="rubric-row2" value="3"> Describe functions of parts of <strong>all three</strong> human systems.</label>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  <strong>Systems working together</strong><br>
+                  <small>(how systems work together to ensure survival)</small>
+                </td>
+                <td class="rubric-cell" data-row="3" data-col="1">
+                  <label><input type="radio" name="rubric-row3" value="1"> Describe how <strong>one</strong> human system works to ensure survival.</label>
+                </td>
+                <td class="rubric-cell" data-row="3" data-col="2">
+                  <label><input type="radio" name="rubric-row3" value="2"> Describe how <strong>two</strong> of the human systems work together to ensure survival.</label>
+                </td>
+                <td class="rubric-cell" data-row="3" data-col="3">
+                  <label><input type="radio" name="rubric-row3" value="3"> Describe how <strong>all three</strong> human systems work together to ensure survival.</label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="rubric-score-box mt-3">
+          <button class="btn btn-primary" id="btn-calc-rubric">Evaluate Rubric Level</button>
+          <div id="rubric-result" class="feedback-msg mt-2"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ==================== CHECK FOR UNDERSTANDING ==================== -->
+    <section id="tab-understanding" class="tab-content" role="tabpanel">
+      <div class="activity-header">
+        <div class="activity-tag">Assessment</div>
+        <h2>Check for Your Understanding (Pages 33–36)</h2>
+        <p class="aim">Test your knowledge with official multiple-choice and structured questions from the textbook assessment.</p>
+      </div>
+
+      <div class="card questions-card">
+        <div class="card-header">
+          <h3><span class="icon">🎯</span> Section A: Multiple-Choice Questions</h3>
+        </div>
+
+        <div class="question-list">
+          <!-- Quiz Q1 -->
+          <div class="question-box" data-qid="mcq-1">
+            <label class="q-label">1. Study the flowchart below:</label>
+            <p class="mb-2">Living things → Does it breathe through the lungs? (Yes → A, No → Does it breathe through the gills? (Yes → B, No → C))<br>Which of the following best represents A, B and C?</p>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="mcq1" value="1"> (1) A: Humans, B: Plants, C: Fish</label>
+              <label class="mcq-option"><input type="radio" name="mcq1" value="2"> (2) A: Plants, B: Fish, C: Humans</label>
+              <label class="mcq-option"><input type="radio" name="mcq1" value="3"> (3) A: Fish, B: Plants, C: Humans</label>
+              <label class="mcq-option"><input type="radio" name="mcq1" value="4"> (4) A: Humans, B: Fish, C: Plants</label>
+            </div>
+            <div class="feedback-msg" id="fb-mcq1"></div>
+          </div>
+
+          <!-- Quiz Q2 -->
+          <div class="question-box" data-qid="mcq-2">
+            <label class="q-label">2. The function of the tiny openings on a leaf is to ________.</label>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="mcq2" value="1"> (1) make food</label>
+              <label class="mcq-option"><input type="radio" name="mcq2" value="2"> (2) allow gaseous exchange to take place</label>
+              <label class="mcq-option"><input type="radio" name="mcq2" value="3"> (3) transport food to all parts of the plant</label>
+              <label class="mcq-option"><input type="radio" name="mcq2" value="4"> (4) transport water to all parts of the plant</label>
+            </div>
+            <div class="feedback-msg" id="fb-mcq2"></div>
+          </div>
+
+          <!-- Quiz Q3 -->
+          <div class="question-box" data-qid="mcq-3">
+            <label class="q-label">3. In the blood flow diagram (Lungs ↔ Heart ↔ Small Intestine with vessels P, Q, R, S), which pair of blood vessels carries blood rich in carbon dioxide?</label>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="mcq3" value="1"> (1) P and Q</label>
+              <label class="mcq-option"><input type="radio" name="mcq3" value="2"> (2) P and S</label>
+              <label class="mcq-option"><input type="radio" name="mcq3" value="3"> (3) Q and R</label>
+              <label class="mcq-option"><input type="radio" name="mcq3" value="4"> (4) R and S</label>
+            </div>
+            <div class="feedback-msg" id="fb-mcq3"></div>
+          </div>
+
+          <!-- Quiz Q4 -->
+          <div class="question-box" data-qid="mcq-4">
+            <label class="q-label">4. Blood in R has ________ than blood in Q.</label>
+            <div class="mcq-options">
+              <label class="mcq-option"><input type="radio" name="mcq4" value="1"> (1) more oxygen and less digested food</label>
+              <label class="mcq-option"><input type="radio" name="mcq4" value="2"> (2) more oxygen and more digested food</label>
+              <label class="mcq-option"><input type="radio" name="mcq4" value="3"> (3) more carbon dioxide and less digested food</label>
+              <label class="mcq-option"><input type="radio" name="mcq4" value="4"> (4) more carbon dioxide and more digested food</label>
+            </div>
+            <div class="feedback-msg" id="fb-mcq4"></div>
+          </div>
+
+          <div class="btn-group mt-3">
+            <button class="btn btn-primary" id="btn-submit-mcq">Submit MCQs</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card questions-card mt-4">
+        <div class="card-header">
+          <h3><span class="icon">📝</span> Section B: Structured Questions</h3>
+        </div>
+
+        <div class="question-list">
+          <!-- Structured Q5 -->
+          <div class="question-box" data-qid="sq-5">
+            <label class="q-label">5a. Name System X (human body transport system):</label>
+            <input type="text" class="blank-input" id="input-sq5a" placeholder="System name">
+
+            <label class="q-label mt-3">5b. System X transports substances in a human body, while System Y transports substances in a plant. In terms of how the substances are transported, state one difference between Systems X and Y:</label>
+            <textarea class="answer-input" id="input-sq5b" rows="3" placeholder="State one difference..."></textarea>
+
+            <div class="btn-group mt-3">
+              <button class="btn btn-socratic" id="btn-check-sq5">🤔 Check Q5 & Guide My Thinking</button>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-sq5"></div>
+          </div>
+
+          <!-- Structured Q6 -->
+          <div class="question-box" data-qid="sq-6">
+            <label class="q-label">6a. What is the relationship between the number of goldfish and the amount of oxygen in the water over time?</label>
+            <textarea class="answer-input" id="input-sq6a" rows="2" placeholder="State relationship..."></textarea>
+
+            <label class="q-label mt-3">6b. Explain what caused the change in the amount of oxygen in the water:</label>
+            <textarea class="answer-input" id="input-sq6b" rows="2" placeholder="Explain cause..."></textarea>
+
+            <label class="q-label mt-3">6c. Which part of the human respiratory system has a similar function as the gills of a fish?</label>
+            <input type="text" class="blank-input" id="input-sq6c" placeholder="Human organ">
+
+            <div class="btn-group mt-3">
+              <button class="btn btn-socratic" id="btn-check-sq6">🤔 Check Q6 & Guide My Thinking</button>
+            </div>
+            <div class="socratic-coaching-panel hidden" id="socratic-sq6"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="app-footer">
+    <p>Human Respiratory & Circulatory Systems Interactive Module (Activities 4.4 – 4.7) • Aligned with Official Science Curriculum</p>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
