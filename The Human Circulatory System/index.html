@@ -10,7 +10,31 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2.2">
+  <link rel="stylesheet" href="styles.css?v=3.0">
+  <script>
+    function openTeacherLoginModal() {
+      var pass = prompt("🔑 Teacher Master Access:\nEnter Master Password to unlock ALL activities for your class:");
+      if (pass && ["teacher", "teacher123", "admin", "master"].indexOf(pass.trim().toLowerCase()) !== -1) {
+        var tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(function(b) {
+          b.setAttribute('data-locked', 'false');
+          b.classList.remove('locked');
+          var icon = b.querySelector('.lock-status-icon');
+          if (icon) icon.textContent = '🔓';
+        });
+        var btn = document.getElementById('btn-teacher-login');
+        if (btn) {
+          btn.innerHTML = '🔓 Teacher Mode (All Unlocked)';
+          btn.style.background = 'rgba(16, 185, 129, 0.35)';
+          btn.style.borderColor = '#10b981';
+          btn.style.color = '#a7f3d0';
+        }
+        alert('✨ Success! All activities (4.5, 4.6, 4.7, Quiz) are now unlocked.');
+      } else if (pass) {
+        alert('❌ Incorrect Teacher Password. Default password is: teacher');
+      }
+    }
+  </script>
 </head>
 <body>
   <!-- Header -->
@@ -1268,6 +1292,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=2.4"></script>
+  <script src="app.js?v=3.0"></script>
 </body>
 </html>
