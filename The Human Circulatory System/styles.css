@@ -1808,8 +1808,12 @@ mark.kw-highlight {
   padding: 1.5rem;
 }
 
+.hidden {
+  display: none !important;
+}
+
 .modal-backdrop.hidden {
-  display: none;
+  display: none !important;
 }
 
 .storybook-modal-content {
