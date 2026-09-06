@@ -1889,6 +1889,83 @@ mark.kw-highlight {
   color: #f0abfc;
 }
 
+/* Password Lock System & Teacher Passwords Banner */
+.teacher-pass-badge {
+  background: rgba(245, 158, 11, 0.2);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  color: #fef08a;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.teacher-pass-badge:hover {
+  background: rgba(245, 158, 11, 0.35);
+  border-color: #f59e0b;
+}
+
+.teacher-pass-banner {
+  background: rgba(30, 27, 75, 0.9);
+  border: 1px solid rgba(245, 158, 11, 0.5);
+  border-radius: var(--radius-sm);
+  padding: 0.75rem 1.1rem;
+  margin: 0.75rem auto 0 auto;
+  max-width: 1200px;
+  animation: fadeIn 0.3s ease;
+}
+
+.teacher-pass-banner.hidden {
+  display: none !important;
+}
+
+.pass-banner-title {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #fef08a;
+  margin-bottom: 0.5rem;
+}
+
+.pass-banner-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.pass-chip {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 0.35rem 0.65rem;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  color: #e9d5ff;
+}
+
+.pass-chip code {
+  color: #a7f3d0;
+  font-weight: 700;
+  background: rgba(16, 185, 129, 0.2);
+  padding: 0.1rem 0.35rem;
+  border-radius: 4px;
+}
+
+.tab-btn.locked {
+  opacity: 0.85;
+}
+
+.tab-btn.locked .lock-status-icon {
+  margin-left: 0.3rem;
+  font-size: 0.85rem;
+}
+
+.lock-modal-content {
+  max-width: 440px !important;
+}
+
+.lock-pass-input {
+  text-align: center;
+  font-size: 1rem;
+  padding: 0.6rem 0.85rem;
+}
+
 /* Footer */
 .app-footer {
   text-align: center;

@@ -10,27 +10,107 @@ document.addEventListener('DOMContentLoaded', () => {
   initQuizEngine();
 });
 
-/* ==================== TAB NAVIGATION ==================== */
+/* ==================== TAB NAVIGATION & PASSWORD LOCK SYSTEM ==================== */
 function initTabNavigation() {
   const tabBtns = document.querySelectorAll('.tab-btn');
   const tabContents = document.querySelectorAll('.tab-content');
+  const btnToggleTeacherPass = document.getElementById('btn-toggle-teacher-pass');
+  const teacherPassBanner = document.getElementById('teacher-pass-banner');
+
+  const lockModal = document.getElementById('password-lock-modal');
+  const lockModalTitle = document.getElementById('lock-modal-title');
+  const inputTabPassword = document.getElementById('input-tab-password');
+  const btnSubmitTabPassword = document.getElementById('btn-submit-tab-password');
+  const btnCloseLockModal = document.getElementById('btn-close-lock-modal');
+  const btnCancelLockModal = document.getElementById('btn-cancel-lock-modal');
+  const lockErrorMsg = document.getElementById('lock-error-msg');
+
+  let pendingTabBtn = null;
+
+  // Toggle Teacher Reference Banner
+  if (btnToggleTeacherPass && teacherPassBanner) {
+    btnToggleTeacherPass.addEventListener('click', () => {
+      teacherPassBanner.classList.toggle('hidden');
+    });
+  }
+
+  function activateTab(btn) {
+    const targetTab = btn.getAttribute('data-tab');
+
+    tabBtns.forEach(b => {
+      b.classList.remove('active');
+      b.setAttribute('aria-selected', 'false');
+    });
+    tabContents.forEach(c => c.classList.remove('active'));
+
+    btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
+    const contentEl = document.getElementById(targetTab);
+    if (contentEl) contentEl.classList.add('active');
+  }
+
+  function unlockTab(btn) {
+    btn.setAttribute('data-locked', 'false');
+    btn.classList.remove('locked');
+    const iconSpan = btn.querySelector('.lock-status-icon');
+    if (iconSpan) iconSpan.textContent = '🔓';
+  }
 
   tabBtns.forEach(btn => {
     btn.addEventListener('click', () => {
-      const targetTab = btn.getAttribute('data-tab');
+      const isLocked = btn.getAttribute('data-locked') === 'true';
 
-      tabBtns.forEach(b => {
-        b.classList.remove('active');
-        b.setAttribute('aria-selected', 'false');
-      });
-      tabContents.forEach(c => c.classList.remove('active'));
-
-      btn.classList.add('active');
-      btn.setAttribute('aria-selected', 'true');
-      const contentEl = document.getElementById(targetTab);
-      if (contentEl) contentEl.classList.add('active');
+      if (isLocked) {
+        pendingTabBtn = btn;
+        const tabText = btn.querySelector('.tab-text')?.textContent || 'Activity';
+        if (lockModalTitle) lockModalTitle.textContent = `🔒 ${tabText} is Locked`;
+        if (inputTabPassword) inputTabPassword.value = '';
+        if (lockErrorMsg) lockErrorMsg.classList.add('hidden');
+        if (lockModal) lockModal.classList.remove('hidden');
+        if (inputTabPassword) inputTabPassword.focus();
+      } else {
+        activateTab(btn);
+      }
     });
   });
+
+  function processPasswordUnlock() {
+    if (!pendingTabBtn) return;
+    const userPass = (inputTabPassword?.value || '').trim().toLowerCase();
+    const validPasses = (pendingTabBtn.getAttribute('data-pass') || '').toLowerCase().split(',');
+
+    if (validPasses.some(p => p.trim() === userPass)) {
+      unlockTab(pendingTabBtn);
+      activateTab(pendingTabBtn);
+      if (lockModal) lockModal.classList.add('hidden');
+      if (lockErrorMsg) lockErrorMsg.classList.add('hidden');
+    } else {
+      if (lockErrorMsg) lockErrorMsg.classList.remove('hidden');
+      if (inputTabPassword) {
+        inputTabPassword.focus();
+        inputTabPassword.select();
+      }
+    }
+  }
+
+  if (btnSubmitTabPassword) {
+    btnSubmitTabPassword.addEventListener('click', processPasswordUnlock);
+  }
+
+  if (inputTabPassword) {
+    inputTabPassword.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') processPasswordUnlock();
+    });
+  }
+
+  function closeLockModal() {
+    if (lockModal) lockModal.classList.add('hidden');
+    if (lockErrorMsg) lockErrorMsg.classList.add('hidden');
+    pendingTabBtn = null;
+  }
+
+  if (btnCloseLockModal) btnCloseLockModal.addEventListener('click', closeLockModal);
+  if (btnCancelLockModal) btnCancelLockModal.addEventListener('click', closeLockModal);
 }
 
 /* ==================== ACTIVITY 4.4 ROLE-PLAY DRAG & DROP ==================== */
