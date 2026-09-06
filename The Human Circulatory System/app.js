@@ -111,6 +111,64 @@ function initTabNavigation() {
 
   if (btnCloseLockModal) btnCloseLockModal.addEventListener('click', closeLockModal);
   if (btnCancelLockModal) btnCancelLockModal.addEventListener('click', closeLockModal);
+
+  // Teacher Master Login Elements
+  const btnTeacherLogin = document.getElementById('btn-teacher-login');
+  const teacherLoginModal = document.getElementById('teacher-login-modal');
+  const inputTeacherMasterPass = document.getElementById('input-teacher-master-pass');
+  const btnSubmitTeacherLogin = document.getElementById('btn-submit-teacher-login');
+  const btnCloseTeacherLogin = document.getElementById('btn-close-teacher-login');
+  const btnCancelTeacherLogin = document.getElementById('btn-cancel-teacher-login');
+  const teacherLoginErrorMsg = document.getElementById('teacher-login-error-msg');
+
+  if (btnTeacherLogin && teacherLoginModal) {
+    btnTeacherLogin.addEventListener('click', () => {
+      if (inputTeacherMasterPass) inputTeacherMasterPass.value = '';
+      if (teacherLoginErrorMsg) teacherLoginErrorMsg.classList.add('hidden');
+      teacherLoginModal.classList.remove('hidden');
+      if (inputTeacherMasterPass) inputTeacherMasterPass.focus();
+    });
+  }
+
+  function processTeacherMasterLogin() {
+    const pass = (inputTeacherMasterPass?.value || '').trim().toLowerCase();
+    const validMasterPasses = ['teacher', 'teacher123', 'admin', 'master'];
+
+    if (validMasterPasses.includes(pass)) {
+      tabBtns.forEach(b => unlockTab(b));
+      if (btnTeacherLogin) {
+        btnTeacherLogin.innerHTML = '🔓 Teacher Mode (All Unlocked)';
+        btnTeacherLogin.style.background = 'rgba(16, 185, 129, 0.3)';
+        btnTeacherLogin.style.borderColor = '#10b981';
+      }
+      if (teacherLoginModal) teacherLoginModal.classList.add('hidden');
+      if (teacherLoginErrorMsg) teacherLoginErrorMsg.classList.add('hidden');
+    } else {
+      if (teacherLoginErrorMsg) teacherLoginErrorMsg.classList.remove('hidden');
+      if (inputTeacherMasterPass) {
+        inputTeacherMasterPass.focus();
+        inputTeacherMasterPass.select();
+      }
+    }
+  }
+
+  if (btnSubmitTeacherLogin) {
+    btnSubmitTeacherLogin.addEventListener('click', processTeacherMasterLogin);
+  }
+
+  if (inputTeacherMasterPass) {
+    inputTeacherMasterPass.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') processTeacherMasterLogin();
+    });
+  }
+
+  function closeTeacherLoginModal() {
+    if (teacherLoginModal) teacherLoginModal.classList.add('hidden');
+    if (teacherLoginErrorMsg) teacherLoginErrorMsg.classList.add('hidden');
+  }
+
+  if (btnCloseTeacherLogin) btnCloseTeacherLogin.addEventListener('click', closeTeacherLoginModal);
+  if (btnCancelTeacherLogin) btnCancelTeacherLogin.addEventListener('click', closeTeacherLoginModal);
 }
 
 /* ==================== ACTIVITY 4.4 ROLE-PLAY DRAG & DROP ==================== */
