@@ -1948,12 +1948,24 @@ mark.kw-highlight {
 }
 
 .tab-btn.locked {
-  opacity: 0.85;
+  position: relative;
+  border-color: rgba(245, 158, 11, 0.4);
+}
+
+.tab-btn.locked .tab-num {
+  background: rgba(245, 158, 11, 0.25);
+  color: #fef08a;
+  border: 1px solid rgba(245, 158, 11, 0.5);
 }
 
 .tab-btn.locked .lock-status-icon {
-  margin-left: 0.3rem;
+  margin-left: 0.25rem;
   font-size: 0.85rem;
+  display: inline-block;
+}
+
+.tab-btn:not(.locked) .lock-status-icon {
+  display: none !important;
 }
 
 .lock-modal-content {
