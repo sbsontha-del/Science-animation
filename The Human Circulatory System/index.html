@@ -25,7 +25,7 @@
       </div>
       <div class="header-actions">
         <span class="badge answer-key-badge">🏛️ Socratic Learning Mode</span>
-        <button class="badge teacher-pass-badge" id="btn-teacher-login">🔑 Teacher Login</button>
+        <button class="badge teacher-pass-badge" id="btn-teacher-login" onclick="openTeacherLoginModal()">🔑 Teacher Login</button>
       </div>
     </div>
   </header>
@@ -1249,7 +1249,7 @@
     <div class="modal-content lock-modal-content">
       <div class="modal-header">
         <h2>🔑 Teacher Master Login</h2>
-        <button class="btn-close-modal" id="btn-close-teacher-login">✖</button>
+        <button class="btn-close-modal" id="btn-close-teacher-login" onclick="closeTeacherLoginModal()">✖</button>
       </div>
       <div class="modal-body text-center" style="text-align: center;">
         <div class="lock-avatar-icon" style="font-size: 3rem; margin-bottom: 0.5rem;">🔑</div>
@@ -1258,16 +1258,16 @@
         
         <div class="lock-input-group" style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 320px; margin: 0 auto;">
           <input type="password" id="input-teacher-master-pass" class="blank-input lock-pass-input" placeholder="Enter Teacher Password (e.g. teacher)...">
-          <button class="btn btn-primary" id="btn-submit-teacher-login">🔓 Unlock All Activities</button>
+          <button class="btn btn-primary" id="btn-submit-teacher-login" onclick="processTeacherMasterLogin()">🔓 Unlock All Activities</button>
         </div>
         <div id="teacher-login-error-msg" class="lock-error-msg hidden" style="color: #fca5a5; font-size: 0.85rem; font-weight: 600; margin-top: 0.75rem;">❌ Incorrect Teacher Password. Default password is <code>teacher</code></div>
       </div>
       <div class="modal-footer" style="justify-content: center;">
-        <button class="btn btn-secondary" id="btn-cancel-teacher-login">Cancel</button>
+        <button class="btn btn-secondary" id="btn-cancel-teacher-login" onclick="closeTeacherLoginModal()">Cancel</button>
       </div>
     </div>
   </div>
 
-  <script src="app.js?v=2.3"></script>
+  <script src="app.js?v=2.4"></script>
 </body>
 </html>

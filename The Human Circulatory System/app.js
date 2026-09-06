@@ -112,63 +112,85 @@ function initTabNavigation() {
   if (btnCloseLockModal) btnCloseLockModal.addEventListener('click', closeLockModal);
   if (btnCancelLockModal) btnCancelLockModal.addEventListener('click', closeLockModal);
 
-  // Teacher Master Login Elements
+  // Global Window Attachments for Teacher Login & Unlock
+  window.unlockAllTabs = function() {
+    tabBtns.forEach(b => unlockTab(b));
+    const btnTeacher = document.getElementById('btn-teacher-login');
+    if (btnTeacher) {
+      btnTeacher.innerHTML = '🔓 Teacher Mode (All Unlocked)';
+      btnTeacher.style.background = 'rgba(16, 185, 129, 0.3)';
+      btnTeacher.style.borderColor = '#10b981';
+    }
+  };
+
+  window.openTeacherLoginModal = function() {
+    const modal = document.getElementById('teacher-login-modal');
+    const input = document.getElementById('input-teacher-master-pass');
+    const errorMsg = document.getElementById('teacher-login-error-msg');
+
+    if (modal) {
+      modal.classList.remove('hidden');
+      modal.style.display = 'flex';
+      if (errorMsg) errorMsg.classList.add('hidden');
+      if (input) {
+        input.value = '';
+        setTimeout(() => input.focus(), 100);
+      }
+    } else {
+      const pass = prompt('Enter Teacher Password (e.g. teacher):');
+      if (pass && ['teacher', 'teacher123', 'admin', 'master'].includes(pass.trim().toLowerCase())) {
+        window.unlockAllTabs();
+        alert('✨ All activities unlocked for your class session!');
+      } else if (pass) {
+        alert('❌ Incorrect Teacher Password.');
+      }
+    }
+  };
+
+  window.closeTeacherLoginModal = function() {
+    const modal = document.getElementById('teacher-login-modal');
+    const errorMsg = document.getElementById('teacher-login-error-msg');
+    if (modal) {
+      modal.classList.add('hidden');
+      modal.style.display = '';
+    }
+    if (errorMsg) errorMsg.classList.add('hidden');
+  };
+
+  window.processTeacherMasterLogin = function() {
+    const input = document.getElementById('input-teacher-master-pass');
+    const errorMsg = document.getElementById('teacher-login-error-msg');
+    const pass = (input?.value || '').trim().toLowerCase();
+    const validMasterPasses = ['teacher', 'teacher123', 'admin', 'master'];
+
+    if (validMasterPasses.includes(pass)) {
+      window.unlockAllTabs();
+      window.closeTeacherLoginModal();
+    } else {
+      if (errorMsg) errorMsg.classList.remove('hidden');
+      if (input) {
+        input.focus();
+        input.select();
+      }
+    }
+  };
+
   const btnTeacherLogin = document.getElementById('btn-teacher-login');
-  const teacherLoginModal = document.getElementById('teacher-login-modal');
   const inputTeacherMasterPass = document.getElementById('input-teacher-master-pass');
   const btnSubmitTeacherLogin = document.getElementById('btn-submit-teacher-login');
   const btnCloseTeacherLogin = document.getElementById('btn-close-teacher-login');
   const btnCancelTeacherLogin = document.getElementById('btn-cancel-teacher-login');
-  const teacherLoginErrorMsg = document.getElementById('teacher-login-error-msg');
 
-  if (btnTeacherLogin && teacherLoginModal) {
-    btnTeacherLogin.addEventListener('click', () => {
-      if (inputTeacherMasterPass) inputTeacherMasterPass.value = '';
-      if (teacherLoginErrorMsg) teacherLoginErrorMsg.classList.add('hidden');
-      teacherLoginModal.classList.remove('hidden');
-      if (inputTeacherMasterPass) inputTeacherMasterPass.focus();
-    });
-  }
-
-  function processTeacherMasterLogin() {
-    const pass = (inputTeacherMasterPass?.value || '').trim().toLowerCase();
-    const validMasterPasses = ['teacher', 'teacher123', 'admin', 'master'];
-
-    if (validMasterPasses.includes(pass)) {
-      tabBtns.forEach(b => unlockTab(b));
-      if (btnTeacherLogin) {
-        btnTeacherLogin.innerHTML = '🔓 Teacher Mode (All Unlocked)';
-        btnTeacherLogin.style.background = 'rgba(16, 185, 129, 0.3)';
-        btnTeacherLogin.style.borderColor = '#10b981';
-      }
-      if (teacherLoginModal) teacherLoginModal.classList.add('hidden');
-      if (teacherLoginErrorMsg) teacherLoginErrorMsg.classList.add('hidden');
-    } else {
-      if (teacherLoginErrorMsg) teacherLoginErrorMsg.classList.remove('hidden');
-      if (inputTeacherMasterPass) {
-        inputTeacherMasterPass.focus();
-        inputTeacherMasterPass.select();
-      }
-    }
-  }
-
-  if (btnSubmitTeacherLogin) {
-    btnSubmitTeacherLogin.addEventListener('click', processTeacherMasterLogin);
-  }
+  if (btnTeacherLogin) btnTeacherLogin.addEventListener('click', window.openTeacherLoginModal);
+  if (btnSubmitTeacherLogin) btnSubmitTeacherLogin.addEventListener('click', window.processTeacherMasterLogin);
+  if (btnCloseTeacherLogin) btnCloseTeacherLogin.addEventListener('click', window.closeTeacherLoginModal);
+  if (btnCancelTeacherLogin) btnCancelTeacherLogin.addEventListener('click', window.closeTeacherLoginModal);
 
   if (inputTeacherMasterPass) {
     inputTeacherMasterPass.addEventListener('keyup', (e) => {
-      if (e.key === 'Enter') processTeacherMasterLogin();
+      if (e.key === 'Enter') window.processTeacherMasterLogin();
     });
   }
-
-  function closeTeacherLoginModal() {
-    if (teacherLoginModal) teacherLoginModal.classList.add('hidden');
-    if (teacherLoginErrorMsg) teacherLoginErrorMsg.classList.add('hidden');
-  }
-
-  if (btnCloseTeacherLogin) btnCloseTeacherLogin.addEventListener('click', closeTeacherLoginModal);
-  if (btnCancelTeacherLogin) btnCancelTeacherLogin.addEventListener('click', closeTeacherLoginModal);
 }
 
 /* ==================== ACTIVITY 4.4 ROLE-PLAY DRAG & DROP ==================== */
