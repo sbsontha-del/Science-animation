@@ -24,7 +24,7 @@ class MagnetSimulation {
     this.showRuler = false;
     this.isMuted = false;
     this.activeInvestigation = 'gi1';
-    this.unlockedActivities = { gi1: true, gi2: true, gi3: true, gi4: false, gi5: false, gi6: false, free: false };
+    this.unlockedActivities = { gi1: true, gi2: true, gi3: true, gi4: true, gi5: false, gi6: false, free: false };
     this.barrierType = 'none';
     this.history = [];
     this.maxHistory = 20;
@@ -2639,7 +2639,7 @@ class SproutMagnetApp {
         playerName: this.playerName,
         playerAvatar: this.playerAvatar,
         completedChallenges: this.magnetSim ? this.magnetSim.completedChallenges : [false, false, false, false, false, false, false],
-        unlockedActivities: this.magnetSim ? this.magnetSim.unlockedActivities : { gi1: true, gi2: false, gi3: false, gi4: false, gi5: false, gi6: false, free: false }
+        unlockedActivities: this.magnetSim ? this.magnetSim.unlockedActivities : { gi1: true, gi2: true, gi3: true, gi4: true, gi5: false, gi6: false, free: false }
       };
       localStorage.setItem("sprout_magnet_lab_state", JSON.stringify(data));
     } catch (e) {
@@ -2674,7 +2674,7 @@ class SproutMagnetApp {
             gi1: true,
             gi2: true,
             gi3: true,
-            gi4: !!loaded.gi4,
+            gi4: true,
             gi5: !!loaded.gi5,
             gi6: !!loaded.gi6,
             free: !!loaded.free
