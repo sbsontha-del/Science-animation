@@ -1059,11 +1059,13 @@ class MagnetSimulation {
         rings[i].x = rect.width / 2;
         const below = rings[i - 1];
 
-        // N = left, S = right in side-view.
-        // Pole faces: angle 0 = N-left/S-right; angle 180 = flipped.
-        // Adjacent faces (bottom of upper vs top of lower) are the TOP/BOTTOM of the flat disc.
-        // Same angle = same pole faces = repels; opposite angle = attracts.
-        const repels = (Math.abs((rings[i].angle || 0) - (below.angle || 0)) % 360 < 90);
+        // Facing faces:
+        // Angle 0: Top half = North (Red), Bottom half = South (Blue).
+        // Angle 180 (flipped): Top half = South (Blue), Bottom half = North (Red).
+        // When angle difference is ~180°: like poles face each other -> REPEL (float in air)!
+        // When angle difference is ~0°: unlike poles face each other -> ATTRACT (snap together)!
+        const angleDiff = Math.abs((rings[i].angle || 0) - (below.angle || 0)) % 360;
+        const repels = (angleDiff > 90 && angleDiff < 270);
 
         if (repels) {
           // Float above with gap
