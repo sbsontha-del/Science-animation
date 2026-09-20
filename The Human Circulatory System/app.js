@@ -566,18 +566,20 @@ const socraticConfig = {
     starter: "This ensures that different parts of plants and humans receive substances that are needed for them to survive."
   },
   'input-4-5-sim1': {
-    prompt: "What essential substances do both plants and humans transport?",
+    prompt: "State how both systems transport substances to parts of the organism:",
     keywords: [
-      { text: 'transport food and water', aliases: ['food', 'water', 'substances', 'nutrients'] }
+      { text: 'transport substances', aliases: ['transport', 'substances', 'food', 'water', 'nutrients'] },
+      { text: 'different parts of the organism', aliases: ['different parts', 'organism', 'body', 'parts of the organism', 'different parts of the organism'] }
     ],
-    starter: "Both systems transport food and water to different parts of the system."
+    starter: "Both systems transport substances to different parts of the organism."
   },
   'input-4-5-sim2': {
-    prompt: "What structures do both use to carry liquids and nutrients?",
+    prompt: "State how both systems use tubes to transport substances throughout the organism:",
     keywords: [
-      { text: 'transport substances in tubes', aliases: ['tubes', 'vessels', 'pipes'] }
+      { text: 'transport substances', aliases: ['transport', 'substances', 'food', 'water', 'nutrients'] },
+      { text: 'through tubes throughout the organism', aliases: ['tubes', 'through tubes', 'throughout', 'organism', 'throughout the organism', 'vessels'] }
     ],
-    starter: "Both systems transport substances in tubes throughout the system."
+    starter: "Both systems transport substances through tubes throughout the organism."
   },
   'input-4-5-diff-plant-tubes': {
     prompt: "Does a plant have separate tubes for carrying food and water?",
@@ -994,7 +996,79 @@ function evaluateSocraticAnswer(inputId) {
 }
 
 function evaluateTable45Socratic() {
-  evaluateSocraticAnswer('input-4-5-diff-plant-tubes');
+  const panel = document.getElementById('socratic-4-5-table');
+  if (!panel) return;
+  panel.classList.remove('hidden');
+
+  const fields = [
+    { id: 'input-4-5-sim1', label: 'Similarity 1 (Substances & Destination)', defaultAns: 'Both systems transport substances to different parts of the organism.' },
+    { id: 'input-4-5-sim2', label: 'Similarity 2 (Structure & Tubes)', defaultAns: 'Both systems transport substances through tubes throughout the organism.' },
+    { id: 'input-4-5-diff-plant-tubes', label: 'Plant Transport Tubes', defaultAns: 'Transports food and water through separate tubes (food-carrying tubes and water-carrying tubes).' },
+    { id: 'input-4-5-diff-human-tubes', label: 'Human Blood Vessels', defaultAns: 'Transports food and water through the same tube (blood vessels).' },
+    { id: 'input-4-5-diff-plant-pump', label: 'Plant Pump Requirement', defaultAns: 'Does not require a pump.' },
+    { id: 'input-4-5-diff-human-pump', label: 'Human Pump Requirement', defaultAns: 'Requires a pump (heart) to push substances carried by blood.' }
+  ];
+
+  let evalBlocksHtml = '';
+
+  fields.forEach(item => {
+    const el = document.getElementById(item.id);
+    const userVal = (el?.value || '').trim();
+    const config = socraticConfig[item.id];
+    let kwMatchCount = 0;
+
+    if (config && userVal) {
+      const userValLower = userVal.toLowerCase();
+      config.keywords.forEach(kw => {
+        if (kw.aliases.some(alias => userValLower.includes(alias.toLowerCase()))) {
+          kwMatchCount++;
+        }
+      });
+    }
+
+    const isFullyCorrect = config ? (kwMatchCount === config.keywords.length) : (userVal.length > 5);
+    if (el) {
+      el.style.borderColor = isFullyCorrect ? 'var(--success-green)' : (userVal ? '#f59e0b' : 'var(--card-border)');
+    }
+
+    const highlighted = config && userVal ? getHighlightedText(userVal, config.keywords) : (userVal ? escapeHtml(userVal) : '<em>(Not answered yet)</em>');
+
+    evalBlocksHtml += `
+      <div class="sub-eval ${isFullyCorrect ? 'correct' : (userVal ? 'guidance' : 'incorrect')}" style="margin-bottom: 0.75rem;">
+        <div style="font-weight: 700; margin-bottom: 0.25rem;">
+          ${isFullyCorrect ? '✨' : '💡'} <strong>${item.label}:</strong>
+        </div>
+        <div style="font-size: 0.9rem; color: #e2e8f0; margin-bottom: 0.35rem;">
+          ${highlighted}
+        </div>
+        <div class="scaffold-starter-box mt-2" style="background: rgba(15, 23, 42, 0.6); padding: 0.5rem; border-radius: 6px;">
+          <div><strong>Official Answer:</strong> "${item.defaultAns}"</div>
+          <button class="btn-use-starter mt-1" data-input-target="${item.id}" style="font-size: 0.8rem; padding: 0.25rem 0.5rem; cursor: pointer;">📋 Insert Answer into Table</button>
+        </div>
+      </div>
+    `;
+  });
+
+  panel.innerHTML = `
+    <div class="socratic-feedback-header">📊 <strong>Table 4.5 Comparison Evaluation & Answers:</strong></div>
+    ${evalBlocksHtml}
+  `;
+
+  panel.querySelectorAll('.btn-use-starter').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const targetId = btn.getAttribute('data-input-target');
+      const targetEl = document.getElementById(targetId);
+      const config = socraticConfig[targetId];
+      if (targetEl && config) {
+        targetEl.value = config.starter;
+        targetEl.style.borderColor = 'var(--success-green)';
+        btn.textContent = '✅ Inserted!';
+        setTimeout(() => { btn.textContent = '📋 Insert Answer into Table'; }, 1500);
+      }
+    });
+  });
+
+  panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
 }
 
 function evaluateQ9Socratic() {
