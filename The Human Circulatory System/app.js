@@ -582,18 +582,18 @@ const socraticConfig = {
     starter: "Both systems transport substances through tubes throughout the organism."
   },
   'input-4-5-diff-plant-tubes': {
-    prompt: "Does a plant have separate tubes for carrying food and water?",
+    prompt: "Does a plant have separate tubes for carrying substances?",
     keywords: [
       { text: 'separate tubes', aliases: ['separate', 'food-carrying tubes', 'water-carrying tubes', 'food-carrying', 'water-carrying'] }
     ],
-    starter: "Transports food and water through separate tubes (food-carrying tubes and water-carrying tubes)."
+    starter: "Transports substances through separate tubes (food-carrying tubes and water-carrying tubes)."
   },
   'input-4-5-diff-human-tubes': {
-    prompt: "What tubes do humans use to transport blood?",
+    prompt: "What tubes do humans use to transport substances?",
     keywords: [
       { text: 'same tube (blood vessels)', aliases: ['same tube', 'blood vessels', 'vessels', 'blood'] }
     ],
-    starter: "Transports food and water through the same tube (blood vessels)."
+    starter: "Transports substances through the same tube (blood vessels)."
   },
   'input-4-5-diff-plant-pump': {
     prompt: "Do plants have a organ or heart to pump liquids?",
@@ -701,7 +701,7 @@ const socraticConfig = {
       { text: 'same tube (blood vessels) in X', aliases: ['same tube', 'blood vessels', 'vessels', 'blood'] },
       { text: 'separate tubes in Y', aliases: ['separate tubes', 'separate', 'food-carrying', 'water-carrying'] }
     ],
-    starter: "X transports food and water using the same tube (blood vessels) but Y has separate tubes for transporting food and water."
+    starter: "X transports substances using the same tube (blood vessels) but Y has separate tubes for transporting substances."
   },
   'input-sq6a': {
     prompt: "State the relationship between the number of goldfish and the amount of oxygen in water over time:",
@@ -1003,8 +1003,8 @@ function evaluateTable45Socratic() {
   const fields = [
     { id: 'input-4-5-sim1', label: 'Similarity 1 (Substances & Destination)', defaultAns: 'Both systems transport substances to different parts of the organism.' },
     { id: 'input-4-5-sim2', label: 'Similarity 2 (Structure & Tubes)', defaultAns: 'Both systems transport substances through tubes throughout the organism.' },
-    { id: 'input-4-5-diff-plant-tubes', label: 'Plant Transport Tubes', defaultAns: 'Transports food and water through separate tubes (food-carrying tubes and water-carrying tubes).' },
-    { id: 'input-4-5-diff-human-tubes', label: 'Human Blood Vessels', defaultAns: 'Transports food and water through the same tube (blood vessels).' },
+    { id: 'input-4-5-diff-plant-tubes', label: 'Plant Transport Tubes', defaultAns: 'Transports substances through separate tubes (food-carrying tubes and water-carrying tubes).' },
+    { id: 'input-4-5-diff-human-tubes', label: 'Human Blood Vessels', defaultAns: 'Transports substances through the same tube (blood vessels).' },
     { id: 'input-4-5-diff-plant-pump', label: 'Plant Pump Requirement', defaultAns: 'Does not require a pump.' },
     { id: 'input-4-5-diff-human-pump', label: 'Human Pump Requirement', defaultAns: 'Requires a pump (heart) to push substances carried by blood.' }
   ];
