@@ -24,7 +24,7 @@ class MagnetSimulation {
     this.showRuler = false;
     this.isMuted = false;
     this.activeInvestigation = 'gi1';
-    this.unlockedActivities = { gi1: true, gi2: true, gi3: true, gi4: true, gi5: false, gi6: false, free: false };
+    this.unlockedActivities = { gi1: true, gi2: false, gi3: false, gi4: false, gi5: false, gi6: false, free: false };
     this.barrierType = 'none';
     this.history = [];
     this.maxHistory = 20;
@@ -2674,9 +2674,9 @@ class SproutMagnetApp {
           const loaded = data.unlockedActivities || {};
           this.magnetSim.unlockedActivities = {
             gi1: true,
-            gi2: true,
-            gi3: true,
-            gi4: true,
+            gi2: !!loaded.gi2,
+            gi3: !!loaded.gi3,
+            gi4: !!loaded.gi4,
             gi5: !!loaded.gi5,
             gi6: !!loaded.gi6,
             free: !!loaded.free
@@ -2889,7 +2889,9 @@ class SproutMagnetApp {
     };
 
     const submitTeacherPassword = () => {
-      if (teacherInput.value === 'admin') {
+      const inputVal = teacherInput.value.trim().toLowerCase();
+      const validAdminPasses = ['admin', 'teacher', 'teacher123', 'master'];
+      if (validAdminPasses.includes(inputVal)) {
         this.teacherModeActive = true;
         teacherBtn.textContent = '🔓 Teacher: ON';
         teacherBtn.style.background = '#059669';
@@ -3002,16 +3004,17 @@ class SproutMagnetApp {
       if (!actInput || !pendingUnlockKey) return;
       const code = actInput.value.trim().toUpperCase();
       const MODULE_PASSCODES = {
-        gi1: ["PUSH"],
-        gi2: ["CLASS", "PULL-61B", "PULL61B"],
-        gi3: ["POLES", "POLE-62A", "POLE62A"],
-        gi4: ["RINGS", "RING-63B", "RING63B"],
-        gi5: ["MYSTERY", "CASE-63C", "CASE63C"],
-        gi6: ["ALIGN", "ALIGN-64", "ALIGN64"],
-        free: ["GRAPH", "SPROUT-FREE", "SPROUTFREE", "FREE"]
+        gi1: ["PUSH", "1000"],
+        gi2: ["CLASS", "2000", "PULL-61B", "PULL61B"],
+        gi3: ["POLES", "3000", "POLE-62A", "POLE62A"],
+        gi4: ["RINGS", "4000", "RING-63B", "RING63B"],
+        gi5: ["MYSTERY", "5000", "CASE-63C", "CASE63C"],
+        gi6: ["ALIGN", "6000", "ALIGN-64", "ALIGN64"],
+        free: ["GRAPH", "7000", "SPROUT-FREE", "SPROUTFREE", "FREE"]
       };
+      const masterPasses = ['ADMIN', 'TEACHER', 'TEACHER123', 'MASTER'];
       const validCodes = MODULE_PASSCODES[pendingUnlockKey] || [];
-      const isValid = (code === 'ADMIN') || validCodes.includes(code);
+      const isValid = masterPasses.includes(code) || validCodes.includes(code);
 
       if (isValid) {
         const key = pendingUnlockKey;
