@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=7.0">
+  <link rel="stylesheet" href="styles.css?v=8.0">
   <script>
     function openTeacherLoginModal() {
       var modal = document.getElementById('teacher-login-modal');
@@ -1348,15 +1348,15 @@
         <div class="lock-avatar-icon" style="font-size: 3rem; margin-bottom: 0.5rem;">🔐</div>
         <h3 style="color: #f0abfc; margin-top: 0.2rem;">Teacher Master Access</h3>
         <p style="color: #d8b4fe; font-size: 0.9rem; margin-bottom: 1.25rem;">
-          Enter Master Password (<code>admin</code>) to view activity passwords and manage your class session:
+          Enter Master Password to view activity passwords and manage your class session:
         </p>
         
         <div class="lock-input-group" style="display: flex; flex-direction: column; gap: 0.75rem; max-width: 320px; margin: 0 auto;">
-          <input type="password" id="input-teacher-master-pass" class="blank-input lock-pass-input" placeholder="Enter admin password..." style="text-align: center;">
+          <input type="password" id="input-teacher-master-pass" class="blank-input lock-pass-input" placeholder="Enter Master Password..." style="text-align: center;">
           <button class="btn btn-primary" id="btn-submit-teacher-login" onclick="processTeacherMasterLogin()">🔓 Login to View Passwords</button>
         </div>
         <div id="teacher-login-error-msg" class="lock-error-msg hidden" style="display: none; color: #fca5a5; font-size: 0.85rem; font-weight: 600; margin-top: 0.75rem;">
-          ❌ Incorrect Password. Default Master Password is: <code>admin</code>
+          ❌ Incorrect Master Password. Please try again.
         </div>
       </div>
 
@@ -1410,6 +1410,6 @@
     </div>
   </div>
 
-  <script src="app.js?v=7.0"></script>
+  <script src="app.js?v=8.0"></script>
 </body>
 </html>
