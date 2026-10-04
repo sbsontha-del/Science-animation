@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Check for Your Understanding - Complete Science Workbook Companion</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @keyframes snapToMagnet {
+      0% { transform: translate(0, 0) rotate(0deg); }
+      100% { transform: translate(var(--snap-x), 0) rotate(70deg); }
+    }
+    .snap-anim {
+      animation: snapToMagnet 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+    .nav-tab.active {
+      background-color: var(--primary);
+      color: var(--primary-foreground);
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body class="bg-[var(--background)] text-[var(--foreground)] min-h-screen p-4 md:p-6 font-sans antialiased">
+
+  <div class="max-w-5xl mx-auto space-y-6">
+    
+    <!-- Top Banner -->
+    <header class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+      <div>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mb-2">
+          <span>📗 Primary Science Workbook Companion</span>
+          <span>•</span>
+          <span>Chapter 7 (Pages 139–145)</span>
+        </div>
+        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-[var(--foreground)]">
+          Check for Your Understanding
+        </h1>
+        <p class="text-xs text-[var(--muted-foreground)] mt-1">
+          Full Question Context & Interactive Workbook Diagrams
+        </p>
+      </div>
+
+      <!-- Scoreboard -->
+      <div class="bg-[var(--background)] border border-[var(--border)] p-3 rounded-xl flex items-center gap-4">
+        <div class="text-center">
+          <span class="text-[10px] text-[var(--muted-foreground)] uppercase font-mono block">Score</span>
+          <span id="global-score" class="text-xl font-extrabold text-emerald-600 dark:text-emerald-400">0 / 6</span>
+        </div>
+        <div class="h-8 w-px bg-[var(--border)]"></div>
+        <div class="text-center">
+          <span class="text-[10px] text-[var(--muted-foreground)] uppercase font-mono block">Progress</span>
+          <span id="progress-percent" class="text-sm font-bold text-blue-600 dark:text-blue-400">0%</span>
+        </div>
+      </div>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="flex flex-wrap gap-2 border-b border-[var(--border)] pb-2 overflow-x-auto">
+      <button onclick="showQuestion(1)" id="tab-q1" class="nav-tab active px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+        <span>Q1</span> Magnet Rules (P.139)
+      </button>
+      <button onclick="showQuestion(2)" id="tab-q2" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+        <span>Q2</span> Object P & Q (P.140)
+      </button>
+      <button onclick="showQuestion(3)" id="tab-q3" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+        <span>Q3</span> Electromagnet Setups (P.141)
+      </button>
+      <button onclick="showQuestion(4)" id="tab-q4" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+        <span>Q4</span> Raj's Stroke Test (P.142)
+      </button>
+      <button onclick="showQuestion(5)" id="tab-q5" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+        <span>Q5</span> Sam's Distance Test (P.143-144)
+      </button>
+      <button onclick="showQuestion(6)" id="tab-q6" class="nav-tab px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5">
+        <span>Q6</span> Pole Graph & Assembly (P.145)
+      </button>
+    </nav>
+
+    <!-- ======================================================== -->
+    <!-- QUESTION 1 (PAGE 139) -->
+    <!-- ======================================================== -->
+    <div id="q-section-1" class="q-card space-y-6">
+      
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
+        
+        <div class="flex justify-between items-start border-b border-[var(--border)] pb-4">
+          <div>
+            <span class="text-xs font-bold text-blue-500 uppercase tracking-wider">Page 139 • Section A Multiple-choice Questions</span>
+            <p class="text-xs text-[var(--muted-foreground)] italic mt-1">For questions 1–3, four options are given. One of them is the correct answer. Indicate your answer in the brackets provided.</p>
+            <h2 class="text-base font-bold text-[var(--foreground)] mt-2">1. Which of the following statements about magnets is correct?</h2>
+          </div>
+          <span id="status-q1" class="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-500/10 text-slate-500">Unanswered</span>
+        </div>
+
+        <!-- Visual Diagram Test Bench -->
+        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4">
+          <div class="flex justify-between items-center text-xs text-slate-300">
+            <span class="font-bold text-emerald-400">🔬 Interactive Diagram: Test Statement Properties</span>
+            <span class="text-[10px] text-slate-400">Click a test button to simulate property</span>
+          </div>
+
+          <div id="q1-stage" class="min-h-[160px] bg-slate-900 rounded-xl p-4 flex flex-col items-center justify-center border border-slate-800 text-center relative overflow-hidden">
+            <div id="q1-graphic" class="flex items-center justify-center gap-6">
+              <svg class="w-48 h-16" viewBox="0 0 200 60">
+                <rect x="10" y="10" width="90" height="40" fill="#dc2626" rx="4" />
+                <rect x="100" y="10" width="90" height="40" fill="#2563eb" rx="4" />
+                <text x="55" y="35" fill="white" font-weight="bold" text-anchor="middle" font-size="18">N</text>
+                <text x="145" y="35" fill="white" font-weight="bold" text-anchor="middle" font-size="18">S</text>
+              </svg>
+            </div>
+            <div id="q1-text" class="text-xs text-slate-300 mt-4 font-mono">
+              Click a test button below to simulate statement properties visually!
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+            <button onclick="runQ1Test(1)" class="p-2.5 bg-slate-900 hover:bg-slate-800 text-slate-200 rounded-xl border border-slate-700 text-left transition flex items-center gap-2">
+              <span class="font-bold text-amber-400">Test (1):</span> Magnets vs All Metals
+            </button>
+            <button onclick="runQ1Test(2)" class="p-2.5 bg-slate-900 hover:bg-slate-800 text-slate-200 rounded-xl border border-slate-700 text-left transition flex items-center gap-2">
+              <span class="font-bold text-amber-400">Test (2):</span> Like Poles Facing
+            </button>
+            <button onclick="runQ1Test(3)" class="p-2.5 bg-slate-900 hover:bg-slate-800 text-slate-200 rounded-xl border border-slate-700 text-left transition flex items-center gap-2">
+              <span class="font-bold text-amber-400">Test (3):</span> Freely Suspended Magnet
+            </button>
+            <button onclick="runQ1Test(4)" class="p-2.5 bg-slate-900 hover:bg-slate-800 text-slate-200 rounded-xl border border-slate-700 text-left transition flex items-center gap-2">
+              <span class="font-bold text-amber-400">Test (4):</span> Non-Magnetic Materials
+            </button>
+          </div>
+        </div>
+
+        <!-- Options -->
+        <div class="space-y-2 text-xs">
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq1" value="1" onchange="checkQ1(1)" class="accent-emerald-500">
+            <span>(1) Magnets attract all objects made of metal.</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq1" value="2" onchange="checkQ1(2)" class="accent-emerald-500">
+            <span>(2) Magnets repel when their like poles are facing each other.</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq1" value="3" onchange="checkQ1(3)" class="accent-emerald-500">
+            <span>(3) Freely suspended magnets always come to rest in the North-East direction.</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq1" value="4" onchange="checkQ1(4)" class="accent-emerald-500">
+            <span>(4) Magnets attract non-magnetic materials.</span>
+          </label>
+        </div>
+
+        <div id="feedback-q1" class="hidden p-4 rounded-xl text-xs font-semibold leading-relaxed"></div>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- QUESTION 2 (PAGE 140) -->
+    <!-- ======================================================== -->
+    <div id="q-section-2" class="q-card space-y-6 hidden">
+      
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
+        
+        <div class="flex justify-between items-start border-b border-[var(--border)] pb-4">
+          <div>
+            <span class="text-xs font-bold text-blue-500 uppercase tracking-wider">Page 140 • Question 2</span>
+            <p class="text-xs text-[var(--foreground)] font-medium mt-1">
+              2. Object P was placed near a bar magnet. It then moved away as shown in diagram 1.
+            </p>
+            <p class="text-xs text-[var(--foreground)] font-medium mt-1">
+              When object Q was placed near the bar magnet, it moved towards the magnet as shown in diagram 2.
+            </p>
+          </div>
+          <span id="status-q2" class="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-500/10 text-slate-500">Unanswered</span>
+        </div>
+
+        <!-- WORKBOOK DIAGRAM SCHEMATICS -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Diagram 1 Schematic -->
+          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-amber-400">Diagram 1: Object P</span>
+              <span class="text-[10px] text-slate-400">P moves away ⬅️</span>
+            </div>
+
+            <div class="h-32 bg-slate-900 rounded-xl p-3 flex flex-col justify-between items-center border border-slate-800 relative">
+              <div class="flex items-center justify-around w-full h-full">
+                <div id="graphic-obj-p" class="w-24 h-10 bg-slate-700 text-white font-bold text-xs rounded border-2 border-slate-500 flex items-center justify-center transition-transform duration-500 shadow-lg">
+                  object P
+                </div>
+                <div id="vector-p-arrow" class="text-red-400 font-extrabold text-sm opacity-50">⬅️ REPEL</div>
+                <div class="flex w-24 h-10 rounded overflow-hidden font-bold text-xs text-white shadow border border-white/20">
+                  <div class="w-1/2 bg-red-600 flex items-center justify-center">N</div>
+                  <div class="w-1/2 bg-blue-600 flex items-center justify-center">S</div>
+                </div>
+              </div>
+              <div class="w-full text-center border-t border-slate-800 pt-1"><span class="text-[10px] text-slate-400 font-mono">bar magnet</span></div>
+            </div>
+
+            <button onclick="triggerObjectPhysics('P')" class="w-full py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl font-bold text-xs transition shadow">
+              🚀 Simulate Diagram 1
+            </button>
+          </div>
+
+          <!-- Diagram 2 Schematic -->
+          <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 space-y-3">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-amber-400">Diagram 2: Object Q</span>
+              <span class="text-[10px] text-slate-400">Q moves towards ➡️</span>
+            </div>
+
+            <div class="h-32 bg-slate-900 rounded-xl p-3 flex flex-col justify-between items-center border border-slate-800 relative">
+              <div class="flex items-center justify-around w-full h-full">
+                <div id="graphic-obj-q" class="w-24 h-10 bg-slate-700 text-white font-bold text-xs rounded border-2 border-slate-500 flex items-center justify-center transition-transform duration-500 shadow-lg">
+                  object Q
+                </div>
+                <div id="vector-q-arrow" class="text-amber-400 font-extrabold text-sm opacity-50">ATTRACT ➡️</div>
+                <div class="flex w-24 h-10 rounded overflow-hidden font-bold text-xs text-white shadow border border-white/20">
+                  <div class="w-1/2 bg-red-600 flex items-center justify-center">N</div>
+                  <div class="w-1/2 bg-blue-600 flex items-center justify-center">S</div>
+                </div>
+              </div>
+              <div class="w-full text-center border-t border-slate-800 pt-1"><span class="text-[10px] text-slate-400 font-mono">bar magnet</span></div>
+            </div>
+
+            <button onclick="triggerObjectPhysics('Q')" class="w-full py-2 bg-amber-600 hover:bg-amber-500 text-white rounded-xl font-bold text-xs transition shadow">
+              🚀 Simulate Diagram 2
+            </button>
+          </div>
+
+        </div>
+
+        <p class="text-xs font-bold text-[var(--foreground)]">Based on diagrams 1 and 2, which of the following are correct?</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs font-mono bg-slate-900 p-3 rounded-xl border border-slate-800 text-slate-200">
+          <div>A: Object P is a magnet.</div>
+          <div>B: Object Q is a plastic bar.</div>
+          <div>C: Object P is made of a non-magnetic material.</div>
+          <div>D: Object Q is made of a magnetic material.</div>
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq2" value="1" onchange="checkQ2(1)" class="accent-emerald-500">
+            <span>(1) A and B</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq2" value="2" onchange="checkQ2(2)" class="accent-emerald-500">
+            <span>(2) A and D</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq2" value="3" onchange="checkQ2(3)" class="accent-emerald-500">
+            <span>(3) B and C</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq2" value="4" onchange="checkQ2(4)" class="accent-emerald-500">
+            <span>(4) C and D</span>
+          </label>
+        </div>
+
+        <div id="feedback-q2" class="hidden p-4 rounded-xl text-xs font-semibold leading-relaxed"></div>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- QUESTION 3 (PAGE 141) -->
+    <!-- ======================================================== -->
+    <div id="q-section-3" class="q-card space-y-6 hidden">
+      
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
+        
+        <div class="flex justify-between items-start border-b border-[var(--border)] pb-4">
+          <div>
+            <span class="text-xs font-bold text-blue-500 uppercase tracking-wider">Page 141 • Question 3</span>
+            <h2 class="text-base font-bold text-[var(--foreground)] mt-1">
+              3. Paul wanted to make a magnet using the electrical method. Which one of the following set-ups should he use to make the <span class="underline">strongest</span> magnet?
+            </h2>
+          </div>
+          <span id="status-q3" class="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-500/10 text-slate-500">Unanswered</span>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          
+          <!-- SETUP 1 -->
+          <div onclick="testCircuitSchematic(1)" class="bg-slate-950 border border-slate-800 hover:border-blue-500 p-4 rounded-2xl cursor-pointer transition flex flex-col justify-between space-y-3 group shadow">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-slate-300">(1)</span>
+              <span class="text-[10px] text-slate-400 font-mono">1 battery • 10 turns</span>
+            </div>
+
+            <div class="relative bg-slate-900 rounded-xl p-3 border border-slate-800 flex flex-col items-center justify-between min-h-[160px] overflow-hidden">
+              <div id="field-ring-1" class="absolute inset-0 border border-emerald-400/30 rounded-full opacity-0 pointer-events-none"></div>
+              <div class="relative flex items-center my-2">
+                <div class="w-3 h-8 bg-slate-400 rounded-l border-r border-slate-600"></div>
+                <div class="w-24 h-5 bg-slate-400 rounded-r-full relative flex items-center justify-around px-1 overflow-hidden">
+                  <div class="w-1.5 h-full bg-amber-600 border-x border-amber-800"></div>
+                  <div class="w-1.5 h-full bg-amber-600 border-x border-amber-800"></div>
+                </div>
+              </div>
+              <div class="w-full flex justify-center items-center gap-1 my-1">
+                <div class="w-6 h-8 bg-amber-500 rounded border border-slate-700 flex flex-col justify-between p-0.5 text-[8px] font-bold text-slate-900 text-center"><span>+</span><span>-</span></div>
+              </div>
+              <div id="clip-result-1" class="min-h-[24px] flex items-center justify-center gap-1 text-xs text-slate-400"><span>1 battery<br>10 turns of wire</span></div>
+            </div>
+            <button class="w-full py-2 bg-blue-600/30 hover:bg-blue-600 text-blue-200 hover:text-white rounded-xl text-xs font-bold transition">⚡ Test (1)</button>
+          </div>
+
+          <!-- SETUP 2 -->
+          <div onclick="testCircuitSchematic(2)" class="bg-slate-950 border border-slate-800 hover:border-blue-500 p-4 rounded-2xl cursor-pointer transition flex flex-col justify-between space-y-3 group shadow">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-slate-300">(2)</span>
+              <span class="text-[10px] text-slate-400 font-mono">2 batteries • 10 turns</span>
+            </div>
+
+            <div class="relative bg-slate-900 rounded-xl p-3 border border-slate-800 flex flex-col items-center justify-between min-h-[160px] overflow-hidden">
+              <div id="field-ring-2" class="absolute inset-0 border border-emerald-400/30 rounded-full opacity-0 pointer-events-none"></div>
+              <div class="relative flex items-center my-2">
+                <div class="w-3 h-8 bg-slate-400 rounded-l border-r border-slate-600"></div>
+                <div class="w-24 h-5 bg-slate-400 rounded-r-full relative flex items-center justify-around px-1 overflow-hidden">
+                  <div class="w-1.5 h-full bg-amber-600 border-x border-amber-800"></div>
+                  <div class="w-1.5 h-full bg-amber-600 border-x border-amber-800"></div>
+                </div>
+              </div>
+              <div class="w-full flex justify-center items-center gap-1 my-1">
+                <div class="w-5 h-8 bg-amber-500 rounded border border-slate-700 flex flex-col justify-between p-0.5 text-[8px] font-bold text-slate-900 text-center"><span>+</span><span>-</span></div>
+                <div class="w-5 h-8 bg-amber-500 rounded border border-slate-700 flex flex-col justify-between p-0.5 text-[8px] font-bold text-slate-900 text-center"><span>+</span><span>-</span></div>
+              </div>
+              <div id="clip-result-2" class="min-h-[24px] flex items-center justify-center gap-1 text-xs text-slate-400"><span>2 batteries<br>10 turns of wire</span></div>
+            </div>
+            <button class="w-full py-2 bg-blue-600/30 hover:bg-blue-600 text-blue-200 hover:text-white rounded-xl text-xs font-bold transition">⚡ Test (2)</button>
+          </div>
+
+          <!-- SETUP 3 -->
+          <div onclick="testCircuitSchematic(3)" class="bg-slate-950 border border-slate-800 hover:border-blue-500 p-4 rounded-2xl cursor-pointer transition flex flex-col justify-between space-y-3 group shadow">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-slate-300">(3)</span>
+              <span class="text-[10px] text-slate-400 font-mono">1 battery • 20 turns</span>
+            </div>
+
+            <div class="relative bg-slate-900 rounded-xl p-3 border border-slate-800 flex flex-col items-center justify-between min-h-[160px] overflow-hidden">
+              <div id="field-ring-3" class="absolute inset-0 border border-emerald-400/30 rounded-full opacity-0 pointer-events-none"></div>
+              <div class="relative flex items-center my-2">
+                <div class="w-3 h-8 bg-slate-400 rounded-l border-r border-slate-600"></div>
+                <div class="w-24 h-5 bg-slate-400 rounded-r-full relative flex items-center justify-around px-0.5 overflow-hidden">
+                  <div class="w-1 h-full bg-amber-600"></div><div class="w-1 h-full bg-amber-600"></div><div class="w-1 h-full bg-amber-600"></div><div class="w-1 h-full bg-amber-600"></div>
+                </div>
+              </div>
+              <div class="w-full flex justify-center items-center gap-1 my-1">
+                <div class="w-6 h-8 bg-amber-500 rounded border border-slate-700 flex flex-col justify-between p-0.5 text-[8px] font-bold text-slate-900 text-center"><span>+</span><span>-</span></div>
+              </div>
+              <div id="clip-result-3" class="min-h-[24px] flex items-center justify-center gap-1 text-xs text-slate-400"><span>1 battery<br>20 turns of wire</span></div>
+            </div>
+            <button class="w-full py-2 bg-blue-600/30 hover:bg-blue-600 text-blue-200 hover:text-white rounded-xl text-xs font-bold transition">⚡ Test (3)</button>
+          </div>
+
+          <!-- SETUP 4 -->
+          <div onclick="testCircuitSchematic(4)" class="bg-slate-950 border border-slate-800 hover:border-blue-500 p-4 rounded-2xl cursor-pointer transition flex flex-col justify-between space-y-3 group shadow">
+            <div class="flex justify-between items-center text-xs">
+              <span class="font-bold text-slate-300">(4)</span>
+              <span class="text-[10px] text-slate-400 font-mono">2 batteries • 20 turns</span>
+            </div>
+
+            <div class="relative bg-slate-900 rounded-xl p-3 border border-slate-800 flex flex-col items-center justify-between min-h-[160px] overflow-hidden">
+              <div id="field-ring-4" class="absolute inset-0 border-2 border-emerald-400/50 rounded-full opacity-0 pointer-events-none"></div>
+              <div class="relative flex items-center my-2">
+                <div class="w-3 h-8 bg-slate-400 rounded-l border-r border-slate-600"></div>
+                <div class="w-24 h-5 bg-slate-400 rounded-r-full relative flex items-center justify-around px-0.5 overflow-hidden">
+                  <div class="w-1 h-full bg-amber-600"></div><div class="w-1 h-full bg-amber-600"></div><div class="w-1 h-full bg-amber-600"></div><div class="w-1 h-full bg-amber-600"></div>
+                </div>
+              </div>
+              <div class="w-full flex justify-center items-center gap-1 my-1">
+                <div class="w-5 h-8 bg-amber-500 rounded border border-slate-700 flex flex-col justify-between p-0.5 text-[8px] font-bold text-slate-900 text-center"><span>+</span><span>-</span></div>
+                <div class="w-5 h-8 bg-amber-500 rounded border border-slate-700 flex flex-col justify-between p-0.5 text-[8px] font-bold text-slate-900 text-center"><span>+</span><span>-</span></div>
+              </div>
+              <div id="clip-result-4" class="min-h-[24px] flex items-center justify-center gap-1 text-xs text-slate-400"><span>2 batteries<br>20 turns of wire</span></div>
+            </div>
+            <button class="w-full py-2 bg-blue-600/30 hover:bg-blue-600 text-blue-200 hover:text-white rounded-xl text-xs font-bold transition">⚡ Test (4)</button>
+          </div>
+
+        </div>
+
+        <div class="space-y-2 text-xs">
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq3" value="1" onchange="checkQ3(1)" class="accent-emerald-500">
+            <span>(1) 1 battery, 10 turns of wire</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq3" value="2" onchange="checkQ3(2)" class="accent-emerald-500">
+            <span>(2) 2 batteries, 10 turns of wire</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq3" value="3" onchange="checkQ3(3)" class="accent-emerald-500">
+            <span>(3) 1 battery, 20 turns of wire</span>
+          </label>
+          <label class="flex items-center gap-3 p-3 rounded-xl bg-[var(--background)] border border-[var(--border)] cursor-pointer hover:bg-emerald-500/5 transition">
+            <input type="radio" name="mcq3" value="4" onchange="checkQ3(4)" class="accent-emerald-500">
+            <span>(4) 2 batteries, 20 turns of wire</span>
+          </label>
+        </div>
+
+        <div id="feedback-q3" class="hidden p-4 rounded-xl text-xs font-semibold leading-relaxed"></div>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- QUESTION 4 (PAGE 142) -->
+    <!-- ======================================================== -->
+    <div id="q-section-4" class="q-card space-y-6 hidden">
+      
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
+        
+        <div class="flex justify-between items-start border-b border-[var(--border)] pb-4">
+          <div>
+            <span class="text-xs font-bold text-purple-500 uppercase tracking-wider">Page 142 • Section B Structured Questions</span>
+            <p class="text-xs text-[var(--muted-foreground)] italic mt-1">For questions 4–6, write your answer in the space provided.</p>
+            <p class="text-xs text-[var(--foreground)] font-medium mt-2">
+              4. Raj stroked an iron nail in the same direction using a bar magnet. He then used the iron nail to attract some pins. He repeated the steps a few times and recorded his observation in the table below.
+            </p>
+          </div>
+          <span id="status-q4" class="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-500/10 text-slate-500">Unanswered</span>
+        </div>
+
+        <!-- Observation Table -->
+        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4">
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left text-slate-200 font-mono border border-slate-800">
+              <thead class="bg-slate-900 uppercase text-[10px] text-slate-400 border-b border-slate-800">
+                <tr>
+                  <th class="p-3 border-r border-slate-800">Number of strokes</th>
+                  <th class="p-3 border-r border-slate-800">Number of pins attracted</th>
+                  <th class="p-3">Simulate Test</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800">
+                <tr>
+                  <td class="p-3 font-bold border-r border-slate-800">10</td>
+                  <td class="p-3 border-r border-slate-800 text-slate-400">0</td>
+                  <td class="p-3"><button onclick="simStrokeRow(10)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-[10px] rounded font-bold">Test 10</button></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-bold border-r border-slate-800">20</td>
+                  <td class="p-3 border-r border-slate-800 text-blue-400 font-bold">1</td>
+                  <td class="p-3"><button onclick="simStrokeRow(20)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-[10px] rounded font-bold">Test 20</button></td>
+                </tr>
+                <tr class="bg-amber-500/10 border-amber-500/30">
+                  <td class="p-3 font-bold border-r border-slate-800 text-amber-400">30</td>
+                  <td class="p-3 border-r border-slate-800 text-amber-400 font-extrabold text-sm">X</td>
+                  <td class="p-3"><button onclick="simStrokeRow(30)" class="px-3 py-1 bg-amber-600 hover:bg-amber-500 text-white font-bold text-[10px] rounded shadow">Test 30 (Find X)</button></td>
+                </tr>
+                <tr>
+                  <td class="p-3 font-bold border-r border-slate-800">40</td>
+                  <td class="p-3 border-r border-slate-800 text-emerald-400 font-bold">4</td>
+                  <td class="p-3"><button onclick="simStrokeRow(40)" class="px-3 py-1 bg-slate-800 hover:bg-slate-700 text-[10px] rounded font-bold">Test 40</button></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div id="q4-sim-output" class="bg-slate-900 p-3 rounded-xl border border-slate-800 text-xs text-center text-slate-300 font-mono">
+            Click "Test 30 (Find X)" above to simulate attraction!
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          <div class="space-y-1">
+            <label class="font-bold text-[var(--foreground)] block">a. Based on his results, what is the likely value of X?</label>
+            <input type="text" id="ans-q4a" placeholder="Type answer here" class="w-full max-w-md bg-[var(--background)] border border-[var(--border)] rounded-xl p-2.5 text-xs text-[var(--foreground)]">
+          </div>
+
+          <div class="space-y-1">
+            <label class="font-bold text-[var(--foreground)] block">b. Name another method that Raj can use to make the iron nail into a magnet.</label>
+            <input type="text" id="ans-q4b" placeholder="Type answer here" class="w-full max-w-md bg-[var(--background)] border border-[var(--border)] rounded-xl p-2.5 text-xs text-[var(--foreground)]">
+          </div>
+
+          <button onclick="checkQ4()" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl shadow transition text-xs">
+            Verify Question 4 Answers
+          </button>
+        </div>
+
+        <div id="feedback-q4" class="hidden p-4 rounded-xl text-xs font-semibold leading-relaxed"></div>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- QUESTION 5 (PAGES 143-144) -->
+    <!-- ======================================================== -->
+    <div id="q-section-5" class="q-card space-y-6 hidden">
+      
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
+        
+        <div class="flex justify-between items-start border-b border-[var(--border)] pb-4">
+          <div>
+            <span class="text-xs font-bold text-purple-500 uppercase tracking-wider">Pages 143–144 • Question 5</span>
+            <p class="text-xs text-[var(--foreground)] font-medium mt-1">
+              5. Sam carried out an experiment with a steel pin and magnet A as shown below.
+            </p>
+          </div>
+          <span id="status-q5" class="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-500/10 text-slate-500">Unanswered</span>
+        </div>
+
+        <!-- EXACT VISUAL DIAGRAM MATCHING WORKBOOK PAGE 143 PICTURE -->
+        <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 space-y-4">
+          <div class="flex justify-between items-center text-xs text-slate-300">
+            <span class="font-bold text-emerald-400">📏 Interactive Workbook Diagram: Sam's Setup</span>
+            <span id="q5-readout-top" class="font-mono text-amber-400">Distance: -- cm</span>
+          </div>
+
+          <!-- Dynamic Diagram Canvas -->
+          <div id="q5-canvas-container" class="relative bg-slate-900 rounded-xl p-6 border border-slate-800 overflow-hidden flex flex-col justify-end h-52">
+            
+            <!-- Surface Line -->
+            <div class="absolute bottom-10 inset-x-4 h-0.5 bg-slate-600"></div>
+
+            <!-- Tilted Steel Pin (Matching Workbook Picture) -->
+            <div id="q5-steel-pin" class="absolute bottom-10 left-[60px] z-20 transition-all duration-300 origin-bottom-left">
+              <div class="relative flex flex-col items-center">
+                <!-- Pin Head & Shaft Tilted -->
+                <div class="w-12 h-3 bg-slate-300 rounded-r border border-slate-500 transform -rotate-25 origin-bottom-left shadow-md flex items-center justify-end px-1">
+                  <div class="w-2 h-5 bg-slate-400 rounded-t border border-slate-600"></div>
+                </div>
+                <span class="text-[10px] text-slate-300 font-mono mt-2">steel pin</span>
+              </div>
+            </div>
+
+            <!-- Dynamic Distance Double-Headed Arrow -->
+            <div id="q5-distance-arrow-box" class="absolute bottom-2 left-[108px] right-[128px] h-6 flex flex-col items-center justify-center transition-all duration-1000 ease-out">
+              <span id="q5-arrow-label" class="text-[10px] font-mono text-amber-400 font-bold mb-0.5">distance</span>
+              <div class="w-full flex items-center justify-between">
+                <span class="text-xs text-amber-400">◀</span>
+                <div class="w-full h-0.5 bg-amber-400"></div>
+                <span class="text-xs text-amber-400">▶</span>
+              </div>
+            </div>
+
+            <!-- Rectangular Bar Magnet (Matching Workbook Picture) -->
+            <div id="q5-magnet-shell" class="absolute bottom-10 right-4 z-10 transition-all duration-1000 ease-out">
+              <div class="flex flex-col items-center">
+                <span id="q5-magnet-title" class="text-[11px] font-mono text-slate-200 font-bold mb-1">magnet A</span>
+                <div class="flex w-28 h-10 rounded shadow-lg border-2 border-slate-400 overflow-hidden font-bold text-xs text-white">
+                  <div class="w-1/2 bg-slate-300 text-slate-900 border-r border-slate-500 flex items-center justify-center">N</div>
+                  <div class="w-1/2 bg-slate-100 text-slate-900 flex items-center justify-center">S</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Description Text matching Workbook -->
+          <div class="space-y-2 text-xs text-slate-300 leading-relaxed font-sans">
+            <p>He moved magnet A towards the steel pin until the magnet could attract the steel pin. He then measured the distance between the pin and magnet A.</p>
+            <p>He repeated the experiment with magnets B and C. The results are shown in the table below.</p>
+          </div>
+
+          <!-- Magnet Test Buttons -->
+          <div class="grid grid-cols-3 gap-3 text-xs">
+            <button onclick="testQ5Magnet('A', 5)" class="p-3 bg-slate-900 hover:bg-slate-800 text-blue-400 border border-slate-700 rounded-xl font-bold transition text-center shadow flex items-center justify-center gap-2">
+              🧪 Test Magnet A
+            </button>
+            <button onclick="testQ5Magnet('B', 8)" class="p-3 bg-slate-900 hover:bg-slate-800 text-blue-400 border border-slate-700 rounded-xl font-bold transition text-center shadow flex items-center justify-center gap-2">
+              🧪 Test Magnet B
+            </button>
+            <button onclick="testQ5Magnet('C', 2)" class="p-3 bg-slate-900 hover:bg-slate-800 text-blue-400 border border-slate-700 rounded-xl font-bold transition text-center shadow flex items-center justify-center gap-2">
+              🧪 Test Magnet C
+            </button>
+          </div>
+        </div>
+
+        <!-- Table from Page 143 -->
+        <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 space-y-2">
+          <div class="flex justify-between items-center">
+            <span class="text-xs font-bold text-slate-300">Results Table (Page 143):</span>
+            <span class="text-[10px] text-amber-400 font-mono">⚡ Click test buttons above to log measured distance</span>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-xs text-left font-mono border border-slate-800">
+              <thead class="bg-slate-900 uppercase text-[10px] text-slate-400 border-b border-slate-800">
+                <tr>
+                  <th class="p-2.5 border-r border-slate-800">Magnet</th>
+                  <th class="p-2.5">Distance (cm)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800">
+                <tr>
+                  <td class="p-2.5 font-bold border-r border-slate-800 text-slate-200">A</td>
+                  <td id="q5-table-dist-A" class="p-2.5 text-slate-400 font-mono font-bold">-</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-bold border-r border-slate-800 text-slate-200">B</td>
+                  <td id="q5-table-dist-B" class="p-2.5 text-slate-400 font-mono font-bold">-</td>
+                </tr>
+                <tr>
+                  <td class="p-2.5 font-bold border-r border-slate-800 text-slate-200">C</td>
+                  <td id="q5-table-dist-C" class="p-2.5 text-slate-400 font-mono font-bold">-</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Questions 5a and 5b -->
+        <div class="space-y-4 text-xs">
+          
+          <!-- 5a -->
+          <div class="p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl space-y-2">
+            <label class="font-bold text-[var(--foreground)] block">a. Based on the results, what could Sam conclude about magnet C?</label>
+            <select id="ans-q5a" class="w-full max-w-md bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5 text-xs text-[var(--foreground)] font-semibold">
+              <option value="">-- Select Conclusion --</option>
+              <option value="weakest">Magnet C is the weakest magnet</option>
+              <option value="strongest">Magnet C is the strongest magnet</option>
+              <option value="nonmagnetic">Magnet C is made of plastic</option>
+            </select>
+          </div>
+
+          <!-- 5b Page 144 Context -->
+          <div class="p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl space-y-3">
+            <div class="font-bold text-[var(--foreground)]">
+              b. Sam wanted to find out the strength of the poles of magnet A. He set up his experiment as shown below:
+            </div>
+
+            <!-- Page 144 Setups Diagram Schematics -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 p-3 bg-slate-950 rounded-xl border border-slate-800 font-mono text-[11px] text-slate-300">
+              <div class="bg-slate-900 p-2.5 rounded border border-slate-800">
+                <span class="text-blue-400 font-bold block mb-1">Experiment 1:</span>
+                <div>steel nail &lt;--- distance ---&gt; [ N | S ] magnet A</div>
+              </div>
+              <div class="bg-slate-900 p-2.5 rounded border border-slate-800">
+                <span class="text-blue-400 font-bold block mb-1">Experiment 2:</span>
+                <div>iron nail  &lt;--- distance ---&gt; [ S | N ] magnet A</div>
+              </div>
+            </div>
+
+            <label class="font-bold text-[var(--foreground)] block pt-1">Give a reason why his experiment is not fair:</label>
+            <div class="space-y-2">
+              <label class="flex items-center gap-2 p-2 bg-[var(--card)] border border-[var(--border)] rounded-lg cursor-pointer">
+                <input type="checkbox" id="chk-q5b-1" class="accent-purple-500">
+                <span>Reason 1: The type of nail material is different (steel nail vs iron nail)</span>
+              </label>
+              <label class="flex items-center gap-2 p-2 bg-[var(--card)] border border-[var(--border)] rounded-lg cursor-pointer">
+                <input type="checkbox" id="chk-q5b-2" class="accent-purple-500">
+                <span>Reason 2: The poles of the magnet facing the nails are not the same (N pole vs S pole)</span>
+              </label>
+            </div>
+          </div>
+
+          <button onclick="checkQ5()" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl shadow transition text-xs">
+            Verify Question 5 Answers
+          </button>
+        </div>
+
+        <div id="feedback-q5" class="hidden p-4 rounded-xl text-xs font-semibold leading-relaxed"></div>
+
+      </div>
+
+    </div>
+
+    <!-- ======================================================== -->
+    <!-- QUESTION 6 (PAGE 145) -->
+    <!-- ======================================================== -->
+    <div id="q-section-6" class="q-card space-y-6 hidden">
+      
+      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
+        
+        <div class="flex justify-between items-start border-b border-[var(--border)] pb-4">
+          <div>
+            <span class="text-xs font-bold text-purple-500 uppercase tracking-wider">Page 145 • Question 6</span>
+            <p class="text-xs text-[var(--foreground)] font-medium mt-1">
+              6. Chen conducted an experiment to find out how many iron nails are attracted to different parts of a bar magnet. He labelled four parts of a bar magnet, A, B, C and D.
+            </p>
+            <p class="text-xs text-[var(--muted-foreground)] italic mt-1">The graph below shows his findings.</p>
+          </div>
+          <span id="status-q6" class="text-xs px-2.5 py-1 rounded-full font-bold bg-slate-500/10 text-slate-500">Unanswered</span>
+        </div>
+
+        <!-- GRAPH & REGION INSPECTOR -->
+        <div class="bg-slate-950 p-5 rounded-2xl border border-slate-800 space-y-4">
+          <div class="flex justify-between items-center text-xs text-slate-300">
+            <span class="font-bold text-blue-400">📊 Bar Graph: Number of iron nails attracted vs Parts of the bar magnet</span>
+            <span class="text-[10px] text-slate-400">Click bars to test region magnetism</span>
+          </div>
+
+          <div class="h-44 bg-slate-900 rounded-xl p-4 border border-slate-800 flex items-end justify-around gap-4">
+            <div onclick="testRegionGraph('A', 5)" class="flex flex-col items-center flex-1 h-full justify-end cursor-pointer group">
+              <span class="text-[10px] font-bold text-slate-300 mb-1">5</span>
+              <div class="w-full bg-blue-600 group-hover:bg-blue-500 rounded-t-md transition-all duration-300 h-[25%]"></div>
+              <span class="text-xs font-bold mt-2 text-slate-300">A</span>
+            </div>
+            <div onclick="testRegionGraph('B', 19)" class="flex flex-col items-center flex-1 h-full justify-end cursor-pointer group">
+              <span class="text-[10px] font-bold text-slate-300 mb-1">19</span>
+              <div class="w-full bg-blue-600 group-hover:bg-blue-500 rounded-t-md transition-all duration-300 h-[95%]"></div>
+              <span class="text-xs font-bold mt-2 text-slate-300">B</span>
+            </div>
+            <div onclick="testRegionGraph('C', 19)" class="flex flex-col items-center flex-1 h-full justify-end cursor-pointer group">
+              <span class="text-[10px] font-bold text-slate-300 mb-1">19</span>
+              <div class="w-full bg-blue-600 group-hover:bg-blue-500 rounded-t-md transition-all duration-300 h-[95%]"></div>
+              <span class="text-xs font-bold mt-2 text-slate-300">C</span>
+            </div>
+            <div onclick="testRegionGraph('D', 5)" class="flex flex-col items-center flex-1 h-full justify-end cursor-pointer group">
+              <span class="text-[10px] font-bold text-slate-300 mb-1">5</span>
+              <div class="w-full bg-blue-600 group-hover:bg-blue-500 rounded-t-md transition-all duration-300 h-[25%]"></div>
+              <span class="text-xs font-bold mt-2 text-slate-300">D</span>
+            </div>
+          </div>
+
+          <div id="q6-graph-output" class="text-xs font-mono text-center text-slate-300 bg-slate-900 p-2.5 rounded-lg border border-slate-800">
+            Click any bar above to test how many iron nails it attracts!
+          </div>
+        </div>
+
+        <div class="space-y-4 text-xs">
+          
+          <!-- 6a -->
+          <div class="p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl space-y-2">
+            <label class="font-bold text-[var(--foreground)] block">a. Which parts of the bar magnet, A, B, C or D, are weaker?</label>
+            <select id="ans-q6a" class="w-full max-w-md bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5 text-xs text-[var(--foreground)] font-semibold">
+              <option value="">-- Select Weaker Parts --</option>
+              <option value="ad">A and D</option>
+              <option value="bc">B and C</option>
+            </select>
+          </div>
+
+          <!-- 6b -->
+          <div class="p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl space-y-2">
+            <label class="font-bold text-[var(--foreground)] block">b. Explain your answer in a.</label>
+            <input type="text" id="ans-q6b" placeholder="Type answer here (e.g. attracted fewer iron nails)" class="w-full max-w-md bg-[var(--card)] border border-[var(--border)] rounded-xl p-2.5 text-xs text-[var(--foreground)]">
+          </div>
+
+          <!-- 6c -->
+          <div class="p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl space-y-3">
+            <label class="font-bold text-[var(--foreground)] block">c. Label the parts of the bar magnet with the correct letters, A, B, C and D. One of them has been done for you.</label>
+            
+            <div class="bg-slate-950 p-4 rounded-xl border border-slate-800 max-w-xl mx-auto space-y-3">
+              <div class="flex h-14 w-full rounded-xl overflow-hidden border-2 border-slate-700 font-mono font-bold text-white text-xs">
+                <div class="w-1/6 bg-blue-600 flex items-center justify-center border-r border-slate-800">S</div>
+                <div class="w-1/4 bg-slate-800 flex items-center justify-center border-r border-slate-700 p-1">
+                  <select id="q6-assembly-1" class="w-full bg-slate-900 border border-slate-600 rounded text-center text-xs font-bold text-amber-300">
+                    <option value="">?</option><option value="B">B</option><option value="A">A</option><option value="D">D</option><option value="C">C</option>
+                  </select>
+                </div>
+                <div class="w-1/4 bg-slate-800 flex items-center justify-center border-r border-slate-700 p-1">
+                  <select id="q6-assembly-2" class="w-full bg-slate-900 border border-slate-600 rounded text-center text-xs font-bold text-amber-300">
+                    <option value="">?</option><option value="B">B</option><option value="A">A</option><option value="D">D</option><option value="C">C</option>
+                  </select>
+                </div>
+                <div class="w-1/4 bg-slate-800 flex items-center justify-center border-r border-slate-700 p-1">
+                  <select id="q6-assembly-3" class="w-full bg-slate-900 border border-slate-600 rounded text-center text-xs font-bold text-amber-300">
+                    <option value="">?</option><option value="B">B</option><option value="A">A</option><option value="D">D</option><option value="C">C</option>
+                  </select>
+                </div>
+                <div class="w-1/4 bg-slate-800 flex items-center justify-center border-r border-slate-700 p-1">
+                  <select id="q6-assembly-4" class="w-full bg-slate-900 border border-slate-600 rounded text-center text-xs font-bold text-amber-300">
+                    <option value="">?</option><option value="B">B</option><option value="A">A</option><option value="D">D</option><option value="C">C</option>
+                  </select>
+                </div>
+                <div class="w-1/6 bg-red-600 flex items-center justify-center border-l border-slate-800">N</div>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="checkQ6()" class="px-5 py-2.5 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl shadow transition text-xs">
+            Verify Question 6 Answers
+          </button>
+        </div>
+
+        <div id="feedback-q6" class="hidden p-4 rounded-xl text-xs font-semibold leading-relaxed"></div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    const scores = { q1: 0, q2: 0, q3: 0, q4: 0, q5: 0, q6: 0 };
+
+    function showQuestion(qNum) {
+      document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+      document.querySelectorAll('.q-card').forEach(c => c.classList.add('hidden'));
+
+      document.getElementById(`tab-q${qNum}`).classList.add('active');
+      document.getElementById(`q-section-${qNum}`).classList.remove('hidden');
+    }
+
+    // ================= Q1 LOGIC =================
+    function runQ1Test(testNum) {
+      const stage = document.getElementById('q1-graphic');
+      const text = document.getElementById('q1-text');
+
+      if (testNum === 1) {
+        stage.innerHTML = `
+          <div class="flex items-center gap-4">
+            <svg class="w-24 h-12" viewBox="0 0 100 40"><rect x="0" y="5" width="45" height="30" fill="#dc2626" rx="2"/><rect x="45" y="5" width="45" height="30" fill="#2563eb" rx="2"/><text x="22" y="25" fill="white" font-weight="bold" text-anchor="middle">N</text><text x="67" y="25" fill="white" font-weight="bold" text-anchor="middle">S</text></svg>
+            <div class="flex flex-col gap-1 text-[11px] font-mono">
+              <span class="bg-emerald-600 text-white px-2 py-0.5 rounded">Iron Nail: ATTRACTED!</span>
+              <span class="bg-rose-600 text-white px-2 py-0.5 rounded">Gold Ring: NOT Attracted</span>
+            </div>
+          </div>
+        `;
+        text.innerText = 'Statement (1): Magnets only attract magnetic metals (iron, steel, nickel, cobalt), NOT all metals!';
+      } else if (testNum === 2) {
+        stage.innerHTML = `
+          <div class="flex items-center gap-3">
+            <svg class="w-20 h-10" viewBox="0 0 80 30"><rect x="0" y="0" width="40" height="30" fill="#2563eb"/><rect x="40" y="0" width="40" height="30" fill="#dc2626"/><text x="20" y="20" fill="white" font-weight="bold" text-anchor="middle">S</text><text x="60" y="20" fill="white" font-weight="bold" text-anchor="middle">N</text></svg>
+            <span class="text-red-400 font-extrabold text-sm animate-ping">⬅️ REPEL ➡️</span>
+            <svg class="w-20 h-10" viewBox="0 0 80 30"><rect x="0" y="0" width="40" height="30" fill="#dc2626"/><rect x="40" y="0" width="40" height="30" fill="#2563eb"/><text x="20" y="20" fill="white" font-weight="bold" text-anchor="middle">N</text><text x="60" y="20" fill="white" font-weight="bold" text-anchor="middle">S</text></svg>
+          </div>
+        `;
+        text.innerText = 'Statement (2): When like poles (N vs N) face each other, repulsion forces push them apart!';
+      } else if (testNum === 3) {
+        stage.innerHTML = `
+          <div class="flex flex-col items-center">
+            <span class="text-xs text-blue-400 font-mono">Suspended Magnet Rest Alignment:</span>
+            <span class="text-sm font-bold text-amber-300">North - South Axis</span>
+          </div>
+        `;
+        text.innerText = 'Statement (3): Freely suspended magnets align North-South, NOT North-East!';
+      } else if (testNum === 4) {
+        stage.innerHTML = `
+          <div class="flex items-center gap-3">
+            <span class="text-2xl">🧲</span>
+            <span class="text-xs bg-slate-700 text-slate-300 px-2 py-1 rounded">Plastic/Wood: No attraction</span>
+          </div>
+        `;
+        text.innerText = 'Statement (4): Magnets cannot attract non-magnetic materials!';
+      }
+    }
+
+    function checkQ1(val) {
+      const fb = document.getElementById('feedback-q1');
+      const status = document.getElementById('status-q1');
+      fb.classList.remove('hidden');
+
+      if (val === 2) {
+        scores.q1 = 1;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-emerald-500/20 text-emerald-500';
+        status.innerText = 'Correct (1/1)';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 block';
+        fb.innerText = '🌟 Correct! Statement (2) is correct because like poles repel each other!';
+      } else {
+        scores.q1 = 0;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-rose-500/20 text-rose-500';
+        status.innerText = 'Incorrect';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-600 dark:text-rose-300 block';
+        fb.innerText = '❌ Incorrect. Test the statements using the buttons above!';
+      }
+      updateGlobalScore();
+    }
+
+    // ================= Q2 JS LOGIC =================
+    function triggerObjectPhysics(type) {
+      if (type === 'P') {
+        const objP = document.getElementById('graphic-obj-p');
+        const arrow = document.getElementById('vector-p-arrow');
+        objP.style.transform = 'translateX(-35px)';
+        arrow.style.opacity = '1';
+        setTimeout(() => { objP.style.transform = 'translateX(0)'; arrow.style.opacity = '0.5'; }, 1500);
+      } else {
+        const objQ = document.getElementById('graphic-obj-q');
+        const arrow = document.getElementById('vector-q-arrow');
+        objQ.style.transform = 'translateX(45px)';
+        arrow.style.opacity = '1';
+        setTimeout(() => { objQ.style.transform = 'translateX(0)'; arrow.style.opacity = '0.5'; }, 1500);
+      }
+    }
+
+    function checkQ2(val) {
+      const fb = document.getElementById('feedback-q2');
+      const status = document.getElementById('status-q2');
+      fb.classList.remove('hidden');
+
+      if (val === 2) {
+        scores.q2 = 1;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-emerald-500/20 text-emerald-500';
+        status.innerText = 'Correct (1/1)';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 block';
+        fb.innerText = '🌟 Correct! Repulsion proves Object P is a magnet (A), and attraction proves Object Q is made of magnetic material (D)!';
+      } else {
+        scores.q2 = 0;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-rose-500/20 text-rose-500';
+        status.innerText = 'Incorrect';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-600 dark:text-rose-300 block';
+        fb.innerText = '❌ Incorrect. Remember: Repulsion is the only sure test of a magnet!';
+      }
+      updateGlobalScore();
+    }
+
+    // ================= Q3 JS LOGIC =================
+    function testCircuitSchematic(id) {
+      for (let i = 1; i <= 4; i++) {
+        document.getElementById(`field-ring-${i}`).style.opacity = '0';
+        document.getElementById(`clip-result-${i}`).innerHTML = `<span class="text-slate-400">${i <= 2 ? 10 : 20} turns of wire</span>`;
+      }
+
+      const ring = document.getElementById(`field-ring-${id}`);
+      const res = document.getElementById(`clip-result-${id}`);
+      ring.style.opacity = '1';
+
+      let clipCount = 2;
+      if (id === 2) clipCount = 4;
+      if (id === 3) clipCount = 4;
+      if (id === 4) clipCount = 8;
+
+      let clipsHtml = '';
+      for (let c = 0; c < clipCount; c++) clipsHtml += '<span class="text-amber-400 transform rotate-45">📎</span>';
+
+      res.innerHTML = `<span class="text-emerald-400 font-bold flex items-center gap-1">${clipsHtml} (${clipCount} Clips Attracted)</span>`;
+    }
+
+    function checkQ3(val) {
+      const fb = document.getElementById('feedback-q3');
+      const status = document.getElementById('status-q3');
+      fb.classList.remove('hidden');
+
+      if (val === 4) {
+        scores.q3 = 1;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-emerald-500/20 text-emerald-500';
+        status.innerText = 'Correct (1/1)';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 block';
+        fb.innerText = '🌟 Correct! Set-up (4) has the most batteries (2) and most turns of wire (20), making it the strongest magnet!';
+      } else {
+        scores.q3 = 0;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-rose-500/20 text-rose-500';
+        status.innerText = 'Incorrect';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-600 dark:text-rose-300 block';
+        fb.innerText = '❌ Incorrect. Maximizing both batteries and turns creates the strongest magnet.';
+      }
+      updateGlobalScore();
+    }
+
+    // ================= Q4 JS LOGIC =================
+    function simStrokeRow(strokes) {
+      const output = document.getElementById('q4-sim-output');
+      if (strokes === 30) {
+        output.innerHTML = `<span class="text-amber-400 font-bold">Observation: 30 strokes attracted pins (more than 1 pin, fewer than 4 pins).</span>`;
+        const cellX = document.getElementById('q4-table-cell-x');
+        if (cellX) {
+          cellX.innerHTML = `<span class="text-emerald-400 font-extrabold px-2 py-0.5 bg-emerald-500/20 rounded border border-emerald-500/40 animate-pulse">2 or 3</span>`;
+        }
+      } else if (strokes === 10) output.innerText = 'Observation: 10 strokes attracted 0 pins.';
+      else if (strokes === 20) output.innerText = 'Observation: 20 strokes attracted 1 pin.';
+      else if (strokes === 40) output.innerText = 'Observation: 40 strokes attracted 4 pins.';
+    }
+
+    function checkQ4() {
+      const q4a = document.getElementById('ans-q4a').value.trim();
+      const q4b = document.getElementById('ans-q4b').value.trim().toLowerCase();
+      const fb = document.getElementById('feedback-q4');
+      const status = document.getElementById('status-q4');
+      fb.classList.remove('hidden');
+
+      const isA = (q4a === '2' || q4a === '3' || q4a.includes('2 or 3'));
+      const isB = (q4b.includes('electric') || q4b.includes('electromagnet'));
+
+      if (isA && isB) {
+        scores.q4 = 1;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-emerald-500/20 text-emerald-500';
+        status.innerText = 'Correct (1/1)';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 block';
+        fb.innerText = '🌟 Outstanding! X is 2 or 3, and the alternative method is the Electrical method!';
+      } else {
+        scores.q4 = 0;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-rose-500/20 text-rose-500';
+        status.innerText = 'Incomplete';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-600 dark:text-rose-300 block';
+        fb.innerText = '❌ Check your answers! Expected: X = 2 or 3, Method = Electrical method.';
+      }
+      updateGlobalScore();
+    }
+
+    // ================= Q5 JS LOGIC (EXACT WORKBOOK EXPERIMENT ANIMATION) =================
+    let q5Animating = false;
+
+    function testQ5Magnet(mag, cm) {
+      if (q5Animating) return;
+      q5Animating = true;
+
+      document.getElementById('q5-magnet-title').innerText = `magnet ${mag}`;
+      document.getElementById('q5-readout-top').innerText = `Moving magnet ${mag} towards steel pin...`;
+
+      const canvas = document.getElementById('q5-canvas-container');
+      const magnetShell = document.getElementById('q5-magnet-shell');
+      const steelPin = document.getElementById('q5-steel-pin');
+      const arrowBox = document.getElementById('q5-distance-arrow-box');
+      const arrowLabel = document.getElementById('q5-arrow-label');
+
+      // 1. Reset pin position to resting state and magnet to far right
+      magnetShell.style.transition = 'none';
+      arrowBox.style.transition = 'none';
+      steelPin.style.transition = 'none';
+
+      const containerWidth = canvas.clientWidth || 650;
+      const pinHeadX = 108; // Pin head tip position from left
+      const magnetWidth = 112; // Bar magnet width
+
+      // Initial starting position (far right)
+      magnetShell.style.right = '16px';
+      arrowBox.style.left = `${pinHeadX}px`;
+      arrowBox.style.right = '128px'; // 16px + 112px
+      arrowLabel.innerText = 'moving magnet...';
+      steelPin.style.transform = 'translate(0, 0) rotate(0deg)';
+
+      // Trigger reflow to apply reset position immediately
+      void magnetShell.offsetWidth;
+
+      // 2. Animate sliding magnet left to exact distance gap (1cm = 24px)
+      // 8cm = 192px gap | 5cm = 120px gap | 2cm = 48px gap
+      const gapPx = cm * 24; 
+      const targetRight = containerWidth - pinHeadX - gapPx - magnetWidth;
+
+      magnetShell.style.transition = 'all 1200ms cubic-bezier(0.25, 0.1, 0.25, 1)';
+      arrowBox.style.transition = 'all 1200ms cubic-bezier(0.25, 0.1, 0.25, 1)';
+
+      magnetShell.style.right = `${Math.max(16, targetRight)}px`;
+      arrowBox.style.right = `${Math.max(16, targetRight) + magnetWidth}px`;
+      arrowLabel.innerText = `distance (${cm} cm)`;
+
+      // 3. When magnet reaches exact distance (8cm / 5cm / 2cm), THE PIN ATTRACTS THE MAGNET!
+      setTimeout(() => {
+        document.getElementById('q5-readout-top').innerText = `⚡ Pin Attracted at ${cm} cm!`;
+
+        // Steel pin leaps across gapPx and sticks directly to Magnet N-pole face!
+        steelPin.style.transition = 'transform 320ms cubic-bezier(0.34, 1.56, 0.64, 1)';
+        steelPin.style.transform = `translate(${gapPx - 5}px, -4px) rotate(65deg)`;
+
+        // Update Results Table
+        const tableCell = document.getElementById(`q5-table-dist-${mag}`);
+        if (tableCell) {
+          tableCell.innerHTML = `<span class="text-emerald-400 font-extrabold bg-emerald-500/20 px-2.5 py-1 rounded border border-emerald-500/40 animate-pulse inline-block shadow">${cm} cm</span>`;
+        }
+
+        q5Animating = false;
+      }, 1250);
+    }
+
+    function checkQ5() {
+      const q5a = document.getElementById('ans-q5a').value;
+      const c1 = document.getElementById('chk-q5b-1').checked;
+      const c2 = document.getElementById('chk-q5b-2').checked;
+      const fb = document.getElementById('feedback-q5');
+      const status = document.getElementById('status-q5');
+      fb.classList.remove('hidden');
+
+      if (q5a === 'weakest' && c1 && c2) {
+        scores.q5 = 1;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-emerald-500/20 text-emerald-500';
+        status.innerText = 'Correct (1/1)';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 block';
+        fb.innerText = '🌟 Perfect! Magnet C is the weakest magnet (attracted pin at shortest distance 2cm), and Sam\'s pole test is not fair because there are 2 changed variables (different nail materials AND different facing poles)!';
+      } else {
+        scores.q5 = 0;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-rose-500/20 text-rose-500';
+        status.innerText = 'Incomplete';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-600 dark:text-rose-300 block';
+        fb.innerText = '❌ Check your selection for 5a and make sure BOTH reasons are checked for 5b!';
+      }
+      updateGlobalScore();
+    }
+
+    // ================= Q6 JS LOGIC =================
+    function testRegionGraph(region, count) {
+      document.getElementById('q6-graph-output').innerHTML = `<span class="text-blue-400 font-bold">Part ${region} attracted ${count} iron nails.</span>`;
+    }
+
+    function checkQ6() {
+      const q6a = document.getElementById('ans-q6a').value;
+      const q6b = document.getElementById('ans-q6b').value.trim().toLowerCase();
+      const p1 = document.getElementById('q6-assembly-1').value;
+      const p2 = document.getElementById('q6-assembly-2').value;
+      const p3 = document.getElementById('q6-assembly-3').value;
+      const p4 = document.getElementById('q6-assembly-4').value;
+      const fb = document.getElementById('feedback-q6');
+      const status = document.getElementById('status-q6');
+      fb.classList.remove('hidden');
+
+      const isAssemblyCorrect = (p1 === 'B' && p2 === 'A' && p3 === 'D' && p4 === 'C');
+      const isExplanation = q6b.includes('fewer') || q6b.includes('less') || q6b.includes('weak') || q6b.includes('small');
+
+      if (q6a === 'ad' && isAssemblyCorrect && isExplanation) {
+        scores.q6 = 1;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-emerald-500/20 text-emerald-500';
+        status.innerText = 'Correct (1/1)';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 block';
+        fb.innerText = '🌟 Excellent! A and D are weaker parts (5 nails), and magnet assembly [B, A, D, C] places strong poles B & C at the ends!';
+      } else {
+        scores.q6 = 0;
+        status.className = 'text-xs px-2.5 py-1 rounded-full font-bold bg-rose-500/20 text-rose-500';
+        status.innerText = 'Incomplete';
+        fb.className = 'p-4 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-600 dark:text-rose-300 block';
+        fb.innerText = '❌ Check your assembly and explanation!';
+      }
+      updateGlobalScore();
+    }
+
+    function updateGlobalScore() {
+      const total = Object.values(scores).reduce((a, b) => a + b, 0);
+      document.getElementById('global-score').innerText = `${total} / 6`;
+      const pct = Math.round((total / 6) * 100);
+      document.getElementById('progress-percent').innerText = `${pct}%`;
+    }
+  </script>
+</body>
+</html>
