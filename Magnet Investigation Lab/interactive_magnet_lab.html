@@ -26,19 +26,25 @@
       border: 1px solid #d4a373;
     }
 
-    @keyframes magnetStrokeAnim {
-      0% { transform: translate(0, -60px) rotate(0deg); }
-      20% { transform: translate(0, -10px) rotate(5deg); }
-      50% { transform: translate(220px, -10px) rotate(5deg); }
-      75% { transform: translate(220px, -70px) rotate(-15deg); }
-      90% { transform: translate(0, -70px) rotate(0deg); }
-      100% { transform: translate(0, -60px) rotate(0deg); }
+    @keyframes magnetFastStrokeSingle {
+      0% { transform: translate(0, -60px) rotate(0deg); opacity: 0.9; }
+      20% { transform: translate(0, -10px) rotate(5deg); opacity: 1; }
+      60% { transform: translate(210px, -10px) rotate(5deg); opacity: 1; }
+      80% { transform: translate(210px, -65px) rotate(-15deg); opacity: 0.6; }
+      100% { transform: translate(0, -60px) rotate(0deg); opacity: 0.9; }
     }
 
-    @keyframes magnetBackForthAnim {
-      0% { transform: translate(0, -10px); }
-      50% { transform: translate(220px, -10px); }
-      100% { transform: translate(0, -10px); }
+    @keyframes magnetFastStrokeBackForth {
+      0% { transform: translate(0, -10px) rotate(0deg); opacity: 1; }
+      50% { transform: translate(210px, -10px) rotate(0deg); opacity: 1; }
+      100% { transform: translate(0, -10px) rotate(0deg); opacity: 1; }
+    }
+
+    .animate-stroke-fast-single {
+      animation: magnetFastStrokeSingle 0.09s linear;
+    }
+    .animate-stroke-fast-backforth {
+      animation: magnetFastStrokeBackForth 0.09s linear;
     }
 
     .animate-stroke-single {
@@ -664,25 +670,55 @@
       document.getElementById('stroke-slider-badge').innerText = `Strokes: ${val}`;
     }
 
+    let isStrokingActive = false;
+
     function executeStrokeSimulation() {
       if (!strokeState.material) {
         alert('Please select a nail material in Step 1 first!');
         return;
       }
+      if (isStrokingActive) return;
 
+      isStrokingActive = true;
       const magnet = document.getElementById('stroke-workbench-magnet');
       const badge = document.getElementById('stroke-progress-badge');
+      const btn = document.getElementById('btn-do-stroke');
       
+      const totalStrokes = strokeState.strokes;
+      badge.className = 'text-xs font-mono font-bold bg-amber-200 text-[#bc6c25] border border-amber-400 px-3 py-1 rounded-full animate-pulse shadow-sm';
+      badge.innerText = `⚡ Fast-Forwarding... 0 / ${totalStrokes}`;
+      btn.disabled = true;
       magnet.style.opacity = '1';
-      magnet.className = `absolute bottom-16 left-16 z-20 flex flex-col items-center ${strokeState.direction === 'same' ? 'animate-stroke-single' : 'animate-stroke-backforth'}`;
-      
-      badge.innerText = `Stroking... ${strokeState.strokes} / 50`;
 
-      setTimeout(() => {
-        magnet.style.opacity = '0';
-        magnet.className = 'absolute bottom-16 left-16 z-20 flex flex-col items-center opacity-0 pointer-events-none';
-        badge.innerText = `Strokes: ${strokeState.strokes} / 50 Complete!`;
-      }, 800);
+      let count = 0;
+      // Calculate delay per stroke so 50 strokes finish in ~1.8 seconds
+      const delayMs = Math.max(30, Math.min(200, Math.floor(1800 / totalStrokes)));
+
+      function stepStroke() {
+        count++;
+        badge.innerText = `⚡ Fast Stroking... ${count} / ${totalStrokes}`;
+        
+        // Re-trigger fast stroke CSS animation
+        magnet.className = 'absolute bottom-16 left-16 z-20 flex flex-col items-center';
+        void magnet.offsetWidth;
+        magnet.className = `absolute bottom-16 left-16 z-20 flex flex-col items-center ${strokeState.direction === 'same' ? 'animate-stroke-fast-single' : 'animate-stroke-fast-backforth'}`;
+
+        if (count < totalStrokes) {
+          setTimeout(stepStroke, delayMs);
+        } else {
+          // Finished all strokes!
+          setTimeout(() => {
+            magnet.style.opacity = '0';
+            magnet.className = 'absolute bottom-16 left-16 z-20 flex flex-col items-center opacity-0 pointer-events-none';
+            badge.className = 'text-xs font-mono font-bold bg-[#e9edc9] text-[#2563eb] border border-[#a3b18a] px-3 py-1 rounded-full shadow-sm';
+            badge.innerText = `✨ ${totalStrokes} / ${totalStrokes} Strokes Complete! Ready to Test!`;
+            btn.disabled = false;
+            isStrokingActive = false;
+          }, delayMs + 100);
+        }
+      }
+
+      stepStroke();
     }
 
     function runLowerNailTest() {
