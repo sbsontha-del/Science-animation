@@ -3,178 +3,409 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Making and Using Magnets - Interactive Science Lab</title>
+  <title>Primary Science - Interactive Magnet & Electromagnet Lab</title>
   <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
   <style>
-    @keyframes pulseField {
-      0%, 100% { opacity: 0.3; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.05); }
+    @import url('https://fonts.googleapis.com/css2?family=Comic+Neue:wght@400;700&family=Inter:wght@400;600;700;800&family=JetBrains+Mono:wght@600;700&display=swap');
+    
+    body {
+      font-family: 'Inter', sans-serif;
     }
-    @keyframes strokeAnim {
-      0% { transform: translate(0, 0) rotate(0deg); }
-      30% { transform: translate(160px, 0) rotate(-5deg); }
-      60% { transform: translate(160px, -60px) rotate(-20deg); }
-      90% { transform: translate(0, -60px) rotate(0deg); }
-      100% { transform: translate(0, 0) rotate(0deg); }
+    
+    .font-handwritten {
+      font-family: 'Comic Neue', cursive, sans-serif;
     }
-    .animate-stroke {
-      animation: strokeAnim 0.8s ease-in-out;
+
+    /* Notebook & Warm Theme (Matching Stroke Lab Screenshot) */
+    .stroke-theme-card {
+      background-color: #fefae0;
+      border: 2px solid #dde5b6;
     }
-    .magnetic-field {
-      animation: pulseField 2s infinite ease-in-out;
+    .stroke-panel {
+      background-color: #faedcd;
+      border: 1px solid #d4a373;
     }
+
+    @keyframes magnetStrokeAnim {
+      0% { transform: translate(0, -60px) rotate(0deg); }
+      20% { transform: translate(0, -10px) rotate(5deg); }
+      50% { transform: translate(220px, -10px) rotate(5deg); }
+      75% { transform: translate(220px, -70px) rotate(-15deg); }
+      90% { transform: translate(0, -70px) rotate(0deg); }
+      100% { transform: translate(0, -60px) rotate(0deg); }
+    }
+
+    @keyframes magnetBackForthAnim {
+      0% { transform: translate(0, -10px); }
+      50% { transform: translate(220px, -10px); }
+      100% { transform: translate(0, -10px); }
+    }
+
+    .animate-stroke-single {
+      animation: magnetStrokeAnim 0.75s ease-in-out forwards;
+    }
+    .animate-stroke-backforth {
+      animation: magnetBackForthAnim 0.75s ease-in-out forwards;
+    }
+
+    @keyframes clipAttractPop {
+      0% { transform: translateY(30px) scale(0.5); opacity: 0; }
+      70% { transform: translateY(-5px) scale(1.1); opacity: 1; }
+      100% { transform: translateY(0) scale(1); opacity: 1; }
+    }
+    .clip-pop {
+      animation: clipAttractPop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
     .tab-btn.active {
-      background-color: var(--primary);
-      color: var(--primary-foreground);
-      font-weight: 600;
+      background-color: #2563eb;
+      color: #ffffff;
+      font-weight: 700;
+      box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
     }
   </style>
 </head>
-<body class="bg-[var(--background)] text-[var(--foreground)] min-h-screen p-4 md:p-6 font-sans antialiased">
+<body class="bg-slate-900 text-slate-100 min-h-screen p-3 md:p-6 antialiased">
 
-  <div class="max-w-6xl mx-auto space-y-6">
+  <div class="max-w-6xl mx-auto space-y-4 md:space-y-6">
     
-    <!-- Top Header & Banner -->
-    <header class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+    <!-- Top Suite Header -->
+    <header class="bg-slate-950 border border-slate-800 rounded-2xl p-4 md:p-6 shadow-xl flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
       <div>
-        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 mb-2">
-          <span>🧲 Primary Science Chapter 7</span>
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-bold bg-blue-500/20 text-blue-400 mb-2 border border-blue-500/30">
+          <span>🔬 Primary Science Interactive Suite</span>
           <span>•</span>
-          <span>Activities 7.1 & 7.2</span>
+          <span>Chapter 7: Making & Using Magnets</span>
         </div>
-        <h1 class="text-2xl md:text-3xl font-bold tracking-tight text-[var(--foreground)]">
-          Making and Using Magnets Lab
+        <h1 class="text-xl md:text-2xl font-extrabold text-white tracking-tight">
+          Science Investigation Lab Simulations
         </h1>
-        <p class="text-sm text-[var(--muted-foreground)] mt-1">
-          Explore the stroke method, electromagnets, fair testing, pole strength, and test your understanding!
+        <p class="text-xs text-slate-400 mt-1">
+          Exact interactive reproductions matching your workbook experiments and investigation questions!
         </p>
       </div>
 
-      <div class="flex items-center gap-3 bg-[var(--background)] p-2 rounded-xl border border-[var(--border)]">
-        <div class="text-center px-3">
-          <span class="block text-xs text-[var(--muted-foreground)]">Magnet Power</span>
-          <span id="global-power-level" class="text-lg font-extrabold text-emerald-600 dark:text-emerald-400">0%</span>
-        </div>
-        <div class="h-8 w-px bg-[var(--border)]"></div>
-        <div class="text-center px-3">
-          <span class="block text-xs text-[var(--muted-foreground)]">Clips Attracted</span>
-          <span id="global-clip-count" class="text-lg font-extrabold text-blue-600 dark:text-blue-400">0</span>
-        </div>
-      </div>
+      <!-- Navigation Tabs -->
+      <nav class="flex flex-wrap gap-2 bg-slate-900 p-1.5 rounded-xl border border-slate-800 w-full md:w-auto">
+        <button onclick="switchMainTab('stroke')" id="nav-btn-stroke" class="tab-btn active px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2">
+          <span>🧲</span> Stroke Method Lab
+        </button>
+        <button onclick="switchMainTab('electromagnet')" id="nav-btn-electromagnet" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2">
+          <span>⚡</span> Electromagnet Metal Lab
+        </button>
+        <button onclick="switchMainTab('fairtest')" id="nav-btn-fairtest" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2">
+          <span>⚖️</span> Fair Testing
+        </button>
+        <button onclick="switchMainTab('toy')" id="nav-btn-toy" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2">
+          <span>🎣</span> Toy Sandbox
+        </button>
+      </nav>
     </header>
 
-    <!-- Navigation Tabs -->
-    <nav class="flex flex-wrap gap-2 border-b border-[var(--border)] pb-2 overflow-x-auto">
-      <button onclick="switchTab('stroke')" id="tab-stroke" class="tab-btn active px-4 py-2.5 rounded-xl text-sm transition flex items-center gap-2">
-        <span>🧲</span> Part A: Stroke Method
-      </button>
-      <button onclick="switchTab('electric')" id="tab-electric" class="tab-btn px-4 py-2.5 rounded-xl text-sm transition flex items-center gap-2">
-        <span>⚡</span> Part B: Electrical Method
-      </button>
-      <button onclick="switchTab('fairtest')" id="tab-fairtest" class="tab-btn px-4 py-2.5 rounded-xl text-sm transition flex items-center gap-2">
-        <span>⚖️</span> Fair Test Explorer
-      </button>
-      <button onclick="switchTab('poles')" id="tab-poles" class="tab-btn px-4 py-2.5 rounded-xl text-sm transition flex items-center gap-2">
-        <span>📊</span> Pole & Magnet Strength
-      </button>
-      <button onclick="switchTab('toy')" id="tab-toy" class="tab-btn px-4 py-2.5 rounded-xl text-sm transition flex items-center gap-2">
-        <span>🎣</span> Magnetic Toy Sandbox
-      </button>
-    </nav>
-
-    <!-- ========================================== -->
-    <!-- TAB 1: STROKE METHOD (ACTIVITY 7.1 PART A) -->
-    <!-- ========================================== -->
-    <div id="content-stroke" class="tab-content space-y-6">
+    <!-- ========================================================================= -->
+    <!-- MODULE 1: MAKE A MAGNET BY STROKE METHOD (MATCHING SCREENSHOT 2) -->
+    <!-- ========================================================================= -->
+    <div id="module-stroke" class="main-module space-y-4">
       
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <!-- Warm Notebook Banner Header matching Screenshot 2 -->
+      <div class="bg-[#fefae0] border-2 border-[#ccd5ae] text-slate-900 rounded-2xl p-4 flex justify-between items-center shadow-md">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">🧲</span>
+          <h2 class="text-lg md:text-xl font-extrabold font-handwritten tracking-wide text-[#588157]">
+            Make a Magnet by Stroke Method
+          </h2>
+        </div>
+        <button onclick="toggleInfoModal('stroke')" class="w-8 h-8 rounded-full bg-[#e9edc9] hover:bg-[#ccd5ae] text-[#2b9348] font-extrabold text-sm border border-[#a3b18a] flex items-center justify-center shadow">
+          i
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
         
-        <!-- Interactive Workbench (2 cols) -->
-        <div class="lg:col-span-2 bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
-          <div class="flex justify-between items-center">
-            <div>
-              <h2 class="text-lg font-semibold flex items-center gap-2">
-                <span>🧲 Stroke Simulator</span>
-                <span class="text-xs bg-amber-500/10 text-amber-600 px-2 py-0.5 rounded-md font-normal">Interactive Canvas</span>
-              </h2>
-              <p class="text-xs text-[var(--muted-foreground)]">Stroke the iron nail with the bar magnet in one continuous direction.</p>
-            </div>
-            <div class="flex items-center gap-2">
-              <label class="text-xs font-medium text-[var(--muted-foreground)]">Stroke Mode:</label>
-              <select id="stroke-direction-mode" onchange="resetStrokeLab()" class="text-xs bg-[var(--background)] border border-[var(--border)] rounded-lg p-1.5 text-[var(--foreground)]">
-                <option value="correct">One Direction Only (Correct)</option>
-                <option value="incorrect">Back & Forth (Wrong)</option>
+        <!-- LEFT CONTROL COLUMN (5 Cols) matching Screenshot 2 -->
+        <div class="lg:col-span-5 bg-[#fefae0] border-2 border-[#ccd5ae] rounded-2xl p-4 text-slate-900 space-y-4 shadow-sm flex flex-col justify-between">
+          
+          <div class="space-y-4">
+            <!-- Step 1: Select Material -->
+            <div class="bg-[#faedcd] border border-[#d4a373] p-3 rounded-xl space-y-1.5">
+              <label class="text-xs font-bold font-handwritten text-[#99582a] flex items-center gap-1.5">
+                <span>🔩 Step 1: Select Material</span>
+              </label>
+              <p class="text-[11px] text-slate-700 italic">Which material do you choose?</p>
+              <select id="stroke-material-select" onchange="updateStrokeControls()" class="w-full bg-white border border-[#d4a373] rounded-lg p-2 text-xs font-semibold text-slate-800 shadow-sm">
+                <option value="">-- Choose nail material --</option>
+                <option value="iron">Iron Nail (Magnetic Core)</option>
+                <option value="steel">Steel Nail (Magnetic Core)</option>
+                <option value="copper">Copper Rod (Non-magnetic Metal)</option>
+                <option value="plastic">Plastic Rod (Non-magnetic Object)</option>
               </select>
+            </div>
+
+            <!-- Step 2: Direction of Stroking -->
+            <div class="bg-[#faedcd] border border-[#d4a373] p-3 rounded-xl space-y-2">
+              <label class="text-xs font-bold font-handwritten text-[#99582a] flex items-center gap-1.5">
+                <span>↔️ Step 2: Direction of Stroking</span>
+              </label>
+              <p class="text-[11px] text-slate-700 italic">How do you stroke the nail?</p>
+              <div class="grid grid-cols-2 gap-2 text-xs font-bold">
+                <button id="btn-dir-same" onclick="setStrokeDirection('same')" class="py-2 px-3 rounded-lg border border-[#bc6c25] bg-[#dda15e] text-white transition text-center shadow flex items-center justify-center gap-1">
+                  <span>➡️ Same Direction</span>
+                </button>
+                <button id="btn-dir-backforth" onclick="setStrokeDirection('backforth')" class="py-2 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition text-center flex items-center justify-center gap-1">
+                  <span>🔄 Back and Forth</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- Step 3: Number of Strokes -->
+            <div class="bg-[#faedcd] border border-[#d4a373] p-3 rounded-xl space-y-2">
+              <div class="flex justify-between items-center">
+                <label class="text-xs font-bold font-handwritten text-[#99582a] flex items-center gap-1.5">
+                  <span>🔢 Step 3: Number of Strokes</span>
+                </label>
+                <span id="stroke-slider-badge" class="text-xs font-bold font-mono bg-[#dda15e] text-white px-2 py-0.5 rounded-md">Strokes: 1</span>
+              </div>
+              <p class="text-[11px] text-slate-700 italic">How many strokes on the nail?</p>
+              
+              <input type="range" id="stroke-slider" min="1" max="50" value="1" oninput="onStrokeSliderInput()" class="w-full accent-[#bc6c25]">
+              
+              <button id="btn-do-stroke" onclick="executeStrokeSimulation()" class="w-full py-3 bg-[#bc6c25] hover:bg-[#99582a] text-white font-bold rounded-xl text-xs shadow-md transition font-handwritten tracking-wider disabled:opacity-50">
+                Stroke the Nail!
+              </button>
             </div>
           </div>
 
-          <!-- Visual Canvas Area -->
-          <div class="relative bg-slate-900 rounded-xl p-6 min-h-[300px] flex flex-col justify-between items-center overflow-hidden border border-slate-700">
-            
-            <!-- Floating Magnet Graphic -->
-            <div id="bar-magnet-container" class="relative z-10 transition-transform duration-300 flex flex-col items-center">
-              <div class="flex w-36 h-10 rounded-lg shadow-lg overflow-hidden border-2 border-white/20">
-                <div class="w-1/2 bg-red-600 text-white font-bold flex items-center justify-center text-sm shadow-inner">N</div>
-                <div class="w-1/2 bg-blue-600 text-white font-bold flex items-center justify-center text-sm shadow-inner">S</div>
-              </div>
-              <span class="text-[10px] text-amber-300 font-mono mt-1">Bar Magnet</span>
-              
-              <!-- Red Circular Loop Stroke Arrow -->
-              <svg class="w-48 h-12 text-red-500 opacity-80 mt-1" fill="none" viewBox="0 0 200 40">
-                <path d="M 20,30 Q 100,-10 180,30" stroke="currentColor" stroke-width="3" stroke-dasharray="4,4" fill="none" />
-                <path d="M 180,30 L 170,22 M 180,30 L 172,36" stroke="currentColor" stroke-width="3" />
-                <text x="70" y="35" fill="#f87171" font-size="11" font-weight="bold">Stroke direction</text>
-              </svg>
+          <!-- Results Table (Bottom Left) -->
+          <div class="bg-[#faedcd] border border-[#d4a373] p-3 rounded-xl space-y-2">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold font-handwritten text-[#99582a]">📊 Results Table</span>
+              <button onclick="clearStrokeTable()" class="text-[10px] bg-white text-[#99582a] border border-[#d4a373] px-2 py-0.5 rounded font-bold hover:bg-slate-50">Clear</button>
+            </div>
+            <div class="overflow-x-auto max-h-36">
+              <table class="w-full text-[11px] text-left border-collapse">
+                <thead class="bg-[#dda15e] text-white font-mono uppercase text-[9px]">
+                  <tr>
+                    <th class="p-1.5 border border-[#d4a373]">#</th>
+                    <th class="p-1.5 border border-[#d4a373]">Material</th>
+                    <th class="p-1.5 border border-[#d4a373]">Direction</th>
+                    <th class="p-1.5 border border-[#d4a373]">Strokes</th>
+                    <th class="p-1.5 border border-[#d4a373]">Clips</th>
+                  </tr>
+                </thead>
+                <tbody id="stroke-table-rows" class="divide-y divide-[#d4a373] bg-white font-mono text-slate-800">
+                  <tr id="stroke-row-empty"><td colspan="5" class="p-3 text-center text-slate-400 italic font-sans text-xs">No results yet</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- RIGHT SIMULATION COLUMN (7 Cols) matching Screenshot 2 -->
+        <div class="lg:col-span-7 space-y-4">
+          
+          <!-- Top Animation Area (Stroking Visual) -->
+          <div class="bg-[#fefae0] border-2 border-[#ccd5ae] rounded-2xl p-4 text-slate-900 space-y-2 shadow-sm relative overflow-hidden">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold font-handwritten text-[#588157]">🧪 Stroke Animation Bench</span>
+              <span id="stroke-progress-badge" class="text-xs font-mono font-bold bg-[#e9edc9] text-[#2563eb] border border-[#a3b18a] px-3 py-1 rounded-full">Strokes: 0 / 50</span>
             </div>
 
-            <!-- Iron Nail with Atomic Dipoles -->
-            <div class="w-full max-w-md my-4 relative">
-              <div class="flex items-center justify-center">
-                <!-- Nail Head -->
-                <div class="w-4 h-12 bg-slate-400 rounded-l-md border-r border-slate-600"></div>
-                <!-- Nail Body -->
-                <div id="iron-nail-body" class="relative flex-1 h-8 bg-gradient-to-r from-slate-300 via-slate-400 to-slate-500 rounded-r-full flex items-center justify-around px-2 border-y border-r border-slate-600 shadow-md">
-                  <!-- Dynamic Magnetic Dipole Arrows -->
-                  <div id="dipoles-container" class="w-full flex justify-around items-center">
-                    <!-- Javascript populates 12 dipole arrows -->
+            <!-- Canvas Workbench -->
+            <div class="relative bg-gradient-to-b from-slate-200 to-slate-300 rounded-xl h-44 border border-slate-400 overflow-hidden flex flex-col justify-end p-4">
+              <!-- Wooden Table Top Surface -->
+              <div class="absolute bottom-6 inset-x-0 h-4 bg-[#d4a373] border-t border-[#bc6c25]"></div>
+
+              <!-- Stationary Nail / Rod -->
+              <div id="stroke-workbench-nail" class="absolute bottom-8 left-16 right-24 h-6 flex items-center justify-start z-10">
+                <div class="w-4 h-8 bg-slate-500 rounded-l border-r border-slate-700"></div>
+                <div id="stroke-workbench-shaft" class="h-4 bg-gradient-to-r from-slate-300 via-slate-400 to-slate-500 rounded-r-full flex-1 border-y border-r border-slate-600 shadow"></div>
+                <span id="stroke-workbench-label" class="text-[10px] font-mono text-slate-700 font-bold ml-2">-- select material --</span>
+              </div>
+
+              <!-- Stroking Bar Magnet -->
+              <div id="stroke-workbench-magnet" class="absolute bottom-16 left-16 z-20 transition-all duration-300 flex flex-col items-center opacity-0 pointer-events-none">
+                <div class="flex w-24 h-8 rounded border border-slate-700 overflow-hidden font-bold text-xs text-white shadow-lg">
+                  <div class="w-1/2 bg-red-600 flex items-center justify-center">N</div>
+                  <div class="w-1/2 bg-blue-600 flex items-center justify-center">S</div>
+                </div>
+                <span class="text-[9px] font-bold font-mono text-slate-800 bg-amber-200 px-1 rounded border border-amber-400 mt-0.5">bar magnet</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bottom Test Box (Step 4: Test Magnetic Strength) -->
+          <div class="bg-[#e9edc9] border-2 border-[#a3b18a] rounded-2xl p-4 text-slate-900 space-y-3 shadow-sm">
+            
+            <div class="flex justify-between items-center border-b border-[#a3b18a] pb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-emerald-700">✏️</span>
+                <span class="text-xs font-bold font-handwritten text-[#2b9348]">Step 4: Test the Magnetic Strength of the Nail</span>
+              </div>
+              <span id="test-clips-badge" class="text-xs font-mono font-bold bg-white text-[#2b9348] border border-[#a3b18a] px-3 py-0.5 rounded-full">Clips: 0</span>
+            </div>
+
+            <p class="text-[11px] text-slate-700 italic">Drag the nail down or press the button below to test if it attracts any clips.</p>
+
+            <!-- Lowering Bench & Paperclips Tray -->
+            <div id="test-tray-area" class="relative bg-white rounded-xl h-44 border border-[#a3b18a] overflow-hidden flex flex-col justify-between p-3">
+              
+              <!-- Floating Nail (Can be lowered down to paperclips) -->
+              <div id="test-lowering-nail" class="relative inset-x-0 mx-auto w-32 transition-all duration-500 flex flex-col items-center z-20">
+                <div class="bg-amber-200 border border-amber-400 rounded-full px-2 py-0.5 text-[9px] font-bold font-mono text-amber-800 shadow mb-1">
+                  ⚡ Stroked Nail
+                </div>
+                <div class="w-3 h-20 bg-gradient-to-b from-slate-300 via-slate-400 to-slate-500 rounded-b-full border-x border-b border-slate-600 shadow-lg relative flex flex-col items-center justify-end">
+                  <!-- Attracted Paper Clips Stick Here -->
+                  <div id="test-attached-clips" class="absolute -bottom-6 flex flex-wrap justify-center gap-0.5 w-16">
+                    <!-- Populated dynamically -->
                   </div>
                 </div>
               </div>
-              <p class="text-center text-xs text-slate-300 mt-2 font-medium">Iron Nail (Internal Magnetic Domains / Dipoles)</p>
+
+              <!-- Paper Clips Tray at Bottom -->
+              <div class="w-full bg-[#faedcd] border-t border-[#d4a373] h-10 rounded-b-lg flex items-center justify-center gap-1.5 overflow-hidden px-2">
+                <span class="text-[10px] text-[#99582a] font-mono font-bold mr-2">Paperclips Tray:</span>
+                <div id="paperclip-tray-icons" class="flex items-center gap-1">
+                  <span class="text-xs opacity-70">📎</span><span class="text-xs opacity-70">📎</span><span class="text-xs opacity-70">📎</span>
+                  <span class="text-xs opacity-70">📎</span><span class="text-xs opacity-70">📎</span><span class="text-xs opacity-70">📎</span>
+                  <span class="text-xs opacity-70">📎</span><span class="text-xs opacity-70">📎</span><span class="text-xs opacity-70">📎</span>
+                  <span class="text-xs opacity-70">📎</span>
+                </div>
+              </div>
+
             </div>
 
-            <!-- Steel Paperclips Tray -->
-            <div class="w-full border-t border-slate-700 pt-3 flex items-center justify-between">
-              <span class="text-xs text-slate-400 font-mono">Tray of Steel Clips</span>
-              <div id="attached-paperclips" class="flex gap-2 min-h-[36px] items-center">
-                <span class="text-xs text-slate-500 italic">No clips attached yet</span>
-              </div>
-              <button onclick="testNailAttraction()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold shadow transition">
-                🧲 Lower Nail to Clips
+            <!-- Lower Nail / Action Controls matching Screenshot 2 -->
+            <button id="btn-test-lower" onclick="runLowerNailTest()" disabled class="w-full py-3 bg-[#2a9d8f] hover:bg-[#264653] text-white font-bold rounded-xl text-xs shadow transition font-handwritten tracking-wider disabled:opacity-50">
+              ⚡ Drag nail down to test magnetic strength
+            </button>
+
+            <div class="grid grid-cols-2 gap-2 text-xs font-bold pt-1">
+              <button onclick="retestSameMaterial()" class="py-2.5 px-3 bg-white border border-[#a3b18a] hover:bg-slate-50 text-slate-800 rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
+                <span>🔄 Retest Same Material</span>
+              </button>
+              <button onclick="chooseNewMaterial()" class="py-2.5 px-3 bg-white border border-[#a3b18a] hover:bg-slate-50 text-slate-800 rounded-xl transition flex items-center justify-center gap-1.5 shadow-sm">
+                <span>🧹 Choose New Material</span>
               </button>
             </div>
+
           </div>
 
-          <!-- Controls -->
-          <div class="flex flex-wrap items-center justify-between gap-3 bg-[var(--background)] p-4 rounded-xl border border-[var(--border)]">
-            <div class="flex items-center gap-2">
-              <button onclick="doStroke(1)" class="px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-sm font-medium transition shadow">
-                +1 Stroke
-              </button>
-              <button onclick="doStroke(10)" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-xl text-sm font-medium transition shadow">
-                +10 Strokes
-              </button>
-              <button onclick="doStroke(50)" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white rounded-xl text-sm font-medium transition shadow">
-                +50 Strokes
-              </button>
-            </div>
+        </div>
+
+      </div>
+
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODULE 2: CAN AN ELECTROMAGNET BE MADE FROM ALL METALS? (SCREENSHOT 1) -->
+    <!-- ========================================================================= -->
+    <div id="module-electromagnet" class="main-module space-y-4 hidden">
+      
+      <!-- Top Investigation Banner matching Screenshot 1 -->
+      <div class="bg-blue-600 text-white rounded-2xl p-4 flex justify-between items-center shadow-lg">
+        <div class="flex items-center gap-3">
+          <span class="text-2xl">⚡</span>
+          <h2 class="text-base md:text-lg font-extrabold tracking-wide">
+            Investigation question: Can an electromagnet be made from all metals?
+          </h2>
+        </div>
+        <button onclick="toggleInfoModal('electromagnet')" class="w-8 h-8 rounded-full bg-blue-500 hover:bg-blue-400 text-white font-extrabold text-sm border border-blue-300 flex items-center justify-center shadow">
+          i
+        </button>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        
+        <!-- LEFT SIMULATION & CONTROL PANEL (7 Cols) matching Screenshot 1 -->
+        <div class="lg:col-span-7 bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-4 shadow-xl flex flex-col justify-between">
+          
+          <!-- Circuit Schematic Canvas (Matching Screenshot 1 Diagram) -->
+          <div class="relative bg-slate-900 rounded-xl p-6 min-h-[300px] border border-slate-800 flex flex-col justify-between items-center overflow-hidden">
             
-            <div class="flex items-center gap-4">
-              <div class="text-right">
-                <span class="text-xs text-[var(--muted-foreground)] block">Total Strokes</span>
-                <span id="stroke-count-display" class="text-xl font-bold text-[var(--foreground)]">0</span>
+            <!-- Battery Pack (2 Dark Blue Batteries connected in series) -->
+            <div class="flex items-center gap-1 z-10">
+              <!-- Battery 1 -->
+              <div class="w-16 h-12 bg-slate-800 rounded-lg border-2 border-slate-600 flex items-center justify-around font-bold font-mono text-white text-xs shadow-md">
+                <span class="text-amber-400 text-sm">+</span>
+                <span class="text-slate-400 text-sm">-</span>
               </div>
-              <button onclick="resetStrokeLab()" class="px-3 py-2 text-xs text-rose-500 hover:bg-rose-500/10 rounded-lg transition border border-rose-500/20">
+              <!-- Battery 2 -->
+              <div class="w-16 h-12 bg-slate-800 rounded-lg border-2 border-slate-600 flex items-center justify-around font-bold font-mono text-white text-xs shadow-md">
+                <span class="text-amber-400 text-sm">+</span>
+                <span class="text-slate-400 text-sm">-</span>
+              </div>
+            </div>
+
+            <!-- Curved Copper Wires connecting to Coiled Rod -->
+            <svg class="absolute inset-0 w-full h-full pointer-events-none" viewBox="0 0 400 300">
+              <!-- Left Wire from battery - to left of rod -->
+              <path d="M 140,40 Q 100,100 100,180" stroke="#d97706" stroke-width="4" fill="none" stroke-linecap="round" />
+              <!-- Right Wire from battery + to right of rod -->
+              <path d="M 260,40 Q 300,100 300,180" stroke="#d97706" stroke-width="4" fill="none" stroke-linecap="round" />
+            </svg>
+
+            <!-- Metallic Rod Centerpiece with Wire Coils -->
+            <div class="my-6 relative z-10 flex items-center justify-center w-full max-w-sm">
+              <div class="relative flex items-center w-64 h-10 bg-slate-400 rounded-full border-2 border-slate-500 shadow-lg justify-center">
+                
+                <!-- Coiled Wire Turns -->
+                <div class="absolute inset-0 flex justify-around items-center px-4">
+                  <div class="w-2 h-12 bg-amber-600 rounded-full border-x border-amber-800 transform rotate-12 shadow"></div>
+                  <div class="w-2 h-12 bg-amber-600 rounded-full border-x border-amber-800 transform rotate-12 shadow"></div>
+                  <div class="w-2 h-12 bg-amber-600 rounded-full border-x border-amber-800 transform rotate-12 shadow"></div>
+                  <div class="w-2 h-12 bg-amber-600 rounded-full border-x border-amber-800 transform rotate-12 shadow"></div>
+                  <div class="w-2 h-12 bg-amber-600 rounded-full border-x border-amber-800 transform rotate-12 shadow"></div>
+                  <div class="w-2 h-12 bg-amber-600 rounded-full border-x border-amber-800 transform rotate-12 shadow"></div>
+                  <div class="w-2 h-12 bg-amber-600 rounded-full border-x border-amber-800 transform rotate-12 shadow"></div>
+                  <div class="w-2 h-12 bg-amber-600 rounded-full border-x border-amber-800 transform rotate-12 shadow"></div>
+                </div>
+
+                <!-- Core Metal Material Text Overlay -->
+                <span id="em-core-label" class="relative z-20 font-bold font-mono text-xs text-slate-900 bg-white/90 px-3 py-0.5 rounded shadow border border-slate-400">
+                  Iron
+                </span>
+              </div>
+
+              <!-- 12 Paper Clips Grid on Right Side (Matching Screenshot 1) -->
+              <div id="em-clips-grid" class="absolute right-2 top-1/2 -translate-y-1/2 grid grid-cols-3 gap-1 p-2 bg-slate-800/80 rounded-xl border border-slate-700">
+                <!-- 12 Paper clips -->
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+                <span class="em-clip text-lg transform rotate-45 transition-all duration-300">📎</span>
+              </div>
+            </div>
+
+            <span class="text-[10px] text-slate-400 font-mono">10 turns of wire • 2 batteries in series</span>
+          </div>
+
+          <!-- Control Card matching Screenshot 1 -->
+          <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-3">
+            <div class="space-y-1">
+              <label class="text-xs font-bold text-slate-200">1. Choose a metal</label>
+              <select id="em-metal-select" onchange="onEmMetalChange()" class="w-full bg-slate-950 border border-slate-700 text-white rounded-lg p-2.5 text-xs font-semibold">
+                <option value="iron">Iron</option>
+                <option value="steel">Steel</option>
+                <option value="copper">Copper</option>
+                <option value="aluminum">Aluminum</option>
+              </select>
+            </div>
+
+            <div class="flex gap-2 pt-1">
+              <button onclick="runElectromagnetTest()" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-500 text-white font-bold rounded-xl text-xs shadow transition">
+                2. Test electromagnet
+              </button>
+              <button onclick="resetElectromagnetTest()" class="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-300 font-bold rounded-xl text-xs border border-slate-700">
                 Reset
               </button>
             </div>
@@ -182,227 +413,98 @@
 
         </div>
 
-        <!-- Data Log & Observations (1 col) -->
-        <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-4 flex flex-col justify-between">
-          <div>
-            <h3 class="text-base font-semibold border-b border-[var(--border)] pb-2 flex items-center justify-between">
-              <span>📊 Observation Table</span>
-              <span class="text-xs text-[var(--muted-foreground)]">Activity 7.1 Page 130</span>
-            </h3>
-            
-            <div class="overflow-x-auto mt-3">
-              <table class="w-full text-xs text-left">
-                <thead class="bg-[var(--background)] text-[var(--muted-foreground)] uppercase">
+        <!-- RIGHT DATA & GRAPH COLUMN (5 Cols) matching Screenshot 1 -->
+        <div class="lg:col-span-5 space-y-4">
+          
+          <!-- Outcome Panel (Top Right) matching Screenshot 1 -->
+          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 flex justify-between items-center shadow-md">
+            <div>
+              <span class="text-xs font-bold text-slate-300 block">Outcome panel</span>
+              <span class="text-xs font-bold text-slate-400">Clips attracted</span>
+              <span class="text-[10px] text-slate-500 block">out of 12 clips</span>
+            </div>
+            <span id="em-outcome-count" class="text-4xl font-extrabold text-emerald-400 font-mono">0</span>
+          </div>
+
+          <!-- Results Table (Middle Right) matching Screenshot 1 -->
+          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-md">
+            <span class="text-xs font-bold text-slate-200 block">Results table</span>
+            <div class="overflow-x-auto max-h-36">
+              <table class="w-full text-xs text-left font-mono border border-slate-800">
+                <thead class="bg-slate-900 text-[10px] text-slate-400 uppercase border-b border-slate-800">
                   <tr>
-                    <th class="p-2 border-b border-[var(--border)]">Strokes</th>
-                    <th class="p-2 border-b border-[var(--border)]">Magnet Strength</th>
-                    <th class="p-2 border-b border-[var(--border)]">Clips Attracted</th>
+                    <th class="p-2 border-r border-slate-800">Test</th>
+                    <th class="p-2 border-r border-slate-800">Metal</th>
+                    <th class="p-2 border-r border-slate-800">Clips</th>
+                    <th class="p-2">Graph</th>
                   </tr>
                 </thead>
-                <tbody id="stroke-table-body" class="divide-y divide-[var(--border)] font-mono">
-                  <tr>
-                    <td class="p-2">10</td>
-                    <td class="p-2 text-amber-500">Very Weak</td>
-                    <td id="clips-10" class="p-2 font-bold text-slate-400">-</td>
-                  </tr>
-                  <tr>
-                    <td class="p-2">50</td>
-                    <td class="p-2 text-blue-500">Moderate</td>
-                    <td id="clips-50" class="p-2 font-bold text-slate-400">-</td>
-                  </tr>
-                  <tr>
-                    <td class="p-2">100</td>
-                    <td class="p-2 text-emerald-500">Strong</td>
-                    <td id="clips-100" class="p-2 font-bold text-slate-400">-</td>
+                <tbody id="em-table-body" class="divide-y divide-slate-800 text-slate-300">
+                  <tr id="em-table-empty">
+                    <td colspan="4" class="p-3 text-center text-slate-500 italic font-sans text-xs">
+                      No tests yet. Press <strong>Test electromagnet</strong> to begin.
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
-
-            <!-- Workbook Conclusion Question Interactive Fill-in -->
-            <div class="mt-6 p-4 bg-[var(--background)] border border-[var(--border)] rounded-xl space-y-3">
-              <h4 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">Workbook Question 5 Check</h4>
-              <p class="text-xs text-[var(--muted-foreground)] leading-relaxed">
-                As the number of strokes 
-                <select id="stroke-q1" onchange="checkStrokeConclusion()" class="mx-1 bg-[var(--card)] border border-[var(--border)] rounded px-1 py-0.5 text-xs text-[var(--foreground)] font-semibold">
-                  <option value="">[select]</option>
-                  <option value="increases">increases</option>
-                  <option value="decreases">decreases</option>
-                </select>,
-                the number of steel clips attracted to the magnet 
-                <select id="stroke-q2" onchange="checkStrokeConclusion()" class="mx-1 bg-[var(--card)] border border-[var(--border)] rounded px-1 py-0.5 text-xs text-[var(--foreground)] font-semibold">
-                  <option value="">[select]</option>
-                  <option value="increases">increases</option>
-                  <option value="decreases">decreases</option>
-                </select>.
-              </p>
-              <div id="stroke-conclusion-feedback" class="text-xs font-semibold hidden p-2 rounded-lg"></div>
-            </div>
           </div>
 
-          <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-700 dark:text-amber-300">
-            <strong>💡 Science Secret:</strong> Stroking an iron nail in one direction forces its randomly pointed magnetic domains to line up in the same direction, turning it into a temporary magnet!
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- ============================================== -->
-    <!-- TAB 2: ELECTRICAL METHOD (ACTIVITY 7.1 PART B) -->
-    <!-- ============================================== -->
-    <div id="content-electric" class="tab-content space-y-6 hidden">
-      
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        
-        <!-- Electromagnet Workbench (2 cols) -->
-        <div class="lg:col-span-2 bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
-          <div class="flex justify-between items-center">
-            <div>
-              <h2 class="text-lg font-semibold flex items-center gap-2">
-                <span>⚡ Electromagnet Workbench</span>
-                <span class="text-xs bg-blue-500/10 text-blue-600 px-2 py-0.5 rounded-md font-normal">Electrical Method</span>
-              </h2>
-              <p class="text-xs text-[var(--muted-foreground)]">Coil wire around an iron nail and connect it to a battery circuit.</p>
+          <!-- Results Graph (Lower Right) matching Screenshot 1 -->
+          <div class="bg-slate-950 border border-slate-800 rounded-2xl p-4 space-y-2 shadow-md">
+            <div class="flex justify-between items-center">
+              <span class="text-xs font-bold text-slate-200">Results graph</span>
+              <span class="text-[10px] text-slate-500 font-mono">0 - 12 clips</span>
             </div>
 
-            <!-- Heat Warning Badge -->
-            <div id="heat-warning-badge" class="hidden flex items-center gap-1.5 px-3 py-1 bg-red-500/20 border border-red-500 text-red-600 dark:text-red-400 rounded-full text-xs font-bold animate-pulse">
-              <span>⚠️ WARNING: Getting Hot!</span>
-            </div>
-          </div>
-
-          <!-- Circuit Visualizer Canvas -->
-          <div class="relative bg-slate-950 rounded-xl p-6 min-h-[320px] flex flex-col justify-between items-center overflow-hidden border border-slate-800">
-            
-            <!-- Dynamic Pulsing Magnetic Field Lines -->
-            <div id="magnetic-field-overlay" class="absolute inset-0 pointer-events-none flex items-center justify-center opacity-0 transition-opacity duration-500">
-              <div class="w-80 h-40 border-2 border-emerald-400/40 rounded-full magnetic-field"></div>
-              <div class="w-96 h-52 border border-emerald-400/20 rounded-full magnetic-field absolute"></div>
-            </div>
-
-            <!-- Battery Pack & Circuit Wires -->
-            <div class="w-full flex justify-between items-center relative z-10">
-              <!-- Batteries -->
-              <div class="flex items-center gap-1 bg-slate-900 p-2 rounded-xl border border-slate-800">
-                <span class="text-[10px] text-slate-400 uppercase font-mono mr-1">Power:</span>
-                <div id="battery-icons-container" class="flex gap-1">
-                  <!-- Populated via JS -->
-                </div>
-              </div>
-
-              <!-- Circuit Switch Button -->
-              <button id="circuit-switch-btn" onclick="toggleCircuit()" class="px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-xl text-xs shadow-lg transition flex items-center gap-2">
-                <span id="switch-status-dot" class="w-2.5 h-2.5 rounded-full bg-white"></span>
-                <span id="switch-status-text">SWITCH OFF</span>
-              </button>
-            </div>
-
-            <!-- Coiled Nail Centerpiece -->
-            <div class="my-6 relative z-10 flex flex-col items-center">
-              <div class="relative flex items-center">
-                <!-- Iron Nail Head -->
-                <div class="w-4 h-12 bg-slate-400 rounded-l-md border-r border-slate-600"></div>
-                <!-- Nail Shaft -->
-                <div class="w-64 h-8 bg-slate-400 rounded-r-full relative flex items-center justify-center">
-                  <!-- Wire Coils Rendered Here -->
-                  <div id="wire-coils-render" class="absolute inset-0 flex justify-around items-center px-4 overflow-hidden">
-                    <!-- Populated by JS -->
-                  </div>
-                </div>
-              </div>
-              <div class="text-center mt-2">
-                <span id="turns-counter-badge" class="text-xs bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded font-mono">10 Turns of Wire</span>
-              </div>
-            </div>
-
-            <!-- Attracted Paperclips Tray -->
-            <div class="w-full border-t border-slate-800 pt-3 flex items-center justify-between relative z-10">
-              <span class="text-xs text-slate-400 font-mono">Attracted Steel Clips</span>
-              <div id="electric-clips-attached" class="flex gap-2 min-h-[32px] items-center">
-                <span class="text-xs text-slate-500 italic">Switch OFF - No magnetic field</span>
-              </div>
-              <div class="text-right">
-                <span class="text-[10px] text-slate-400 block">Attraction Force</span>
-                <span id="electric-force-display" class="text-sm font-mono font-bold text-emerald-400">0 Clips</span>
-              </div>
-            </div>
-
-          </div>
-
-          <!-- Variable Sliders / Controls -->
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 bg-[var(--background)] p-4 rounded-xl border border-[var(--border)]">
-            
-            <!-- Number of Wire Turns Slider -->
-            <div class="space-y-1">
-              <div class="flex justify-between text-xs">
-                <span class="font-medium text-[var(--foreground)]">Number of Turns of Wire:</span>
-                <span id="slider-turns-val" class="font-bold text-emerald-600 dark:text-emerald-400">10 Turns</span>
-              </div>
-              <input type="range" id="slider-turns" min="5" max="40" step="5" value="10" oninput="updateElectromagnetParams()" class="w-full accent-emerald-500">
-              <p class="text-[10px] text-[var(--muted-foreground)]">More turns = Stronger magnetic field.</p>
-            </div>
-
-            <!-- Number of Batteries Selector -->
-            <div class="space-y-1">
-              <div class="flex justify-between text-xs">
-                <span class="font-medium text-[var(--foreground)]">Number of Batteries:</span>
-                <span id="slider-batteries-val" class="font-bold text-blue-600 dark:text-blue-400">1 Battery</span>
-              </div>
-              <input type="range" id="slider-batteries" min="1" max="4" step="1" value="1" oninput="updateElectromagnetParams()" class="w-full accent-blue-500">
-              <p class="text-[10px] text-[var(--muted-foreground)]">More batteries = Greater electric current strength.</p>
-            </div>
-
-          </div>
-
-        </div>
-
-        <!-- Electromagnet Data & Findings (1 col) -->
-        <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-4 flex flex-col justify-between">
-          <div>
-            <h3 class="text-base font-semibold border-b border-[var(--border)] pb-2 flex items-center justify-between">
-              <span>⚡ Electromagnet Summary</span>
-              <span class="text-xs text-[var(--muted-foreground)]">Activity 7.1 Page 136</span>
-            </h3>
-
-            <!-- Key Ways to Increase Strength -->
-            <div class="mt-4 space-y-3">
-              <h4 class="text-xs font-bold text-[var(--foreground)] uppercase tracking-wider">How to Increase Strength?</h4>
+            <!-- Bar Chart Canvas -->
+            <div class="h-36 bg-slate-900 rounded-xl p-3 border border-slate-800 flex items-end justify-around gap-3 relative">
               
-              <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl space-y-1.5 text-xs">
-                <div class="flex items-center gap-2 font-bold text-emerald-700 dark:text-emerald-300">
-                  <span>1.</span>
-                  <span>Increase number of batteries</span>
-                </div>
-                <p class="text-[11px] text-[var(--muted-foreground)] pl-5">Supplies more electrical current through the coil.</p>
+              <!-- Y-Axis Ticks (0, 3, 6, 9, 12) -->
+              <div class="absolute left-2 inset-y-2 flex flex-col justify-between text-[9px] font-mono text-slate-500">
+                <span>12</span><span>9</span><span>6</span><span>3</span><span>0</span>
               </div>
 
-              <div class="p-3 bg-blue-500/10 border border-blue-500/20 rounded-xl space-y-1.5 text-xs">
-                <div class="flex items-center gap-2 font-bold text-blue-700 dark:text-blue-300">
-                  <span>2.</span>
-                  <span>Increase number of turns of wire</span>
-                </div>
-                <p class="text-[11px] text-[var(--muted-foreground)] pl-5">Concentrates more magnetic flux around the iron core.</p>
+              <!-- Bar 1: Iron -->
+              <div class="flex flex-col items-center flex-1 h-full justify-end pl-5">
+                <span id="em-graph-val-iron" class="text-[9px] font-bold text-slate-400 mb-1">0</span>
+                <div id="em-graph-bar-iron" class="w-full bg-emerald-500 rounded-t transition-all duration-500 h-[0%]"></div>
+                <span class="text-[10px] font-bold mt-1 text-slate-300">Iron</span>
               </div>
-            </div>
 
-            <!-- Safety Warning Notice from Workbook Page 134 -->
-            <div class="mt-4 p-3 bg-rose-500/10 border border-rose-500/30 rounded-xl space-y-2 text-xs">
-              <h4 class="font-bold text-rose-600 dark:text-rose-400 flex items-center gap-1.5">
-                <span>⚠️ Safety Rules (Page 134)</span>
-              </h4>
-              <ul class="list-disc list-inside text-[11px] text-[var(--muted-foreground)] space-y-1">
-                <li>Do NOT connect electromagnet too long (gets hot!).</li>
-                <li>Do NOT touch exposed wires with bare hands.</li>
-                <li>NEVER connect to main electrical supply socket!</li>
-              </ul>
+              <!-- Bar 2: Steel -->
+              <div class="flex flex-col items-center flex-1 h-full justify-end">
+                <span id="em-graph-val-steel" class="text-[9px] font-bold text-slate-400 mb-1">0</span>
+                <div id="em-graph-bar-steel" class="w-full bg-blue-500 rounded-t transition-all duration-500 h-[0%]"></div>
+                <span class="text-[10px] font-bold mt-1 text-slate-300">Steel</span>
+              </div>
+
+              <!-- Bar 3: Copper -->
+              <div class="flex flex-col items-center flex-1 h-full justify-end">
+                <span id="em-graph-val-copper" class="text-[9px] font-bold text-slate-400 mb-1">0</span>
+                <div id="em-graph-bar-copper" class="w-full bg-amber-500 rounded-t transition-all duration-500 h-[0%]"></div>
+                <span class="text-[10px] font-bold mt-1 text-slate-300">Copper</span>
+              </div>
+
+              <!-- Bar 4: Aluminum -->
+              <div class="flex flex-col items-center flex-1 h-full justify-end">
+                <span id="em-graph-val-aluminum" class="text-[9px] font-bold text-slate-400 mb-1">0</span>
+                <div id="em-graph-bar-aluminum" class="w-full bg-purple-500 rounded-t transition-all duration-500 h-[0%]"></div>
+                <span class="text-[10px] font-bold mt-1 text-slate-300">Alum</span>
+              </div>
+
             </div>
           </div>
 
-          <div class="p-3 bg-[var(--background)] border border-[var(--border)] rounded-xl text-xs text-center text-[var(--muted-foreground)]">
-            Electromagnets are <strong>temporary magnets</strong>. They lose their magnetism when electricity is switched OFF!
+          <!-- Safety Box (Bottom Right) matching Screenshot 1 -->
+          <div class="bg-amber-500/10 border border-amber-500/30 rounded-2xl p-3 text-xs space-y-1.5 shadow-sm">
+            <div class="flex items-center gap-1.5 font-bold text-amber-400">
+              <span>⚡ Safety:</span>
+              <span class="font-normal text-amber-200">This is a virtual simulation. In real life, wires and batteries can become hot. Always work with an adult or teacher.</span>
+            </div>
+            <p class="text-[11px] text-amber-300/80 italic pt-1 border-t border-amber-500/20">
+              <strong>Think like a scientist:</strong> Compare different metals while the setup stays fixed at 2 batteries and 10 turns.
+            </p>
           </div>
 
         </div>
@@ -411,608 +513,344 @@
 
     </div>
 
-    <!-- ========================================== -->
-    <!-- TAB 3: FAIR TEST EXPLORER (PAGES 131 & 135) -->
-    <!-- ========================================== -->
-    <div id="content-fairtest" class="tab-content space-y-6 hidden">
-      
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
-        <div>
-          <h2 class="text-xl font-bold flex items-center gap-2">
-            <span>⚖️ Conducting a Fair Test Explorer</span>
+    <!-- ========================================================================= -->
+    <!-- MODULE 3: FAIR TESTING EXPLORER -->
+    <!-- ========================================================================= -->
+    <div id="module-fairtest" class="main-module space-y-4 hidden">
+      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 shadow-xl">
+        <h2 class="text-lg font-bold text-white flex items-center gap-2">
+          <span>⚖️ Fair Testing Explorer</span>
+        </h2>
+        <p class="text-xs text-slate-300 leading-relaxed">
+          In a fair test, change only <strong>ONE variable</strong> at a time (independent variable) while keeping all other variables constant (controlled variables).
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-emerald-400 font-bold block">✓ Fair Test Example:</span>
+            <p class="text-slate-300">Testing pole strength of Magnet A: Use the SAME iron nail material, SAME facing distance, and change ONLY the facing pole (N vs S).</p>
+          </div>
+          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+            <span class="text-rose-400 font-bold block">❌ Unfair Test Example (Workbook Page 144):</span>
+            <p class="text-slate-300">Comparing a steel nail facing N pole vs an iron nail facing S pole. Two variables changed (nail material AND facing pole), making it UNFAIR!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ========================================================================= -->
+    <!-- MODULE 4: MAGNETIC TOY SANDBOX -->
+    <!-- ========================================================================= -->
+    <div id="module-toy" class="main-module space-y-4 hidden">
+      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 shadow-xl">
+        <div class="flex justify-between items-center">
+          <h2 class="text-lg font-bold text-white flex items-center gap-2">
+            <span>🎣 Activity 7.2: Magnetic Toy Fishing Sandbox</span>
           </h2>
-          <p class="text-xs text-[var(--muted-foreground)] mt-1">
-            In a fair test, you change <strong>ONLY ONE variable</strong> at a time and keep all other variables the same.
-          </p>
+          <span class="text-xs font-mono font-bold text-amber-400 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">Score: <span id="toy-score-val">0</span> Fish</span>
         </div>
 
-        <!-- Interactive Drag-and-Drop / Categorizer -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-          
-          <!-- Column 1: Changed Variable -->
-          <div class="bg-amber-500/10 border-2 border-dashed border-amber-500/30 rounded-xl p-4 space-y-3">
-            <h3 class="text-sm font-bold text-amber-600 dark:text-amber-400 flex items-center gap-2">
-              <span>🎯 Variable to be Changed</span>
-            </h3>
-            <p class="text-[11px] text-[var(--muted-foreground)]">The single factor you are testing.</p>
-            <div id="slot-changed" class="min-h-[100px] bg-[var(--card)] rounded-lg p-3 border border-[var(--border)] flex flex-col gap-2">
-              <!-- Slotted Card -->
-            </div>
+        <div id="toy-sea-canvas" class="relative bg-gradient-to-b from-blue-900 to-indigo-950 rounded-2xl h-72 border border-blue-800 overflow-hidden flex items-center justify-around p-4 cursor-crosshair">
+          <div onclick="catchToyFish('steel')" class="p-3 bg-teal-500/20 border border-teal-400/40 rounded-full text-white font-bold text-xs flex items-center gap-2 cursor-pointer hover:scale-110 transition">
+            <span class="text-2xl">🐟</span>
+            <span>Steel Clip Fish</span>
           </div>
-
-          <!-- Column 2: Kept the Same -->
-          <div class="bg-blue-500/10 border-2 border-dashed border-blue-500/30 rounded-xl p-4 space-y-3">
-            <h3 class="text-sm font-bold text-blue-600 dark:text-blue-400 flex items-center gap-2">
-              <span>🔒 Variables Kept the Same</span>
-            </h3>
-            <p class="text-[11px] text-[var(--muted-foreground)]">Factors that must remain identical.</p>
-            <div id="slot-kept" class="min-h-[100px] bg-[var(--card)] rounded-lg p-3 border border-[var(--border)] flex flex-col gap-2">
-              <!-- Slotted Cards -->
-            </div>
+          <div onclick="catchToyFish('plastic')" class="p-3 bg-rose-500/20 border border-rose-400/40 rounded-full text-white font-bold text-xs flex items-center gap-2 cursor-pointer hover:scale-110 transition">
+            <span class="text-2xl">🐠</span>
+            <span>Plastic Fish (Non-magnetic)</span>
           </div>
-
-          <!-- Column 3: Measured Variable -->
-          <div class="bg-emerald-500/10 border-2 border-dashed border-emerald-500/30 rounded-xl p-4 space-y-3">
-            <h3 class="text-sm font-bold text-emerald-600 dark:text-emerald-400 flex items-center gap-2">
-              <span>📏 Variable to be Measured</span>
-            </h3>
-            <p class="text-[11px] text-[var(--muted-foreground)]">The outcome or result observed.</p>
-            <div id="slot-measured" class="min-h-[100px] bg-[var(--card)] rounded-lg p-3 border border-[var(--border)] flex flex-col gap-2">
-              <!-- Slotted Card -->
-            </div>
+          <div onclick="catchToyFish('iron')" class="p-3 bg-[#e9edc9]/20 border border-[#a3b18a]/40 rounded-full text-white font-bold text-xs flex items-center gap-2 cursor-pointer hover:scale-110 transition">
+            <span class="text-2xl">🐡</span>
+            <span>Iron Ring Fish</span>
           </div>
-
         </div>
-
-        <!-- Mode Selector for Fair Test Setup -->
-        <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 bg-[var(--background)] p-4 rounded-xl border border-[var(--border)]">
-          <div>
-            <label class="text-xs font-bold block mb-1">Select Experiment Scenario:</label>
-            <select id="fairtest-scenario" onchange="loadFairTestScenario()" class="text-xs bg-[var(--card)] border border-[var(--border)] rounded-lg p-2 font-semibold">
-              <option value="stroke">Part A: Testing Number of Strokes on Nail (Page 131)</option>
-              <option value="electric">Part B: Testing Number of Turns of Wire (Page 135)</option>
-            </select>
-          </div>
-
-          <button onclick="checkFairTestSetup()" class="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition shadow">
-            Check Fair Test Classification
-          </button>
-        </div>
-
-        <!-- Feedback alert -->
-        <div id="fairtest-feedback" class="hidden p-4 rounded-xl text-xs font-semibold"></div>
-
       </div>
-
-    </div>
-
-    <!-- ========================================== -->
-    <!-- TAB 4: POLE & MAGNET STRENGTH TEST LAB -->
-    <!-- ========================================== -->
-    <div id="content-poles" class="tab-content space-y-6 hidden">
-      
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        
-        <!-- Experiment 1: Bar Magnet Regions (A, B, C, D) Page 145 -->
-        <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-4">
-          <div class="border-b border-[var(--border)] pb-3">
-            <h3 class="text-base font-bold flex items-center gap-2">
-              <span>📍 Pole Strength Explorer (Page 145)</span>
-            </h3>
-            <p class="text-xs text-[var(--muted-foreground)]">Which parts of a bar magnet are the strongest?</p>
-          </div>
-
-          <!-- Interactive Bar Magnet Diagram -->
-          <div class="bg-slate-900 p-4 rounded-xl space-y-4">
-            <div class="flex w-full h-14 rounded-xl overflow-hidden border-2 border-slate-700 shadow-lg text-white font-bold font-mono">
-              <div onclick="testMagnetRegion('B', 19)" class="w-1/4 bg-blue-600 hover:bg-blue-500 flex flex-col items-center justify-center cursor-pointer transition">
-                <span>Region B</span>
-                <span class="text-[10px] text-blue-200 font-normal">Pole (S)</span>
-              </div>
-              <div onclick="testMagnetRegion('A', 5)" class="w-1/4 bg-slate-700 hover:bg-slate-600 flex flex-col items-center justify-center cursor-pointer transition border-x border-slate-800">
-                <span>Region A</span>
-                <span class="text-[10px] text-slate-300 font-normal">Middle-Left</span>
-              </div>
-              <div onclick="testMagnetRegion('D', 5)" class="w-1/4 bg-slate-700 hover:bg-slate-600 flex flex-col items-center justify-center cursor-pointer transition border-r border-slate-800">
-                <span>Region D</span>
-                <span class="text-[10px] text-slate-300 font-normal">Middle-Right</span>
-              </div>
-              <div onclick="testMagnetRegion('C', 19)" class="w-1/4 bg-red-600 hover:bg-red-500 flex flex-col items-center justify-center cursor-pointer transition">
-                <span>Region C</span>
-                <span class="text-[10px] text-red-200 font-normal">Pole (N)</span>
-              </div>
-            </div>
-            <p class="text-center text-xs text-slate-400">Click any region to test how many iron nails it attracts!</p>
-          </div>
-
-          <!-- Live Graph Visualization -->
-          <div class="space-y-2">
-            <span class="text-xs font-semibold text-[var(--foreground)] block">Clips Attracted Graph (Workbook Q6):</span>
-            <div class="h-36 bg-[var(--background)] p-4 rounded-xl border border-[var(--border)] flex items-end justify-around gap-4">
-              <div class="flex flex-col items-center flex-1 h-full justify-end">
-                <span class="text-[10px] font-bold text-slate-400 mb-1">5</span>
-                <div class="w-full bg-amber-500 rounded-t-md transition-all duration-500 h-[25%]"></div>
-                <span class="text-xs font-bold mt-1">A</span>
-              </div>
-              <div class="flex flex-col items-center flex-1 h-full justify-end">
-                <span class="text-[10px] font-bold text-emerald-500 mb-1">19</span>
-                <div class="w-full bg-emerald-500 rounded-t-md transition-all duration-500 h-[95%]"></div>
-                <span class="text-xs font-bold mt-1">B (Pole)</span>
-              </div>
-              <div class="flex flex-col items-center flex-1 h-full justify-end">
-                <span class="text-[10px] font-bold text-emerald-500 mb-1">19</span>
-                <div class="w-full bg-emerald-500 rounded-t-md transition-all duration-500 h-[95%]"></div>
-                <span class="text-xs font-bold mt-1">C (Pole)</span>
-              </div>
-              <div class="flex flex-col items-center flex-1 h-full justify-end">
-                <span class="text-[10px] font-bold text-slate-400 mb-1">5</span>
-                <div class="w-full bg-amber-500 rounded-t-md transition-all duration-500 h-[25%]"></div>
-                <span class="text-xs font-bold mt-1">D</span>
-              </div>
-            </div>
-          </div>
-
-          <div class="p-3 bg-emerald-500/10 border border-emerald-500/20 rounded-xl text-xs text-emerald-700 dark:text-emerald-300">
-            <strong>Conclusion:</strong> The magnetic force is <strong>strongest at the two poles (B & C)</strong> and weakest in the middle (A & D).
-          </div>
-        </div>
-
-        <!-- Experiment 2: Distance of Attraction Simulator (Page 143 Q5) -->
-        <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-4">
-          <div class="border-b border-[var(--border)] pb-3">
-            <h3 class="text-base font-bold flex items-center gap-2">
-              <span>📏 Distance of Attraction Test (Page 143)</span>
-            </h3>
-            <p class="text-xs text-[var(--muted-foreground)]">Move magnets toward a steel pin to measure attraction distance.</p>
-          </div>
-
-          <!-- Interactive Track -->
-          <div class="bg-slate-900 p-4 rounded-xl space-y-4 relative overflow-hidden">
-            <div class="flex justify-between items-center text-xs text-slate-300 mb-2">
-              <span>Select Magnet:</span>
-              <div class="flex gap-2">
-                <button onclick="selectDistanceMagnet('A', 5)" class="px-2.5 py-1 bg-blue-600 text-white rounded text-xs">Magnet A (5cm)</button>
-                <button onclick="selectDistanceMagnet('B', 8)" class="px-2.5 py-1 bg-emerald-600 text-white rounded text-xs">Magnet B (8cm)</button>
-                <button onclick="selectDistanceMagnet('C', 2)" class="px-2.5 py-1 bg-rose-600 text-white rounded text-xs">Magnet C (2cm)</button>
-              </div>
-            </div>
-
-            <!-- Distance Ruler Visualization -->
-            <div class="relative h-20 bg-slate-950 rounded-lg flex items-center justify-between px-6 border border-slate-800">
-              <!-- Steel Pin -->
-              <div class="flex items-center gap-1">
-                <div class="w-2 h-6 bg-slate-300 rounded-l"></div>
-                <div class="w-8 h-2 bg-slate-400"></div>
-                <span class="text-[10px] text-slate-300">Steel Pin</span>
-              </div>
-
-              <!-- Distance Arrow Indicator -->
-              <div id="distance-arrow-indicator" class="flex-1 px-4 flex flex-col items-center">
-                <span id="dist-cm-text" class="text-xs font-mono font-bold text-amber-400">Distance: 5 cm</span>
-                <div class="w-full h-0.5 bg-amber-400 relative flex items-center justify-between">
-                  <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
-                  <div class="w-1.5 h-1.5 rounded-full bg-amber-400"></div>
-                </div>
-              </div>
-
-              <!-- Magnet -->
-              <div class="flex w-24 h-8 rounded overflow-hidden font-bold text-xs text-white shadow">
-                <div class="w-1/2 bg-red-600 flex items-center justify-center">N</div>
-                <div class="w-1/2 bg-blue-600 flex items-center justify-center">S</div>
-              </div>
-            </div>
-          </div>
-
-          <!-- Comparison Table -->
-          <div class="overflow-x-auto">
-            <table class="w-full text-xs text-left">
-              <thead class="bg-[var(--background)] text-[var(--muted-foreground)] uppercase">
-                <tr>
-                  <th class="p-2 border-b border-[var(--border)]">Magnet</th>
-                  <th class="p-2 border-b border-[var(--border)]">Distance of Attraction</th>
-                  <th class="p-2 border-b border-[var(--border)]">Strength Rank</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-[var(--border)] font-mono">
-                <tr>
-                  <td class="p-2 font-bold text-blue-500">Magnet A</td>
-                  <td class="p-2">5 cm</td>
-                  <td class="p-2">Moderate</td>
-                </tr>
-                <tr>
-                  <td class="p-2 font-bold text-emerald-500">Magnet B</td>
-                  <td class="p-2">8 cm</td>
-                  <td class="p-2 font-bold text-emerald-600 dark:text-emerald-400">Strongest</td>
-                </tr>
-                <tr>
-                  <td class="p-2 font-bold text-rose-500">Magnet C</td>
-                  <td class="p-2">2 cm</td>
-                  <td class="p-2 font-bold text-rose-600 dark:text-rose-400">Weakest</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-
-          <div class="p-3 bg-amber-500/10 border border-amber-500/20 rounded-xl text-xs text-amber-700 dark:text-amber-300">
-            <strong>Key Concept:</strong> A stronger magnet can attract magnetic materials from a <strong>further distance</strong>!
-          </div>
-
-        </div>
-
-      </div>
-
-    </div>
-
-    <!-- ========================================== -->
-    <!-- TAB 5: MAGNETIC TOY SANDBOX (ACTIVITY 7.2) -->
-    <!-- ========================================== -->
-    <div id="content-toy" class="tab-content space-y-6 hidden">
-      
-      <div class="bg-[var(--card)] border border-[var(--border)] rounded-2xl p-6 shadow-sm space-y-6">
-        <div>
-          <h2 class="text-xl font-bold flex items-center gap-2">
-            <span>🎣 Activity 7.2: Magnetic Toy Playground</span>
-          </h2>
-          <p class="text-xs text-[var(--muted-foreground)]">Apply magnetic attraction properties to play the interactive magnetic fishing game!</p>
-        </div>
-
-        <!-- Fishing Game Arena -->
-        <div id="toy-arena" class="relative bg-gradient-to-b from-blue-900 to-indigo-950 rounded-2xl h-80 overflow-hidden border border-blue-800 p-4 flex flex-col justify-between cursor-crosshair">
-          
-          <!-- Top Fishing Wand (Follows Cursor) -->
-          <div id="fishing-rod" class="absolute top-2 left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none transition-all duration-75">
-            <div class="w-1 h-16 bg-amber-400"></div>
-            <!-- Magnet Hook -->
-            <div class="w-10 h-6 bg-red-600 rounded-b-lg border-2 border-white flex items-center justify-center text-white font-bold text-[10px] shadow-lg">
-              MAGNET
-            </div>
-          </div>
-
-          <div class="flex justify-between items-center text-white text-xs font-bold relative z-10">
-            <span>Score: <span id="toy-score" class="text-amber-300 font-mono text-base">0</span> Fish Caught</span>
-            <span class="text-[10px] bg-blue-800/80 px-2 py-1 rounded border border-blue-600">Move mouse / tap to position magnetic rod</span>
-          </div>
-
-          <!-- Swimming Fish Container -->
-          <div id="sea-objects" class="relative flex-1 w-full flex items-center justify-around">
-            <!-- Fish 1 (Steel clip attached - Magnetic) -->
-            <div id="fish-1" onclick="catchFish(1, true)" class="toy-fish cursor-pointer flex items-center gap-1 bg-teal-500/20 text-teal-200 border border-teal-400/40 p-2 rounded-full transition transform hover:scale-110">
-              <span class="text-lg">🐟</span>
-              <span class="text-[10px] bg-slate-300 text-slate-900 font-bold px-1 rounded">Steel Clip</span>
-            </div>
-
-            <!-- Non-Magnetic Trash (Plastic bottle) -->
-            <div id="fish-2" onclick="catchFish(2, false)" class="toy-fish cursor-pointer flex items-center gap-1 bg-rose-500/20 text-rose-200 border border-rose-400/40 p-2 rounded-full transition transform hover:scale-110">
-              <span class="text-lg">🍾</span>
-              <span class="text-[10px] bg-rose-900 text-rose-200 font-bold px-1 rounded">Plastic Bottle</span>
-            </div>
-
-            <!-- Fish 3 (Steel pin attached - Magnetic) -->
-            <div id="fish-3" onclick="catchFish(3, true)" class="toy-fish cursor-pointer flex items-center gap-1 bg-cyan-500/20 text-cyan-200 border border-cyan-400/40 p-2 rounded-full transition transform hover:scale-110">
-              <span class="text-lg">🐠</span>
-              <span class="text-[10px] bg-slate-300 text-slate-900 font-bold px-1 rounded">Steel Pin</span>
-            </div>
-          </div>
-
-          <div id="toy-feedback-msg" class="text-center text-xs text-amber-300 font-bold min-h-[20px]">
-            Click/Tap magnetic objects (with steel clips) to catch them!
-          </div>
-
-        </div>
-
-      </div>
-
     </div>
 
   </div>
 
+  <!-- Info Modal -->
+  <div id="info-modal" class="fixed inset-0 bg-slate-950/80 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="bg-slate-900 border border-slate-700 rounded-2xl max-w-md w-full p-6 text-slate-200 space-y-4 shadow-2xl">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+        <h3 id="modal-title" class="font-bold text-white text-sm">Simulation Guidelines</h3>
+        <button onclick="toggleInfoModal('')" class="text-slate-400 hover:text-white font-bold text-base">✕</button>
+      </div>
+      <p id="modal-body" class="text-xs leading-relaxed text-slate-300">
+        This simulation models Primary Science Chapter 7 experiments. Use controls to choose materials, stroke directions, and test magnetic strength!
+      </p>
+      <button onclick="toggleInfoModal('')" class="w-full py-2 bg-blue-600 hover:bg-blue-500 text-white font-bold text-xs rounded-xl shadow">
+        Got it!
+      </button>
+    </div>
+  </div>
+
+  <!-- SCRIPT LOGIC -->
   <script>
-    // Global State Variables
-    let currentStrokeCount = 0;
-    let strokeMethodMode = 'correct';
-    let isCircuitOn = false;
-    let electromagnetTurns = 10;
-    let electromagnetBatteries = 1;
-    let heatTimer = null;
-    let heatSeconds = 0;
-
-    // Initialize Dipoles on Load
-    window.addEventListener('DOMContentLoaded', () => {
-      initDipoles();
-      renderWireCoils();
-      renderBatteries();
-      loadFairTestScenario();
-      setupToyRodTracking();
-    });
-
-    // Tab Navigation Switcher
-    function switchTab(tabId) {
+    // Global Navigation
+    function switchMainTab(tabId) {
       document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(content => content.classList.add('hidden'));
+      document.querySelectorAll('.main-module').forEach(mod => mod.classList.add('hidden'));
 
-      document.getElementById(`tab-${tabId}`).classList.add('active');
-      document.getElementById(`content-${tabId}`).classList.remove('hidden');
+      document.getElementById(`nav-btn-${tabId}`).classList.add('active');
+      document.getElementById(`module-${tabId}`).classList.remove('hidden');
     }
 
-    // ===============================================
-    // PART A: STROKE METHOD SIMULATOR LOGIC
-    // ===============================================
-    function initDipoles() {
-      const container = document.getElementById('dipoles-container');
-      container.innerHTML = '';
-      for (let i = 0; i < 12; i++) {
-        const randomDeg = Math.floor(Math.random() * 360);
-        const arrow = document.createElement('div');
-        arrow.className = 'dipole-arrow text-slate-300 text-xs transition-transform duration-500 font-bold';
-        arrow.style.transform = `rotate(${randomDeg}deg)`;
-        arrow.innerHTML = '➔';
-        container.appendChild(arrow);
+    function toggleInfoModal(type) {
+      const modal = document.getElementById('info-modal');
+      const title = document.getElementById('modal-title');
+      const body = document.getElementById('modal-body');
+
+      if (!type) {
+        modal.classList.add('hidden');
+        return;
       }
+
+      if (type === 'stroke') {
+        title.innerText = '🧲 Stroke Method Lab Guide';
+        body.innerText = 'In the Stroke Method lab (Activity 7.1), select a material (Iron, Steel, Copper, Plastic), choose stroking direction (Same Direction vs Back and Forth), set number of strokes, and lower the nail to the paperclip tray to observe how many clips stick!';
+      } else if (type === 'electromagnet') {
+        title.innerText = '⚡ Electromagnet Metal Investigation Guide';
+        body.innerText = 'This investigation tests if an electromagnet can be made from all metals. Select Iron, Steel, Copper, or Aluminum. Keep controlled variables fixed (2 batteries, 10 turns of wire) and test how many paper clips each metal core attracts!';
+      }
+      modal.classList.remove('hidden');
     }
 
-    function doStroke(count) {
-      const mode = document.getElementById('stroke-direction-mode').value;
-      const barMagnet = document.getElementById('bar-magnet-container');
+    // =====================================================================
+    // MODULE 1: STROKE METHOD LAB (MATCHING SCREENSHOT 2)
+    // =====================================================================
+    let strokeState = {
+      material: '',
+      direction: 'same',
+      strokes: 1,
+      testCount: 0,
+      currentClipsAttracted: 0
+    };
+
+    function updateStrokeControls() {
+      const mat = document.getElementById('stroke-material-select').value;
+      strokeState.material = mat;
+      const label = document.getElementById('stroke-workbench-label');
+      const nail = document.getElementById('stroke-workbench-nail');
       
-      barMagnet.classList.add('animate-stroke');
-      setTimeout(() => barMagnet.classList.remove('animate-stroke'), 800);
-
-      if (mode === 'correct') {
-        currentStrokeCount += count;
-      } else {
-        // Back & forth disrupts alignment
-        currentStrokeCount = Math.max(0, currentStrokeCount - count);
+      if (!mat) {
+        label.innerText = '-- select material --';
+        document.getElementById('btn-test-lower').disabled = true;
+        return;
       }
 
-      document.getElementById('stroke-count-display').innerText = currentStrokeCount;
-      updateDipoleAlignment();
-      updateGlobalStats();
+      const matNames = { iron: 'Iron Nail', steel: 'Steel Nail', copper: 'Copper Rod', plastic: 'Plastic Rod' };
+      label.innerText = matNames[mat];
+      document.getElementById('btn-test-lower').disabled = false;
     }
 
-    function updateDipoleAlignment() {
-      const dipoles = document.querySelectorAll('.dipole-arrow');
-      const alignmentPercent = Math.min(100, (currentStrokeCount / 50) * 100);
+    function setStrokeDirection(dir) {
+      strokeState.direction = dir;
+      const btnSame = document.getElementById('btn-dir-same');
+      const btnBackForth = document.getElementById('btn-dir-backforth');
 
-      dipoles.forEach(arrow => {
-        if (strokeMethodMode === 'correct') {
-          // Orient towards 0 deg (horizontal alignment)
-          const spread = Math.max(0, 180 - (alignmentPercent * 1.8));
-          const offset = (Math.random() - 0.5) * spread;
-          arrow.style.transform = `rotate(${offset}deg)`;
-          arrow.style.color = alignmentPercent > 60 ? '#34d399' : '#cbd5e1';
+      if (dir === 'same') {
+        btnSame.className = 'py-2 px-3 rounded-lg border border-[#bc6c25] bg-[#dda15e] text-white transition text-center shadow flex items-center justify-center gap-1';
+        btnBackForth.className = 'py-2 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition text-center flex items-center justify-center gap-1';
+      } else {
+        btnBackForth.className = 'py-2 px-3 rounded-lg border border-[#bc6c25] bg-[#dda15e] text-white transition text-center shadow flex items-center justify-center gap-1';
+        btnSame.className = 'py-2 px-3 rounded-lg border border-slate-300 bg-white text-slate-700 hover:bg-slate-50 transition text-center flex items-center justify-center gap-1';
+      }
+    }
+
+    function onStrokeSliderInput() {
+      const val = document.getElementById('stroke-slider').value;
+      strokeState.strokes = parseInt(val);
+      document.getElementById('stroke-slider-badge').innerText = `Strokes: ${val}`;
+    }
+
+    function executeStrokeSimulation() {
+      if (!strokeState.material) {
+        alert('Please select a nail material in Step 1 first!');
+        return;
+      }
+
+      const magnet = document.getElementById('stroke-workbench-magnet');
+      const badge = document.getElementById('stroke-progress-badge');
+      
+      magnet.style.opacity = '1';
+      magnet.className = `absolute bottom-16 left-16 z-20 flex flex-col items-center ${strokeState.direction === 'same' ? 'animate-stroke-single' : 'animate-stroke-backforth'}`;
+      
+      badge.innerText = `Stroking... ${strokeState.strokes} / 50`;
+
+      setTimeout(() => {
+        magnet.style.opacity = '0';
+        magnet.className = 'absolute bottom-16 left-16 z-20 flex flex-col items-center opacity-0 pointer-events-none';
+        badge.innerText = `Strokes: ${strokeState.strokes} / 50 Complete!`;
+      }, 800);
+    }
+
+    function runLowerNailTest() {
+      if (!strokeState.material) return;
+
+      const nail = document.getElementById('test-lowering-nail');
+      const attachedClipsDiv = document.getElementById('test-attached-clips');
+      const clipsBadge = document.getElementById('test-clips-badge');
+
+      // Lower nail to tray
+      nail.style.transform = 'translateY(55px)';
+
+      // Calculate magnetic clips physics
+      let clipsCount = 0;
+      const mat = strokeState.material;
+      const dir = strokeState.direction;
+      const strokes = strokeState.strokes;
+
+      if ((mat === 'iron' || mat === 'steel') && dir === 'same') {
+        // Magnetic material stroked in same direction
+        clipsCount = Math.min(10, Math.ceil((strokes / 50) * 10));
+      } else {
+        // Back & forth OR non-magnetic material (Copper, Plastic)
+        clipsCount = 0;
+      }
+
+      strokeState.currentClipsAttracted = clipsCount;
+
+      setTimeout(() => {
+        // Raise nail back up with attached clips
+        nail.style.transform = 'translateY(0)';
+        
+        let clipsHtml = '';
+        for (let i = 0; i < clipsCount; i++) {
+          clipsHtml += `<span class="text-xs clip-pop">📎</span>`;
         }
+        attachedClipsDiv.innerHTML = clipsHtml;
+        clipsBadge.innerText = `Clips: ${clipsCount}`;
+
+        // Log to table
+        logStrokeResultToTable(mat, dir, strokes, clipsCount);
+      }, 600);
+    }
+
+    function logStrokeResultToTable(mat, dir, strokes, clips) {
+      strokeState.testCount++;
+      const emptyRow = document.getElementById('stroke-row-empty');
+      if (emptyRow) emptyRow.remove();
+
+      const tbody = document.getElementById('stroke-table-rows');
+      const matNames = { iron: 'Iron', steel: 'Steel', copper: 'Copper', plastic: 'Plastic' };
+      const dirNames = { same: 'Same Dir', backforth: 'Back & Forth' };
+
+      const tr = document.createElement('tr');
+      tr.className = 'hover:bg-amber-50';
+      tr.innerHTML = `
+        <td class="p-1.5 border border-[#d4a373] font-bold">${strokeState.testCount}</td>
+        <td class="p-1.5 border border-[#d4a373]">${matNames[mat]}</td>
+        <td class="p-1.5 border border-[#d4a373]">${dirNames[dir]}</td>
+        <td class="p-1.5 border border-[#d4a373]">${strokes}</td>
+        <td class="p-1.5 border border-[#d4a373] font-bold ${clips > 0 ? 'text-[#2b9348]' : 'text-slate-400'}">${clips}</td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function retestSameMaterial() {
+      document.getElementById('test-attached-clips').innerHTML = '';
+      document.getElementById('test-clips-badge').innerText = 'Clips: 0';
+      document.getElementById('test-lowering-nail').style.transform = 'translateY(0)';
+    }
+
+    function chooseNewMaterial() {
+      document.getElementById('stroke-material-select').value = '';
+      updateStrokeControls();
+      retestSameMaterial();
+    }
+
+    function clearStrokeTable() {
+      strokeState.testCount = 0;
+      document.getElementById('stroke-table-rows').innerHTML = `
+        <tr id="stroke-row-empty"><td colspan="5" class="p-3 text-center text-slate-400 italic font-sans text-xs">No results yet</td></tr>
+      `;
+    }
+
+    // =====================================================================
+    // MODULE 2: ELECTROMAGNET METAL LAB (MATCHING SCREENSHOT 1)
+    // =====================================================================
+    let emState = {
+      selectedMetal: 'iron',
+      testCount: 0,
+      results: { iron: 0, steel: 0, copper: 0, aluminum: 0 }
+    };
+
+    function onEmMetalChange() {
+      const val = document.getElementById('em-metal-select').value;
+      emState.selectedMetal = val;
+      const metalNames = { iron: 'Iron', steel: 'Steel', copper: 'Copper', aluminum: 'Aluminum' };
+      document.getElementById('em-core-label').innerText = metalNames[val];
+    }
+
+    function runElectromagnetTest() {
+      const metal = emState.selectedMetal;
+      let clipsCount = 0;
+
+      if (metal === 'iron') clipsCount = 12; // Maximum attraction
+      else if (metal === 'steel') clipsCount = 8; // Good attraction
+      else if (metal === 'copper' || metal === 'aluminum') clipsCount = 0; // Non-magnetic
+
+      emState.results[metal] = clipsCount;
+
+      // Outcome panel display
+      document.getElementById('em-outcome-count').innerText = clipsCount;
+
+      // Animate clips grid
+      const clipElems = document.querySelectorAll('.em-clip');
+      clipElems.forEach((c, idx) => {
+        if (idx < clipsCount) {
+          c.className = 'em-clip text-lg transform rotate-12 scale-110 text-emerald-400 transition-all duration-300';
+        } else {
+          c.className = 'em-clip text-lg transform rotate-45 text-slate-500 opacity-40 transition-all duration-300';
+        }
+      });
+
+      // Update Bar Graph
+      const percent = (clipsCount / 12) * 100;
+      document.getElementById(`em-graph-bar-${metal}`).style.height = `${percent}%`;
+      document.getElementById(`em-graph-val-${metal}`).innerText = clipsCount;
+
+      // Log to Results Table matching Screenshot 1
+      logElectromagnetTable(metal, clipsCount);
+    }
+
+    function logElectromagnetTable(metal, clips) {
+      emState.testCount++;
+      const emptyRow = document.getElementById('em-table-empty');
+      if (emptyRow) emptyRow.remove();
+
+      const tbody = document.getElementById('em-table-body');
+      const metalNames = { iron: 'Iron', steel: 'Steel', copper: 'Copper', aluminum: 'Aluminum' };
+
+      const tr = document.createElement('tr');
+      tr.className = 'hover:bg-slate-900';
+      tr.innerHTML = `
+        <td class="p-2 border-r border-slate-800 font-bold text-slate-300">Test ${emState.testCount}</td>
+        <td class="p-2 border-r border-slate-800">${metalNames[metal]}</td>
+        <td class="p-2 border-r border-slate-800 font-bold ${clips > 0 ? 'text-emerald-400' : 'text-slate-400'}">${clips}</td>
+        <td class="p-2"><span class="text-[10px] bg-blue-500/20 text-blue-300 px-1.5 py-0.5 rounded">Bar Plotted</span></td>
+      `;
+      tbody.appendChild(tr);
+    }
+
+    function resetElectromagnetTest() {
+      document.getElementById('em-outcome-count').innerText = '0';
+      const clipElems = document.querySelectorAll('.em-clip');
+      clipElems.forEach(c => {
+        c.className = 'em-clip text-lg transform rotate-45 transition-all duration-300';
       });
     }
 
-    function testNailAttraction() {
-      const clipsContainer = document.getElementById('attached-paperclips');
-      let clipCount = 0;
-
-      if (currentStrokeCount >= 100) clipCount = 9;
-      else if (currentStrokeCount >= 50) clipCount = 5;
-      else if (currentStrokeCount >= 30) clipCount = 3;
-      else if (currentStrokeCount >= 10) clipCount = 1;
-      else clipCount = 0;
-
-      if (clipCount === 0) {
-        clipsContainer.innerHTML = `<span class="text-xs text-rose-400 italic">0 clips attached (Not magnetized enough)</span>`;
+    // Toy Sandbox Catch
+    function catchToyFish(type) {
+      if (type === 'steel' || type === 'iron') {
+        const val = parseInt(document.getElementById('toy-score-val').innerText) + 1;
+        document.getElementById('toy-score-val').innerText = val;
+        alert(`🌟 Caught a magnetic ${type} fish!`);
       } else {
-        let html = '';
-        for (let i = 0; i < clipCount; i++) {
-          html += `<span class="text-sm transform rotate-45 text-amber-400">📎</span>`;
-        }
-        clipsContainer.innerHTML = html;
+        alert('❌ Plastic is non-magnetic! The magnetic wand cannot catch plastic fish.');
       }
-
-      // Log to table
-      if (currentStrokeCount >= 10) document.getElementById('clips-10').innerText = '1 Clip';
-      if (currentStrokeCount >= 50) document.getElementById('clips-50').innerText = '5 Clips';
-      if (currentStrokeCount >= 100) document.getElementById('clips-100').innerText = '9 Clips';
-
-      document.getElementById('global-clip-count').innerText = clipCount;
-    }
-
-    function resetStrokeLab() {
-      currentStrokeCount = 0;
-      document.getElementById('stroke-count-display').innerText = '0';
-      document.getElementById('attached-paperclips').innerHTML = `<span class="text-xs text-slate-500 italic">No clips attached yet</span>`;
-      document.getElementById('clips-10').innerText = '-';
-      document.getElementById('clips-50').innerText = '-';
-      document.getElementById('clips-100').innerText = '-';
-      initDipoles();
-      updateGlobalStats();
-    }
-
-    function checkStrokeConclusion() {
-      const q1 = document.getElementById('stroke-q1').value;
-      const q2 = document.getElementById('stroke-q2').value;
-      const feedback = document.getElementById('stroke-conclusion-feedback');
-
-      if (q1 === 'increases' && q2 === 'increases') {
-        feedback.className = 'text-xs font-semibold p-2 rounded-lg bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 block';
-        feedback.innerText = '✅ Correct! As strokes increase, clips attracted increases!';
-      } else if (q1 && q2) {
-        feedback.className = 'text-xs font-semibold p-2 rounded-lg bg-rose-500/20 text-rose-600 dark:text-rose-300 block';
-        feedback.innerText = '❌ Try again! Hint: More strokes make a stronger magnet.';
-      }
-    }
-
-    // ===============================================
-    // PART B: ELECTROMAGNET SIMULATOR LOGIC
-    // ===============================================
-    function updateElectromagnetParams() {
-      electromagnetTurns = parseInt(document.getElementById('slider-turns').value);
-      electromagnetBatteries = parseInt(document.getElementById('slider-batteries').value);
-
-      document.getElementById('slider-turns-val').innerText = `${electromagnetTurns} Turns`;
-      document.getElementById('slider-batteries-val').innerText = `${electromagnetBatteries} ${electromagnetBatteries === 1 ? 'Battery' : 'Batteries'}`;
-      document.getElementById('turns-counter-badge').innerText = `${electromagnetTurns} Turns of Wire`;
-
-      renderWireCoils();
-      renderBatteries();
-
-      if (isCircuitOn) {
-        calculateElectromagnetForce();
-      }
-    }
-
-    function renderWireCoils() {
-      const container = document.getElementById('wire-coils-render');
-      container.innerHTML = '';
-      for (let i = 0; i < electromagnetTurns; i++) {
-        const coil = document.createElement('div');
-        coil.className = 'w-2 h-full bg-amber-600 rounded-full border-x border-amber-800 shadow-sm';
-        container.appendChild(coil);
-      }
-    }
-
-    function renderBatteries() {
-      const container = document.getElementById('battery-icons-container');
-      container.innerHTML = '';
-      for (let i = 0; i < electromagnetBatteries; i++) {
-        const bat = document.createElement('div');
-        bat.className = 'w-6 h-9 bg-amber-500 rounded border border-slate-700 flex flex-col justify-between p-0.5 text-[8px] font-bold text-slate-900 text-center shadow';
-        bat.innerHTML = '<span>+</span><span>-</span>';
-        container.appendChild(bat);
-      }
-    }
-
-    function toggleCircuit() {
-      isCircuitOn = !isCircuitOn;
-      const switchBtn = document.getElementById('circuit-switch-btn');
-      const switchText = document.getElementById('switch-status-text');
-      const switchDot = document.getElementById('switch-status-dot');
-      const fieldOverlay = document.getElementById('magnetic-field-overlay');
-
-      if (isCircuitOn) {
-        switchBtn.className = 'px-5 py-2.5 bg-emerald-600 hover:bg-emerald-500 text-white font-bold rounded-xl text-xs shadow-lg transition flex items-center gap-2';
-        switchText.innerText = 'SWITCH ON';
-        switchDot.className = 'w-2.5 h-2.5 rounded-full bg-emerald-200 animate-ping';
-        fieldOverlay.style.opacity = '1';
-
-        calculateElectromagnetForce();
-        startHeatSafetyTimer();
-      } else {
-        switchBtn.className = 'px-5 py-2.5 bg-rose-600 hover:bg-rose-500 text-white font-bold rounded-xl text-xs shadow-lg transition flex items-center gap-2';
-        switchText.innerText = 'SWITCH OFF';
-        switchDot.className = 'w-2.5 h-2.5 rounded-full bg-white';
-        fieldOverlay.style.opacity = '0';
-
-        document.getElementById('electric-clips-attached').innerHTML = `<span class="text-xs text-slate-500 italic">Switch OFF - No magnetic field</span>`;
-        document.getElementById('electric-force-display').innerText = '0 Clips';
-        stopHeatSafetyTimer();
-      }
-    }
-
-    function calculateElectromagnetForce() {
-      const clipCount = Math.floor((electromagnetTurns * electromagnetBatteries) / 6);
-      const container = document.getElementById('electric-clips-attached');
-
-      let html = '';
-      for (let i = 0; i < clipCount; i++) {
-        html += `<span class="text-sm transform rotate-45 text-emerald-400">📎</span>`;
-      }
-      container.innerHTML = html;
-      document.getElementById('electric-force-display').innerText = `${clipCount} Clips`;
-      document.getElementById('global-clip-count').innerText = clipCount;
-      updateGlobalStats();
-    }
-
-    function startHeatSafetyTimer() {
-      stopHeatSafetyTimer();
-      heatSeconds = 0;
-      heatTimer = setInterval(() => {
-        heatSeconds++;
-        if (heatSeconds >= 8) {
-          document.getElementById('heat-warning-badge').classList.remove('hidden');
-        }
-      }, 1000);
-    }
-
-    function stopHeatSafetyTimer() {
-      clearInterval(heatTimer);
-      document.getElementById('heat-warning-badge').classList.add('hidden');
-    }
-
-    // ===============================================
-    // TAB 3: FAIR TEST EXPLORER LOGIC
-    // ===============================================
-    function loadFairTestScenario() {
-      const scenario = document.getElementById('fairtest-scenario').value;
-      const slotChanged = document.getElementById('slot-changed');
-      const slotKept = document.getElementById('slot-kept');
-      const slotMeasured = document.getElementById('slot-measured');
-
-      if (scenario === 'stroke') {
-        slotChanged.innerHTML = `<div class="p-2 bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold rounded text-xs">Number of strokes</div>`;
-        slotKept.innerHTML = `
-          <div class="p-2 bg-blue-500/20 text-blue-700 dark:text-blue-300 font-medium rounded text-xs">Type of iron nail</div>
-          <div class="p-2 bg-blue-500/20 text-blue-700 dark:text-blue-300 font-medium rounded text-xs">Direction of strokes</div>
-        `;
-        slotMeasured.innerHTML = `<div class="p-2 bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold rounded text-xs">Number of steel clips attracted</div>`;
-      } else {
-        slotChanged.innerHTML = `<div class="p-2 bg-amber-500/20 text-amber-700 dark:text-amber-300 font-bold rounded text-xs">Number of turns of wire</div>`;
-        slotKept.innerHTML = `
-          <div class="p-2 bg-blue-500/20 text-blue-700 dark:text-blue-300 font-medium rounded text-xs">Type of iron nail</div>
-          <div class="p-2 bg-blue-500/20 text-blue-700 dark:text-blue-300 font-medium rounded text-xs">Number of batteries</div>
-          <div class="p-2 bg-blue-500/20 text-blue-700 dark:text-blue-300 font-medium rounded text-xs">Type of steel clips</div>
-        `;
-        slotMeasured.innerHTML = `<div class="p-2 bg-emerald-500/20 text-emerald-700 dark:text-emerald-300 font-bold rounded text-xs">Number of steel clips attracted</div>`;
-      }
-    }
-
-    function checkFairTestSetup() {
-      const feedback = document.getElementById('fairtest-feedback');
-      feedback.className = 'p-4 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-600 dark:text-emerald-300 block';
-      feedback.innerText = '✅ Perfect! Only 1 variable is changed, keeping all other factors identical for a fair test!';
-    }
-
-    // ===============================================
-    // TAB 4: POLE & DISTANCE LOGIC
-    // ===============================================
-    function testMagnetRegion(region, count) {
-      document.getElementById('global-clip-count').innerText = count;
-    }
-
-    function selectDistanceMagnet(magnet, cm) {
-      document.getElementById('dist-cm-text').innerText = `Distance: ${cm} cm`;
-    }
-
-    // ===============================================
-    // TAB 5: MAGNETIC TOY SANDBOX LOGIC
-    // ===============================================
-    let toyScore = 0;
-    function setupToyRodTracking() {
-      const arena = document.getElementById('toy-arena');
-      const rod = document.getElementById('fishing-rod');
-
-      arena.addEventListener('mousemove', (e) => {
-        const rect = arena.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        rod.style.left = `${x}px`;
-      });
-    }
-
-    function catchFish(id, isMagnetic) {
-      const msg = document.getElementById('toy-feedback-msg');
-      if (isMagnetic) {
-        toyScore++;
-        document.getElementById('toy-score').innerText = toyScore;
-        msg.className = 'text-center text-xs text-emerald-400 font-bold min-h-[20px]';
-        msg.innerText = '🎉 Catch! The magnetic iron/steel clip was attracted to the magnet!';
-        document.getElementById(`fish-${id}`).style.visibility = 'hidden';
-        setTimeout(() => {
-          document.getElementById(`fish-${id}`).style.visibility = 'visible';
-        }, 2000);
-      } else {
-        msg.className = 'text-center text-xs text-rose-400 font-bold min-h-[20px]';
-        msg.innerText = '❌ Failed! Plastic is non-magnetic and cannot be attracted!';
-      }
-    }
-
-    function updateGlobalStats() {
-      const totalPower = Math.min(100, Math.floor((currentStrokeCount / 100) * 100));
-      document.getElementById('global-power-level').innerText = `${totalPower}%`;
     }
   </script>
 </body>
