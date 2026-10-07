@@ -47,13 +47,6 @@
       animation: magnetFastStrokeBackForth 0.09s linear;
     }
 
-    .animate-stroke-single {
-      animation: magnetStrokeAnim 0.75s ease-in-out forwards;
-    }
-    .animate-stroke-backforth {
-      animation: magnetBackForthAnim 0.75s ease-in-out forwards;
-    }
-
     @keyframes clipAttractPop {
       0% { transform: translateY(30px) scale(0.5); opacity: 0; }
       70% { transform: translateY(-5px) scale(1.1); opacity: 1; }
@@ -100,10 +93,7 @@
           <span>⚡</span> Electromagnet Metal Lab
         </button>
         <button onclick="switchMainTab('fairtest')" id="nav-btn-fairtest" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2">
-          <span>⚖️</span> Fair Testing
-        </button>
-        <button onclick="switchMainTab('toy')" id="nav-btn-toy" class="tab-btn px-4 py-2 rounded-lg text-xs font-bold transition flex items-center gap-2">
-          <span>🎣</span> Toy Sandbox
+          <span>⚖️</span> Fair Test Builder
         </button>
       </nav>
     </header>
@@ -520,57 +510,167 @@
     </div>
 
     <!-- ========================================================================= -->
-    <!-- MODULE 3: FAIR TESTING EXPLORER -->
+    <!-- MODULE 3: INTERACTIVE FAIR TEST BUILDER (BASED ON THE 2 EXPERIMENTS) -->
     <!-- ========================================================================= -->
     <div id="module-fairtest" class="main-module space-y-4 hidden">
-      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 shadow-xl">
-        <h2 class="text-lg font-bold text-white flex items-center gap-2">
-          <span>⚖️ Fair Testing Explorer</span>
-        </h2>
-        <p class="text-xs text-slate-300 leading-relaxed">
-          In a fair test, change only <strong>ONE variable</strong> at a time (independent variable) while keeping all other variables constant (controlled variables).
-        </p>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-mono">
-          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
-            <span class="text-emerald-400 font-bold block">✓ Fair Test Example:</span>
-            <p class="text-slate-300">Testing pole strength of Magnet A: Use the SAME iron nail material, SAME facing distance, and change ONLY the facing pole (N vs S).</p>
+      
+      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-6 shadow-xl">
+        
+        <div class="flex justify-between items-start border-b border-slate-800 pb-4">
+          <div>
+            <h2 class="text-lg font-bold text-white flex items-center gap-2">
+              <span>⚖️ Fair Test Experiment Builder</span>
+            </h2>
+            <p class="text-xs text-slate-400 mt-1">
+              Build and evaluate controlled experiments for the <strong>Stroke Method</strong> and <strong>Electromagnet Method</strong>!
+            </p>
           </div>
-          <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
-            <span class="text-rose-400 font-bold block">❌ Unfair Test Example (Workbook Page 144):</span>
-            <p class="text-slate-300">Comparing a steel nail facing N pole vs an iron nail facing S pole. Two variables changed (nail material AND facing pole), making it UNFAIR!</p>
-          </div>
+          <span class="text-xs px-3 py-1 rounded-full font-mono font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30">
+            Rule: Change ONLY 1 Variable
+          </span>
         </div>
+
+        <!-- Choose Experiment Focus -->
+        <div class="bg-slate-900 p-4 rounded-xl border border-slate-800 space-y-2">
+          <label class="text-xs font-bold text-amber-400 uppercase tracking-wider block">1. Select Experiment to Test:</label>
+          <select id="ft-experiment-type" onchange="onFairTestTypeChange()" class="w-full bg-slate-950 border border-slate-700 text-white text-xs rounded-lg p-2.5 font-semibold">
+            <option value="stroke">Experiment 1: Stroke Method (Testing Material vs Strokes vs Direction)</option>
+            <option value="electromagnet">Experiment 2: Electromagnet Method (Testing Core Metal vs Batteries vs Wire Turns)</option>
+          </select>
+        </div>
+
+        <!-- Side-by-side Setup Comparison Builder -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <!-- Setup A Card -->
+          <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-3">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+              <span class="text-xs font-bold text-blue-400">Setup A</span>
+              <span id="ft-setupA-badge" class="text-[10px] bg-blue-500/20 text-blue-300 px-2 py-0.5 rounded font-mono">Control Setup</span>
+            </div>
+
+            <!-- Stroke Setup A Controls -->
+            <div id="ft-stroke-setupA" class="space-y-2 text-xs">
+              <div>
+                <label class="text-[11px] text-slate-400 block">Nail Material:</label>
+                <select id="ft-sa-mat" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="iron">Iron Nail</option>
+                  <option value="steel">Steel Nail</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-400 block">Stroke Direction:</label>
+                <select id="ft-sa-dir" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="same">Same Direction</option>
+                  <option value="backforth">Back and Forth</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-400 block">Number of Strokes:</label>
+                <select id="ft-sa-strokes" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="20">20 Strokes</option>
+                  <option value="50">50 Strokes</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Electromagnet Setup A Controls -->
+            <div id="ft-em-setupA" class="space-y-2 text-xs hidden">
+              <div>
+                <label class="text-[11px] text-slate-400 block">Core Metal:</label>
+                <select id="ft-em-sa-metal" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="iron">Iron</option>
+                  <option value="copper">Copper</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-400 block">Batteries:</label>
+                <select id="ft-em-sa-bat" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="2">2 Batteries</option>
+                  <option value="4">4 Batteries</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-400 block">Wire Turns:</label>
+                <select id="ft-em-sa-turns" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="10">10 Turns</option>
+                  <option value="20">20 Turns</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Setup B Card -->
+          <div class="bg-slate-900 border border-slate-800 p-4 rounded-xl space-y-3">
+            <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+              <span class="text-xs font-bold text-amber-400">Setup B</span>
+              <span id="ft-setupB-badge" class="text-[10px] bg-amber-500/20 text-amber-300 px-2 py-0.5 rounded font-mono">Comparison Setup</span>
+            </div>
+
+            <!-- Stroke Setup B Controls -->
+            <div id="ft-stroke-setupB" class="space-y-2 text-xs">
+              <div>
+                <label class="text-[11px] text-slate-400 block">Nail Material:</label>
+                <select id="ft-sb-mat" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="iron">Iron Nail</option>
+                  <option value="steel">Steel Nail</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-400 block">Stroke Direction:</label>
+                <select id="ft-sb-dir" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="same">Same Direction</option>
+                  <option value="backforth">Back and Forth</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-400 block">Number of Strokes:</label>
+                <select id="ft-sb-strokes" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="50">50 Strokes</option>
+                  <option value="20">20 Strokes</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Electromagnet Setup B Controls -->
+            <div id="ft-em-setupB" class="space-y-2 text-xs hidden">
+              <div>
+                <label class="text-[11px] text-slate-400 block">Core Metal:</label>
+                <select id="ft-em-sb-metal" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="copper">Copper</option>
+                  <option value="iron">Iron</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-400 block">Batteries:</label>
+                <select id="ft-em-sb-bat" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="2">2 Batteries</option>
+                  <option value="4">4 Batteries</option>
+                </select>
+              </div>
+              <div>
+                <label class="text-[11px] text-slate-400 block">Wire Turns:</label>
+                <select id="ft-em-sb-turns" class="w-full bg-slate-950 border border-slate-700 rounded p-1.5 text-white">
+                  <option value="10">10 Turns</option>
+                  <option value="20">20 Turns</option>
+                </select>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Action Button & Fair Test Evaluation Result -->
+        <button onclick="evaluateFairTestBuilder()" class="w-full py-3 bg-purple-600 hover:bg-purple-500 text-white font-bold rounded-xl text-xs shadow-lg transition">
+          ⚖️ Evaluate Fair Test Comparison (Setup A vs Setup B)
+        </button>
+
+        <div id="ft-eval-output" class="hidden p-4 rounded-xl text-xs font-semibold leading-relaxed"></div>
+
       </div>
-    </div>
 
-    <!-- ========================================================================= -->
-    <!-- MODULE 4: MAGNETIC TOY SANDBOX -->
-    <!-- ========================================================================= -->
-    <div id="module-toy" class="main-module space-y-4 hidden">
-      <div class="bg-slate-950 border border-slate-800 rounded-2xl p-6 space-y-4 shadow-xl">
-        <div class="flex justify-between items-center">
-          <h2 class="text-lg font-bold text-white flex items-center gap-2">
-            <span>🎣 Activity 7.2: Magnetic Toy Fishing Sandbox</span>
-          </h2>
-          <span class="text-xs font-mono font-bold text-amber-400 bg-slate-900 border border-slate-800 px-3 py-1 rounded-full">Score: <span id="toy-score-val">0</span> Fish</span>
-        </div>
-
-        <div id="toy-sea-canvas" class="relative bg-gradient-to-b from-blue-900 to-indigo-950 rounded-2xl h-72 border border-blue-800 overflow-hidden flex items-center justify-around p-4 cursor-crosshair">
-          <div onclick="catchToyFish('steel')" class="p-3 bg-teal-500/20 border border-teal-400/40 rounded-full text-white font-bold text-xs flex items-center gap-2 cursor-pointer hover:scale-110 transition">
-            <span class="text-2xl">🐟</span>
-            <span>Steel Clip Fish</span>
-          </div>
-          <div onclick="catchToyFish('plastic')" class="p-3 bg-rose-500/20 border border-rose-400/40 rounded-full text-white font-bold text-xs flex items-center gap-2 cursor-pointer hover:scale-110 transition">
-            <span class="text-2xl">🐠</span>
-            <span>Plastic Fish (Non-magnetic)</span>
-          </div>
-          <div onclick="catchToyFish('iron')" class="p-3 bg-[#e9edc9]/20 border border-[#a3b18a]/40 rounded-full text-white font-bold text-xs flex items-center gap-2 cursor-pointer hover:scale-110 transition">
-            <span class="text-2xl">🐡</span>
-            <span>Iron Ring Fish</span>
-          </div>
-        </div>
-      </div>
     </div>
 
   </div>
@@ -637,7 +737,6 @@
       const mat = document.getElementById('stroke-material-select').value;
       strokeState.material = mat;
       const label = document.getElementById('stroke-workbench-label');
-      const nail = document.getElementById('stroke-workbench-nail');
       
       if (!mat) {
         label.innerText = '-- select material --';
@@ -691,14 +790,12 @@
       magnet.style.opacity = '1';
 
       let count = 0;
-      // Calculate delay per stroke so 50 strokes finish in ~1.8 seconds
       const delayMs = Math.max(30, Math.min(200, Math.floor(1800 / totalStrokes)));
 
       function stepStroke() {
         count++;
         badge.innerText = `⚡ Fast Stroking... ${count} / ${totalStrokes}`;
         
-        // Re-trigger fast stroke CSS animation
         magnet.className = 'absolute bottom-16 left-16 z-20 flex flex-col items-center';
         void magnet.offsetWidth;
         magnet.className = `absolute bottom-16 left-16 z-20 flex flex-col items-center ${strokeState.direction === 'same' ? 'animate-stroke-fast-single' : 'animate-stroke-fast-backforth'}`;
@@ -706,7 +803,6 @@
         if (count < totalStrokes) {
           setTimeout(stepStroke, delayMs);
         } else {
-          // Finished all strokes!
           setTimeout(() => {
             magnet.style.opacity = '0';
             magnet.className = 'absolute bottom-16 left-16 z-20 flex flex-col items-center opacity-0 pointer-events-none';
@@ -728,27 +824,22 @@
       const attachedClipsDiv = document.getElementById('test-attached-clips');
       const clipsBadge = document.getElementById('test-clips-badge');
 
-      // Lower nail to tray
       nail.style.transform = 'translateY(55px)';
 
-      // Calculate magnetic clips physics
       let clipsCount = 0;
       const mat = strokeState.material;
       const dir = strokeState.direction;
       const strokes = strokeState.strokes;
 
       if ((mat === 'iron' || mat === 'steel') && dir === 'same') {
-        // Magnetic material stroked in same direction
         clipsCount = Math.min(10, Math.ceil((strokes / 50) * 10));
       } else {
-        // Back & forth OR non-magnetic material (Copper, Plastic)
         clipsCount = 0;
       }
 
       strokeState.currentClipsAttracted = clipsCount;
 
       setTimeout(() => {
-        // Raise nail back up with attached clips
         nail.style.transform = 'translateY(0)';
         
         let clipsHtml = '';
@@ -758,7 +849,6 @@
         attachedClipsDiv.innerHTML = clipsHtml;
         clipsBadge.innerText = `Clips: ${clipsCount}`;
 
-        // Log to table
         logStrokeResultToTable(mat, dir, strokes, clipsCount);
       }, 600);
     }
@@ -823,16 +913,14 @@
       const metal = emState.selectedMetal;
       let clipsCount = 0;
 
-      if (metal === 'iron') clipsCount = 12; // Maximum attraction
-      else if (metal === 'steel') clipsCount = 8; // Good attraction
-      else if (metal === 'copper' || metal === 'aluminum') clipsCount = 0; // Non-magnetic
+      if (metal === 'iron') clipsCount = 12;
+      else if (metal === 'steel') clipsCount = 8;
+      else if (metal === 'copper' || metal === 'aluminum') clipsCount = 0;
 
       emState.results[metal] = clipsCount;
 
-      // Outcome panel display
       document.getElementById('em-outcome-count').innerText = clipsCount;
 
-      // Animate clips grid
       const clipElems = document.querySelectorAll('.em-clip');
       clipElems.forEach((c, idx) => {
         if (idx < clipsCount) {
@@ -842,12 +930,10 @@
         }
       });
 
-      // Update Bar Graph
       const percent = (clipsCount / 12) * 100;
       document.getElementById(`em-graph-bar-${metal}`).style.height = `${percent}%`;
       document.getElementById(`em-graph-val-${metal}`).innerText = clipsCount;
 
-      // Log to Results Table matching Screenshot 1
       logElectromagnetTable(metal, clipsCount);
     }
 
@@ -878,14 +964,83 @@
       });
     }
 
-    // Toy Sandbox Catch
-    function catchToyFish(type) {
-      if (type === 'steel' || type === 'iron') {
-        const val = parseInt(document.getElementById('toy-score-val').innerText) + 1;
-        document.getElementById('toy-score-val').innerText = val;
-        alert(`🌟 Caught a magnetic ${type} fish!`);
+    // =====================================================================
+    // MODULE 3: INTERACTIVE FAIR TEST BUILDER LOGIC
+    // =====================================================================
+    function onFairTestTypeChange() {
+      const type = document.getElementById('ft-experiment-type').value;
+      
+      const strokeA = document.getElementById('ft-stroke-setupA');
+      const strokeB = document.getElementById('ft-stroke-setupB');
+      const emA = document.getElementById('ft-em-setupA');
+      const emB = document.getElementById('ft-em-setupB');
+
+      if (type === 'stroke') {
+        strokeA.classList.remove('hidden');
+        strokeB.classList.remove('hidden');
+        emA.classList.add('hidden');
+        emB.classList.add('hidden');
       } else {
-        alert('❌ Plastic is non-magnetic! The magnetic wand cannot catch plastic fish.');
+        strokeA.classList.add('hidden');
+        strokeB.classList.add('hidden');
+        emA.classList.remove('hidden');
+        emB.classList.remove('hidden');
+      }
+    }
+
+    function evaluateFairTestBuilder() {
+      const type = document.getElementById('ft-experiment-type').value;
+      const out = document.getElementById('ft-eval-output');
+      out.classList.remove('hidden');
+
+      let diffCount = 0;
+      let diffList = [];
+
+      if (type === 'stroke') {
+        const ma = document.getElementById('ft-sa-mat').value;
+        const mb = document.getElementById('ft-sb-mat').value;
+        const da = document.getElementById('ft-sa-dir').value;
+        const db = document.getElementById('ft-sb-dir').value;
+        const sa = document.getElementById('ft-sa-strokes').value;
+        const sb = document.getElementById('ft-sb-strokes').value;
+
+        if (ma !== mb) { diffCount++; diffList.push('Nail Material'); }
+        if (da !== db) { diffCount++; diffList.push('Stroke Direction'); }
+        if (sa !== sb) { diffCount++; diffList.push('Number of Strokes'); }
+
+      } else {
+        const ma = document.getElementById('ft-em-sa-metal').value;
+        const mb = document.getElementById('ft-em-sb-metal').value;
+        const ba = document.getElementById('ft-em-sa-bat').value;
+        const bb = document.getElementById('ft-em-sb-bat').value;
+        const ta = document.getElementById('ft-em-sa-turns').value;
+        const tb = document.getElementById('ft-em-sb-turns').value;
+
+        if (ma !== mb) { diffCount++; diffList.push('Core Metal'); }
+        if (ba !== bb) { diffCount++; diffList.push('Number of Batteries'); }
+        if (ta !== tb) { diffCount++; diffList.push('Wire Turns'); }
+      }
+
+      if (diffCount === 1) {
+        out.className = 'p-4 rounded-xl text-xs font-semibold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 block';
+        out.innerHTML = `
+          <div class="font-bold text-sm text-emerald-400 mb-1">✅ VALID FAIR TEST!</div>
+          <p>You changed <strong>ONLY 1 variable</strong> (${diffList.join(', ')}). All other variables are kept constant!</p>
+          <p class="mt-1 text-[11px] opacity-90">A reliable conclusion can be drawn from comparing Setup A and Setup B.</p>
+        `;
+      } else if (diffCount === 0) {
+        out.className = 'p-4 rounded-xl text-xs font-semibold bg-amber-500/20 text-amber-300 border border-amber-500/40 block';
+        out.innerHTML = `
+          <div class="font-bold text-sm text-amber-400 mb-1">⚠️ IDENTICAL SETUPS!</div>
+          <p>No variables were changed between Setup A and Setup B. Change exactly <strong>1 variable</strong> to test its effect!</p>
+        `;
+      } else {
+        out.className = 'p-4 rounded-xl text-xs font-semibold bg-rose-500/20 text-rose-300 border border-rose-500/40 block';
+        out.innerHTML = `
+          <div class="font-bold text-sm text-rose-400 mb-1">❌ UNFAIR TEST!</div>
+          <p>You changed <strong>${diffCount} variables</strong> at the same time: <strong>${diffList.join(' AND ')}</strong>!</p>
+          <p class="mt-1 text-[11px] opacity-90">In Primary Science, an experiment is UNFAIR if more than 1 variable is changed because you cannot tell which variable caused the difference in results!</p>
+        `;
       }
     }
   </script>
