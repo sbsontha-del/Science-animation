@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BCM P5 Science Mind Mapper</title>
+<style>
+:root{--bg:#f4f7fb;--card:#fff;--ink:#182230;--muted:#667085;--line:#d0d5dd;--accent:#6c63ff}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+header{padding:22px 28px;background:white;border-bottom:1px solid #e7eaf0;position:sticky;top:0;z-index:10}
+h1{margin:0 0 6px;font-size:28px}.sub{color:var(--muted)}
+.wrap{max-width:1250px;margin:22px auto;padding:0 18px 50px}
+.card{background:var(--card);border-radius:18px;padding:22px;margin:18px 0;box-shadow:0 6px 22px rgba(16,24,40,.07)}
+.step{display:inline-block;background:#eef0ff;color:#4138c2;padding:6px 10px;border-radius:999px;font-weight:700;margin-bottom:8px}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input,select,button{font:inherit;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+input,select{background:white} select{min-width:260px}
+button{cursor:pointer;background:white;font-weight:700} button.primary{background:var(--accent);color:white;border-color:var(--accent)}
+button.danger{color:#b42318}.small{padding:7px 9px;font-size:13px}
+#keywordInput{min-width:340px;flex:1}
+.chips{display:flex;gap:8px;flex-wrap:wrap;min-height:46px;padding:10px;border:1px dashed #b8c0cc;border-radius:12px;background:#fafbfc}
+.chip{padding:7px 7px 7px 12px;border-radius:999px;background:#fff;border:1px solid #cfd5df;cursor:grab;user-select:none;display:inline-flex;align-items:center;gap:7px}
+.chip-delete{width:22px;height:22px;border:0;border-radius:50%;padding:0;background:#f2f4f7;color:#667085;font-size:16px;line-height:20px;cursor:pointer}
+.chip-delete:hover{background:#fee4e2;color:#b42318}
+.cluster-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:14px}
+.cluster{border:2px dashed #c8ced8;border-radius:14px;padding:12px;min-height:145px;background:#fbfcfe}
+.cluster.dragover{border-color:var(--accent);background:#f2f1ff}
+.cluster-head{display:flex;gap:6px;align-items:center;margin-bottom:8px}.cluster-head input{width:100%;font-weight:700}
+.cluster-body{min-height:85px;display:flex;gap:7px;flex-wrap:wrap;align-content:flex-start}
+.note{color:var(--muted);font-size:14px}.hidden{display:none!important}
+#mapToolbar{margin-bottom:10px}
+#canvasWrap{height:620px;border:1px solid #cfd5df;border-radius:16px;overflow:hidden;position:relative;background-color:#fff;
+background-image:linear-gradient(#eef1f5 1px,transparent 1px),linear-gradient(90deg,#eef1f5 1px,transparent 1px);background-size:24px 24px}
+#mapCanvas{position:absolute;left:0;top:0;width:2000px;height:1400px;transform-origin:0 0}
+#links{position:absolute;left:0;top:0;width:2000px;height:1400px;overflow:visible;pointer-events:none}
+#inkLayer{position:absolute;left:0;top:0;width:2000px;height:1400px;overflow:visible;pointer-events:none;z-index:8}
+#inkLayer.drawing{pointer-events:auto;cursor:crosshair}
+.ink-stroke{fill:none;stroke:#344054;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.recognized{fill:none;stroke:#344054;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.node{z-index:9;position:absolute;min-width:120px;max-width:230px;padding:12px 14px;border-radius:14px;border:2px solid #4f46e5;background:#eef0ff;box-shadow:0 4px 10px rgba(0,0,0,.08);cursor:move;text-align:center;font-weight:700}
+.node.selected{outline:4px solid rgba(108,99,255,.25)}
+.node .del{position:absolute;right:-8px;top:-9px;border-radius:50%;width:24px;height:24px;padding:0;background:white;font-size:12px;display:none}
+.node.selected .del{display:block}
+.bracket{position:absolute;font-family:Georgia,serif;font-size:90px;line-height:.8;cursor:move;user-select:none;color:#475467;min-width:45px;text-align:center}
+.bracket.selected{outline:3px dashed rgba(108,99,255,.35);border-radius:8px}
+.edge-label{font-size:14px}
+.palette{display:flex;gap:5px}.swatch{width:28px;height:28px;border-radius:50%;border:2px solid white;box-shadow:0 0 0 1px #aaa;padding:0}
+.legend{padding:10px 12px;background:#fff8e7;border-radius:10px;margin-top:10px}
+@media(max-width:700px){#canvasWrap{height:520px}#keywordInput{min-width:100%}}
+@media print{header,.no-print,#steps1,#steps2,#steps3{display:none!important}.wrap{max-width:none;margin:0;padding:0}.card{box-shadow:none}.card:not(#mapCard){display:none!important}#canvasWrap{height:900px;border:none}}
+</style>
+</head>
+<body>
+<header>
+<h1>BCM P5 Science Mind Mapper</h1>
+<div class="sub">Success Criteria → Brainstorm → Cluster → Map</div>
+</header>
+<div class="wrap">
+<section class="card" id="steps1">
+<div class="step">GET READY · SUCCESS CRITERIA</div>
+<h2>Choose what you are revising</h2>
+<div class="row"><select id="topic"></select><select id="concept"></select></div>
+<h3>Success Criteria Self-Check</h3>
+<p class="note">Tick what you already know. Leave anything you are unsure about unticked, then revisit it after your mind map.</p>
+<div id="successCriteria" class="legend"></div>
+<hr style="border:0;border-top:1px solid #e7eaf0;margin:20px 0">
+<div class="step">1 · BRAINSTORM</div>
+<h3>What do you already know?</h3>
+<div class="row"><input id="keywordInput" placeholder="Type one keyword or short phrase"><button class="primary" id="addKeyword">Add keyword</button></div>
+<p class="note">Try to retrieve ideas from memory first. There are no suggested answers at this stage.</p>
+<div id="brainstorm" class="chips"></div>
+</section>
+
+<section class="card" id="steps2">
+<div class="step">2 · CLUSTER</div>
+<h2>Group related ideas</h2>
+<p>Drag each keyword into a cluster. You decide which ideas belong together.</p>
+<div class="row no-print">
+<button id="newCluster">+ Create cluster</button>
+<button id="suggestClusters">💡 Give me a hint</button>
+<button id="checkClusters">✓ Check my thinking</button>
+<button id="clearClusters">Reset clustering</button>
+</div>
+<div class="legend">💡 <b>Scaffold:</b> Start by creating your own clusters. If you are stuck, “Give me a hint” will give you a thinking prompt — not the answers.</div>
+<div id="thinkingFeedback" class="legend hidden"></div><h3>Unsorted / Not sure yet</h3>
+<div id="unsorted" class="chips dropzone"></div>
+<div id="clusters" class="cluster-grid"></div>
+</section>
+
+<section class="card" id="steps3">
+<div class="step">3 · MAP</div>
+<h2>Turn your clusters into a mind map</h2>
+<p>When you are happy with your clusters, create your mind map. Show relationships with arrows, linking words, diagrams and examples.</p>
+<div class="row"><button class="primary" id="buildMap">Create my mind map</button></div>
+</section>
+
+<section class="card" id="mapCard">
+<div class="step">3 · MAP · WORKSPACE</div>
+<h2>Create your own mind map</h2>
+<div id="mapToolbar" class="row no-print">
+<button id="addNode">+ Add node</button>
+<button id="freeDraw">✏️ Free Draw</button>
+<button id="smartDraw">✨ Smart Draw</button>
+<button id="eraser">🧽 Eraser</button>
+<button id="clearInk">Clear drawing</button>
+<select id="connectorType" title="Connector type">
+<option value="arrow">→ Arrow</option>
+<option value="line">— Line</option>
+<option value="double">↔ Double arrow</option>
+<option value="elbow">⌞ Elbow arrow</option>
+</select>
+<button id="linkMode">🔗 Draw connector</button>
+<button id="reverseLink">⇄ Reverse selected connector</button>
+<input id="linkLabel" placeholder="Link label e.g. transports">
+<select id="bracketType" title="Bracket type">
+<option value="right">} Right brace</option>
+<option value="left">{ Left brace</option>
+<option value="top">⏞ Top bracket</option>
+<option value="bottom">⏟ Bottom bracket</option>
+</select>
+<button id="addBracket">+ Add bracket</button>
+<button id="undo">↶ Undo</button><button id="redo">↷ Redo</button>
+<button id="zoomOut">− Zoom</button><button id="zoomIn">+ Zoom</button><button id="resetView">Reset view</button>
+<button onclick="window.print()">Print / Save PDF</button>
+<span class="palette">
+<button class="swatch" data-color="#eef0ff" style="background:#eef0ff" title="Purple"></button>
+<button class="swatch" data-color="#e8f7ee" style="background:#e8f7ee" title="Green"></button>
+<button class="swatch" data-color="#fff4df" style="background:#fff4df" title="Orange"></button>
+<button class="swatch" data-color="#e7f5ff" style="background:#e7f5ff" title="Blue"></button>
+<button class="swatch" data-color="#ffe9ef" style="background:#ffe9ef" title="Pink"></button>
+</span>
+</div>
+<p class="note no-print">Drag nodes anywhere. Double-click a node to rename it. Select a node and choose a colour. Use <b>Free Draw</b> for sketches, or <b>Smart Draw</b> to turn a rough line, arrow, circle or rectangle into a neat shape. Choose a connector style, enter an optional label, click <b>Draw connector</b>, then click two nodes. Click a connector and use <b>Reverse selected connector</b> to change its direction. Add braces/brackets and drag them beside groups; double-click a bracket to enlarge it.</p>
+<div id="drawStatus" class="note no-print">Pointer mode: move and edit your mind map.</div>
+<div id="canvasWrap"><div id="mapCanvas"><svg id="links"></svg><svg id="inkLayer"></svg></div></div>
+</section>
+</div>
+
+<script>
+const DATA={
+"Reproduction in Plants and Animals":{
+"Human reproduction":["reproductive organs","fertilisation","development","puberty"],
+"Flowering plant reproduction":["flower parts","pollination","fertilisation","fruit and seed formation","seed dispersal"]},
+"Water":{
+"Changes of state":["melting","freezing","evaporation","condensation","boiling"],
+"Evaporation":["temperature","wind or air movement","exposed surface area","variables"],
+"Water cycle":["evaporation","condensation","clouds","precipitation","water conservation"]},
+"Plant Systems":{
+"Transport in plants":["roots","water and mineral salts","water-transporting tubes","food-transporting tubes","leaves"],
+"Gaseous exchange in plants":["gases","leaves","photosynthesis","respiration"]},
+"Human Respiratory and Circulatory Systems":{
+"Respiratory system":["nose","windpipe","lungs","gaseous exchange","inhaled and exhaled air"],
+"Circulatory system":["heart","blood","blood vessels","oxygen","digested food","carbon dioxide"],
+"Systems working together":["respiratory system","circulatory system","oxygen pathway","carbon dioxide pathway","exercise"]},
+"Electrical System":{
+"Simple circuits":["battery or cell","wire","bulb","switch","open circuit","closed circuit"],
+"Conductors and insulators":["conductors","insulators","metals","electrical safety"],
+"Series and parallel circuits":["series","parallel","pathways","bulb brightness","batteries","bulbs"],
+"Electrical investigations":["variables","fair test","prediction","conclusion","evidence"]}
+};
+
+
+const SUCCESS={
+"Water":{
+"Changes of state":[
+"I can recognise that water can exist as a solid, liquid or gas.",
+"I can give examples of water in each state.",
+"I can explain melting as a change from solid to liquid.",
+"I can explain freezing as a change from liquid to solid.",
+"I can explain evaporation or boiling as a change from liquid to gas.",
+"I can explain condensation as a change from gas to liquid.",
+"I can explain changes of state in terms of gaining or losing heat.",
+"I can state that the melting/freezing point of water is 0°C.",
+"I can state that the boiling point of water is 100°C."],
+"Evaporation":[
+"I can explain evaporation as liquid water changing into water vapour.",
+"I can investigate how temperature affects the rate of evaporation.",
+"I can investigate how wind or air movement affects the rate of evaporation.",
+"I can investigate how exposed surface area affects the rate of evaporation.",
+"I can identify variables and use evidence from an evaporation investigation."],
+"Water cycle":[
+"I can explain the role of evaporation in the water cycle.",
+"I can explain the role of condensation in the water cycle.",
+"I can explain how water returns to Earth's surface as precipitation.",
+"I can recognise the importance of the water cycle.",
+"I can explain why water is important to life processes.",
+"I can describe how water pollution affects water resources.",
+"I can recognise that water is a limited resource and should be conserved."]},
+"Reproduction in Plants and Animals":{
+"Human reproduction":["I can explain why reproduction is important for continuity of a kind.","I can identify the main male and female reproductive organs and their functions.","I can explain fertilisation as the fusion of a sperm and an egg.","I can state that the fertilised egg develops in the womb."],
+"Flowering plant reproduction":["I can identify the reproductive parts of a flower and their functions.","I can describe pollination.","I can explain fertilisation in flowering plants.","I can relate fertilisation to seed formation.","I can describe seed dispersal and germination."]},
+"Plant Systems":{
+"Transport in plants":["I can identify the parts involved in the plant transport system.","I can explain how water and mineral salts are transported from roots to other plant parts.","I can explain how food made in leaves is transported to other plant parts.","I can use observations or experimental evidence to explain transport in plants."],
+"Gaseous exchange in plants":["I can recognise that plants exchange gases with their surroundings.","I can relate gaseous exchange to photosynthesis and respiration."]},
+"Human Respiratory and Circulatory Systems":{
+"Respiratory system":["I can identify the nose, windpipe and lungs and describe their functions.","I can describe the pathway of air through the respiratory system.","I can explain gaseous exchange in the lungs."],
+"Circulatory system":["I can identify the heart, blood and blood vessels and describe their functions.","I can explain that blood transports oxygen, digested food and carbon dioxide."],
+"Systems working together":["I can explain how the respiratory and circulatory systems work together.","I can explain how the digestive and circulatory systems work together.","I can compare transport of substances in plants and humans."]},
+"Electrical System":{
+"Simple circuits":["I can identify the main components of a simple electrical circuit.","I can explain that electric current flows through a closed circuit.","I can predict whether a bulb will light in a given circuit."],
+"Conductors and insulators":["I can identify electrical conductors and insulators.","I can use evidence to classify a material as a conductor or insulator.","I can relate electrical insulation to safety."],
+"Series and parallel circuits":["I can recognise bulbs arranged in series and in parallel.","I can investigate the effect of changing the number of batteries or bulbs.","I can use evidence to explain changes in bulb brightness."],
+"Electrical investigations":["I can identify changed, measured and constant variables.","I can plan or recognise a fair test.","I can use evidence to make a conclusion."]}
+};
+
+
+const SUPPORT={
+"Reproduction in Plants and Animals":{
+"Human reproduction":{
+ hints:["Can you group ideas about the male and female reproductive systems?","Can you find ideas connected to fertilisation and development?","Which ideas describe changes during puberty?"],
+ checks:[["reproductive organs","Have you included the main reproductive organs and their functions?"],["fertilisation","Have you included what happens during fertilisation?"],["development","Have you included where and how the young develops?"],["puberty","Have you included important changes during puberty?"]]},
+"Flowering plant reproduction":{
+ hints:["Can you group ideas according to parts of a flower and what they do?","Which ideas belong to pollination?","Which ideas describe what happens after fertilisation?","Can you group ideas about how seeds are dispersed?"],
+ checks:[["flower parts","Have you included the reproductive parts of a flower?"],["pollination","Have you included pollination and how pollen can be transferred?"],["fertilisation","Have you included fertilisation in flowering plants?"],["seed dispersal","Have you included ways seeds or fruits are dispersed?"]]}},
+"Water":{
+"Changes of state":{
+ hints:["Can you find some ideas connected to heating?","Can you find some ideas connected to cooling?","Can you group words according to the three states of water?","Do any of your ideas relate to temperature?"],
+ checks:[["melting","Have you included what happens when ice gains heat?"],["freezing","Have you included what happens when water loses heat?"],["evaporation","Have you included liquid water changing into water vapour?"],["condensation","Have you included water vapour changing into liquid water?"],["boiling","Have you included boiling and how it differs from evaporation?"]]},
+"Evaporation":{
+ hints:["Which ideas describe conditions that make evaporation faster or slower?","Can you group the factors that can be changed in an evaporation investigation?","Which ideas are observations and which are variables?"],
+ checks:[["temperature","Have you considered temperature?"],["wind","Have you considered wind or air movement?"],["surface","Have you considered exposed surface area?"],["variable","Have you included changed, measured and constant variables?"]]},
+"Water cycle":{
+ hints:["Can you group ideas about water moving from Earth's surface into the air?","Which ideas explain how clouds form?","Which ideas describe water returning to Earth's surface?"],
+ checks:[["evaporation","Have you included how water enters the atmosphere?"],["condensation","Have you included how water vapour forms tiny water droplets?"],["precipitation","Have you included how water returns to Earth's surface?"],["conservation","Have you included why water should be conserved?"]]}},
+"Plant Systems":{
+"Transport in plants":{
+ hints:["Can you group ideas about what roots absorb?","Which ideas describe transport from roots to leaves?","Which ideas describe transport of food from leaves to other plant parts?"],
+ checks:[["roots","Have you included what roots absorb from the soil?"],["water","Have you included the pathway of water and mineral salts?"],["food","Have you included how food made in leaves is transported?"]]},
+"Gaseous exchange in plants":{
+ hints:["Which ideas are about gases entering or leaving leaves?","Can you separate ideas connected to photosynthesis and respiration?"],
+ checks:[["gas","Have you included the gases involved in gaseous exchange?"],["photosynthesis","Have you connected gaseous exchange to photosynthesis?"],["respiration","Have you connected gaseous exchange to respiration?"]]}},
+"Human Respiratory and Circulatory Systems":{
+"Respiratory system":{
+ hints:["Can you group the parts of the respiratory system?","Which ideas describe the pathway of air?","Which ideas explain gaseous exchange?"],
+ checks:[["nose","Have you included the main respiratory organs?"],["path","Have you included the pathway taken by air?"],["oxygen","Have you included what happens to oxygen and carbon dioxide in the lungs?"]]},
+"Circulatory system":{
+ hints:["Can you group the parts of the circulatory system?","Which ideas describe what blood transports?","Can you show how blood moves between the heart, lungs and body?"],
+ checks:[["heart","Have you included the heart and its function?"],["blood vessel","Have you included blood vessels?"],["oxygen","Have you included substances transported by blood?"],["path","Have you included the general pathway of blood?"]]},
+"Systems working together":{
+ hints:["Which ideas belong to the respiratory system and which to the circulatory system?","Can you find ideas that connect the two systems?","What changes during exercise?"],
+ checks:[["oxygen","Have you traced oxygen from the air towards body cells?"],["carbon dioxide","Have you traced carbon dioxide from body cells towards the air?"],["exercise","Have you included what happens to breathing and heart rate during exercise?"]]}},
+"Electrical System":{
+"Simple circuits":{
+ hints:["Can you group circuit components and their functions?","Which ideas describe whether a circuit is complete or incomplete?"],
+ checks:[["battery","Have you included the main circuit components?"],["closed","Have you included what makes a complete/closed circuit?"],["open","Have you considered an open circuit?"]]},
+"Conductors and insulators":{
+ hints:["Can you separate materials that allow electricity to pass through from those that do not?","Which ideas connect electrical materials to safety?"],
+ checks:[["conductor","Have you included conductors?"],["insulator","Have you included insulators?"],["safety","Have you connected insulation to electrical safety?"]]},
+"Series and parallel circuits":{
+ hints:["Can you group ideas about circuits with one pathway and circuits with more than one pathway?","Which ideas describe bulb brightness?","What happens if a bulb is removed?"],
+ checks:[["series","Have you included series circuits?"],["parallel","Have you included parallel circuits?"],["pathway","Have you compared the number of pathways?"],["brightness","Have you considered bulb brightness?"]]},
+"Electrical investigations":{
+ hints:["Can you group the variables in an investigation?","Which ideas help you decide whether an investigation is a fair test?","Which ideas are about using evidence to make a conclusion?"],
+ checks:[["variable","Have you included changed, measured and constant variables?"],["fair","Have you included what makes a fair test?"],["evidence","Have you included how evidence supports a conclusion?"]]}}
+};
+
+const topic=document.getElementById("topic"), concept=document.getElementById("concept");
+Object.keys(DATA).forEach(t=>topic.add(new Option(t,t)));
+function loadConcepts(){concept.innerHTML="";Object.keys(DATA[topic.value]).forEach(c=>concept.add(new Option(c,c)));renderSuccess();}
+function renderSuccess(){
+ const box=document.getElementById("successCriteria"); if(!box)return;
+ const items=SUCCESS[topic.value]?.[concept.value]||[];
+ box.innerHTML=items.length?items.map((x,i)=>`<label style="display:flex;gap:10px;align-items:flex-start;padding:7px 4px;border-bottom:1px solid #eef1f5"><input type="checkbox" data-sc="${i}" style="margin-top:3px"><span>${x}</span></label>`).join(""):"Success criteria will be added for this concept.";
+}
+topic.onchange=()=>{loadConcepts();hintIndex=0;const f=document.getElementById("thinkingFeedback");if(f)f.classList.add("hidden");}; 
+concept.onchange=()=>{hintIndex=0;renderSuccess();const f=document.getElementById("thinkingFeedback");if(f)f.classList.add("hidden");};
+loadConcepts();
+
+let words=[];
+const brainstorm=document.getElementById("brainstorm"), unsorted=document.getElementById("unsorted");
+function makeChip(text){
+ const d=document.createElement("div"); d.className="chip"; d.draggable=true; d.dataset.word=text;
+ const label=document.createElement("span"); label.textContent=text; d.appendChild(label);
+ const x=document.createElement("button"); x.type="button"; x.className="chip-delete"; x.textContent="×"; x.title="Delete keyword";
+ x.onclick=(e)=>{e.stopPropagation(); const current=d.dataset.word; words=words.filter(w=>w!==current); document.querySelectorAll('.chip').forEach(c=>{if(c.dataset.word===current)c.remove();});};
+ d.appendChild(x);
+ d.addEventListener("dragstart",e=>e.dataTransfer.setData("text/plain",d.dataset.word));
+ d.ondblclick=()=>{const old=d.dataset.word;const n=prompt("Edit keyword:",old);if(n&&n.trim()){const clean=n.trim();words=words.map(w=>w===old?clean:w);document.querySelectorAll('.chip').forEach(c=>{if(c.dataset.word===old){c.dataset.word=clean;const sp=c.querySelector("span");if(sp)sp.textContent=clean;}});}};
+ return d;
+}
+function renderWords(){brainstorm.innerHTML="";unsorted.innerHTML="";words.forEach(w=>{brainstorm.appendChild(makeChip(w));unsorted.appendChild(makeChip(w));});}
+document.getElementById("addKeyword").onclick=addWord;
+document.getElementById("keywordInput").addEventListener("keydown",e=>{if(e.key==="Enter")addWord()});
+function addWord(){const i=document.getElementById("keywordInput");const w=i.value.trim();if(w&&!words.includes(w)){words.push(w);renderWords();i.value="";i.focus();}}
+
+function enableDrop(el){
+ el.addEventListener("dragover",e=>{e.preventDefault();el.classList.add("dragover")});
+ el.addEventListener("dragleave",()=>el.classList.remove("dragover"));
+ el.addEventListener("drop",e=>{e.preventDefault();el.classList.remove("dragover");const w=e.dataTransfer.getData("text/plain");const chip=[...document.querySelectorAll(".chip")].find(x=>x.dataset.word===w && x.closest("#steps2")); if(chip)(el.classList.contains("cluster")?el.querySelector(".cluster-body"):el).appendChild(chip);});
+}
+enableDrop(unsorted);
+let clusterCount=0;
+function addCluster(name="My Cluster"){
+ const box=document.createElement("div");box.className="cluster";box.dataset.id=++clusterCount;
+ box.innerHTML=`<div class="cluster-head"><input value="${name.replace(/"/g,'&quot;')}"><button class="small danger">×</button></div><div class="cluster-body"></div>`;
+ box.querySelector(".danger").onclick=()=>{[...box.querySelectorAll(".chip")].forEach(c=>unsorted.appendChild(c));box.remove()};
+ enableDrop(box);document.getElementById("clusters").appendChild(box);
+}
+document.getElementById("newCluster").onclick=()=>addCluster();
+let hintIndex=0;
+function feedbackBox(msg){
+ const f=document.getElementById("thinkingFeedback");f.classList.remove("hidden");f.innerHTML=msg;
+}
+document.getElementById("suggestClusters").onclick=()=>{
+ const info=SUPPORT[topic.value]?.[concept.value];
+ const hints=info?.hints||["Look at your keywords. Which ones seem to belong together? What could you call that group?"];
+ const hint=hints[hintIndex%hints.length];hintIndex++;
+ feedbackBox("💡 <b>Thinking hint:</b> "+hint+"<br><span class='note'>Create your own cluster heading and decide which keywords belong there.</span>");
+};
+document.getElementById("checkClusters").onclick=()=>{
+ const info=SUPPORT[topic.value]?.[concept.value]; if(!info)return;
+ const text=words.join(" ").toLowerCase();
+ const missing=info.checks.filter(([key])=>!text.includes(key.toLowerCase())).map(x=>x[1]);
+ const clusterN=document.querySelectorAll(".cluster").length;
+ let html="⭐ <b>Check my thinking</b><br>";
+ if(clusterN===0) html+="You have not created a cluster yet. Try grouping related ideas first.<br>";
+ else html+=`You have created <b>${clusterN}</b> cluster${clusterN===1?"":"s"}.<br>`;
+ if(missing.length){
+   html+="<br>💭 <b>Think about one possible gap:</b> "+missing[0];
+   html+="<br><span class='note'>The app is giving you a question, not the missing keyword. Add an idea only if you think it belongs.</span>";
+ } else {
+   html+="<br>✓ Your brainstorm includes the main areas expected for this concept. Now check whether your clusters show the relationships clearly.";
+ }
+ feedbackBox(html);
+};
+document.getElementById("clearClusters").onclick=()=>{document.getElementById("clusters").innerHTML="";clusterCount=0;renderWords();};
+
+let nodes=[], edges=[], brackets=[], selected=null, selectedEdge=null, linkStart=null, linking=false, scale=1, history=[], future=[];
+const canvas=document.getElementById("mapCanvas"), svg=document.getElementById("links"), wrap=document.getElementById("canvasWrap");
+const ink=document.getElementById("inkLayer"), drawStatus=document.getElementById("drawStatus");
+let drawMode="pointer", currentStroke=null, currentPoints=[], inkObjects=[];
+function snapshot(){history.push(JSON.stringify({nodes,edges,brackets}));if(history.length>40)history.shift();future=[]}
+function restore(s){let o=JSON.parse(s);nodes=o.nodes;edges=o.edges;brackets=o.brackets||[];selected=null;selectedEdge=null;draw()}
+function addMapNode(text,x,y,color="#eef0ff",kind="idea"){nodes.push({id:"n"+Date.now()+Math.random(),text,x,y,color,kind});}
+document.getElementById("buildMap").onclick=()=>{
+ snapshot();nodes=[];edges=[];brackets=[];
+ addMapNode(concept.value,820,80,"#fff4df","central");
+ const boxes=[...document.querySelectorAll(".cluster")];
+ let x=180;
+ boxes.forEach((b,bi)=>{
+   const title=b.querySelector("input").value.trim()||"Cluster";
+   const cid="c"+Date.now()+bi;nodes.push({id:cid,text:title,x:x,y:260,color:"#e8f7ee",kind:"cluster"});
+   edges.push({a:nodes[0].id,b:cid,label:""});
+   [...b.querySelectorAll(".chip")].forEach((ch,j)=>{let id="i"+Date.now()+bi+"_"+j;nodes.push({id,text:ch.textContent,x:x-20+(j%2)*150,y:420+Math.floor(j/2)*100,color:"#eef0ff",kind:"idea"});edges.push({a:cid,b:id,label:""});});
+   x+=360;
+ });
+ [...unsorted.querySelectorAll(".chip")].forEach((ch,j)=>addMapNode(ch.textContent,80+j*150,700,"#ffe9ef","idea"));
+ draw();document.getElementById("mapCard").scrollIntoView({behavior:"smooth"});
+};
+document.getElementById("addNode").onclick=()=>{snapshot();addMapNode("New idea",700,500);draw()};
+function draw(){
+ canvas.querySelectorAll(".node").forEach(n=>n.remove());
+ nodes.forEach(n=>{
+   const el=document.createElement("div");el.className="node"+(selected===n.id?" selected":"");el.dataset.id=n.id;el.style.left=n.x+"px";el.style.top=n.y+"px";el.style.background=n.color;el.textContent=n.text;
+   const del=document.createElement("button");del.className="del";del.textContent="×";del.onclick=e=>{e.stopPropagation();snapshot();nodes=nodes.filter(x=>x.id!==n.id);edges=edges.filter(x=>x.a!==n.id&&x.b!==n.id);selected=null;draw()};el.appendChild(del);
+   el.onmousedown=e=>startDrag(e,n,el);
+   el.onclick=e=>{e.stopPropagation(); if(linking){if(!linkStart){linkStart=n.id;selected=n.id}else if(linkStart!==n.id){snapshot();edges.push({a:linkStart,b:n.id,label:document.getElementById("linkLabel").value.trim(),type:document.getElementById("connectorType").value});linkStart=null;linking=false;selected=n.id;
+function setDrawMode(mode){
+ drawMode=mode; ink.classList.toggle("drawing",mode!=="pointer");
+ document.getElementById("freeDraw").classList.toggle("primary",mode==="free");
+ document.getElementById("smartDraw").classList.toggle("primary",mode==="smart");
+ document.getElementById("eraser").classList.toggle("primary",mode==="eraser");
+ drawStatus.textContent= mode==="free"?"Free Draw: sketch anywhere on the canvas. Your drawing will stay as drawn.":
+ mode==="smart"?"Smart Draw: draw a rough line, arrow, circle or rectangle. It will snap into a neat shape.":
+ mode==="eraser"?"Eraser: click a freehand or recognised drawing to remove it.":
+ "Pointer mode: move and edit your mind map.";
+}
+document.getElementById("freeDraw").onclick=()=>setDrawMode(drawMode==="free"?"pointer":"free");
+document.getElementById("smartDraw").onclick=()=>setDrawMode(drawMode==="smart"?"pointer":"smart");
+document.getElementById("eraser").onclick=()=>{setDrawMode(drawMode==="eraser"?"pointer":"eraser");renderInk();};
+document.getElementById("clearInk").onclick=()=>{if(confirm("Clear all freehand and Smart Draw marks?")){inkObjects=[];renderInk();}};
+
+function localPoint(e){
+ const r=canvas.getBoundingClientRect();
+ return {x:(e.clientX-r.left)/scale,y:(e.clientY-r.top)/scale};
+}
+ink.addEventListener("pointerdown",e=>{
+ if(drawMode==="pointer")return;
+ if(drawMode==="eraser")return;
+ e.preventDefault(); currentPoints=[localPoint(e)];
+ currentStroke=document.createElementNS("http://www.w3.org/2000/svg","path");
+ currentStroke.setAttribute("class","ink-stroke"); ink.appendChild(currentStroke);
+ ink.setPointerCapture(e.pointerId);
+});
+ink.addEventListener("pointermove",e=>{
+ if(!currentStroke)return;
+ currentPoints.push(localPoint(e));
+ currentStroke.setAttribute("d",pointsPath(currentPoints));
+});
+ink.addEventListener("pointerup",e=>{
+ if(!currentStroke)return;
+ ink.releasePointerCapture(e.pointerId);
+ const pts=currentPoints.slice(); currentStroke.remove(); currentStroke=null; currentPoints=[];
+ if(pts.length<2)return;
+ if(drawMode==="free") inkObjects.push({kind:"free",pts});
+ else if(drawMode==="smart") inkObjects.push(recognizeStroke(pts));
+ renderInk();
+});
+function pointsPath(pts){return pts.map((p,i)=>(i?"L":"M")+p.x.toFixed(1)+","+p.y.toFixed(1)).join(" ")}
+function dist(a,b){return Math.hypot(a.x-b.x,a.y-b.y)}
+function bounds(pts){let xs=pts.map(p=>p.x),ys=pts.map(p=>p.y);return {minx:Math.min(...xs),maxx:Math.max(...xs),miny:Math.min(...ys),maxy:Math.max(...ys)}}
+function recognizeStroke(pts){
+ const b=bounds(pts),w=b.maxx-b.minx,h=b.maxy-b.miny,start=pts[0],end=pts[pts.length-1],close=dist(start,end);
+ const diag=Math.hypot(w,h)||1, direct=dist(start,end);
+ // Closed strokes become ellipse or rectangle depending on corner-like direction changes.
+ if(close<diag*.28 && pts.length>10){
+   let corners=0,step=Math.max(2,Math.floor(pts.length/12));
+   for(let i=step;i<pts.length-step;i+=step){
+     let a=pts[i-step],p=pts[i],c=pts[i+step];
+     let v1=[a.x-p.x,a.y-p.y],v2=[c.x-p.x,c.y-p.y];
+     let den=(Math.hypot(...v1)*Math.hypot(...v2))||1;
+     let ang=Math.acos(Math.max(-1,Math.min(1,(v1[0]*v2[0]+v1[1]*v2[1])/den)));
+     if(ang<2.15)corners++;
+   }
+   if(corners>=3)return {kind:"rect",x:b.minx,y:b.miny,w:Math.max(20,w),h:Math.max(20,h)};
+   return {kind:"ellipse",cx:(b.minx+b.maxx)/2,cy:(b.miny+b.maxy)/2,rx:Math.max(12,w/2),ry:Math.max(12,h/2)};
+ }
+ // Mostly straight stroke. Detect an arrowhead near the end if the final stroke doubles back.
+ let maxDev=0;
+ for(const p of pts){
+   const num=Math.abs((end.y-start.y)*p.x-(end.x-start.x)*p.y+end.x*start.y-end.y*start.x);
+   maxDev=Math.max(maxDev,num/(direct||1));
+ }
+ let arrow=false;
+ if(pts.length>8){
+   const tail=pts.slice(Math.floor(pts.length*.65));
+   const far=tail.reduce((m,p)=>dist(p,end)>dist(m,end)?p:m,tail[0]);
+   arrow=dist(far,end)>18 && maxDev>8 && direct>45;
+ }
+ if(direct>35 && maxDev<Math.max(35,direct*.30))return {kind:arrow?"arrow":"line",x1:start.x,y1:start.y,x2:end.x,y2:end.y};
+ // Fallback keeps the pupil's mark rather than deleting an unrecognised gesture.
+ return {kind:"free",pts};
+}
+function renderInk(){
+ ink.innerHTML=`<defs><marker id="inkArrow" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#344054"/></marker></defs>`;
+ inkObjects.forEach((o,i)=>{
+   let el;
+   if(o.kind==="free"){el=document.createElementNS("http://www.w3.org/2000/svg","path");el.setAttribute("d",pointsPath(o.pts));el.setAttribute("class","ink-stroke");}
+   if(o.kind==="line"||o.kind==="arrow"){el=document.createElementNS("http://www.w3.org/2000/svg","line");["x1","y1","x2","y2"].forEach(k=>el.setAttribute(k,o[k]));el.setAttribute("class","recognized");if(o.kind==="arrow")el.setAttribute("marker-end","url(#inkArrow)");}
+   if(o.kind==="ellipse"){el=document.createElementNS("http://www.w3.org/2000/svg","ellipse");["cx","cy","rx","ry"].forEach(k=>el.setAttribute(k,o[k]));el.setAttribute("class","recognized");}
+   if(o.kind==="rect"){el=document.createElementNS("http://www.w3.org/2000/svg","rect");["x","y","width","height"].forEach((k,j)=>el.setAttribute(k,[o.x,o.y,o.w,o.h][j]));el.setAttribute("rx","10");el.setAttribute("class","recognized");}
+   if(el){el.dataset.ink=i;el.style.pointerEvents=drawMode==="eraser"?"stroke":"none";el.onclick=e=>{if(drawMode==="eraser"){e.stopPropagation();inkObjects.splice(i,1);renderInk();}};ink.appendChild(el);}
+ });
+}
+document.getElementById("linkMode").textContent="🔗 Link two nodes";draw()}}else{selected=n.id;draw()}};
+   el.ondblclick=e=>{e.stopPropagation();let t=prompt("Edit label:",n.text);if(t){snapshot();n.text=t;draw()}};
+   canvas.appendChild(el);
+ });
+ brackets.forEach(b=>{
+   const el=document.createElement("div");el.className="bracket"+(selected===b.id?" selected":"");el.dataset.bid=b.id;
+   el.style.left=b.x+"px";el.style.top=b.y+"px";el.style.transform=`scale(${b.sx||1},${b.sy||1})`;
+   el.textContent=b.type==="right"?"}":b.type==="left"?"{":b.type==="top"?"⏞":"⏟";
+   el.onclick=e=>{e.stopPropagation();selected=b.id;selectedEdge=null;draw()};
+   el.ondblclick=e=>{e.stopPropagation();snapshot();b.sx=Math.min(4,(b.sx||1)+.35);b.sy=Math.min(4,(b.sy||1)+.35);draw()};
+   el.onmousedown=e=>startBracketDrag(e,b,el);canvas.appendChild(el);
+ });
+ drawEdges();
+}
+function startDrag(e,n,el){
+ if(e.target.classList.contains("del"))return;
+ const sx=e.clientX,sy=e.clientY,ox=n.x,oy=n.y;let moved=false;
+ function move(ev){moved=true;n.x=ox+(ev.clientX-sx)/scale;n.y=oy+(ev.clientY-sy)/scale;el.style.left=n.x+"px";el.style.top=n.y+"px";drawEdges()}
+ function up(){document.removeEventListener("mousemove",move);document.removeEventListener("mouseup",up);if(moved){history.push(JSON.stringify({nodes:nodes.map(x=>x.id===n.id?{...x,x:ox,y:oy}:x),edges}));future=[]}}
+ document.addEventListener("mousemove",move);document.addEventListener("mouseup",up);
+}
+function startBracketDrag(e,b,el){
+ const sx=e.clientX,sy=e.clientY,ox=b.x,oy=b.y;let moved=false;
+ function move(ev){moved=true;b.x=ox+(ev.clientX-sx)/scale;b.y=oy+(ev.clientY-sy)/scale;el.style.left=b.x+"px";el.style.top=b.y+"px"}
+ function up(){document.removeEventListener("mousemove",move);document.removeEventListener("mouseup",up);if(moved){history.push(JSON.stringify({nodes,edges,brackets:brackets.map(x=>x.id===b.id?{...x,x:ox,y:oy}:x)}));future=[]}}
+ document.addEventListener("mousemove",move);document.addEventListener("mouseup",up);
+}
+function centerOf(id){const n=nodes.find(x=>x.id===id);if(!n)return [0,0];const el=canvas.querySelector(`[data-id="${id}"]`);return [n.x+(el?el.offsetWidth/2:70),n.y+(el?el.offsetHeight/2:25)]}
+function drawEdges(){
+ svg.innerHTML=`<defs>
+ <marker id="arrowEnd" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#667085"/></marker>
+ <marker id="arrowStart" markerWidth="8" markerHeight="8" refX="1" refY="3" orient="auto"><path d="M8,0 L8,6 L0,3 z" fill="#667085"/></marker>
+ </defs>`;
+ edges.forEach((ed,idx)=>{
+  const [x1,y1]=centerOf(ed.a),[x2,y2]=centerOf(ed.b), type=ed.type||"arrow";
+  let shape;
+  if(type==="elbow"){
+    shape=document.createElementNS("http://www.w3.org/2000/svg","polyline");
+    const mx=(x1+x2)/2; shape.setAttribute("points",`${x1},${y1} ${mx},${y1} ${mx},${y2} ${x2},${y2}`);
+    shape.setAttribute("fill","none");
+  } else {
+    shape=document.createElementNS("http://www.w3.org/2000/svg","line");
+    shape.setAttribute("x1",x1);shape.setAttribute("y1",y1);shape.setAttribute("x2",x2);shape.setAttribute("y2",y2);
+  }
+  shape.setAttribute("stroke",selectedEdge===idx?"#6c63ff":"#667085");shape.setAttribute("stroke-width",selectedEdge===idx?"4":"2");
+  if(type==="arrow"||type==="elbow")shape.setAttribute("marker-end","url(#arrowEnd)");
+  if(type==="double"){shape.setAttribute("marker-start","url(#arrowStart)");shape.setAttribute("marker-end","url(#arrowEnd)");}
+  shape.style.pointerEvents="stroke";shape.style.cursor="pointer";
+  shape.onclick=e=>{e.stopPropagation();selectedEdge=idx;selected=null;draw()};
+  svg.appendChild(shape);
+  if(ed.label){
+    const t=document.createElementNS("http://www.w3.org/2000/svg","text");t.setAttribute("x",(x1+x2)/2);t.setAttribute("y",(y1+y2)/2-8);
+    t.setAttribute("text-anchor","middle");t.setAttribute("font-size","14");t.setAttribute("fill","#344054");t.setAttribute("paint-order","stroke");t.setAttribute("stroke","white");t.setAttribute("stroke-width","5");
+    t.textContent=ed.label;svg.appendChild(t);
+  }
+ });
+}
+document.getElementById("linkMode").onclick=function(){linking=!linking;linkStart=null;this.textContent=linking?"Click first node…":"🔗 Link two nodes"};
+
+document.getElementById("reverseLink").onclick=()=>{
+ if(selectedEdge!==null && edges[selectedEdge]){
+   snapshot(); const e=edges[selectedEdge]; [e.a,e.b]=[e.b,e.a]; draw();
+ } else alert("Click a connector first, then choose Reverse selected connector.");
+};
+document.getElementById("addBracket").onclick=()=>{
+ snapshot(); const type=document.getElementById("bracketType").value;
+ brackets.push({id:"b"+Date.now(),type,x:650,y:430,sx:1,sy:1}); draw();
+};
+
+document.querySelectorAll(".swatch").forEach(b=>b.onclick=()=>{if(selected){snapshot();nodes.find(n=>n.id===selected).color=b.dataset.color;draw()}});
+document.getElementById("undo").onclick=()=>{if(history.length){future.push(JSON.stringify({nodes,edges,brackets}));restore(history.pop())}};
+document.getElementById("redo").onclick=()=>{if(future.length){history.push(JSON.stringify({nodes,edges,brackets}));restore(future.pop())}};
+function applyZoom(){canvas.style.transform=`scale(${scale})`}
+document.getElementById("zoomIn").onclick=()=>{scale=Math.min(1.5,scale+.1);applyZoom()};
+document.getElementById("zoomOut").onclick=()=>{scale=Math.max(.5,scale-.1);applyZoom()};
+document.getElementById("resetView").onclick=()=>{scale=1;applyZoom();wrap.scrollTop=0;wrap.scrollLeft=0};
+canvas.onclick=()=>{selected=null;selectedEdge=null;draw()};
+</script>
+</body>
+</html>
