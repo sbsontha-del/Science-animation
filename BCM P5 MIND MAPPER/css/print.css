@@ -1,0 +1,79 @@
+/* Print & PDF Export Stylesheet */
+@media print {
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .app-header,
+  .wizard-nav,
+  .no-print,
+  #stepSection1,
+  #stepSection2,
+  .canvas-toolbar-card,
+  .canvas-status-bar,
+  .floating-object-popup,
+  .modal-overlay,
+  .node-delete-btn {
+    display: none !important;
+  }
+
+  .app-main {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .section-card {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+
+  #stepSection3 {
+    display: block !important;
+  }
+
+  .canvas-wrapper {
+    height: 980px !important;
+    border: 1px solid #94a3b8 !important;
+    background: white !important;
+    background-image: none !important;
+    border-radius: 0 !important;
+  }
+
+  .canvas-node {
+    box-shadow: none !important;
+    border: 1.5px solid #000 !important;
+    background: white !important;
+    color: black !important;
+  }
+
+  .canvas-node.is-selected {
+    outline: none !important;
+  }
+
+  .print-header-banner {
+    display: block !important;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #0f172a;
+  }
+
+  .print-header-banner h1 {
+    font-size: 22px;
+    margin-bottom: 4px;
+  }
+
+  .print-meta-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: #475467;
+  }
+}
+
+.print-header-banner {
+  display: none;
+}

@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BCM P5 Science Mind Mapper</title>
+  <meta name="description" content="Singapore Primary 5 Science Interactive Mind Mapper and Pedagogical Concept Revision Tool">
+  
+  <!-- Modern Clean Stylesheets -->
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/canvas.css">
+  <link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+
+  <!-- Top Application Header -->
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand-wrapper">
+        <div class="brand-icon">🔬</div>
+        <div>
+          <h1 class="brand-title">BCM P5 Science Mind Mapper</h1>
+          <p class="brand-subtitle">Singapore Primary 5 Science • Active Recall & Concept Mapping</p>
+        </div>
+      </div>
+      <div class="header-actions no-print">
+        <button id="resetAllProjectBtn" class="btn btn-outline" title="Clear current work and start on another topic">
+          ↺ New Revision Topic
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Workflow Container -->
+  <main class="app-main">
+
+    <!-- Stepped Wizard Navigation -->
+    <nav class="wizard-nav no-print" aria-label="Mind mapping steps">
+      <button class="wizard-step-tab is-active" data-step="1">
+        <span class="step-num-badge">1</span>
+        <span>Get Ready &amp; Brainstorm</span>
+      </button>
+      <button class="wizard-step-tab" data-step="2">
+        <span class="step-num-badge">2</span>
+        <span>Cluster Ideas</span>
+      </button>
+      <button class="wizard-step-tab" data-step="3">
+        <span class="step-num-badge">3</span>
+        <span>Mind Map Workspace</span>
+      </button>
+    </nav>
+
+    <!-- STEP 1: GET READY & BRAINSTORM -->
+    <section class="section-card" id="stepSection1">
+      <div class="section-badge">STEP 1 OF 3 · GET READY &amp; BRAINSTORM</div>
+      <h2 class="section-title">Select Your Science Revision Topic</h2>
+      <p class="section-desc">Choose a core topic and check what you already understand before brainstorming your ideas.</p>
+
+      <!-- Topic Selectors -->
+      <div class="curriculum-select-row">
+        <div class="select-group">
+          <label class="select-label" for="topicSelect">Theme &amp; Topic</label>
+          <select id="topicSelect" class="select-control"></select>
+        </div>
+        <div class="select-group">
+          <label class="select-label" for="conceptSelect">Science Concept</label>
+          <select id="conceptSelect" class="select-control"></select>
+        </div>
+      </div>
+
+      <!-- Success Criteria Self-Check -->
+      <div class="criteria-card">
+        <div class="criteria-header">
+          <span class="criteria-title">🎯 Success Criteria Self-Check</span>
+          <span id="criteriaCountBadge" class="badge-pill badge-neutral">0 / 0 mastered</span>
+        </div>
+        <p class="section-desc" style="margin-bottom:12px;font-size:13.5px;">
+          Tick the criteria you feel confident explaining from memory. Revisit this checklist after building your mind map to verify your mastery!
+        </p>
+        <div id="criteriaList" class="criteria-list"></div>
+      </div>
+
+      <!-- Brainstorm Section -->
+      <div style="margin-top: 24px;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+          <h3 style="font-size:18px;font-weight:700;color:#1e293b;">Active Recall Brainstorm</h3>
+          <span id="keywordCountBadge" class="badge-pill badge-neutral">0 keywords</span>
+        </div>
+        <p class="section-desc">
+          Retrieve key concepts, processes, conditions, and organ/part names from memory. Try not to peek at notes first!
+        </p>
+
+        <div class="brainstorm-input-row">
+          <input type="text" id="keywordInput" class="brainstorm-input" placeholder="Type a science keyword or short phrase (e.g. 'heat gain', 'xylem', 'fertilisation')..." autocomplete="off">
+          <button id="addKeywordBtn" class="btn btn-primary">+ Add Keyword</button>
+        </div>
+
+        <div id="brainstormChips" class="chips-pool"></div>
+
+        <!-- Optional Word Bank Accordion -->
+        <div class="word-bank-box">
+          <div style="display:flex;align-items:center;justify-content:space-between;">
+            <span style="font-size:13.5px;font-weight:600;color:#475467;">Need a memory trigger?</span>
+            <button id="toggleWordBankBtn" type="button" class="btn btn-outline" style="padding:4px 10px;font-size:12.5px;">
+              💡 Show Word Bank Suggestions
+            </button>
+          </div>
+          <div id="wordBankChips" class="word-bank-chips hidden"></div>
+        </div>
+      </div>
+
+      <div class="wizard-footer-actions">
+        <div></div>
+        <button class="btn btn-primary btn-lg wizard-next-btn">
+          Next: Cluster Ideas &rarr;
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 2: CLUSTER -->
+    <section class="section-card hidden" id="stepSection2">
+      <div class="section-badge">STEP 2 OF 3 · CLUSTER &amp; CATEGORIZE</div>
+      <h2 class="section-title">Group Related Science Ideas</h2>
+      <p class="section-desc">
+        Drag keywords into clusters based on cause and effect, anatomical systems, state changes, or functions. You decide how ideas connect!
+      </p>
+
+      <div class="cluster-actions-bar no-print">
+        <button id="newClusterBtn" class="btn btn-primary">+ Create Cluster</button>
+        <button id="suggestClustersBtn" class="btn btn-secondary">💡 Give Me a Hint</button>
+        <button id="checkClustersBtn" class="btn btn-secondary">✓ Check My Thinking</button>
+        <button id="clearClustersBtn" class="btn btn-outline">Reset Clusters</button>
+      </div>
+
+      <!-- Scaffold Feedback Box -->
+      <div id="thinkingFeedbackBox" class="thinking-feedback-card hidden"></div>
+
+      <!-- Unsorted Keywords Holding Area -->
+      <div style="margin-top: 18px;">
+        <h4 style="font-size:14px;font-weight:700;color:#64748b;margin-bottom:8px;text-transform:uppercase;letter-spacing:0.04em;">
+          Unsorted Keywords (Drag into any cluster below)
+        </h4>
+        <div id="unsortedChips" class="chips-pool"></div>
+      </div>
+
+      <!-- Clusters Grid -->
+      <div id="clustersGrid" class="clusters-grid"></div>
+
+      <div class="wizard-footer-actions">
+        <button class="btn btn-secondary wizard-prev-btn">
+          &larr; Back to Brainstorm
+        </button>
+        <button id="buildMapBtn" class="btn btn-primary btn-lg">
+          Create My Mind Map &rarr;
+        </button>
+      </div>
+    </section>
+
+    <!-- STEP 3: MIND MAP WORKSPACE -->
+    <section class="section-card hidden" id="stepSection3">
+      <!-- Print Header (only visible on print/PDF) -->
+      <div class="print-header-banner">
+        <div class="print-meta-row">
+          <span>Student Name: _______________________</span>
+          <span>Class: P5 / _______</span>
+          <span>Date: ____________</span>
+        </div>
+        <h1 style="margin-top:8px;" id="printConceptTitle">Science Mind Map Revision</h1>
+      </div>
+
+      <div class="section-badge no-print">STEP 3 OF 3 · MIND MAP WORKSPACE</div>
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;" class="no-print">
+        <div>
+          <h2 class="section-title">Interactive Mind Map Canvas</h2>
+          <p class="section-desc" style="margin-bottom:0;">
+            Connect your concepts with directional verbs, draw freehand diagrams, snap geometric shapes, and add brackets.
+          </p>
+        </div>
+        <button id="zenToggleBtn" class="btn btn-outline" title="Expand canvas to fill screen">
+          ⛶ Fullscreen Canvas
+        </button>
+      </div>
+
+      <!-- Mind Map Toolbar -->
+      <div class="canvas-toolbar-card no-print">
+        <div class="canvas-toolbar">
+          <!-- Node creation -->
+          <div class="toolbar-group">
+            <button id="addNodeBtn" class="btn btn-secondary" title="Add a new custom idea node">+ Node</button>
+          </div>
+
+          <!-- Drawing & Shapes -->
+          <div class="toolbar-group">
+            <button id="freeDrawBtn" class="btn btn-outline" title="Hand-draw sketches with smooth lines">✏️ Free Draw</button>
+            <button id="smartDrawBtn" class="btn btn-outline" title="Draw rough shapes that snap neat">✨ Smart Draw</button>
+            <select id="shapeSelect" class="toolbar-select" title="Place a geometric shape">
+              <option value="">▱ Shapes…</option>
+              <option value="textbox">🔤 Text Box</option>
+              <option value="rect">▭ Rectangle</option>
+              <option value="square">□ Square</option>
+              <option value="ellipse">○ Circle / Oval</option>
+              <option value="triangle">△ Triangle</option>
+              <option value="arrow">→ Arrow</option>
+              <option value="line">— Line</option>
+            </select>
+          </div>
+
+          <!-- Connector Linking & Verbs -->
+          <div class="toolbar-group">
+            <select id="connectorTypeSelect" class="toolbar-select" title="Connector line style">
+              <option value="curved">~ Curved Arrow</option>
+              <option value="elbow">⌞ Elbow Arrow</option>
+              <option value="arrow">&rarr; Straight Arrow</option>
+              <option value="line">&mdash; Straight Line</option>
+              <option value="double">&harr; Double Arrow</option>
+            </select>
+            <button id="linkModeBtn" class="btn btn-outline" title="Click two nodes to connect them">🔗 Connect</button>
+            <select id="linkVerbSelect" class="toolbar-select" style="max-width:140px;"></select>
+            <input type="text" id="linkVerbInput" class="toolbar-input" placeholder="Verb (e.g. transports)...">
+          </div>
+
+          <!-- Brackets -->
+          <div class="toolbar-group">
+            <select id="bracketTypeSelect" class="toolbar-select">
+              <option value="right">} Right brace</option>
+              <option value="left">{ Left brace</option>
+              <option value="top">⏞ Top bracket</option>
+              <option value="bottom">⏟ Bottom bracket</option>
+            </select>
+            <button id="addBracketBtn" class="btn btn-outline">{ } Bracket</button>
+          </div>
+
+          <!-- Colors -->
+          <div class="toolbar-group color-swatches-row" title="Change color of selected node">
+            <button class="swatch-btn" data-color="#e0f2fe" data-border="#0284c7" style="background:#e0f2fe" title="Sky Blue"></button>
+            <button class="swatch-btn" data-color="#f0fdf4" data-border="#16a34a" style="background:#f0fdf4" title="Mint Green"></button>
+            <button class="swatch-btn" data-color="#fff3d6" data-border="#d97706" style="background:#fff3d6" title="Warm Amber"></button>
+            <button class="swatch-btn" data-color="#f5f3ff" data-border="#7c3aed" style="background:#f5f3ff" title="Lavender"></button>
+            <button class="swatch-btn" data-color="#fdf2f8" data-border="#db2777" style="background:#fdf2f8" title="Soft Rose"></button>
+          </div>
+
+          <!-- History & View -->
+          <div class="toolbar-group">
+            <button id="undoBtn" class="btn btn-outline" title="Undo (Ctrl+Z)" disabled>↶</button>
+            <button id="redoBtn" class="btn btn-outline" title="Redo (Ctrl+Y)" disabled>↷</button>
+            <button id="zoomOutBtn" class="btn btn-outline" title="Zoom Out">&minus;</button>
+            <button id="zoomInBtn" class="btn btn-outline" title="Zoom In">&plus;</button>
+            <button id="resetViewBtn" class="btn btn-outline" title="Reset View">Reset</button>
+          </div>
+
+          <!-- Export & Print -->
+          <div class="toolbar-group">
+            <button id="exportPngBtn" class="btn btn-secondary" title="Save mind map as high-res PNG image">📷 Export PNG</button>
+            <button id="printBtn" class="btn btn-secondary" title="Print or save as PDF">🖨️ Print / PDF</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Canvas Helper Status -->
+      <div class="canvas-status-bar no-print">
+        <div id="canvasToolStatus">👆 <b>Select Mode:</b> Click any node or shape to move or customize. Drag blank canvas or hold <kbd>Space</kbd> to pan.</div>
+        <div>💡 Tip: Double-click nodes or labels to edit text.</div>
+      </div>
+
+      <!-- Canvas Viewport -->
+      <div id="canvasWrap" class="canvas-wrapper">
+        <div id="mapCanvas" class="canvas-viewport-inner">
+          <svg id="canvasEdgesLayer" class="canvas-svg-layer"></svg>
+          <svg id="canvasInkLayer" class="canvas-svg-layer"></svg>
+        </div>
+
+        <!-- Floating Context Popup for Selected Object -->
+        <div id="canvasObjectPopup" class="floating-object-popup hidden no-print">
+          <button id="popConnectBtn" class="btn btn-primary">🔗 Connect to…</button>
+          <button id="popEditBtn" class="btn btn-secondary">✏️ Edit Text</button>
+          <button id="popReverseBtn" class="btn btn-secondary">⇄ Reverse Arrow</button>
+          <button id="popRotateBtn" class="btn btn-secondary">⟳ Rotate</button>
+          <button id="popFlipHBtn" class="btn btn-secondary">↔ Flip H</button>
+          <button id="popFlipVBtn" class="btn btn-secondary">↕ Flip V</button>
+          <button id="popDeleteBtn" class="btn btn-danger">🗑 Delete</button>
+        </div>
+
+        <!-- Floating Connection Guide Banner -->
+        <div id="canvasConnectBanner" class="canvas-connect-banner hidden no-print">
+          <span class="banner-icon">🔗</span>
+          <span id="connectBannerText" class="banner-text">Click the 1st node, then click the 2nd node to connect them.</span>
+          <button id="cancelConnectBtn" class="btn btn-outline small-banner-btn">Cancel</button>
+        </div>
+      </div>
+
+      <div class="wizard-footer-actions no-print">
+        <button class="btn btn-secondary wizard-prev-btn">
+          &larr; Back to Clusters
+        </button>
+        <div></div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- In-App Dialog Modal Container -->
+  <div id="appModalOverlay" class="modal-overlay hidden">
+    <div class="modal-card" role="dialog" aria-modal="true">
+      <div class="modal-header">
+        <h3 class="modal-title" id="modalTitle">Notice</h3>
+        <button class="modal-close-btn" id="modalCloseBtn" aria-label="Close">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer" id="modalFooter"></div>
+    </div>
+  </div>
+
+  <!-- Application Entry Point -->
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
