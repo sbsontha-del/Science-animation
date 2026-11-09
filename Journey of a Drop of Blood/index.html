@@ -1,0 +1,3749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Activity 4.7: Journey of a Drop of Blood — Practice &amp; E-Storybook Studio</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    :root {
+      --accent-color: #e11d48;
+      --progress-bar-track: #ffe4e6;
+      --progress-bar-fill: #e11d48;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+      background: #f2f7ff;
+      color: #20334b;
+      min-height: 100vh;
+      margin: 0;
+    }
+
+    /* =====================================================================
+       PHASE 1: GUIDED PRACTICE STYLES (From Teacher Resource)
+       ===================================================================== */
+    .practice-header {
+      background: linear-gradient(110deg, #c62845, #f06b62);
+      color: white;
+      padding: 22px max(18px, calc((100vw - 1100px) / 2));
+    }
+    .practice-wrap {
+      max-width: 960px;
+      margin: auto;
+      padding: 18px;
+    }
+    .practice-tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 12px 0 20px;
+    }
+    .practice-tab {
+      border: 2px solid #d5e1f1;
+      background: white;
+      color: #294566;
+      border-radius: 13px;
+      padding: 10px 14px;
+      font-weight: 750;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .practice-tab.active {
+      background: #244f87;
+      color: white;
+      border-color: #244f87;
+    }
+    .practice-panel {
+      background: white;
+      border-radius: 22px;
+      padding: clamp(18px, 4vw, 30px);
+      box-shadow: 0 6px 24px #26436613;
+      min-height: 420px;
+    }
+    .practice-panel h2 {
+      margin-top: 0;
+      font-size: 1.45rem;
+      font-weight: 800;
+    }
+    .practice-lead {
+      color: #52647b;
+      margin-bottom: 16px;
+    }
+    .practice-route {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin: 22px 0;
+    }
+    .practice-node {
+      background: #eef5ff;
+      border: 2px solid #c6d9f5;
+      border-radius: 15px;
+      padding: 13px 15px;
+      font-weight: 800;
+      text-align: center;
+      flex: 1;
+      min-width: 125px;
+    }
+    .practice-arrow {
+      font-size: 23px;
+      color: #d7445b;
+      font-weight: 900;
+    }
+    .practice-card {
+      background: #f4f8ff;
+      border: 1px solid #d8e5f5;
+      border-radius: 15px;
+      padding: 16px;
+      margin: 12px 0;
+    }
+    .practice-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .btn-prac-primary {
+      background: #245c9d;
+      color: white;
+      border: 0;
+      border-radius: 12px;
+      padding: 11px 18px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .btn-prac-primary:hover {
+      background: #1d4b82;
+    }
+    .btn-prac-secondary {
+      background: white;
+      color: #245c9d;
+      border: 2px solid #a9c7eb;
+      border-radius: 12px;
+      padding: 10px 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .btn-prac-launch {
+      background: linear-gradient(110deg, #e11d48, #f43f5e);
+      color: white;
+      border: 0;
+      border-radius: 14px;
+      padding: 13px 22px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 20px rgb(225 29 72 / 0.28);
+    }
+    .practice-feedback {
+      margin-top: 14px;
+      padding: 12px 16px;
+      border-radius: 12px;
+      background: #fff4dc;
+      color: #754d00;
+      font-weight: 650;
+    }
+    .practice-feedback.good {
+      background: #e3f8ec;
+      color: #17653b;
+    }
+    .practice-step {
+      border: 2px solid #e0e8f4;
+      border-radius: 13px;
+      padding: 12px;
+      margin: 9px 0;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .practice-step strong {
+      min-width: 90px;
+    }
+    .practice-select {
+      font: inherit;
+      max-width: 100%;
+      padding: 8px 10px;
+      border-radius: 9px;
+      border: 2px solid #b7cbe1;
+      background: white;
+      flex: 1;
+      min-width: 150px;
+    }
+    .practice-question {
+      padding: 16px;
+      border-radius: 14px;
+      background: #f7f9fe;
+      margin: 12px 0;
+    }
+    .practice-question p {
+      font-weight: 700;
+      margin: 0 0 8px;
+    }
+    .practice-options {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .practice-choice {
+      border: 2px solid #ccdced;
+      border-radius: 12px;
+      background: white;
+      padding: 10px 12px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .practice-choice.selected {
+      background: #dcecff;
+      border-color: #3069aa;
+      font-weight: 800;
+    }
+    .practice-wordbank {
+      background: #fff3d8;
+      border: 2px dashed #e6b857;
+      border-radius: 12px;
+      padding: 14px;
+      margin: 14px 0;
+      line-height: 2;
+    }
+    .practice-story {
+      line-height: 2.6;
+      font-size: 16.5px;
+    }
+    .practice-story select {
+      min-width: 130px;
+      max-width: 210px;
+      padding: 5px 8px;
+      margin: 0 4px;
+      border-radius: 8px;
+      border: 2px solid #b7cbe1;
+      background: white;
+      font-weight: 700;
+    }
+
+    /* =====================================================================
+       PHASE 2: E-STORYBOOK & FLIPBOOK STUDIO STYLES
+       ===================================================================== */
+    dialog:modal {
+      overscroll-behavior: contain;
+      border: none;
+      border-radius: 1.25rem;
+      padding: 0;
+      max-width: 92vw;
+      max-height: 90vh;
+      box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.35);
+    }
+    dialog::backdrop {
+      overflow: hidden;
+      overscroll-behavior: contain;
+      background: rgb(15 23 42 / 0.65);
+      backdrop-filter: blur(4px);
+    }
+
+    progress {
+      appearance: none;
+      border: 0 solid;
+      overflow: clip;
+      --progress-bar-radius: 1e5px;
+      border-radius: var(--progress-bar-radius);
+      background: var(--progress-bar-track, #ffe4e6);
+      box-shadow: inset 0 1px 2px rgb(0 0 0 / 0.1);
+      container-type: inline-size;
+      --progress-bar-indeterminate-size: 30%;
+      --progress-bar-indeterminate-animation-duration: 1.5s;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      progress {
+        --progress-bar-indeterminate-animation-duration: 10s;
+      }
+    }
+    progress::-webkit-progress-bar {
+      background: transparent;
+    }
+    progress::-webkit-progress-value {
+      background: var(--progress-bar-fill, var(--accent-color));
+      border-radius: var(--progress-bar-radius);
+      transition: inline-size 0.3s;
+    }
+    progress::-moz-progress-bar {
+      background: var(--progress-bar-fill, var(--accent-color));
+      border-radius: var(--progress-bar-radius);
+      transition: inline-size 0.3s;
+    }
+
+    .drag-handle {
+      cursor: grab;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+    .drag-handle.dragging,
+    .drag-handle:active {
+      cursor: grabbing;
+    }
+
+    .canvas-stage {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      background: #ffffff;
+      border-radius: 0.875rem;
+      overflow: hidden;
+      box-shadow: inset 0 0 0 2px #e2e8f0;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+    }
+
+    .canvas-stage canvas {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #bgCanvas {
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    #drawCanvas {
+      z-index: 2;
+    }
+
+    #stickerLayer {
+      position: absolute;
+      inset: 0;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .sticker-item {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      cursor: grab;
+      touch-action: none;
+      -webkit-user-select: none;
+      user-select: none;
+      pointer-events: auto;
+      transition: filter 0.15s;
+    }
+    .sticker-item.dragging,
+    .sticker-item:active {
+      cursor: grabbing;
+    }
+    .sticker-item.selected {
+      outline: 2px dashed #e11d48;
+      outline-offset: 4px;
+      border-radius: 0.5rem;
+      filter: drop-shadow(0 6px 12px rgb(225 29 72 / 0.25));
+    }
+
+    .story-dropzone {
+      transition: all 0.2s ease;
+    }
+    .story-dropzone.drag-over {
+      border-color: #e11d48 !important;
+      background-color: #fff1f2 !important;
+      box-shadow: 0 0 0 3px rgb(225 29 72 / 0.15);
+    }
+
+    .blank-slot {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 96px;
+      padding: 2px 10px;
+      margin: 2px 3px;
+      border-radius: 8px;
+      border: 2px dashed #fb7185;
+      background: #fff1f2;
+      color: #be123c;
+      font-weight: 800;
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      vertical-align: baseline;
+    }
+    .blank-slot.filled {
+      border-style: solid;
+      border-color: #10b981;
+      background: #ecfdf5;
+      color: #047857;
+    }
+    .blank-slot.drag-over-slot,
+    .blank-slot.active-slot {
+      border-style: solid;
+      border-color: #4f46e5;
+      background: #eef2ff;
+      color: #4338ca;
+      transform: scale(1.05);
+      box-shadow: 0 0 0 3px rgb(79 70 229 / 0.2);
+    }
+
+    .custom-scroll::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scroll::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+
+    @media print {
+      body {
+        background: #ffffff !important;
+      }
+      .no-print,
+      dialog,
+      dialog::backdrop {
+        display: none !important;
+      }
+      #printContainer {
+        display: block !important;
+      }
+      .print-page {
+        page-break-after: always;
+        break-after: page;
+        border: 2px solid #cbd5e1;
+        border-radius: 16px;
+        padding: 24px;
+        margin-bottom: 24px;
+        background: #ffffff;
+      }
+    }
+  </style>
+</head>
+<body class="antialiased">
+
+  <!-- =======================================================================
+       TOP GLOBAL PHASE NAVIGATION BAR (Switch between Part 1: Practice & Part 2: E-Storybook)
+       ======================================================================= -->
+  <div class="no-print sticky top-0 z-40 bg-slate-900 text-white px-4 py-2.5 shadow-md">
+    <div class="max-w-[1440px] mx-auto flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-2.5">
+        <span class="px-2.5 py-0.5 rounded-full bg-rose-500 text-white text-xs font-extrabold uppercase tracking-wider">P5 Science • Activity 4.7</span>
+        <span class="text-sm font-extrabold tracking-tight">🩸 Journey of a Drop of Blood</span>
+      </div>
+
+      <!-- Phase Switcher Pills -->
+      <div class="flex flex-wrap items-center gap-2">
+        <div class="flex items-center gap-1.5 bg-slate-800 p-1 rounded-xl border border-slate-700">
+          <button id="btnSwitchToPractice" type="button" onclick="switchMainPhase('practice')" class="px-3.5 py-1.5 rounded-lg text-xs font-extrabold transition bg-amber-400 text-slate-950 shadow-xs flex items-center gap-1.5">
+            <span>1️⃣</span>
+            <span>Part 1: Warm-Up Practice (Stages 1–5)</span>
+            <span id="practiceDoneBadge" class="hidden px-1.5 py-0.2 rounded-full bg-emerald-600 text-white text-[11px]">✓</span>
+          </button>
+          <button id="btnSwitchToStudio" type="button" onclick="switchMainPhase('studio')" class="px-3.5 py-1.5 rounded-lg text-xs font-extrabold transition text-slate-300 hover:text-white flex items-center gap-1.5">
+            <span>2️⃣</span>
+            <span>Part 2: Create My E-Storybook &amp; Flipbook Studio 🎨</span>
+          </button>
+        </div>
+
+        <!-- Always-Available Print & Download Quick Buttons -->
+        <div class="flex items-center gap-1.5">
+          <button type="button" onclick="downloadDirectPDF()" class="px-3.5 py-1.5 rounded-lg bg-rose-600 hover:bg-rose-500 text-white text-xs font-extrabold transition flex items-center gap-1 shadow-xs" title="Directly download multi-page PDF file (.pdf)">
+            <span>📄</span>
+            <span>Download PDF (.pdf)</span>
+          </button>
+          <button type="button" onclick="downloadStandaloneHTMLFlipbook()" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-extrabold transition flex items-center gap-1 shadow-xs" title="Download standalone interactive HTML Flipbook">
+            <span>⬇️</span>
+            <span>Download Flipbook</span>
+          </button>
+          <button type="button" onclick="printOrDownloadPDF()" class="px-3 py-1.5 rounded-lg bg-slate-700 hover:bg-slate-600 text-white text-xs font-extrabold transition flex items-center gap-1 shadow-xs" title="Open Print Preview">
+            <span>🖨️</span>
+            <span>Print</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div id="actionToast" role="status" aria-live="polite" class="no-print fixed bottom-5 right-5 z-50 hidden px-4 py-3 rounded-2xl bg-slate-900 text-white text-xs font-extrabold shadow-xl border border-slate-700 items-center gap-2"></div>
+
+  <!-- =======================================================================
+       PART 1: GUIDED PRACTICE VIEW (Stages 1 to 5 before Flipbook)
+       ======================================================================= -->
+  <div id="phasePracticeView" class="no-print">
+    <header class="practice-header">
+      <div class="max-w-[940px] mx-auto">
+        <span class="inline-block bg-amber-200 text-amber-950 px-3 py-1 rounded-full text-xs font-extrabold">Step-by-Step Warm-Up Practice</span>
+        <h1 class="text-2xl sm:text-3xl font-extrabold mt-2 mb-1">🩸 Journey of a Drop of Blood — Guided Practice</h1>
+        <p class="text-sm sm:text-base opacity-95">Complete these 5 quick practice stages first, then create and illustrate your own E-Storybook Flipbook!</p>
+        <div class="h-2.5 bg-white/25 rounded-full overflow-hidden mt-3">
+          <div id="practiceProgressBar" class="h-full bg-amber-300 transition-all duration-300" style="width: 20%"></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="practice-wrap">
+      <nav class="practice-tabs" aria-label="Lesson stages">
+        <button type="button" class="practice-tab active" onclick="goPracticeStage(0)">1. Explore</button>
+        <button type="button" class="practice-tab" onclick="goPracticeStage(1)">2. Sequence</button>
+        <button type="button" class="practice-tab" onclick="goPracticeStage(2)">3. Understand</button>
+        <button type="button" class="practice-tab" onclick="goPracticeStage(3)">4. Story</button>
+        <button type="button" class="practice-tab" onclick="goPracticeStage(4)">5. Review &amp; Launch Flipbook</button>
+      </nav>
+
+      <!-- STAGE 1: EXPLORE -->
+      <section class="practice-panel" id="p0">
+        <h2>👋 Meet Ruby, a drop of blood!</h2>
+        <p class="practice-lead">Imagine you are Ruby. The heart pumps you around the body through blood vessels. Where will you travel?</p>
+        <div class="practice-route">
+          <div class="practice-node">❤️ Heart</div>
+          <span class="practice-arrow">→</span>
+          <div class="practice-node">🫁 Lungs</div>
+          <span class="practice-arrow">→</span>
+          <div class="practice-node">❤️ Heart</div>
+          <span class="practice-arrow">→</span>
+          <div class="practice-node">🏃 Body parts</div>
+          <span class="practice-arrow">→</span>
+          <div class="practice-node">❤️ Heart</div>
+        </div>
+        <div class="practice-card"><b>At the lungs:</b> Blood gains <b>oxygen</b> and releases <b>carbon dioxide</b>.</div>
+        <div class="practice-card"><b>At the body parts:</b> Blood delivers <b>oxygen and digested food</b> and picks up <b>carbon dioxide</b>.</div>
+        <div class="practice-card"><b>The heart:</b> Pumps blood. <b>Blood vessels:</b> Carry blood around the body.</div>
+        <p class="mt-3"><b>Say it aloud:</b> “Heart, lungs, heart, body parts, heart.”</p>
+        <div class="practice-actions">
+          <button type="button" class="btn-prac-primary" onclick="goPracticeStage(1)">I am ready →</button>
+        </div>
+      </section>
+
+      <!-- STAGE 2: SEQUENCE -->
+      <section class="practice-panel hidden" id="p1">
+        <h2>🔢 Put Ruby's journey in order</h2>
+        <p class="practice-lead">Choose the correct place for each step. You can use the same place more than once.</p>
+        <div id="seq"></div>
+        <div class="practice-actions">
+          <button type="button" class="btn-prac-primary" onclick="checkSequence()">Check my sequence</button>
+          <button type="button" class="btn-prac-secondary" onclick="pracHint('sfb','Remember: Heart → Lungs → Heart → Body parts → Heart.')">Give me a hint</button>
+        </div>
+        <div id="sfb" aria-live="polite"></div>
+        <div class="practice-actions">
+          <button type="button" class="btn-prac-secondary" onclick="goPracticeStage(2)">Next: Understand →</button>
+        </div>
+      </section>
+
+      <!-- STAGE 3: UNDERSTAND -->
+      <section class="practice-panel hidden" id="p2">
+        <h2>🧠 What happens on the journey?</h2>
+        <p class="practice-lead">Choose the correct answer for each question.</p>
+        <div id="quiz"></div>
+        <div class="practice-actions">
+          <button type="button" class="btn-prac-primary" onclick="checkQuiz()">Check my answers</button>
+          <button type="button" class="btn-prac-secondary" onclick="pracHint('qfb','Think: Lungs = gain oxygen. Body parts = deliver oxygen. Heart = pump.')">Give me a hint</button>
+        </div>
+        <div id="qfb" aria-live="polite"></div>
+        <div class="practice-actions">
+          <button type="button" class="btn-prac-secondary" onclick="goPracticeStage(3)">Next: Build my story →</button>
+        </div>
+      </section>
+
+      <!-- STAGE 4: STORY -->
+      <section class="practice-panel hidden" id="p3">
+        <h2>✍️ Practice building a Science story</h2>
+        <p class="practice-lead">Complete Ruby's practice story. Use the word bank to help you. Some words are used more than once.</p>
+        <div class="practice-wordbank"><b>Word bank:</b> heart · lungs · oxygen · carbon dioxide · body</div>
+        <div class="practice-story" id="story"></div>
+        <div class="practice-actions">
+          <button type="button" class="btn-prac-primary" onclick="checkStory()">Check my story</button>
+          <button type="button" class="btn-prac-secondary" onclick="pracHint('tfb','Read the journey map in Stage 1. At the lungs, blood gains oxygen. At the body parts, blood delivers oxygen.')">Give me a hint</button>
+        </div>
+        <div id="tfb" aria-live="polite"></div>
+        <div class="practice-actions">
+          <button type="button" class="btn-prac-secondary" onclick="goPracticeStage(4)">Next: Review &amp; Launch Flipbook →</button>
+        </div>
+      </section>
+
+      <!-- STAGE 5: REVIEW & LAUNCH E-STORYBOOK STUDIO -->
+      <section class="practice-panel hidden" id="p4">
+        <h2>🌟 Practice Complete! Ready to Create Your E-Storybook?</h2>
+        <p class="practice-lead">Review your practice story and checklist below, then launch the <b>E-Storybook &amp; Flipbook Studio</b> to illustrate and compose your own book!</p>
+        <div class="practice-card practice-story" id="finalstory"></div>
+
+        <h3 class="font-extrabold text-base mt-4 mb-2">My success checklist</h3>
+        <div id="checklist"></div>
+
+        <h3 class="font-extrabold text-base mt-4 mb-1">Optional challenge</h3>
+        <p class="text-sm text-slate-600 mb-2">Can you explain how the respiratory and circulatory systems work together?</p>
+        <textarea id="challenge" class="w-full min-h-[90px] border-2 border-[#b7cbe1] rounded-xl p-3 text-sm" placeholder="The respiratory system helps us to... The circulatory system helps to..."></textarea>
+
+        <!-- Call-To-Action Box to Launch Part 2: E-Storybook & Flipbook Studio -->
+        <div class="mt-6 p-5 rounded-2xl bg-gradient-to-r from-rose-50 via-amber-50 to-indigo-50 border-2 border-rose-300 flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <span class="px-2.5 py-0.5 rounded-full bg-rose-600 text-white text-xs font-extrabold uppercase">Next Step: Part 2</span>
+            <h3 class="text-lg font-extrabold text-slate-900 mt-1">🎨 Create &amp; Illustrate Your Own E-Storybook Flipbook!</h3>
+            <p class="text-xs text-slate-600 mt-0.5">Use the Sticker Gallery, Drawing Tools, and Drag-and-Drop Sentence Builder to design your downloadable e-storybook.</p>
+          </div>
+          <div class="flex flex-wrap gap-2">
+            <button type="button" class="btn-prac-launch" onclick="switchMainPhase('studio')">
+              🎨 Launch E-Storybook &amp; Flipbook Studio →
+            </button>
+          </div>
+        </div>
+
+        <div class="practice-actions mt-4">
+          <button type="button" class="btn-prac-primary" onclick="downloadDirectPDF()">📄 Download PDF (.pdf)</button>
+          <button type="button" class="btn-prac-secondary" onclick="downloadStandaloneHTMLFlipbook()">⬇️ Download HTML Flipbook</button>
+          <button type="button" class="btn-prac-secondary" onclick="printOrDownloadPDF()">🖨️ Print</button>
+          <button type="button" class="btn-prac-secondary" onclick="copyPracticeStory()">📋 Copy practice story</button>
+          <button type="button" class="btn-prac-secondary" onclick="goPracticeStage(0)">🔄 Replay practice stages</button>
+        </div>
+        <div id="cfb" aria-live="polite"></div>
+      </section>
+    </main>
+
+    <footer class="text-xs text-slate-500 p-5 text-center">
+      Designed for guided Primary 5 Science learning • Activity 4.7: Journey of a Drop of Blood
+    </footer>
+  </div>
+
+  <!-- =======================================================================
+       PART 2: E-STORYBOOK & FLIPBOOK STUDIO VIEW (Hidden until launched)
+       ======================================================================= -->
+  <div id="phaseStudioView" class="no-print hidden max-w-[1440px] mx-auto px-4 py-4 flex-col gap-4">
+    
+    <!-- Top Header Bar -->
+    <header class="bg-white/95 backdrop-blur border border-rose-200 rounded-2xl px-5 py-3.5 shadow-sm flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <button type="button" onclick="switchMainPhase('practice')" class="px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-extrabold transition flex items-center gap-1" title="Return to Part 1 Warm-Up Practice">
+          ← Back to Practice
+        </button>
+        <div>
+          <div class="flex items-center gap-2">
+            <span class="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider bg-rose-100 text-rose-700 rounded-full">Part 2 • Studio</span>
+            <span class="text-xs font-medium text-slate-500">Illustrate, Compose &amp; Download Your Book</span>
+          </div>
+          <h1 class="text-xl font-extrabold text-slate-800 tracking-tight">Journey of a Drop of Blood — E-Storybook Studio</h1>
+        </div>
+      </div>
+
+      <!-- Pupil Metadata Inputs -->
+      <div class="flex flex-wrap items-center gap-2 bg-slate-50 p-2 rounded-xl border border-slate-200">
+        <label class="flex items-center gap-1.5 text-xs font-semibold text-slate-600 px-2">
+          <span>Author:</span>
+          <input id="pupilName" type="text" placeholder="Your Name" value="" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:border-rose-500 w-28" />
+        </label>
+        <label class="flex items-center gap-1.5 text-xs font-semibold text-slate-600 px-2">
+          <span>Class:</span>
+          <input id="pupilClass" type="text" placeholder="e.g. 5A" value="" class="bg-white border border-slate-300 rounded-lg px-2 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:border-rose-500 w-16" />
+        </label>
+        <label class="flex items-center gap-1.5 text-xs font-semibold text-slate-600 px-2">
+          <span>Book Title:</span>
+          <input id="bookTitle" type="text" placeholder="My Blood Drop Story" value="My Journey as a Drop of Blood" class="bg-white border border-slate-300 rounded-lg px-2.5 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:border-rose-500 w-48" />
+        </label>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="btnOpenRubric" type="button" class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-800 border border-amber-300 text-xs font-bold flex items-center gap-1.5 transition shadow-sm">
+          <span>📋</span>
+          <span>Rubric Check</span>
+          <span id="headerRubricBadge" class="ml-1 px-2 py-0.5 rounded-full bg-amber-200 text-amber-900 text-xs">0/3 Systems</span>
+        </button>
+
+        <button id="btnPreviewBook" type="button" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold flex items-center gap-1.5 transition shadow-sm shadow-indigo-200">
+          <span>📖</span>
+          <span>Read &amp; Listen (Flipbook)</span>
+        </button>
+
+        <button id="btnDownloadHTML" type="button" class="px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold flex items-center gap-1.5 transition shadow-sm shadow-emerald-200" title="Download interactive HTML e-storybook">
+          <span>⬇️</span>
+          <span>Download HTML Flipbook</span>
+        </button>
+
+        <button id="btnDownloadPDF" type="button" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold flex items-center gap-1.5 transition shadow-sm shadow-rose-200" title="Directly download multi-page PDF file (.pdf)">
+          <span>📄</span>
+          <span>Download PDF (.pdf)</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- Page Navigation Strip -->
+    <section class="bg-white/90 border border-slate-200 rounded-2xl p-3 shadow-sm flex items-center justify-between gap-3">
+      <div class="flex items-center gap-2 overflow-x-auto custom-scroll pb-1" id="pageTabsContainer">
+        <!-- Populated by JS -->
+      </div>
+      <div class="flex items-center gap-2 shrink-0">
+        <button id="btnAddPage" type="button" class="px-3 py-1.5 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-700 border border-rose-200 text-xs font-bold flex items-center gap-1 transition">
+          <span>➕</span> Add Page
+        </button>
+        <button id="btnDeletePage" type="button" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-600 border border-slate-200 text-xs font-bold flex items-center gap-1 transition" title="Delete current page">
+          <span>🗑️</span> Delete Page
+        </button>
+        <button id="btnResetTemplate" type="button" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 text-xs font-bold transition" title="Reset or switch templates">
+          <span>🔄</span> Reset / Modes
+        </button>
+      </div>
+    </section>
+
+    <!-- Main 3-Column Studio Workspace -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
+      
+      <!-- LEFT COLUMN (3 cols): Scene Gallery, Sticker Gallery & Drawing Tools -->
+      <aside class="lg:col-span-3 bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col gap-4">
+        
+        <!-- Mode Switcher Tabs -->
+        <div class="grid grid-cols-3 gap-1 bg-slate-100 p-1 rounded-xl">
+          <button type="button" data-left-tab="stickers" class="left-tab-btn py-2 px-2 rounded-lg text-xs font-bold bg-white text-rose-600 shadow-sm transition">
+            🎨 Stickers
+          </button>
+          <button type="button" data-left-tab="scenes" class="left-tab-btn py-2 px-2 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition">
+            🖼️ Scenes
+          </button>
+          <button type="button" data-left-tab="draw" class="left-tab-btn py-2 px-2 rounded-lg text-xs font-bold text-slate-600 hover:text-slate-900 transition">
+            ✏️ Draw
+          </button>
+        </div>
+
+        <!-- TAB 1: STICKER GALLERY -->
+        <div id="tab-stickers" class="left-tab-panel flex flex-col gap-3">
+          <p class="text-xs text-slate-500">Click any sticker to place it on your page, then drag it (or use arrow keys) to build your diagram!</p>
+          
+          <!-- Category Filter -->
+          <div class="flex flex-wrap gap-1">
+            <button type="button" data-sticker-cat="all" class="sticker-cat-btn px-2.5 py-1 rounded-full text-xs font-bold bg-rose-600 text-white">All</button>
+            <button type="button" data-sticker-cat="characters" class="sticker-cat-btn px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Blood Drops</button>
+            <button type="button" data-sticker-cat="organs" class="sticker-cat-btn px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Body Parts</button>
+            <button type="button" data-sticker-cat="cargo" class="sticker-cat-btn px-2.5 py-1 rounded-full text-xs font-bold bg-slate-100 text-slate-700 hover:bg-slate-200">Substances &amp; Arrows</button>
+          </div>
+
+          <!-- Sticker Grid -->
+          <div id="stickerGalleryGrid" class="grid grid-cols-2 gap-2 max-h-[380px] overflow-y-auto custom-scroll pr-1">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Custom Speech Label Adder -->
+          <div class="border-t border-slate-200 pt-3 mt-1">
+            <label class="block text-xs font-bold text-slate-700 mb-1.5">💬 Add Speech Bubble / Label:</label>
+            <div class="flex gap-1.5">
+              <input id="customBubbleInput" type="text" placeholder="e.g. Off to the lungs!" class="flex-1 border border-slate-300 rounded-lg px-2.5 py-1.5 text-xs focus:outline-none focus:border-rose-500" />
+              <button id="btnAddSpeechBubble" type="button" class="px-3 py-1.5 bg-rose-600 hover:bg-rose-700 text-white rounded-lg text-xs font-bold shrink-0">Add</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: BACKGROUND SCENES -->
+        <div id="tab-scenes" class="left-tab-panel hidden flex-col gap-2.5">
+          <p class="text-xs text-slate-500">Choose a background setting for this stop on your journey:</p>
+          <div id="sceneGalleryList" class="flex flex-col gap-2 max-h-[430px] overflow-y-auto custom-scroll pr-1">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+
+        <!-- TAB 3: FREEHAND DRAWING TOOLS -->
+        <div id="tab-draw" class="left-tab-panel hidden flex-col gap-3">
+          <div class="p-3 rounded-xl bg-rose-50 border border-rose-200 flex items-center justify-between">
+            <span class="text-xs font-bold text-rose-900">Drawing Mode Active</span>
+            <span class="px-2 py-0.5 bg-rose-600 text-white rounded text-xs font-bold">Draw on Canvas</span>
+          </div>
+
+          <div>
+            <span class="block text-xs font-bold text-slate-700 mb-1.5">Tool Type:</span>
+            <div class="grid grid-cols-3 gap-1.5">
+              <button type="button" data-draw-tool="pen" class="draw-tool-btn py-2 px-2 rounded-lg border border-rose-500 bg-rose-50 text-rose-700 text-xs font-bold">🖊️ Pen</button>
+              <button type="button" data-draw-tool="highlighter" class="draw-tool-btn py-2 px-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 text-xs font-bold">🖍️ Marker</button>
+              <button type="button" data-draw-tool="eraser" class="draw-tool-btn py-2 px-2 rounded-lg border border-slate-200 bg-slate-50 text-slate-700 text-xs font-bold">🧽 Eraser</button>
+            </div>
+          </div>
+
+          <div>
+            <span class="block text-xs font-bold text-slate-700 mb-1.5">Science Colors:</span>
+            <div class="flex flex-wrap gap-2 items-center" id="colorSwatches">
+              <button type="button" data-color="#ef4444" class="color-swatch w-7 h-7 rounded-full bg-red-500 ring-2 ring-offset-2 ring-slate-800" title="Oxygen-Rich Red"></button>
+              <button type="button" data-color="#2563eb" class="color-swatch w-7 h-7 rounded-full bg-blue-600" title="Carbon Dioxide-Rich Blue"></button>
+              <button type="button" data-color="#f59e0b" class="color-swatch w-7 h-7 rounded-full bg-amber-500" title="Digested Food Gold"></button>
+              <button type="button" data-color="#10b981" class="color-swatch w-7 h-7 rounded-full bg-emerald-500" title="Green"></button>
+              <button type="button" data-color="#ec4899" class="color-swatch w-7 h-7 rounded-full bg-pink-500" title="Organ Pink"></button>
+              <button type="button" data-color="#8b5cf6" class="color-swatch w-7 h-7 rounded-full bg-violet-500" title="Purple"></button>
+              <button type="button" data-color="#1e293b" class="color-swatch w-7 h-7 rounded-full bg-slate-800" title="Ink Black"></button>
+              <input id="customColorPicker" type="color" value="#ef4444" class="w-7 h-7 rounded cursor-pointer border-0 p-0" title="Custom Color" />
+            </div>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-bold text-slate-700 mb-1">
+              <label for="brushSizeSlider">Brush Size:</label>
+              <span id="brushSizeVal">5 px</span>
+            </div>
+            <input id="brushSizeSlider" type="range" min="2" max="28" value="5" class="w-full accent-rose-600" />
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 pt-2 border-t border-slate-200">
+            <button id="btnUndoStroke" type="button" class="py-2 px-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+              ↩️ Undo Stroke
+            </button>
+            <button id="btnClearDrawing" type="button" class="py-2 px-3 rounded-xl bg-red-50 hover:bg-red-100 text-red-700 text-xs font-bold transition">
+              🗑️ Clear Ink
+            </button>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- CENTER COLUMN (5 cols): Interactive Illustration Stage + Drag & Drop Story Composer -->
+      <main class="lg:col-span-5 flex flex-col gap-4">
+        
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+          
+          <!-- Page Title & Top Controls -->
+          <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-100 pb-2.5">
+            <div class="flex items-center gap-2 flex-1">
+              <span id="currentPageBadge" class="px-2.5 py-1 rounded-lg bg-rose-600 text-white text-xs font-extrabold">Page 1</span>
+              <input id="pageHeadingInput" type="text" class="flex-1 font-extrabold text-sm text-slate-800 bg-slate-50 border border-slate-200 rounded-lg px-3 py-1 focus:outline-none focus:border-rose-500" placeholder="Write a title for this page..." />
+            </div>
+
+            <!-- Selected Sticker Toolbar -->
+            <div id="selectedStickerToolbar" class="hidden items-center gap-1 bg-rose-50 border border-rose-200 px-2 py-1 rounded-xl">
+              <span class="text-xs font-bold text-rose-800 mr-1">Sticker:</span>
+              <button id="btnStickerBigger" type="button" class="px-2 py-0.5 bg-white hover:bg-rose-100 rounded text-xs font-bold border border-rose-200" title="Make Bigger">➕</button>
+              <button id="btnStickerSmaller" type="button" class="px-2 py-0.5 bg-white hover:bg-rose-100 rounded text-xs font-bold border border-rose-200" title="Make Smaller">➖</button>
+              <button id="btnStickerFlip" type="button" class="px-2 py-0.5 bg-white hover:bg-rose-100 rounded text-xs font-bold border border-rose-200" title="Flip Horizontally">↔️</button>
+              <button id="btnStickerDelete" type="button" class="px-2 py-0.5 bg-red-600 hover:bg-red-700 text-white rounded text-xs font-bold ml-1" title="Remove Sticker">✖</button>
+            </div>
+          </div>
+
+          <!-- Interactive Canvas Stage -->
+          <div id="canvasStage" class="canvas-stage">
+            <canvas id="bgCanvas" width="800" height="500"></canvas>
+            <canvas id="drawCanvas" width="800" height="500"></canvas>
+            <div id="stickerLayer"></div>
+          </div>
+
+          <div class="flex items-center justify-between text-xs text-slate-500 px-1">
+            <span>💡 Place stickers from the left or switch to <strong>✏️ Draw</strong> to sketch!</span>
+            <button id="btnClearStickers" type="button" class="text-xs font-semibold text-slate-500 hover:text-red-600 underline">Clear stickers</button>
+          </div>
+
+          <!-- Devi's Guiding Question Prompt Banner (from Activity 4.7 p. 129) -->
+          <div class="bg-amber-50/90 border border-amber-200 rounded-xl p-3 flex items-start gap-2.5">
+            <div class="w-8 h-8 rounded-full bg-amber-200 text-amber-900 flex items-center justify-center font-bold text-base shrink-0">🤔</div>
+            <div class="text-xs text-amber-950 flex-1">
+              <div class="font-bold text-amber-900 mb-0.5">Think &amp; Inquire (Activity 4.7):</div>
+              <p id="pagePromptText" class="leading-relaxed"></p>
+            </div>
+          </div>
+
+          <!-- DRAG-AND-DROP STORY COMPOSER BOARD -->
+          <div class="flex flex-col gap-2">
+            <div class="flex items-center justify-between">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-slate-700">
+                🧩 Your Page Story Board (Drag sentences &amp; words here!):
+              </span>
+              <div class="flex items-center gap-1.5">
+                <button id="btnClearPageStory" type="button" class="px-2 py-1 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-600 hover:text-red-600 text-xs font-bold transition">
+                  Clear Story
+                </button>
+                <button id="btnReadPageAloud" type="button" class="px-2.5 py-1 rounded-lg bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-bold flex items-center gap-1 transition">
+                  <span>🔊</span> Listen
+                </button>
+              </div>
+            </div>
+
+            <!-- Interactive Sentence Dropzone -->
+            <div id="storyDropzone" class="story-dropzone min-h-[150px] rounded-xl border-2 border-dashed border-rose-300 bg-rose-50/30 p-3 flex flex-col gap-2">
+              <!-- Populated by JS with composed sentence cards or empty placeholder -->
+            </div>
+
+            <!-- Custom Free-Writing Input -->
+            <div class="bg-slate-50 border border-slate-200 rounded-xl p-2.5 flex flex-col gap-1.5">
+              <label for="customSentenceInput" class="text-xs font-bold text-slate-700 flex items-center justify-between">
+                <span>✍️ Or type your own sentence to add to this page:</span>
+                <span class="text-xs font-normal text-slate-400">Press Enter or click Add</span>
+              </label>
+              <div class="flex gap-1.5">
+                <input id="customSentenceInput" type="text" placeholder="Write your own sentence as a drop of blood..." class="flex-1 bg-white border border-slate-300 rounded-lg px-3 py-1.5 text-xs font-medium text-slate-800 focus:outline-none focus:border-rose-500" />
+                <button id="btnAddCustomSentence" type="button" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white text-xs font-bold shrink-0 transition">
+                  + Add Sentence
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Prev / Next Page Footer Buttons -->
+          <div class="flex items-center justify-between pt-2 border-t border-slate-100">
+            <button id="btnPrevPage" type="button" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition disabled:opacity-40">
+              ← Previous Page
+            </button>
+            <span id="pageCounterLabel" class="text-xs font-bold text-slate-500">Page 1 of 5</span>
+            <button id="btnNextPage" type="button" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition">
+              Next Page →
+            </button>
+          </div>
+
+        </div>
+
+      </main>
+
+      <!-- RIGHT COLUMN (4 cols): Sentence Strip Bank, Science Word Tiles & Live Rubric Meter -->
+      <aside class="lg:col-span-4 flex flex-col gap-4">
+        
+        <!-- STEP 1 & 2: DRAGGABLE SENTENCE STRIPS & WORD TILES -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-extrabold text-slate-800 flex items-center gap-1.5">
+              <span>🧱</span> Step 1: Drag Sentence Strips
+            </h2>
+            <select id="sentenceCategoryFilter" aria-label="Filter sentence strips" class="text-xs font-bold bg-slate-100 border border-slate-200 rounded-lg px-2 py-1 text-slate-700">
+              <option value="all">All Story Sentences (Shuffled)</option>
+              <option value="circulatory">❤️ Heart &amp; Blood Vessels</option>
+              <option value="respiratory">🫁 Nose, Windpipe &amp; Lungs</option>
+              <option value="digestive">🍎 Small Intestine &amp; Food</option>
+              <option value="body">💪 Body Parts &amp; Teamwork</option>
+            </select>
+          </div>
+          <p class="text-xs text-slate-500">
+            <strong>Drag</strong> a sentence strip into your Story Board (or click <strong>+ Use</strong>), then fill in the <span class="px-1.5 py-0.5 rounded border border-dashed border-rose-400 bg-rose-50 text-rose-700 font-bold">[ ___ ]</span> blanks!
+          </p>
+
+          <!-- Draggable Sentence Cards List -->
+          <div id="sentenceBankContainer" class="flex flex-col gap-2 max-h-[240px] overflow-y-auto custom-scroll pr-1">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- STEP 2: DRAGGABLE SCIENCE WORD TILES -->
+          <div class="border-t border-slate-200 pt-3 mt-1">
+            <div class="flex items-center justify-between mb-1.5">
+              <h3 class="text-sm font-extrabold text-slate-800 flex items-center gap-1.5">
+                <span>🏷️</span> Step 2: Drag Words into Blanks
+              </h3>
+              <span id="activeSlotHint" class="text-xs font-bold text-indigo-600">Drag onto any [ ___ ] blank!</span>
+            </div>
+            <p class="text-xs text-slate-500 mb-2">
+              Drag a science word tile onto any <span class="text-rose-600 font-bold">[ ___ ]</span> blank in your story (or click a blank first, then click a word):
+            </p>
+            <div id="wordBankContainer" class="flex flex-wrap gap-1.5">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Live Activity 4.7 Rubric Progress Card -->
+        <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm flex flex-col gap-3">
+          <div class="flex items-center justify-between">
+            <h2 class="text-sm font-extrabold text-slate-800 flex items-center gap-1.5">
+              <span>🎯</span> Activity 4.7 Rubric Meter
+            </h2>
+            <span id="overallRubricStatus" class="px-2 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700">Just started 🌱</span>
+          </div>
+
+          <div>
+            <div class="flex justify-between text-xs font-semibold text-slate-600 mb-1">
+              <label id="progressLabel" for="rubricProgressBar">Science Concepts Completed Across Book</label>
+              <span id="rubricScoreText">0 / 10 key terms</span>
+            </div>
+            <progress id="rubricProgressBar" aria-labelledby="progressLabel" max="10" value="0" class="w-full h-3"></progress>
+            <p id="rubricLiveStatus" role="status" aria-live="polite" class="text-xs text-slate-500 mt-1.5"></p>
+          </div>
+
+          <!-- 3 Systems Checklist -->
+          <div class="grid grid-cols-2 gap-2 text-xs border-t border-slate-100 pt-2.5">
+            <div id="sysCheckCirculatory" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50">
+              <div class="font-bold text-slate-800 flex items-center justify-between">
+                <span>❤️ Circulatory</span>
+                <span class="sys-badge px-1.5 py-0.5 rounded text-xs bg-slate-200 text-slate-700">0/3</span>
+              </div>
+              <p class="text-slate-500 mt-1 text-xs">Name the system &amp; its 3 parts</p>
+            </div>
+
+            <div id="sysCheckRespiratory" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50">
+              <div class="font-bold text-slate-800 flex items-center justify-between">
+                <span>🫁 Respiratory</span>
+                <span class="sys-badge px-1.5 py-0.5 rounded text-xs bg-slate-200 text-slate-700">0/3</span>
+              </div>
+              <p class="text-slate-500 mt-1 text-xs">Name the system &amp; airway parts</p>
+            </div>
+
+            <div id="sysCheckDigestive" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50">
+              <div class="font-bold text-slate-800 flex items-center justify-between">
+                <span>🍎 Digestive</span>
+                <span class="sys-badge px-1.5 py-0.5 rounded text-xs bg-slate-200 text-slate-700">0/2</span>
+              </div>
+              <p class="text-slate-500 mt-1 text-xs">Where digested food enters blood</p>
+            </div>
+
+            <div id="sysCheckSubstances" class="p-2.5 rounded-xl border border-slate-200 bg-slate-50">
+              <div class="font-bold text-slate-800 flex items-center justify-between">
+                <span>🫧 Gases &amp; Survival</span>
+                <span class="sys-badge px-1.5 py-0.5 rounded text-xs bg-slate-200 text-slate-700">0/2</span>
+              </div>
+              <p class="text-slate-500 mt-1 text-xs">Gases carried &amp; working together</p>
+            </div>
+          </div>
+        </div>
+
+      </aside>
+
+    </div>
+  </div>
+
+  <!-- MODAL 1: Flipbook Reader & Read-Aloud Dialog -->
+  <dialog id="flipbookDialog" closedby="any" aria-labelledby="flipbookDialogTitle" class="w-full max-w-4xl bg-white">
+    <div class="p-6 flex flex-col gap-4">
+      <div class="flex flex-wrap items-center justify-between gap-2 border-b border-slate-200 pb-3">
+        <div>
+          <h2 id="flipbookDialogTitle" class="text-lg font-extrabold text-slate-800">📖 E-Storybook Flipbook Reader</h2>
+          <p id="flipbookSubtitle" class="text-xs text-slate-500"></p>
+        </div>
+        <div class="flex items-center gap-2">
+          <button id="btnFlipbookReadAll" type="button" class="px-3.5 py-1.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold flex items-center gap-1.5 transition">
+            <span>🔊</span> <span id="ttsStatusLabel">Read Aloud</span>
+          </button>
+          <button id="btnFlipbookStopTTS" type="button" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+            ⏹️ Stop
+          </button>
+          <form method="dialog">
+            <button value="close" autofocus class="px-3.5 py-1.5 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-800 text-xs font-bold transition">
+              ✖ Close Reader
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Book Page Display -->
+      <div class="bg-gradient-to-br from-amber-50/70 via-white to-rose-50/60 border-2 border-amber-200/80 rounded-2xl p-5 shadow-inner flex flex-col gap-4">
+        <div class="flex items-center justify-between">
+          <span id="flipbookPageBadge" class="px-3 py-1 rounded-full bg-rose-600 text-white text-xs font-bold">Page 1</span>
+          <h3 id="flipbookPageHeading" class="text-base font-extrabold text-slate-800"></h3>
+          <span id="flipbookAuthorTag" class="text-xs font-semibold text-slate-500"></span>
+        </div>
+
+        <div class="w-full aspect-[16/10] bg-white rounded-xl overflow-hidden border border-slate-200 shadow-sm flex items-center justify-center">
+          <img id="flipbookPageImage" src="" alt="Storybook page illustration" class="w-full h-full object-contain" />
+        </div>
+
+        <div class="bg-white/95 border border-amber-200 rounded-xl p-4 shadow-sm">
+          <p id="flipbookPageText" class="text-base leading-relaxed text-slate-800 font-medium whitespace-pre-line"></p>
+        </div>
+      </div>
+
+      <!-- Flipbook Navigation Footer -->
+      <div class="flex items-center justify-between">
+        <button id="btnFlipPrev" type="button" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition">
+          ← Previous Page
+        </button>
+        <div id="flipbookDots" class="flex items-center gap-1.5"></div>
+        <button id="btnFlipNext" type="button" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold transition">
+          Next Page →
+        </button>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL 2: Official Activity 4.7 Rubric Self-Check Dialog (matches p. 131) -->
+  <dialog id="rubricDialog" closedby="any" aria-labelledby="rubricDialogTitle" class="w-full max-w-4xl bg-white">
+    <div class="p-6 flex flex-col gap-4">
+      <div class="flex items-center justify-between border-b border-slate-200 pb-3">
+        <div>
+          <h2 id="rubricDialogTitle" class="text-lg font-extrabold text-slate-800">📋 Activity 4.7: Rubrics for the Journey of a Drop of Blood (Page 131)</h2>
+          <p class="text-xs text-slate-500">Check how well your e-storybook covers the three human systems, their parts, and how they work together!</p>
+        </div>
+        <form method="dialog">
+          <button value="close" autofocus class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold">
+            ✖ Close
+          </button>
+        </form>
+      </div>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse text-xs">
+          <thead>
+            <tr class="bg-amber-500 text-white font-extrabold">
+              <th class="p-3 border border-amber-600 w-1/4">Area</th>
+              <th class="p-3 border border-amber-600 w-1/4">Just started 🌱</th>
+              <th class="p-3 border border-amber-600 w-1/4">Getting there 🚀</th>
+              <th class="p-3 border border-amber-600 w-1/4">Got it! 🌟</th>
+            </tr>
+          </thead>
+          <tbody id="rubricModalTableBody" class="divide-y divide-slate-200 text-slate-700">
+            <!-- Populated dynamically based on live evaluation -->
+          </tbody>
+        </table>
+      </div>
+
+      <div class="bg-blue-50 border border-blue-200 rounded-xl p-3.5 text-xs text-blue-900 flex items-center justify-between">
+        <div>
+          <strong>💡 Self-Check Tip:</strong> Have you described all <strong>three human systems</strong> (respiratory, circulatory, and digestive), stated their <strong>parts and functions</strong>, and explained how they <strong>work together to ensure survival</strong>?
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <!-- MODAL 3: Template / Reset Chooser Dialog -->
+  <dialog id="templateDialog" closedby="any" aria-labelledby="templateDialogTitle" class="w-full max-w-lg bg-white">
+    <div class="p-6 flex flex-col gap-4">
+      <h2 id="templateDialogTitle" class="text-lg font-extrabold text-slate-800">🔄 Reset or Switch Storybook Mode</h2>
+      <p class="text-xs text-slate-600">Choose how you would like to set up the storybook pages:</p>
+      <div class="flex flex-col gap-2.5">
+        <button id="btnLoadPupilBuilder" type="button" class="p-3.5 rounded-xl border-2 border-rose-300 hover:border-rose-500 bg-rose-50/50 text-left transition">
+          <div class="font-extrabold text-sm text-rose-900">🧩 5-Page Pupil Builder Mode (Default — No Answers Given)</div>
+          <p class="text-xs text-slate-600 mt-1">Starts with empty story boards so pupils drag &amp; drop sentence strips, fill in science blanks, and place stickers themselves.</p>
+        </button>
+        <button id="btnLoadBlankTemplate" type="button" class="p-3.5 rounded-xl border-2 border-slate-200 hover:border-slate-400 bg-slate-50 text-left transition">
+          <div class="font-extrabold text-sm text-slate-800">📄 Blank 3-Page Sketchbook</div>
+          <p class="text-xs text-slate-600 mt-1">Start with 3 completely blank grid pages and compose everything from scratch.</p>
+        </button>
+      </div>
+      <form method="dialog" class="flex justify-end pt-2">
+        <button value="cancel" autofocus class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold">Cancel</button>
+      </form>
+    </div>
+  </dialog>
+
+  <!-- MODAL 4: Print & PDF Preview Dialog -->
+  <dialog id="printPreviewDialog" closedby="any" aria-labelledby="printPreviewTitle" class="w-full max-w-4xl bg-white">
+    <div class="p-6 flex flex-col gap-4 max-h-[88vh]">
+      <div class="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 pb-3">
+        <div>
+          <h2 id="printPreviewTitle" class="text-lg font-extrabold text-slate-800">🖨️ Print &amp; Save as PDF Preview</h2>
+          <p class="text-xs text-slate-500">Review your printable pages below, then click <strong>Print Now</strong> (choose "Save as PDF" in your printer destination) or download the printable file.</p>
+        </div>
+        <div class="flex flex-wrap items-center gap-2">
+          <button type="button" onclick="downloadDirectPDF()" class="px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition">
+            <span>📄</span>
+            <span>Download PDF (.pdf)</span>
+          </button>
+          <button type="button" onclick="triggerSystemPrint()" class="px-3.5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-extrabold flex items-center gap-1.5 shadow-sm transition">
+            <span>🖨️</span>
+            <span>Print Now</span>
+          </button>
+          <form method="dialog">
+            <button value="close" autofocus class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition">
+              ✖ Close
+            </button>
+          </form>
+        </div>
+      </div>
+
+      <div id="printPreviewBody" class="overflow-y-auto custom-scroll p-4 bg-slate-50 border border-slate-200 rounded-2xl space-y-6"></div>
+    </div>
+  </dialog>
+
+  <!-- PRINT CONTAINER (Used when exporting/printing to multi-page PDF) -->
+  <div id="printContainer" class="hidden max-w-4xl mx-auto p-6"></div>
+
+  <script>
+    // =========================================================================
+    // 0. TOP-LEVEL PHASE SWITCHER (Part 1: Practice vs Part 2: E-Storybook Studio)
+    // =========================================================================
+    function switchMainPhase(phase) {
+      const pracView = document.getElementById('phasePracticeView');
+      const studioView = document.getElementById('phaseStudioView');
+      const btnPrac = document.getElementById('btnSwitchToPractice');
+      const btnStudio = document.getElementById('btnSwitchToStudio');
+
+      if (phase === 'studio') {
+        pracView.classList.add('hidden');
+        studioView.classList.remove('hidden');
+        studioView.classList.add('flex');
+        btnStudio.className = 'px-3.5 py-1.5 rounded-lg text-xs font-extrabold transition bg-rose-500 text-white shadow-xs flex items-center gap-1.5';
+        btnPrac.className = 'px-3.5 py-1.5 rounded-lg text-xs font-extrabold transition text-slate-300 hover:text-white flex items-center gap-1.5';
+        renderCurrentPage();
+      } else {
+        studioView.classList.add('hidden');
+        studioView.classList.remove('flex');
+        pracView.classList.remove('hidden');
+        btnPrac.className = 'px-3.5 py-1.5 rounded-lg text-xs font-extrabold transition bg-amber-400 text-slate-950 shadow-xs flex items-center gap-1.5';
+        btnStudio.className = 'px-3.5 py-1.5 rounded-lg text-xs font-extrabold transition text-slate-300 hover:text-white flex items-center gap-1.5';
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =========================================================================
+    // PART 1: GUIDED PRACTICE LOGIC (Stages 1 to 5)
+    // =========================================================================
+    const places = ['', 'heart', 'lungs', 'body parts'];
+    const correctSeq = ['heart', 'lungs', 'heart', 'body parts', 'heart'];
+    const questions = [
+      ['What does the heart do?', ['It pumps blood.', 'It makes oxygen.', 'It digests food.'], 0],
+      ['What happens to blood at the lungs?', ['It loses all oxygen.', 'It gains oxygen and releases carbon dioxide.', 'It stops moving.'], 1],
+      ['What does blood deliver to body parts?', ['Only carbon dioxide.', 'Air.', 'Oxygen and digested food.'], 2],
+      ['What does blood pick up from body parts?', ['Carbon dioxide.', 'Sunlight.', 'Soil.'], 0],
+      ['What carries blood around the body?', ['Windpipe.', 'Blood vessels.', 'Food-carrying tubes.'], 1]
+    ];
+    let chosen = Array(5).fill(-1);
+    const words = ['heart', 'lungs', 'oxygen', 'carbon dioxide', 'heart', 'body', 'oxygen', 'carbon dioxide', 'heart'];
+    const storyParts = [
+      'Hello! I am Ruby, a drop of blood. My journey begins at the ',
+      '!<p>First, the heart pumps me to the ',
+      ' . Here, I gain ',
+      ' and release ',
+      '.</p><p>Next, I travel back to the ',
+      '. The heart pumps me through blood vessels to different parts of the ',
+      '.</p><p>I deliver ',
+      ' and digested food to the body parts. I also pick up ',
+      '.</p><p>Finally, I return to the ',
+      '. My journey begins again!</p>'
+    ];
+    const opts = ['', 'heart', 'lungs', 'oxygen', 'carbon dioxide', 'body'];
+
+    function goPracticeStage(i) {
+      document.querySelectorAll('.practice-panel').forEach((e, j) => e.classList.toggle('hidden', j !== i));
+      document.querySelectorAll('.practice-tab').forEach((e, j) => {
+        e.classList.toggle('active', j === i);
+        e.setAttribute('aria-current', j === i ? 'step' : 'false');
+      });
+      document.getElementById('practiceProgressBar').style.width = ((i + 1) * 20) + '%';
+      if (i === 4) {
+        renderPracticeFinal();
+        document.getElementById('practiceDoneBadge').classList.remove('hidden');
+      }
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function pracHint(id, s) {
+      document.getElementById(id).innerHTML = '<div class="practice-feedback">💡 ' + s + '</div>';
+    }
+
+    function pracFeedback(id, score, total) {
+      document.getElementById(id).innerHTML =
+        '<div class="practice-feedback ' +
+        (score === total ? 'good' : '') +
+        '">' +
+        (score === total
+          ? '🎉 Well done! All correct.'
+          : 'You got ' + score + ' out of ' + total + '. Try the ones you missed. You can do it!') +
+        '</div>';
+    }
+
+    // Initialize Stage 2: Sequence
+    document.getElementById('seq').innerHTML = correctSeq
+      .map(
+        (x, i) =>
+          '<div class="practice-step"><strong>Step ' +
+          (i + 1) +
+          '</strong><select class="practice-select" id="seq' +
+          i +
+          '" aria-label="Place for step ' +
+          (i + 1) +
+          '"><option value="">Choose a place</option>' +
+          places
+            .slice(1)
+            .map((p) => '<option value="' + p + '">' + p + '</option>')
+            .join('') +
+          '</select><span id="seqmark' +
+          i +
+          '"></span></div>'
+      )
+      .join('');
+
+    function checkSequence() {
+      let score = 0;
+      correctSeq.forEach((a, i) => {
+        let ok = document.getElementById('seq' + i).value === a;
+        score += ok;
+        document.getElementById('seqmark' + i).textContent = ok ? '✅' : '↩️ Try again';
+      });
+      pracFeedback('sfb', score, 5);
+    }
+
+    // Initialize Stage 3: Quiz
+    document.getElementById('quiz').innerHTML = questions
+      .map(
+        (q, i) =>
+          '<div class="practice-question"><p>' +
+          (i + 1) +
+          '. ' +
+          q[0] +
+          '</p><div class="practice-options">' +
+          q[1]
+            .map(
+              (a, j) =>
+                '<button type="button" class="practice-choice" id="q' +
+                i +
+                '-' +
+                j +
+                '" onclick="chooseQuiz(' +
+                i +
+                ',' +
+                j +
+                ')">' +
+                a +
+                '</button>'
+            )
+            .join('') +
+          '</div><small id="qmark' +
+          i +
+          '" class="block mt-1.5 font-bold"></small></div>'
+      )
+      .join('');
+
+    function chooseQuiz(i, j) {
+      chosen[i] = j;
+      questions[i][1].forEach((_, k) =>
+        document.getElementById('q' + i + '-' + k).classList.toggle('selected', j === k)
+      );
+    }
+
+    function checkQuiz() {
+      let score = 0;
+      questions.forEach((q, i) => {
+        let ok = chosen[i] === q[2];
+        score += ok;
+        document.getElementById('qmark' + i).textContent = ok ? '✅ Correct' : '↩️ Try again';
+      });
+      pracFeedback('qfb', score, questions.length);
+    }
+
+    // Initialize Stage 4: Practice Cloze Story
+    document.getElementById('story').innerHTML =
+      words
+        .map(
+          (w, i) =>
+            storyParts[i] +
+            '<select aria-label="Story blank ' +
+            (i + 1) +
+            '" id="w' +
+            i +
+            '">' +
+            opts.map((o) => '<option value="' + o + '">' + (o || 'Choose a word') + '</option>').join('') +
+            '</select><span id="wmark' +
+            i +
+            '"></span>'
+        )
+        .join('') + storyParts[words.length];
+
+    function checkStory() {
+      let score = 0;
+      words.forEach((w, i) => {
+        let ok = document.getElementById('w' + i).value === w;
+        score += ok;
+        document.getElementById('wmark' + i).textContent = ok ? '✅' : '↩️';
+      });
+      pracFeedback('tfb', score, words.length);
+    }
+
+    function getPracticeStoryText() {
+      let s = '';
+      words.forEach((w, i) => {
+        s += storyParts[i].replace(/<[^>]*>/g, ' ') + (document.getElementById('w' + i).value || '_____');
+      });
+      return (s + storyParts[words.length].replace(/<[^>]*>/g, ' ')).replace(/\s+/g, ' ').trim();
+    }
+
+    function renderPracticeFinal() {
+      let s = '';
+      words.forEach((w, i) => {
+        s += storyParts[i] + ('<strong>' + (document.getElementById('w' + i).value || '_____') + '</strong>');
+      });
+      document.getElementById('finalstory').innerHTML = s + storyParts[words.length];
+      document.getElementById('checklist').innerHTML = [
+        'I described the correct journey of blood.',
+        'I explained what happens in the lungs.',
+        'I explained what happens at the body parts.',
+        'I mentioned the heart and blood vessels.',
+        'I explained how the respiratory and circulatory systems work together.'
+      ]
+        .map(
+          (item) =>
+            '<label class="practice-step cursor-pointer"><input type="checkbox" style="width:20px;height:20px"> <span>' +
+            item +
+            '</span></label>'
+        )
+        .join('');
+    }
+
+    function copyPracticeStory() {
+      let s = getPracticeStoryText() + '\n\nMy challenge: ' + document.getElementById('challenge').value;
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard
+          .writeText(s)
+          .then(() => pracHint('cfb', 'Story copied!'))
+          .catch(() => fallbackCopy(s));
+      } else {
+        fallbackCopy(s);
+      }
+    }
+
+    function fallbackCopy(s) {
+      let t = document.createElement('textarea');
+      t.value = s;
+      document.body.appendChild(t);
+      t.select();
+      try {
+        document.execCommand('copy');
+        pracHint('cfb', 'Story copied!');
+      } catch (e) {
+        pracHint('cfb', 'Select the story and copy it manually.');
+      }
+      t.remove();
+    }
+
+    // =========================================================================
+    // PART 2: E-STORYBOOK & FLIPBOOK STUDIO LOGIC
+    // =========================================================================
+    if (!('closedBy' in HTMLDialogElement.prototype)) {
+      const outside = (e, dialog) => {
+        const r = dialog.getBoundingClientRect();
+        return e.clientX < r.left || e.clientX > r.right || e.clientY < r.top || e.clientY > r.bottom;
+      };
+      for (const dialog of document.querySelectorAll('dialog[closedby="any"]')) {
+        let pressedOutside = false;
+        dialog.addEventListener('pointerdown', (e) => { pressedOutside = outside(e, dialog); });
+        dialog.addEventListener('pointerup', (e) => { if (pressedOutside && outside(e, dialog)) dialog.close(); });
+      }
+    }
+
+    for (const dialog of document.querySelectorAll('dialog')) {
+      dialog.addEventListener('close', () => {
+        dialog.returnValue = '';
+      });
+    }
+
+    const STICKER_CATALOG = [
+      {
+        id: 'drop-o2',
+        name: 'Red Blood Drop',
+        category: 'characters',
+        svg: `<svg viewBox="0 0 120 120" width="90" height="90">
+          <defs>
+            <radialGradient id="gO2" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#ff8fa3"/>
+              <stop offset="45%" stop-color="#ef233c"/>
+              <stop offset="100%" stop-color="#9b001a"/>
+            </radialGradient>
+          </defs>
+          <path d="M60 10 C60 10 104 62 104 85 A44 44 0 1 1 16 85 C16 62 60 10 60 10 Z" fill="url(#gO2)" stroke="#7f1d1d" stroke-width="3"/>
+          <ellipse cx="42" cy="65" rx="8" ry="14" transform="rotate(-20 42 65)" fill="#ffffff" opacity="0.45"/>
+          <circle cx="46" cy="78" r="5" fill="#1e293b"/>
+          <circle cx="74" cy="78" r="5" fill="#1e293b"/>
+          <circle cx="44" cy="76" r="2" fill="#ffffff"/>
+          <circle cx="72" cy="76" r="2" fill="#ffffff"/>
+          <path d="M48 92 Q60 103 72 92" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+        </svg>`
+      },
+      {
+        id: 'drop-co2',
+        name: 'Tired Blood Drop',
+        category: 'characters',
+        svg: `<svg viewBox="0 0 120 120" width="90" height="90">
+          <defs>
+            <radialGradient id="gCO2" cx="35%" cy="30%" r="70%">
+              <stop offset="0%" stop-color="#93c5fd"/>
+              <stop offset="50%" stop-color="#3b82f6"/>
+              <stop offset="100%" stop-color="#1e3a8a"/>
+            </radialGradient>
+          </defs>
+          <path d="M60 10 C60 10 104 62 104 85 A44 44 0 1 1 16 85 C16 62 60 10 60 10 Z" fill="url(#gCO2)" stroke="#1e3a8a" stroke-width="3"/>
+          <ellipse cx="42" cy="65" rx="8" ry="14" transform="rotate(-20 42 65)" fill="#ffffff" opacity="0.35"/>
+          <path d="M40 76 Q46 82 52 76" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+          <path d="M68 76 Q74 82 80 76" fill="none" stroke="#0f172a" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="60" cy="95" r="6" fill="#0f172a"/>
+        </svg>`
+      },
+      {
+        id: 'drop-chef',
+        name: 'Delivery Blood Drop',
+        category: 'characters',
+        svg: `<svg viewBox="0 0 120 120" width="90" height="90">
+          <path d="M60 12 C60 12 102 62 102 85 A42 42 0 1 1 18 85 C18 62 60 12 60 12 Z" fill="#e11d48" stroke="#881337" stroke-width="3"/>
+          <circle cx="46" cy="78" r="5" fill="#1e293b"/>
+          <circle cx="74" cy="78" r="5" fill="#1e293b"/>
+          <path d="M46 92 Q60 104 74 92" fill="none" stroke="#1e293b" stroke-width="4" stroke-linecap="round"/>
+          <rect x="74" y="22" width="40" height="26" rx="6" fill="#fbbf24" stroke="#b45309" stroke-width="2.5"/>
+          <text x="94" y="39" text-anchor="middle" font-size="11" font-weight="900" fill="#78350f">PACK</text>
+        </svg>`
+      },
+      {
+        id: 'organ-heart',
+        name: 'Heart',
+        category: 'organs',
+        svg: `<svg viewBox="0 0 130 130" width="96" height="96">
+          <path d="M52 20 L52 8 M78 22 L78 8" stroke="#2563eb" stroke-width="10" stroke-linecap="round"/>
+          <path d="M65 24 L65 6" stroke="#dc2626" stroke-width="12" stroke-linecap="round"/>
+          <path d="M65 114 C65 114 20 86 20 50 C20 32 35 22 50 22 C58 22 63 27 65 32 C67 27 72 22 80 22 C95 22 110 32 110 50 C110 86 65 114 65 114 Z" fill="#f43f5e" stroke="#881337" stroke-width="4"/>
+          <path d="M65 32 L65 106" stroke="#881337" stroke-width="3" stroke-dasharray="4 3"/>
+          <rect x="28" y="96" width="74" height="22" rx="8" fill="#ffffff" stroke="#881337" stroke-width="2"/>
+          <text x="65" y="111" text-anchor="middle" font-size="12" font-weight="900" fill="#881337">HEART</text>
+        </svg>`
+      },
+      {
+        id: 'organ-lungs',
+        name: 'Lungs',
+        category: 'organs',
+        svg: `<svg viewBox="0 0 140 130" width="100" height="94">
+          <rect x="64" y="6" width="12" height="36" rx="4" fill="#bae6fd" stroke="#0369a1" stroke-width="3"/>
+          <path d="M58 34 C32 34 16 58 16 88 C16 106 32 112 52 106 C60 103 62 94 62 72 Z" fill="#fda4af" stroke="#9f1239" stroke-width="3.5"/>
+          <path d="M82 34 C108 34 124 58 124 88 C124 106 108 112 88 106 C80 103 78 94 78 72 Z" fill="#fda4af" stroke="#9f1239" stroke-width="3.5"/>
+          <path d="M70 36 L44 64 M44 64 L32 80 M44 64 L52 84 M70 36 L96 64 M96 64 L108 80 M96 64 L88 84" stroke="#0284c7" stroke-width="3" stroke-linecap="round"/>
+          <rect x="38" y="102" width="64" height="22" rx="8" fill="#ffffff" stroke="#9f1239" stroke-width="2"/>
+          <text x="70" y="117" text-anchor="middle" font-size="12" font-weight="900" fill="#9f1239">LUNGS</text>
+        </svg>`
+      },
+      {
+        id: 'organ-windpipe',
+        name: 'Nose & Windpipe',
+        category: 'organs',
+        svg: `<svg viewBox="0 0 130 130" width="94" height="94">
+          <path d="M35 28 Q20 45 38 52 L58 52 L58 104 L76 104 L76 42 C76 26 55 18 35 28 Z" fill="#bae6fd" stroke="#0369a1" stroke-width="3.5"/>
+          <line x1="58" y1="62" x2="76" y2="62" stroke="#0369a1" stroke-width="2.5"/>
+          <line x1="58" y1="74" x2="76" y2="74" stroke="#0369a1" stroke-width="2.5"/>
+          <line x1="58" y1="86" x2="76" y2="86" stroke="#0369a1" stroke-width="2.5"/>
+          <rect x="14" y="102" width="102" height="22" rx="8" fill="#ffffff" stroke="#0369a1" stroke-width="2"/>
+          <text x="65" y="117" text-anchor="middle" font-size="11" font-weight="900" fill="#0369a1">NOSE &amp; WINDPIPE</text>
+        </svg>`
+      },
+      {
+        id: 'organ-intestine',
+        name: 'Small Intestine',
+        category: 'organs',
+        svg: `<svg viewBox="0 0 130 130" width="96" height="96">
+          <path d="M34 32 Q65 20 96 32 Q108 46 88 54 Q42 56 36 70 Q32 84 86 84 Q104 94 65 102" fill="none" stroke="#fb923c" stroke-width="18" stroke-linecap="round"/>
+          <path d="M34 32 Q65 20 96 32 Q108 46 88 54 Q42 56 36 70 Q32 84 86 84 Q104 94 65 102" fill="none" stroke="#fed7aa" stroke-width="10" stroke-linecap="round"/>
+          <rect x="10" y="102" width="110" height="22" rx="8" fill="#ffffff" stroke="#c2410c" stroke-width="2"/>
+          <text x="65" y="117" text-anchor="middle" font-size="11" font-weight="900" fill="#9a3412">SMALL INTESTINE</text>
+        </svg>`
+      },
+      {
+        id: 'organ-vessel',
+        name: 'Blood Vessel',
+        category: 'organs',
+        svg: `<svg viewBox="0 0 140 110" width="96" height="80">
+          <path d="M12 45 Q70 20 128 45 L128 75 Q70 50 12 75 Z" fill="#fecdd3" stroke="#be123c" stroke-width="4"/>
+          <circle cx="42" cy="54" r="9" fill="#e11d48"/>
+          <circle cx="72" cy="48" r="9" fill="#e11d48"/>
+          <circle cx="102" cy="54" r="9" fill="#e11d48"/>
+          <rect x="18" y="82" width="104" height="22" rx="8" fill="#ffffff" stroke="#be123c" stroke-width="2"/>
+          <text x="70" y="97" text-anchor="middle" font-size="11" font-weight="900" fill="#be123c">BLOOD VESSEL</text>
+        </svg>`
+      },
+      {
+        id: 'organ-muscle',
+        name: 'Body Parts / Muscles',
+        category: 'organs',
+        svg: `<svg viewBox="0 0 130 120" width="94" height="88">
+          <ellipse cx="65" cy="56" rx="48" ry="28" fill="#fca5a5" stroke="#b91c1c" stroke-width="3.5"/>
+          <path d="M30 56 Q65 40 100 56 M30 64 Q65 76 100 64" fill="none" stroke="#ef4444" stroke-width="2.5"/>
+          <rect x="16" y="92" width="98" height="22" rx="8" fill="#ffffff" stroke="#b91c1c" stroke-width="2"/>
+          <text x="65" y="107" text-anchor="middle" font-size="11" font-weight="900" fill="#991b1b">BODY PARTS</text>
+        </svg>`
+      },
+      {
+        id: 'cargo-o2',
+        name: 'Oxygen (O₂)',
+        category: 'cargo',
+        svg: `<svg viewBox="0 0 100 100" width="74" height="74">
+          <circle cx="50" cy="50" r="40" fill="#e0f2fe" stroke="#0284c7" stroke-width="4"/>
+          <text x="50" y="48" text-anchor="middle" font-size="18" font-weight="900" fill="#0369a1">O₂</text>
+          <text x="50" y="68" text-anchor="middle" font-size="11" font-weight="800" fill="#0284c7">OXYGEN</text>
+        </svg>`
+      },
+      {
+        id: 'cargo-co2',
+        name: 'Carbon Dioxide (CO₂)',
+        category: 'cargo',
+        svg: `<svg viewBox="0 0 100 100" width="74" height="74">
+          <circle cx="50" cy="50" r="40" fill="#e2e8f0" stroke="#475569" stroke-width="4"/>
+          <text x="50" y="48" text-anchor="middle" font-size="18" font-weight="900" fill="#1e293b">CO₂</text>
+          <text x="50" y="66" text-anchor="middle" font-size="9" font-weight="800" fill="#334155">CARBON DIOXIDE</text>
+        </svg>`
+      },
+      {
+        id: 'cargo-food',
+        name: 'Digested Food',
+        category: 'cargo',
+        svg: `<svg viewBox="0 0 110 100" width="80" height="74">
+          <rect x="10" y="18" width="90" height="64" rx="16" fill="#fef3c7" stroke="#d97706" stroke-width="4"/>
+          <text x="55" y="46" text-anchor="middle" font-size="13" font-weight="900" fill="#92400e">DIGESTED</text>
+          <text x="55" y="66" text-anchor="middle" font-size="14" font-weight="900" fill="#b45309">FOOD 🍎</text>
+        </svg>`
+      },
+      {
+        id: 'cargo-water',
+        name: 'Water',
+        category: 'cargo',
+        svg: `<svg viewBox="0 0 100 100" width="72" height="72">
+          <path d="M50 12 C50 12 84 52 84 70 A34 34 0 1 1 16 70 C16 52 50 12 50 12 Z" fill="#38bdf8" stroke="#0284c7" stroke-width="3.5"/>
+          <text x="50" y="74" text-anchor="middle" font-size="12" font-weight="900" fill="#ffffff">WATER</text>
+        </svg>`
+      },
+      {
+        id: 'arrow-red',
+        name: 'Red Flow Arrow',
+        category: 'cargo',
+        svg: `<svg viewBox="0 0 130 70" width="92" height="52">
+          <path d="M10 24 L85 24 L85 10 L122 35 L85 60 L85 46 L10 46 Z" fill="#ef4444" stroke="#991b1b" stroke-width="3"/>
+        </svg>`
+      },
+      {
+        id: 'arrow-blue',
+        name: 'Blue Flow Arrow',
+        category: 'cargo',
+        svg: `<svg viewBox="0 0 130 70" width="92" height="52">
+          <path d="M10 24 L85 24 L85 10 L122 35 L85 60 L85 46 L10 46 Z" fill="#3b82f6" stroke="#1e3a8a" stroke-width="3"/>
+        </svg>`
+      }
+    ];
+
+    const SCENE_CATALOG = [
+      { id: 'heart-station', name: '❤️ Scene A: Inside the Heart', desc: 'Chambers & major vessels' },
+      { id: 'lungs-alveoli', name: '🫁 Scene B: Airway & Lungs', desc: 'Air sacs & surrounding vessels' },
+      { id: 'small-intestine', name: '🍎 Scene C: Digestive Tract Wall', desc: 'Intestine wall & bloodstream' },
+      { id: 'body-muscles', name: '💪 Scene D: Body Parts & Cells', desc: 'Capillaries next to body cells' },
+      { id: 'vessel-highway', name: '🩸 Scene E: Blood Vessel Tunnel', desc: 'Inside a long blood vessel tube' },
+      { id: 'body-overview', name: '🧍 Scene F: Human Systems Loop', desc: '3-part body loop diagram' },
+      { id: 'blank-grid', name: '📝 Scene G: Blank Sketch Grid', desc: 'Clean grid paper for custom drawing' }
+    ];
+
+    function drawBackgroundScene(ctx, sceneId, width, height) {
+      ctx.save();
+      ctx.clearRect(0, 0, width, height);
+
+      if (sceneId === 'heart-station') {
+        const grad = ctx.createLinearGradient(0, 0, width, height);
+        grad.addColorStop(0, '#fff1f2');
+        grad.addColorStop(1, '#ffe4e6');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.strokeStyle = '#fecdd3';
+        ctx.lineWidth = 48;
+        ctx.lineCap = 'round';
+        ctx.beginPath();
+        ctx.moveTo(60, 430);
+        ctx.quadraticCurveTo(250, 260, 400, 250);
+        ctx.quadraticCurveTo(560, 240, 740, 100);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#bfdbfe';
+        ctx.lineWidth = 44;
+        ctx.beginPath();
+        ctx.moveTo(60, 90);
+        ctx.quadraticCurveTo(240, 220, 400, 250);
+        ctx.quadraticCurveTo(560, 280, 740, 420);
+        ctx.stroke();
+
+        ctx.fillStyle = 'rgba(244, 63, 94, 0.16)';
+        ctx.strokeStyle = '#f43f5e';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.arc(365, 210, 65, Math.PI, 0, false);
+        ctx.arc(455, 210, 65, Math.PI, 0, false);
+        ctx.quadraticCurveTo(520, 310, 410, 395);
+        ctx.quadraticCurveTo(300, 310, 300, 210);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+      } else if (sceneId === 'lungs-alveoli') {
+        const grad = ctx.createLinearGradient(0, 0, 0, height);
+        grad.addColorStop(0, '#e0f2fe');
+        grad.addColorStop(1, '#fff1f2');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#bae6fd';
+        ctx.strokeStyle = '#0284c7';
+        ctx.lineWidth = 4;
+        ctx.fillRect(375, 20, 50, 130);
+        ctx.strokeRect(375, 20, 50, 130);
+
+        ctx.fillStyle = 'rgba(253, 164, 175, 0.35)';
+        ctx.strokeStyle = '#e11d48';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.ellipse(245, 255, 115, 155, 0.12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.ellipse(555, 255, 115, 155, -0.12, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 24;
+        ctx.beginPath();
+        ctx.moveTo(40, 445);
+        ctx.quadraticCurveTo(400, 390, 760, 445);
+        ctx.stroke();
+
+      } else if (sceneId === 'small-intestine') {
+        const grad = ctx.createLinearGradient(0, 0, width, height);
+        grad.addColorStop(0, '#fefce8');
+        grad.addColorStop(1, '#fff1f2');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#fed7aa';
+        ctx.strokeStyle = '#ea580c';
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(0, 180);
+        for (let x = 0; x <= width; x += 80) {
+          ctx.quadraticCurveTo(x + 40, 250, x + 80, 180);
+        }
+        ctx.lineTo(width, 0);
+        ctx.lineTo(0, 0);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#fecdd3';
+        ctx.strokeStyle = '#e11d48';
+        ctx.lineWidth = 4;
+        ctx.fillRect(0, 320, width, 110);
+        ctx.strokeRect(-4, 320, width + 8, 110);
+
+        ctx.fillStyle = '#f59e0b';
+        for (let x = 100; x < 720; x += 120) {
+          ctx.beginPath();
+          ctx.arc(x, 265, 10, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+      } else if (sceneId === 'body-muscles') {
+        const grad = ctx.createLinearGradient(0, 0, width, height);
+        grad.addColorStop(0, '#f0fdf4');
+        grad.addColorStop(1, '#eff6ff');
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = 'rgba(252, 165, 165, 0.28)';
+        ctx.strokeStyle = '#f87171';
+        ctx.lineWidth = 2.5;
+        for (let r = 0; r < 2; r++) {
+          for (let c = 0; c < 4; c++) {
+            ctx.beginPath();
+            ctx.roundRect(90 + c * 165, 75 + r * 95, 140, 72, 24);
+            ctx.fill();
+            ctx.stroke();
+          }
+        }
+
+        const vGrad = ctx.createLinearGradient(0, 360, width, 360);
+        vGrad.addColorStop(0, '#fecdd3');
+        vGrad.addColorStop(0.5, '#e9d5ff');
+        vGrad.addColorStop(1, '#bfdbfe');
+        ctx.fillStyle = vGrad;
+        ctx.fillRect(0, 325, width, 105);
+
+      } else if (sceneId === 'vessel-highway') {
+        ctx.fillStyle = '#fff1f2';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.fillStyle = '#fda4af';
+        ctx.fillRect(0, 0, width, 75);
+        ctx.fillRect(0, height - 75, width, 75);
+
+        ctx.strokeStyle = '#be123c';
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(0, 75);
+        ctx.lineTo(width, 75);
+        ctx.moveTo(0, height - 75);
+        ctx.lineTo(width, height - 75);
+        ctx.stroke();
+
+      } else if (sceneId === 'body-overview') {
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(0, 0, width, height);
+
+        ctx.lineWidth = 3;
+        ctx.fillStyle = '#ffe4e6';
+        ctx.strokeStyle = '#e11d48';
+        ctx.beginPath();
+        ctx.roundRect(310, 55, 180, 70, 16);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#fecdd3';
+        ctx.strokeStyle = '#be123c';
+        ctx.beginPath();
+        ctx.roundRect(310, 210, 180, 75, 16);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#fef3c7';
+        ctx.strokeStyle = '#d97706';
+        ctx.beginPath();
+        ctx.roundRect(270, 375, 260, 75, 16);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.strokeStyle = '#ef4444';
+        ctx.lineWidth = 8;
+        ctx.beginPath();
+        ctx.moveTo(490, 90);
+        ctx.quadraticCurveTo(630, 170, 490, 245);
+        ctx.moveTo(490, 255);
+        ctx.quadraticCurveTo(640, 335, 530, 412);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#3b82f6';
+        ctx.beginPath();
+        ctx.moveTo(310, 245);
+        ctx.quadraticCurveTo(170, 170, 310, 90);
+        ctx.moveTo(270, 412);
+        ctx.quadraticCurveTo(160, 335, 310, 255);
+        ctx.stroke();
+
+      } else {
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, width, height);
+        ctx.strokeStyle = '#f1f5f9';
+        ctx.lineWidth = 1.5;
+        for (let x = 0; x < width; x += 32) {
+          ctx.beginPath();
+          ctx.moveTo(x, 0);
+          ctx.lineTo(x, height);
+          ctx.stroke();
+        }
+        for (let y = 0; y < height; y += 32) {
+          ctx.beginPath();
+          ctx.moveTo(0, y);
+          ctx.lineTo(width, y);
+          ctx.stroke();
+        }
+      }
+
+      ctx.restore();
+    }
+
+    const SENTENCE_TEMPLATES = [
+      {
+        id: 'tpl-1',
+        cat: 'circulatory',
+        parts: ['Hi! I am a drop of ', null, ' in the human ', null, ' system.']
+      },
+      {
+        id: 'tpl-2',
+        cat: 'circulatory',
+        parts: ['The ', null, ' system is made up of the ', null, ', ', null, ', and blood.']
+      },
+      {
+        id: 'tpl-3',
+        cat: 'circulatory',
+        parts: ['The muscular ', null, ' pumps me through long tubes called ', null, ' to all parts of the body.']
+      },
+      {
+        id: 'tpl-4',
+        cat: 'respiratory',
+        parts: ['When my human breathes in, air enters through the ', null, ', travels down the ', null, ', and into the ', null, '.']
+      },
+      {
+        id: 'tpl-5',
+        cat: 'respiratory',
+        parts: ['At the ', null, ' in the ', null, ' system, gaseous exchange takes place!']
+      },
+      {
+        id: 'tpl-6',
+        cat: 'respiratory',
+        parts: ['I absorb fresh ', null, ' at the lungs and give out ', null, ' to be breathed out.']
+      },
+      {
+        id: 'tpl-7',
+        cat: 'digestive',
+        parts: ['As I flow past the ', null, ' in the ', null, ' system, I pick up ', null, ' and ', null, '.']
+      },
+      {
+        id: 'tpl-8',
+        cat: 'body',
+        parts: ['I transport ', null, ', ', null, ', and water to all parts of the body so they can ', null, '.']
+      },
+      {
+        id: 'tpl-9',
+        cat: 'body',
+        parts: ['The body parts give out waste ', null, ', which enters my ', null, ' to be carried back to the ', null, '.']
+      },
+      {
+        id: 'tpl-10',
+        cat: 'body',
+        parts: ['The ', null, ', ', null, ', and ', null, ' systems work together to ensure survival!']
+      }
+    ];
+
+    const WORD_TILES = [
+      'heart', 'blood', 'blood vessels', 'circulatory',
+      'nose', 'windpipe', 'lungs', 'respiratory',
+      'small intestine', 'digestive', 'digested food', 'water',
+      'oxygen', 'carbon dioxide', 'survive', 'gaseous exchange'
+    ];
+
+    function createPupilBuilderPages() {
+      return [
+        {
+          id: 'p1',
+          heading: 'Page 1: Pumped Out of the Heart',
+          sceneId: 'heart-station',
+          prompt: 'Where will you go after you are pumped out of the heart? Which system and parts are involved?',
+          composedBlocks: [],
+          stickers: [
+            { uid: 's1', id: 'drop-o2', x: 30, y: 60, scale: 1.05, flip: false }
+          ],
+          strokes: []
+        },
+        {
+          id: 'p2',
+          heading: 'Page 2: Visiting the Lungs',
+          sceneId: 'lungs-alveoli',
+          prompt: 'How does air reach the lungs? What gas do you pick up at the lungs, and what gas is removed?',
+          composedBlocks: [],
+          stickers: [],
+          strokes: []
+        },
+        {
+          id: 'p3',
+          heading: 'Page 3: Passing the Small Intestine',
+          sceneId: 'small-intestine',
+          prompt: 'What substance do you pick up as you pass the small intestine in the digestive system?',
+          composedBlocks: [],
+          stickers: [],
+          strokes: []
+        },
+        {
+          id: 'p4',
+          heading: 'Page 4: Delivering to the Rest of the Body',
+          sceneId: 'body-muscles',
+          prompt: 'What substances do you deliver to the body parts, and what waste gas do you pick up from them?',
+          composedBlocks: [],
+          stickers: [],
+          strokes: []
+        },
+        {
+          id: 'p5',
+          heading: 'Page 5: Working Together for Survival',
+          sceneId: 'body-overview',
+          prompt: 'Where do you go next? How do the respiratory, circulatory, and digestive systems work together to ensure survival?',
+          composedBlocks: [],
+          stickers: [],
+          strokes: []
+        }
+      ];
+    }
+
+    function createBlankPages() {
+      return [
+        {
+          id: 'b1',
+          heading: 'Page 1',
+          sceneId: 'blank-grid',
+          prompt: 'Where will you go after you are pumped out of the heart?',
+          composedBlocks: [],
+          stickers: [],
+          strokes: []
+        },
+        {
+          id: 'b2',
+          heading: 'Page 2',
+          sceneId: 'blank-grid',
+          prompt: 'What are some substances that you may carry?',
+          composedBlocks: [],
+          stickers: [],
+          strokes: []
+        },
+        {
+          id: 'b3',
+          heading: 'Page 3',
+          sceneId: 'blank-grid',
+          prompt: 'What will happen next? How do the systems work together?',
+          composedBlocks: [],
+          stickers: [],
+          strokes: []
+        }
+      ];
+    }
+
+    let pages = createPupilBuilderPages();
+    let currentPageIndex = 0;
+    let selectedStickerUid = null;
+    let activeLeftTab = 'stickers';
+    let selectedStickerCategory = 'all';
+    let activeBlankTarget = null;
+
+    let drawTool = 'pen';
+    let drawColor = '#ef4444';
+    let brushSize = 5;
+    let isDrawing = false;
+    let currentStroke = null;
+
+    let flipbookIndex = 0;
+    let renderedPageImages = [];
+
+    const bgCanvas = document.getElementById('bgCanvas');
+    const bgCtx = bgCanvas.getContext('2d');
+    const drawCanvas = document.getElementById('drawCanvas');
+    const drawCtx = drawCanvas.getContext('2d');
+    const stickerLayer = document.getElementById('stickerLayer');
+    const pageHeadingInput = document.getElementById('pageHeadingInput');
+    const storyDropzone = document.getElementById('storyDropzone');
+
+    function getPagePlainText(page) {
+      if (!page.composedBlocks || page.composedBlocks.length === 0) return '';
+      return page.composedBlocks
+        .map((blk) => {
+          if (blk.type === 'custom') {
+            return blk.text;
+          }
+          let slotCounter = 0;
+          return blk.parts
+            .map((part) => {
+              if (part !== null) return part;
+              const val = blk.values[slotCounter++];
+              return val && val.trim() ? val.trim() : '_____';
+            })
+            .join('');
+        })
+        .join('\n\n');
+    }
+
+    function getStickerDef(id) {
+      return STICKER_CATALOG.find((s) => s.id === id);
+    }
+
+    function renderPageTabs() {
+      const container = document.getElementById('pageTabsContainer');
+      container.innerHTML = '';
+      pages.forEach((p, idx) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        const isActive = idx === currentPageIndex;
+        const hasContent = p.composedBlocks && p.composedBlocks.length > 0;
+        btn.className = `px-3.5 py-2 rounded-xl text-xs font-extrabold transition flex items-center gap-1.5 shrink-0 ${
+          isActive
+            ? 'bg-rose-600 text-white shadow-sm shadow-rose-200'
+            : 'bg-slate-100 hover:bg-slate-200 text-slate-700'
+        }`;
+        btn.innerHTML = `<span>Page ${idx + 1}</span>${hasContent ? '<span class="w-2 h-2 rounded-full bg-emerald-400"></span>' : ''}`;
+        btn.addEventListener('click', () => {
+          currentPageIndex = idx;
+          selectedStickerUid = null;
+          activeBlankTarget = null;
+          renderCurrentPage();
+        });
+        container.appendChild(btn);
+      });
+    }
+
+    function renderStrokes(ctx, strokes, width, height) {
+      ctx.clearRect(0, 0, width, height);
+      for (const stroke of strokes) {
+        if (!stroke.points || stroke.points.length === 0) continue;
+        ctx.save();
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.lineWidth = stroke.size;
+        if (stroke.tool === 'eraser') {
+          ctx.globalCompositeOperation = 'destination-out';
+          ctx.strokeStyle = 'rgba(0,0,0,1)';
+        } else if (stroke.tool === 'highlighter') {
+          ctx.globalAlpha = 0.35;
+          ctx.strokeStyle = stroke.color;
+        } else {
+          ctx.globalAlpha = 1.0;
+          ctx.strokeStyle = stroke.color;
+        }
+
+        ctx.beginPath();
+        ctx.moveTo(stroke.points[0].x * width, stroke.points[0].y * height);
+        for (let i = 1; i < stroke.points.length; i++) {
+          ctx.lineTo(stroke.points[i].x * width, stroke.points[i].y * height);
+        }
+        ctx.stroke();
+        ctx.restore();
+      }
+    }
+
+    function clampStickerCoords(x, y) {
+      return {
+        x: Math.max(5, Math.min(95, x)),
+        y: Math.max(5, Math.min(95, y))
+      };
+    }
+
+    function renderStickersDom() {
+      const page = pages[currentPageIndex];
+      stickerLayer.innerHTML = '';
+
+      page.stickers.forEach((st) => {
+        const el = document.createElement('div');
+        el.className = `sticker-item ${st.uid === selectedStickerUid ? 'selected' : ''}`;
+        el.tabIndex = 0;
+        el.setAttribute('aria-label', `${st.id} sticker. Use arrow keys to move.`);
+        el.style.left = `${st.x}%`;
+        el.style.top = `${st.y}%`;
+        const scaleX = st.flip ? -st.scale : st.scale;
+        el.style.transform = `translate(-50%, -50%) scale(${scaleX}, ${st.scale})`;
+
+        if (st.id === 'Bubble') {
+          el.innerHTML = `
+            <div class="bg-white border-2 border-slate-800 rounded-2xl px-3.5 py-2 shadow-md max-w-[200px] text-center relative">
+              <span class="text-xs font-extrabold text-slate-900 leading-tight block">${escapeHtml(st.text || 'Hello!')}</span>
+              <div class="w-3 h-3 bg-white border-r-2 border-b-2 border-slate-800 rotate-45 mx-auto -mb-3.5 mt-1"></div>
+            </div>
+          `;
+        } else {
+          const def = getStickerDef(st.id);
+          if (def) {
+            el.innerHTML = def.svg;
+          }
+        }
+
+        let offsetX = 0;
+        let offsetY = 0;
+        el.addEventListener('pointerdown', (event) => {
+          if (event.button !== 0) return;
+          event.stopPropagation();
+          selectedStickerUid = st.uid;
+          updateSelectedStickerToolbar();
+          document.querySelectorAll('.sticker-item').forEach((node) => node.classList.remove('selected'));
+          el.classList.add('selected');
+
+          const stageRect = document.getElementById('canvasStage').getBoundingClientRect();
+          const currentCenterPxX = (st.x / 100) * stageRect.width + stageRect.left;
+          const currentCenterPxY = (st.y / 100) * stageRect.height + stageRect.top;
+          offsetX = event.clientX - currentCenterPxX;
+          offsetY = event.clientY - currentCenterPxY;
+          el.setPointerCapture(event.pointerId);
+        });
+
+        el.addEventListener('pointermove', (event) => {
+          if (!el.hasPointerCapture(event.pointerId)) return;
+          el.classList.add('dragging');
+          const stageRect = document.getElementById('canvasStage').getBoundingClientRect();
+          const newX = ((event.clientX - offsetX - stageRect.left) / stageRect.width) * 100;
+          const newY = ((event.clientY - offsetY - stageRect.top) / stageRect.height) * 100;
+          const clamped = clampStickerCoords(newX, newY);
+          st.x = clamped.x;
+          st.y = clamped.y;
+          el.style.left = `${st.x}%`;
+          el.style.top = `${st.y}%`;
+        });
+
+        el.addEventListener('lostpointercapture', () => {
+          el.classList.remove('dragging');
+        });
+
+        el.addEventListener('keydown', (event) => {
+          const step = 3;
+          let moved = false;
+          if (event.key === 'ArrowLeft') { st.x -= step; moved = true; }
+          else if (event.key === 'ArrowRight') { st.x += step; moved = true; }
+          else if (event.key === 'ArrowUp') { st.y -= step; moved = true; }
+          else if (event.key === 'ArrowDown') { st.y += step; moved = true; }
+          else if (event.key === 'Delete' || event.key === 'Backspace') {
+            event.preventDefault();
+            pages[currentPageIndex].stickers = pages[currentPageIndex].stickers.filter((s) => s.uid !== st.uid);
+            selectedStickerUid = null;
+            renderStickersDom();
+            return;
+          }
+          if (moved) {
+            event.preventDefault();
+            const clamped = clampStickerCoords(st.x, st.y);
+            st.x = clamped.x;
+            st.y = clamped.y;
+            el.style.left = `${st.x}%`;
+            el.style.top = `${st.y}%`;
+          }
+        });
+
+        stickerLayer.appendChild(el);
+      });
+
+      updateSelectedStickerToolbar();
+    }
+
+    function updateSelectedStickerToolbar() {
+      const toolbar = document.getElementById('selectedStickerToolbar');
+      if (selectedStickerUid) {
+        toolbar.classList.remove('hidden');
+        toolbar.classList.add('flex');
+      } else {
+        toolbar.classList.add('hidden');
+        toolbar.classList.remove('flex');
+      }
+    }
+
+    function addSentenceTemplateToPage(templateId) {
+      const tpl = SENTENCE_TEMPLATES.find((t) => t.id === templateId);
+      if (!tpl) return;
+      const blankCount = tpl.parts.filter((p) => p === null).length;
+      const newBlock = {
+        uid: 'blk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+        type: 'template',
+        parts: [...tpl.parts],
+        values: Array(blankCount).fill('')
+      };
+      pages[currentPageIndex].composedBlocks.push(newBlock);
+      activeBlankTarget = { blockUid: newBlock.uid, slotIndex: 0 };
+      renderStoryDropzone();
+      evaluateRubrics();
+    }
+
+    function addCustomSentenceToPage(text) {
+      const trimmed = text.trim();
+      if (!trimmed) return;
+      pages[currentPageIndex].composedBlocks.push({
+        uid: 'cblk_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+        type: 'custom',
+        text: trimmed
+      });
+      renderStoryDropzone();
+      evaluateRubrics();
+    }
+
+    function fillBlankSlot(blockUid, slotIndex, word) {
+      const page = pages[currentPageIndex];
+      const blk = page.composedBlocks.find((b) => b.uid === blockUid);
+      if (!blk || blk.type !== 'template') return;
+      blk.values[slotIndex] = word;
+
+      const nextEmptyIdx = blk.values.findIndex((v, idx) => idx > slotIndex && !v);
+      if (nextEmptyIdx !== -1) {
+        activeBlankTarget = { blockUid, slotIndex: nextEmptyIdx };
+      } else {
+        activeBlankTarget = null;
+      }
+
+      renderStoryDropzone();
+      evaluateRubrics();
+    }
+
+    function renderStoryDropzone() {
+      const page = pages[currentPageIndex];
+      storyDropzone.innerHTML = '';
+
+      const hintEl = document.getElementById('activeSlotHint');
+      if (activeBlankTarget) {
+        hintEl.textContent = '✨ Click or drag a word to fill the highlighted blank!';
+        hintEl.className = 'text-xs font-extrabold text-indigo-600 animate-pulse';
+      } else {
+        hintEl.textContent = 'Drag onto any [ ___ ] blank!';
+        hintEl.className = 'text-xs font-bold text-slate-500';
+      }
+
+      if (!page.composedBlocks || page.composedBlocks.length === 0) {
+        storyDropzone.innerHTML = `
+          <div class="my-auto py-8 text-center flex flex-col items-center gap-1.5 text-slate-400 pointer-events-none">
+            <span class="text-2xl">🧩</span>
+            <p class="text-xs font-bold text-slate-600">Your Story Board for this page is empty!</p>
+            <p class="text-xs text-slate-500 max-w-md">
+              Drag sentence strips from <strong>Step 1</strong> on the right and drop them here, or type your own sentence below.
+            </p>
+          </div>
+        `;
+        return;
+      }
+
+      page.composedBlocks.forEach((blk, blkIdx) => {
+        const card = document.createElement('div');
+        card.className = 'bg-white border border-slate-200 rounded-xl p-2.5 shadow-sm flex items-start justify-between gap-2 group';
+
+        const contentDiv = document.createElement('div');
+        contentDiv.className = 'text-xs leading-relaxed font-semibold text-slate-800 flex-1';
+
+        if (blk.type === 'custom') {
+          const textSpan = document.createElement('span');
+          textSpan.textContent = blk.text;
+          contentDiv.appendChild(textSpan);
+        } else {
+          let slotCounter = 0;
+          blk.parts.forEach((part) => {
+            if (part !== null) {
+              const span = document.createElement('span');
+              span.textContent = part;
+              contentDiv.appendChild(span);
+            } else {
+              const sIdx = slotCounter++;
+              const currentVal = blk.values[sIdx] || '';
+              const isSelectedSlot =
+                activeBlankTarget &&
+                activeBlankTarget.blockUid === blk.uid &&
+                activeBlankTarget.slotIndex === sIdx;
+
+              const slotBtn = document.createElement('button');
+              slotBtn.type = 'button';
+              slotBtn.className = `blank-slot ${currentVal ? 'filled' : ''} ${isSelectedSlot ? 'active-slot' : ''}`;
+              slotBtn.textContent = currentVal ? currentVal : '[ drop word ]';
+              slotBtn.title = 'Click to select this blank, or drag a word tile here!';
+
+              slotBtn.addEventListener('click', () => {
+                if (activeBlankTarget && activeBlankTarget.blockUid === blk.uid && activeBlankTarget.slotIndex === sIdx && currentVal) {
+                  blk.values[sIdx] = '';
+                }
+                activeBlankTarget = { blockUid: blk.uid, slotIndex: sIdx };
+                renderStoryDropzone();
+                evaluateRubrics();
+              });
+
+              slotBtn.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                slotBtn.classList.add('drag-over-slot');
+              });
+              slotBtn.addEventListener('dragleave', () => {
+                slotBtn.classList.remove('drag-over-slot');
+              });
+              slotBtn.addEventListener('drop', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                slotBtn.classList.remove('drag-over-slot');
+                const word = e.dataTransfer.getData('text/word');
+                if (word) {
+                  fillBlankSlot(blk.uid, sIdx, word);
+                }
+              });
+
+              contentDiv.appendChild(slotBtn);
+            }
+          });
+        }
+
+        const actionsDiv = document.createElement('div');
+        actionsDiv.className = 'flex items-center gap-1 shrink-0';
+
+        if (blkIdx > 0) {
+          const upBtn = document.createElement('button');
+          upBtn.type = 'button';
+          upBtn.className = 'px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold';
+          upBtn.textContent = '↑';
+          upBtn.title = 'Move sentence up';
+          upBtn.addEventListener('click', () => {
+            const temp = page.composedBlocks[blkIdx - 1];
+            page.composedBlocks[blkIdx - 1] = page.composedBlocks[blkIdx];
+            page.composedBlocks[blkIdx] = temp;
+            renderStoryDropzone();
+          });
+          actionsDiv.appendChild(upBtn);
+        }
+
+        if (blkIdx < page.composedBlocks.length - 1) {
+          const downBtn = document.createElement('button');
+          downBtn.type = 'button';
+          downBtn.className = 'px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold';
+          downBtn.textContent = '↓';
+          downBtn.title = 'Move sentence down';
+          downBtn.addEventListener('click', () => {
+            const temp = page.composedBlocks[blkIdx + 1];
+            page.composedBlocks[blkIdx + 1] = page.composedBlocks[blkIdx];
+            page.composedBlocks[blkIdx] = temp;
+            renderStoryDropzone();
+          });
+          actionsDiv.appendChild(downBtn);
+        }
+
+        const delBtn = document.createElement('button');
+        delBtn.type = 'button';
+        delBtn.className = 'px-1.5 py-0.5 rounded bg-red-50 hover:bg-red-100 text-red-600 text-xs font-bold';
+        delBtn.textContent = '✖';
+        delBtn.title = 'Remove sentence';
+        delBtn.addEventListener('click', () => {
+          page.composedBlocks.splice(blkIdx, 1);
+          if (activeBlankTarget && activeBlankTarget.blockUid === blk.uid) {
+            activeBlankTarget = null;
+          }
+          renderStoryDropzone();
+          evaluateRubrics();
+        });
+        actionsDiv.appendChild(delBtn);
+
+        card.appendChild(contentDiv);
+        card.appendChild(actionsDiv);
+        storyDropzone.appendChild(card);
+      });
+    }
+
+    storyDropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      storyDropzone.classList.add('drag-over');
+    });
+    storyDropzone.addEventListener('dragleave', () => {
+      storyDropzone.classList.remove('drag-over');
+    });
+    storyDropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      storyDropzone.classList.remove('drag-over');
+      const tplId = e.dataTransfer.getData('text/template-id');
+      const word = e.dataTransfer.getData('text/word');
+      if (tplId) {
+        addSentenceTemplateToPage(tplId);
+      } else if (word && activeBlankTarget) {
+        fillBlankSlot(activeBlankTarget.blockUid, activeBlankTarget.slotIndex, word);
+      }
+    });
+
+    function renderSentenceBank() {
+      const container = document.getElementById('sentenceBankContainer');
+      const cat = document.getElementById('sentenceCategoryFilter').value;
+      container.innerHTML = '';
+
+      const filtered = SENTENCE_TEMPLATES.filter((t) => cat === 'all' || t.cat === cat);
+
+      filtered.forEach((tpl) => {
+        const item = document.createElement('div');
+        item.draggable = true;
+        item.className = 'drag-handle p-2.5 rounded-xl border border-slate-200 hover:border-rose-400 bg-slate-50/80 hover:bg-rose-50/40 flex items-center justify-between gap-2 transition shadow-2xs';
+
+        const previewHtml = tpl.parts
+          .map((p) =>
+            p === null
+              ? '<span class="px-1.5 py-0.5 mx-0.5 rounded border border-dashed border-rose-400 bg-white text-rose-700 font-extrabold">[ ___ ]</span>'
+              : escapeHtml(p)
+          )
+          .join('');
+
+        item.innerHTML = `
+          <div class="text-xs font-semibold text-slate-700 leading-relaxed flex-1">
+            <span class="text-slate-400 mr-1">⠿</span>${previewHtml}
+          </div>
+          <button type="button" class="px-2.5 py-1 rounded-lg bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shrink-0">
+            + Use
+          </button>
+        `;
+
+        item.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/template-id', tpl.id);
+          e.dataTransfer.effectAllowed = 'copy';
+        });
+
+        item.querySelector('button').addEventListener('click', () => {
+          addSentenceTemplateToPage(tpl.id);
+        });
+
+        container.appendChild(item);
+      });
+    }
+
+    function renderWordTilesBank() {
+      const wb = document.getElementById('wordBankContainer');
+      wb.innerHTML = '';
+      WORD_TILES.forEach((word) => {
+        const tile = document.createElement('button');
+        tile.type = 'button';
+        tile.draggable = true;
+        tile.className = 'drag-handle px-2.5 py-1.5 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-900 border border-indigo-200 text-xs font-extrabold transition shadow-2xs';
+        tile.textContent = word;
+        tile.title = 'Drag onto a [ drop word ] blank, or click to fill the highlighted blank!';
+
+        tile.addEventListener('dragstart', (e) => {
+          e.dataTransfer.setData('text/word', word);
+          e.dataTransfer.effectAllowed = 'copy';
+        });
+
+        tile.addEventListener('click', () => {
+          if (activeBlankTarget) {
+            fillBlankSlot(activeBlankTarget.blockUid, activeBlankTarget.slotIndex, word);
+          } else {
+            const page = pages[currentPageIndex];
+            for (const blk of page.composedBlocks) {
+              if (blk.type === 'template') {
+                const emptyIdx = blk.values.findIndex((v) => !v);
+                if (emptyIdx !== -1) {
+                  fillBlankSlot(blk.uid, emptyIdx, word);
+                  return;
+                }
+              }
+            }
+            const customInp = document.getElementById('customSentenceInput');
+            customInp.value = (customInp.value ? customInp.value + ' ' : '') + word;
+            customInp.focus();
+          }
+        });
+
+        wb.appendChild(tile);
+      });
+    }
+
+    function renderCurrentPage() {
+      const page = pages[currentPageIndex];
+      renderPageTabs();
+
+      document.getElementById('currentPageBadge').textContent = `Page ${currentPageIndex + 1}`;
+      pageHeadingInput.value = page.heading;
+      document.getElementById('pagePromptText').textContent =
+        page.prompt || 'Where will you go next? What substances do you carry, and how do the systems work together?';
+
+      document.getElementById('pageCounterLabel').textContent = `Page ${currentPageIndex + 1} of ${pages.length}`;
+      document.getElementById('btnPrevPage').disabled = currentPageIndex === 0;
+      document.getElementById('btnNextPage').textContent = currentPageIndex === pages.length - 1 ? '➕ Add Next Page' : 'Next Page →';
+
+      drawBackgroundScene(bgCtx, page.sceneId, bgCanvas.width, bgCanvas.height);
+      renderStrokes(drawCtx, page.strokes, drawCanvas.width, drawCanvas.height);
+      renderStickersDom();
+      renderSceneGallerySelection();
+      renderStoryDropzone();
+      evaluateRubrics();
+    }
+
+    function getNormalizedCanvasCoords(e) {
+      const rect = drawCanvas.getBoundingClientRect();
+      return {
+        x: (e.clientX - rect.left) / rect.width,
+        y: (e.clientY - rect.top) / rect.height
+      };
+    }
+
+    drawCanvas.addEventListener('pointerdown', (e) => {
+      if (activeLeftTab !== 'draw') {
+        selectedStickerUid = null;
+        renderStickersDom();
+        return;
+      }
+      if (e.button !== 0) return;
+      isDrawing = true;
+      drawCanvas.setPointerCapture(e.pointerId);
+      const pt = getNormalizedCanvasCoords(e);
+      currentStroke = {
+        tool: drawTool,
+        color: drawColor,
+        size: brushSize * (drawTool === 'highlighter' ? 2.4 : drawTool === 'eraser' ? 3 : 1),
+        points: [pt]
+      };
+      pages[currentPageIndex].strokes.push(currentStroke);
+      renderStrokes(drawCtx, pages[currentPageIndex].strokes, drawCanvas.width, drawCanvas.height);
+    });
+
+    drawCanvas.addEventListener('pointermove', (e) => {
+      if (!isDrawing || !currentStroke) return;
+      const pt = getNormalizedCanvasCoords(e);
+      currentStroke.points.push(pt);
+      renderStrokes(drawCtx, pages[currentPageIndex].strokes, drawCanvas.width, drawCanvas.height);
+    });
+
+    drawCanvas.addEventListener('pointerup', () => {
+      isDrawing = false;
+      currentStroke = null;
+    });
+
+    function renderStickerGallery() {
+      const grid = document.getElementById('stickerGalleryGrid');
+      grid.innerHTML = '';
+      const filtered = STICKER_CATALOG.filter(
+        (s) => selectedStickerCategory === 'all' || s.category === selectedStickerCategory
+      );
+
+      filtered.forEach((st) => {
+        const card = document.createElement('button');
+        card.type = 'button';
+        card.className = 'p-2 rounded-xl border border-slate-200 hover:border-rose-400 hover:bg-rose-50/40 flex flex-col items-center gap-1 transition group';
+        card.innerHTML = `
+          <div class="w-14 h-14 flex items-center justify-center pointer-events-none group-hover:scale-105 transition">${st.svg}</div>
+          <span class="text-xs font-bold text-slate-700 text-center leading-tight">${st.name}</span>
+        `;
+        card.addEventListener('click', () => {
+          const newSticker = {
+            uid: 'st_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6),
+            id: st.id,
+            x: 35 + Math.round(Math.random() * 30),
+            y: 35 + Math.round(Math.random() * 30),
+            scale: 1.0,
+            flip: false
+          };
+          pages[currentPageIndex].stickers.push(newSticker);
+          selectedStickerUid = newSticker.uid;
+          renderStickersDom();
+        });
+        grid.appendChild(card);
+      });
+    }
+
+    function renderSceneGallerySelection() {
+      const list = document.getElementById('sceneGalleryList');
+      list.innerHTML = '';
+      const activeScene = pages[currentPageIndex].sceneId;
+
+      SCENE_CATALOG.forEach((sc) => {
+        const btn = document.createElement('button');
+        btn.type = 'button';
+        const isCurrent = sc.id === activeScene;
+        btn.className = `p-2.5 rounded-xl border text-left transition flex flex-col gap-0.5 ${
+          isCurrent
+            ? 'border-rose-500 bg-rose-50/80 text-rose-900 shadow-sm'
+            : 'border-slate-200 hover:border-slate-300 bg-slate-50/60 text-slate-800'
+        }`;
+        btn.innerHTML = `
+          <div class="text-xs font-extrabold">${sc.name}</div>
+          <div class="text-xs text-slate-500">${sc.desc}</div>
+        `;
+        btn.addEventListener('click', () => {
+          pages[currentPageIndex].sceneId = sc.id;
+          drawBackgroundScene(bgCtx, sc.id, bgCanvas.width, bgCanvas.height);
+          renderSceneGallerySelection();
+        });
+        list.appendChild(btn);
+      });
+    }
+
+    function evaluateRubrics() {
+      const fullText = pages.map((p) => getPagePlainText(p)).join(' ').toLowerCase();
+      const hasKw = (kw) => fullText.includes(kw.toLowerCase());
+
+      const allKeywords = [
+        'heart', 'blood vessels', 'blood',
+        'nose', 'windpipe', 'lungs',
+        'small intestine', 'digested food',
+        'oxygen', 'carbon dioxide'
+      ];
+
+      let matchedCount = 0;
+      allKeywords.forEach((kw) => {
+        if (hasKw(kw)) matchedCount++;
+      });
+
+      const circCount = [hasKw('heart'), hasKw('blood vessels') || hasKw('blood vessel'), hasKw('blood')].filter(Boolean).length;
+      const respCount = [hasKw('nose'), hasKw('windpipe'), hasKw('lungs')].filter(Boolean).length;
+      const digCount = [hasKw('small intestine'), hasKw('digested food')].filter(Boolean).length;
+      const gasCount = [hasKw('oxygen'), hasKw('carbon dioxide')].filter(Boolean).length;
+
+      const circComplete = circCount >= 2;
+      const respComplete = hasKw('lungs') && respCount >= 2;
+      const digComplete = digCount >= 1;
+      const gasComplete = gasCount === 2;
+
+      updateSystemCard('sysCheckCirculatory', circComplete, `${circCount}/3`);
+      updateSystemCard('sysCheckRespiratory', respComplete, `${respCount}/3`);
+      updateSystemCard('sysCheckDigestive', digComplete, `${digCount}/2`);
+      updateSystemCard('sysCheckSubstances', gasComplete, `${gasCount}/2`);
+
+      const systemsDescribed = [circComplete, respComplete, digComplete].filter(Boolean).length;
+
+      const progressBar = document.getElementById('rubricProgressBar');
+      progressBar.value = matchedCount;
+      document.getElementById('rubricScoreText').textContent = `${matchedCount} / ${allKeywords.length} key terms`;
+      document.getElementById('headerRubricBadge').textContent = `${systemsDescribed}/3 Systems`;
+
+      const statusBadge = document.getElementById('overallRubricStatus');
+      const livePolite = document.getElementById('rubricLiveStatus');
+      if (systemsDescribed === 3 && gasComplete) {
+        statusBadge.textContent = 'Got it! 🌟';
+        statusBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-emerald-100 text-emerald-800';
+        livePolite.textContent = 'Awesome! Your story describes all 3 human systems and how they work together!';
+      } else if (systemsDescribed >= 2) {
+        statusBadge.textContent = 'Getting there 🚀';
+        statusBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-amber-100 text-amber-800';
+        livePolite.textContent = `Great progress! You have covered ${systemsDescribed} systems so far.`;
+      } else {
+        statusBadge.textContent = 'Just started 🌱';
+        statusBadge.className = 'px-2.5 py-0.5 rounded-full text-xs font-bold bg-slate-100 text-slate-700';
+        livePolite.textContent = 'Drag sentence strips and word tiles into your pages to build your story!';
+      }
+
+      renderRubricModalRows(systemsDescribed, gasComplete);
+    }
+
+    function updateSystemCard(cardId, isDone, ratioText) {
+      const card = document.getElementById(cardId);
+      const badge = card.querySelector('.sys-badge');
+      if (isDone) {
+        card.className = 'p-2.5 rounded-xl border border-emerald-200 bg-emerald-50/60';
+        badge.textContent = `✓ ${ratioText}`;
+        badge.className = 'sys-badge px-1.5 py-0.5 rounded text-xs font-bold bg-emerald-200 text-emerald-900';
+      } else {
+        card.className = 'p-2.5 rounded-xl border border-slate-200 bg-slate-50';
+        badge.textContent = ratioText;
+        badge.className = 'sys-badge px-1.5 py-0.5 rounded text-xs font-semibold bg-slate-200 text-slate-700';
+      }
+    }
+
+    function renderRubricModalRows(systemsCount, gasComplete) {
+      const tbody = document.getElementById('rubricModalTableBody');
+      if (!tbody) return;
+
+      const cellClass = (active) =>
+        active
+          ? 'p-3 border border-emerald-400 bg-emerald-50 font-bold text-emerald-950'
+          : 'p-3 border border-slate-200 text-slate-600';
+
+      const tick = (active) => (active ? '✅ ' : '⬜ ');
+
+      tbody.innerHTML = `
+        <tr>
+          <td class="p-3 border border-slate-200 font-bold bg-amber-50/60">
+            The human systems (i.e., the respiratory, circulatory and digestive systems) and their parts in the journey of the drop of blood
+          </td>
+          <td class="${cellClass(systemsCount === 1)}">${tick(systemsCount === 1)}I can describe only <strong>one</strong> human system and state the parts of that system.</td>
+          <td class="${cellClass(systemsCount === 2)}">${tick(systemsCount === 2)}I can describe <strong>two</strong> human systems and state the parts of the two systems.</td>
+          <td class="${cellClass(systemsCount === 3)}">${tick(systemsCount === 3)}I can describe <strong>all three</strong> human systems and state the parts of the three systems.</td>
+        </tr>
+        <tr>
+          <td class="p-3 border border-slate-200 font-bold bg-amber-50/60">
+            The functions of the parts of the three human systems
+          </td>
+          <td class="${cellClass(systemsCount === 1)}">${tick(systemsCount === 1)}I can describe the functions of the parts of <strong>one</strong> human system.</td>
+          <td class="${cellClass(systemsCount === 2)}">${tick(systemsCount === 2)}I can describe the functions of the parts of <strong>two</strong> of the human systems.</td>
+          <td class="${cellClass(systemsCount === 3 && gasComplete)}">${tick(systemsCount === 3 && gasComplete)}I can describe the functions of the parts of <strong>all three</strong> human systems.</td>
+        </tr>
+        <tr>
+          <td class="p-3 border border-slate-200 font-bold bg-amber-50/60">
+            Description of how the three human systems work together to ensure survival
+          </td>
+          <td class="${cellClass(systemsCount === 1)}">${tick(systemsCount === 1)}I can describe how <strong>one</strong> human system works to ensure survival.</td>
+          <td class="${cellClass(systemsCount === 2)}">${tick(systemsCount === 2)}I can describe how <strong>two</strong> of the human systems work together to ensure survival.</td>
+          <td class="${cellClass(systemsCount === 3 && gasComplete)}">${tick(systemsCount === 3 && gasComplete)}I can describe how <strong>all three</strong> human systems work together to ensure survival.</td>
+        </tr>
+      `;
+    }
+
+    let toastTimer = null;
+    function showToast(message) {
+      const toast = document.getElementById('actionToast');
+      if (!toast) return;
+      toast.textContent = message;
+      toast.classList.remove('hidden');
+      toast.classList.add('flex');
+      if (toastTimer) clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => {
+        toast.classList.add('hidden');
+        toast.classList.remove('flex');
+      }, 4000);
+    }
+
+    async function renderPageToDataUrl(page) {
+      const offCanvas = document.createElement('canvas');
+      offCanvas.width = 800;
+      offCanvas.height = 500;
+      const ctx = offCanvas.getContext('2d');
+
+      drawBackgroundScene(ctx, page.sceneId, 800, 500);
+
+      const strokeCanvas = document.createElement('canvas');
+      strokeCanvas.width = 800;
+      strokeCanvas.height = 500;
+      renderStrokes(strokeCanvas.getContext('2d'), page.strokes, 800, 500);
+      ctx.drawImage(strokeCanvas, 0, 0);
+
+      for (const st of page.stickers) {
+        const px = (st.x / 100) * 800;
+        const py = (st.y / 100) * 500;
+
+        if (st.id === 'Bubble') {
+          ctx.save();
+          ctx.translate(px, py);
+          ctx.scale(st.scale, st.scale);
+          ctx.font = 'bold 14px sans-serif';
+          const text = st.text || 'Hello!';
+          const metrics = ctx.measureText(text);
+          const bw = Math.max(90, metrics.width + 28);
+          const bh = 38;
+          ctx.fillStyle = '#ffffff';
+          ctx.strokeStyle = '#1e293b';
+          ctx.lineWidth = 2.5;
+          ctx.beginPath();
+          ctx.roundRect(-bw / 2, -bh / 2, bw, bh, 12);
+          ctx.fill();
+          ctx.stroke();
+          ctx.fillStyle = '#0f172a';
+          ctx.textAlign = 'center';
+          ctx.textBaseline = 'middle';
+          ctx.fillText(text, 0, 0);
+          ctx.restore();
+        } else {
+          const def = getStickerDef(st.id);
+          if (def) {
+            const img = await svgToImage(def.svg);
+            if (img && img.complete && img.naturalWidth > 0) {
+              try {
+                ctx.save();
+                ctx.translate(px, py);
+                ctx.scale(st.flip ? -st.scale : st.scale, st.scale);
+                const w = img.naturalWidth || img.width || 90;
+                const h = img.naturalHeight || img.height || 90;
+                ctx.drawImage(img, -w / 2, -h / 2, w, h);
+                ctx.restore();
+              } catch (err) {
+                ctx.restore();
+              }
+            }
+          }
+        }
+      }
+
+      return offCanvas.toDataURL('image/png');
+    }
+
+    function svgToImage(svgString) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        const normalizedSvg = svgString.includes('xmlns=')
+          ? svgString
+          : svgString.replace('<svg', '<svg xmlns="http://www.w3.org/2000/svg"');
+        const dataUri = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(normalizedSvg);
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = dataUri;
+      });
+    }
+
+    async function openFlipbookModal() {
+      stopSpeech();
+      showToast('📖 Opening Flipbook Reader...');
+      renderedPageImages = [];
+      for (const p of pages) {
+        const dataUrl = await renderPageToDataUrl(p);
+        renderedPageImages.push(dataUrl);
+      }
+      flipbookIndex = 0;
+      updateFlipbookView();
+      document.getElementById('flipbookDialog').showModal();
+    }
+
+    function updateFlipbookView() {
+      const page = pages[flipbookIndex];
+      const title = document.getElementById('bookTitle').value || 'Journey of a Drop of Blood';
+      const author = document.getElementById('pupilName').value || 'Pupil';
+      const cls = document.getElementById('pupilClass').value || '';
+      const plainStory = getPagePlainText(page);
+
+      document.getElementById('flipbookSubtitle').textContent = `${title} • By ${author} ${cls ? '(' + cls + ')' : ''}`;
+      document.getElementById('flipbookPageBadge').textContent = `Page ${flipbookIndex + 1} of ${pages.length}`;
+      document.getElementById('flipbookPageHeading').textContent = page.heading;
+      document.getElementById('flipbookAuthorTag').textContent = `Author: ${author}`;
+      document.getElementById('flipbookPageImage').src = renderedPageImages[flipbookIndex];
+      document.getElementById('flipbookPageText').textContent =
+        plainStory || '(No sentences composed on this page yet. Drag sentence strips into the Story Board!)';
+
+      document.getElementById('btnFlipPrev').disabled = flipbookIndex === 0;
+      document.getElementById('btnFlipNext').disabled = flipbookIndex === pages.length - 1;
+
+      const dots = document.getElementById('flipbookDots');
+      dots.innerHTML = '';
+      pages.forEach((_, idx) => {
+        const dot = document.createElement('button');
+        dot.type = 'button';
+        dot.className = `w-3 h-3 rounded-full transition ${idx === flipbookIndex ? 'bg-rose-600 scale-125' : 'bg-slate-300'}`;
+        dot.addEventListener('click', () => {
+          stopSpeech();
+          flipbookIndex = idx;
+          updateFlipbookView();
+        });
+        dots.appendChild(dot);
+      });
+    }
+
+    function speakText(text) {
+      if (!('speechSynthesis' in window)) return;
+      stopSpeech();
+      const utter = new SpeechSynthesisUtterance(text);
+      utter.rate = 0.95;
+      utter.pitch = 1.05;
+      utter.onstart = () => {
+        const lbl = document.getElementById('ttsStatusLabel');
+        if (lbl) lbl.textContent = 'Reading...';
+      };
+      utter.onend = () => {
+        const lbl = document.getElementById('ttsStatusLabel');
+        if (lbl) lbl.textContent = 'Read Aloud';
+      };
+      window.speechSynthesis.speak(utter);
+    }
+
+    function stopSpeech() {
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+      }
+      const lbl = document.getElementById('ttsStatusLabel');
+      if (lbl) lbl.textContent = 'Read Aloud';
+    }
+
+    function getPracticeStoryForExport() {
+      const gv = (id) => {
+        const el = document.getElementById(id);
+        return el && el.value ? el.value : '___';
+      };
+      const ch = document.getElementById('challenge');
+      const challengeText = ch && ch.value ? ch.value.trim() : '';
+      return {
+        text: `Hi! I am Ruby, a drop of blood in the circulatory system. First, the heart pumps me through blood vessels to the lungs in the respiratory system. Air enters through the nose and windpipe to reach the lungs. There, I pick up ${gv('b1')} and remove ${gv('b2')}. Next, I return to the ${gv('b3')} so I can be pumped around the body. As I pass the ${gv('b4')} in the digestive system, I pick up ${gv('b5')}. Then I travel through ${gv('b6')} to deliver ${gv('b7')} and digested food to all body parts. I also collect ${gv('b8')} from the body parts and return to the heart to begin my journey again!`,
+        challenge: challengeText
+      };
+    }
+
+    async function buildPrintableHTMLContent() {
+      evaluateRubrics();
+      const title = escapeHtml(document.getElementById('bookTitle').value || 'Journey of a Drop of Blood');
+      const author = escapeHtml(document.getElementById('pupilName').value || 'Pupil');
+      const cls = escapeHtml(document.getElementById('pupilClass').value || '');
+      const prac = getPracticeStoryForExport();
+
+      const snapshots = [];
+      for (const p of pages) {
+        snapshots.push(await renderPageToDataUrl(p));
+      }
+
+      let html = `
+        <div class="print-page text-center py-8 bg-white rounded-2xl border border-slate-200 p-6">
+          <div class="inline-block px-4 py-1 rounded-full bg-rose-100 text-rose-800 text-sm font-bold mb-3">
+            Activity 4.7 • The Human Respiratory and Circulatory Systems
+          </div>
+          <h1 class="text-3xl font-extrabold text-slate-900 mb-2">${title}</h1>
+          <p class="text-base font-bold text-slate-600 mb-4">Written &amp; Illustrated by ${author} ${cls ? '(' + cls + ')' : ''}</p>
+          <img src="${snapshots[0]}" class="w-full max-w-xl mx-auto rounded-xl border border-slate-300 mb-4" alt="Cover illustration"/>
+          <div class="text-left mt-4 p-4 rounded-xl bg-blue-50 border border-blue-200">
+            <div class="text-xs font-extrabold uppercase text-blue-800 mb-1">Part 1: Warm-Up Practice Story (Ruby's Journey)</div>
+            <p class="text-sm leading-relaxed text-slate-800">${escapeHtml(prac.text)}</p>
+            ${prac.challenge ? `<p class="text-xs text-slate-700 mt-2"><strong>Challenge Response:</strong> ${escapeHtml(prac.challenge)}</p>` : ''}
+          </div>
+        </div>
+      `;
+
+      pages.forEach((p, idx) => {
+        const storyText = getPagePlainText(p);
+        html += `
+          <div class="print-page bg-white rounded-2xl border border-slate-200 p-6">
+            <div class="flex items-center justify-between border-b border-slate-200 pb-2 mb-4">
+              <span class="text-xs font-extrabold uppercase tracking-wider text-rose-600">Page ${idx + 1} of ${pages.length}</span>
+              <h2 class="text-lg font-extrabold text-slate-800">${escapeHtml(p.heading)}</h2>
+              <span class="text-xs text-slate-500">${author} ${cls ? '(' + cls + ')' : ''}</span>
+            </div>
+            <img src="${snapshots[idx]}" class="w-full rounded-xl border border-slate-200 mb-4" alt="Page ${idx + 1}"/>
+            <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-sm leading-relaxed text-slate-800 whitespace-pre-line">${escapeHtml(storyText || '(No story sentences placed on this page yet)')}</div>
+          </div>
+        `;
+      });
+
+      html += `
+        <div class="print-page bg-white rounded-2xl border border-slate-200 p-6">
+          <h2 class="text-lg font-extrabold text-slate-800 mb-2">Activity 4.7 Self-Check Rubric Summary (Page 131)</h2>
+          <p class="text-xs text-slate-600 mb-4">Pupil: <strong>${author}</strong> | Class: <strong>${cls}</strong> | Book: <strong>${title}</strong></p>
+          <table class="w-full text-left border-collapse text-xs">
+            <thead>
+              <tr class="bg-amber-500 text-white font-bold">
+                <th class="p-2 border border-slate-300">Area</th>
+                <th class="p-2 border border-slate-300">Just started</th>
+                <th class="p-2 border border-slate-300">Getting there</th>
+                <th class="p-2 border border-slate-300">Got it!</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${document.getElementById('rubricModalTableBody').innerHTML}
+            </tbody>
+          </table>
+        </div>
+      `;
+
+      return html;
+    }
+
+    function drawWrappedCanvasText(ctx, text, x, y, maxWidth, lineHeight, maxLines = 18) {
+      const paragraphs = String(text || '').split(/\n+/);
+      let curY = y;
+      let linesDrawn = 0;
+      for (const para of paragraphs) {
+        const words = para.split(/\s+/).filter(Boolean);
+        if (words.length === 0) {
+          curY += lineHeight * 0.5;
+          continue;
+        }
+        let line = '';
+        for (let i = 0; i < words.length; i++) {
+          const testLine = line ? line + ' ' + words[i] : words[i];
+          if (ctx.measureText(testLine).width > maxWidth && line) {
+            ctx.fillText(line, x, curY);
+            curY += lineHeight;
+            linesDrawn++;
+            if (linesDrawn >= maxLines) return curY;
+            line = words[i];
+          } else {
+            line = testLine;
+          }
+        }
+        if (line && linesDrawn < maxLines) {
+          ctx.fillText(line, x, curY);
+          curY += lineHeight;
+          linesDrawn++;
+        }
+        curY += lineHeight * 0.35;
+      }
+      return curY;
+    }
+
+    function loadDataUrlAsImage(dataUrl) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(img);
+        img.onerror = () => resolve(null);
+        img.src = dataUrl;
+      });
+    }
+
+    function buildPdfBlobFromCanvases(canvases) {
+      const pageWPt = 595.28;
+      const pageHPt = 841.89;
+      const jpegs = canvases.map((c) => {
+        const dataUrl = c.toDataURL('image/jpeg', 0.92);
+        const base64 = dataUrl.split(',')[1];
+        const bin = atob(base64);
+        const bytes = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) {
+          bytes[i] = bin.charCodeAt(i);
+        }
+        return { width: c.width, height: c.height, bytes };
+      });
+
+      const chunks = [];
+      let offset = 0;
+      const offsets = [];
+      const enc = new TextEncoder();
+
+      const pushAscii = (str) => {
+        const arr = enc.encode(str);
+        chunks.push(arr);
+        offset += arr.length;
+      };
+      const pushBytes = (uint8) => {
+        chunks.push(uint8);
+        offset += uint8.length;
+      };
+      const startObj = (id) => {
+        offsets[id] = offset;
+        pushAscii(`${id} 0 obj\n`);
+      };
+      const endObj = () => pushAscii('endobj\n');
+
+      pushAscii('%PDF-1.4\n');
+      pushBytes(new Uint8Array([0x25, 0xff, 0xff, 0xff, 0xff, 0x0a]));
+
+      startObj(1);
+      pushAscii('<< /Type /Catalog /Pages 2 0 R >>\n');
+      endObj();
+
+      const n = jpegs.length;
+      const kids = jpegs.map((_, i) => `${3 + i * 3} 0 R`).join(' ');
+      startObj(2);
+      pushAscii(`<< /Type /Pages /Kids [ ${kids} ] /Count ${n} >>\n`);
+      endObj();
+
+      jpegs.forEach((jpg, i) => {
+        const pageObjId = 3 + i * 3;
+        const contentObjId = 4 + i * 3;
+        const imgObjId = 5 + i * 3;
+        const imgName = `/Im${i}`;
+
+        startObj(pageObjId);
+        pushAscii(
+          `<< /Type /Page /Parent 2 0 R /MediaBox [0 0 ${pageWPt.toFixed(2)} ${pageHPt.toFixed(2)}] /Resources << /XObject << ${imgName} ${imgObjId} 0 R >> >> /Contents ${contentObjId} 0 R >>\n`
+        );
+        endObj();
+
+        const contentStream = `q\n${pageWPt.toFixed(2)} 0 0 ${pageHPt.toFixed(2)} 0 0 cm\n${imgName} Do\nQ\n`;
+        startObj(contentObjId);
+        pushAscii(`<< /Length ${contentStream.length} >>\nstream\n${contentStream}endstream\n`);
+        endObj();
+
+        startObj(imgObjId);
+        pushAscii(
+          `<< /Type /XObject /Subtype /Image /Width ${jpg.width} /Height ${jpg.height} /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ${jpg.bytes.length} >>\nstream\n`
+        );
+        pushBytes(jpg.bytes);
+        pushAscii('\nendstream\n');
+        endObj();
+      });
+
+      const totalObjs = 2 + n * 3;
+      const xrefOffset = offset;
+      pushAscii(`xref\n0 ${totalObjs + 1}\n0000000000 65535 f \n`);
+      for (let id = 1; id <= totalObjs; id++) {
+        pushAscii(String(offsets[id]).padStart(10, '0') + ' 00000 n \n');
+      }
+      pushAscii(`trailer\n<< /Size ${totalObjs + 1} /Root 1 0 R >>\nstartxref\n${xrefOffset}\n%%EOF\n`);
+
+      return new Blob(chunks, { type: 'application/pdf' });
+    }
+
+    async function downloadDirectPDF() {
+      showToast('📄 Generating your PDF file...');
+      evaluateRubrics();
+      const title = document.getElementById('bookTitle').value || 'Journey of a Drop of Blood';
+      const author = document.getElementById('pupilName').value || 'Pupil';
+      const cls = document.getElementById('pupilClass').value || '';
+      const prac = getPracticeStoryForExport();
+
+      const snapshots = [];
+      for (const p of pages) {
+        const dataUrl = await renderPageToDataUrl(p);
+        const img = await loadDataUrlAsImage(dataUrl);
+        snapshots.push(img);
+      }
+
+      const W = 1240;
+      const H = 1754;
+      const pdfCanvases = [];
+
+      // 1. COVER + PART 1 PRACTICE PAGE
+      {
+        const c = document.createElement('canvas');
+        c.width = W;
+        c.height = H;
+        const ctx = c.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.strokeStyle = '#fda4af';
+        ctx.lineWidth = 6;
+        ctx.strokeRect(48, 48, W - 96, H - 96);
+
+        ctx.fillStyle = '#ffe4e6';
+        ctx.beginPath();
+        ctx.roundRect(W / 2 - 290, 96, 580, 48, 24);
+        ctx.fill();
+        ctx.fillStyle = '#be123c';
+        ctx.font = 'bold 20px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('PRIMARY 5 SCIENCE • ACTIVITY 4.7', W / 2, 127);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 46px sans-serif';
+        ctx.fillText(title, W / 2, 205);
+
+        ctx.fillStyle = '#475569';
+        ctx.font = 'bold 26px sans-serif';
+        ctx.fillText(`Written & Illustrated by ${author}${cls ? ' (' + cls + ')' : ''}`, W / 2, 255);
+
+        if (snapshots[0]) {
+          const imgW = 920;
+          const imgH = 575;
+          const imgX = (W - imgW) / 2;
+          const imgY = 295;
+          ctx.fillStyle = '#f8fafc';
+          ctx.strokeStyle = '#cbd5e1';
+          ctx.lineWidth = 3;
+          ctx.strokeRect(imgX - 4, imgY - 4, imgW + 8, imgH + 8);
+          ctx.drawImage(snapshots[0], imgX, imgY, imgW, imgH);
+        }
+
+        // Part 1 Warm-Up Practice Box
+        const boxX = 96;
+        const boxY = 920;
+        const boxW = W - 192;
+        const boxH = 730;
+        ctx.fillStyle = '#eff6ff';
+        ctx.strokeStyle = '#93c5fd';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.roundRect(boxX, boxY, boxW, boxH, 20);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#1e40af';
+        ctx.font = 'bold 24px sans-serif';
+        ctx.fillText("Part 1: Guided Warm-Up Practice Story (Ruby's Journey)", boxX + 36, boxY + 52);
+
+        ctx.fillStyle = '#1e293b';
+        ctx.font = '24px sans-serif';
+        let nextY = drawWrappedCanvasText(ctx, prac.text, boxX + 36, boxY + 105, boxW - 72, 38, 11);
+
+        if (prac.challenge) {
+          ctx.fillStyle = '#1e40af';
+          ctx.font = 'bold 22px sans-serif';
+          ctx.fillText('Optional Challenge (How Systems Work Together):', boxX + 36, nextY + 25);
+          ctx.fillStyle = '#334155';
+          ctx.font = '22px sans-serif';
+          drawWrappedCanvasText(ctx, prac.challenge, boxX + 36, nextY + 62, boxW - 72, 34, 4);
+        }
+
+        pdfCanvases.push(c);
+      }
+
+      // 2. STORYBOOK PAGES (1 PAGE PER E-STORYBOOK PAGE)
+      pages.forEach((p, idx) => {
+        const c = document.createElement('canvas');
+        c.width = W;
+        c.height = H;
+        const ctx = c.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(48, 48, W - 96, H - 96);
+
+        // Header bar
+        ctx.fillStyle = '#e11d48';
+        ctx.beginPath();
+        ctx.roundRect(88, 86, 190, 44, 22);
+        ctx.fill();
+        ctx.fillStyle = '#ffffff';
+        ctx.font = 'bold 20px sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText(`Page ${idx + 1} of ${pages.length}`, 88 + 95, 115);
+
+        ctx.textAlign = 'left';
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 34px sans-serif';
+        ctx.fillText(p.heading || `Page ${idx + 1}`, 300, 118);
+
+        // Illustration
+        const imgW = 1064;
+        const imgH = 665;
+        const imgX = (W - imgW) / 2;
+        const imgY = 160;
+        if (snapshots[idx]) {
+          ctx.strokeStyle = '#cbd5e1';
+          ctx.lineWidth = 3;
+          ctx.strokeRect(imgX - 2, imgY - 2, imgW + 4, imgH + 4);
+          ctx.drawImage(snapshots[idx], imgX, imgY, imgW, imgH);
+        }
+
+        // Story Box
+        const sBoxX = 88;
+        const sBoxY = 865;
+        const sBoxW = W - 176;
+        const sBoxH = 790;
+        ctx.fillStyle = '#fffbeb';
+        ctx.strokeStyle = '#fde68a';
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.roundRect(sBoxX, sBoxY, sBoxW, sBoxH, 20);
+        ctx.fill();
+        ctx.stroke();
+
+        ctx.fillStyle = '#92400e';
+        ctx.font = 'bold 22px sans-serif';
+        ctx.fillText('My Composed Story:', sBoxX + 36, sBoxY + 48);
+
+        const storyText = getPagePlainText(p) || '(No story sentences placed on this page yet.)';
+        ctx.fillStyle = '#1e293b';
+        ctx.font = '26px sans-serif';
+        drawWrappedCanvasText(ctx, storyText, sBoxX + 36, sBoxY + 100, sBoxW - 72, 42, 15);
+
+        pdfCanvases.push(c);
+      });
+
+      // 3. RUBRIC SUMMARY PAGE (Matches Activity 4.7 Page 131)
+      {
+        const c = document.createElement('canvas');
+        c.width = W;
+        c.height = H;
+        const ctx = c.getContext('2d');
+        ctx.fillStyle = '#ffffff';
+        ctx.fillRect(0, 0, W, H);
+
+        ctx.strokeStyle = '#e2e8f0';
+        ctx.lineWidth = 4;
+        ctx.strokeRect(48, 48, W - 96, H - 96);
+
+        ctx.fillStyle = '#0f172a';
+        ctx.font = 'bold 36px sans-serif';
+        ctx.textAlign = 'left';
+        ctx.fillText('Activity 4.7: Rubrics for the Journey of a Drop of Blood (p. 131)', 88, 120);
+
+        ctx.fillStyle = '#475569';
+        ctx.font = 'bold 24px sans-serif';
+        ctx.fillText(`Pupil: ${author}   |   Class: ${cls || '-'}   |   Book: ${title}`, 88, 168);
+
+        const rows = [
+          [
+            'The human systems (respiratory, circulatory and digestive) and their parts in the journey',
+            'I can describe only one human system and state the parts of that system.',
+            'I can describe two human systems and state the parts of the two systems.',
+            'I can describe all three human systems and state the parts of the three systems.'
+          ],
+          [
+            'The functions of the parts of the three human systems',
+            'I can describe the functions of the parts of one human system.',
+            'I can describe the functions of the parts of two of the human systems.',
+            'I can describe the functions of the parts of all three human systems.'
+          ],
+          [
+            'Description of how the three human systems work together to ensure survival',
+            'I can describe how one human system works to ensure survival.',
+            'I can describe how two of the human systems work together to ensure survival.',
+            'I can describe how all three human systems work together to ensure survival.'
+          ]
+        ];
+
+        const tableX = 88;
+        let tableY = 220;
+        const colW = (W - 176) / 4;
+        const headers = ['Area', 'Just started', 'Getting there', 'Got it!'];
+
+        // Draw Table Header
+        for (let col = 0; col < 4; col++) {
+          ctx.fillStyle = '#f59e0b';
+          ctx.fillRect(tableX + col * colW, tableY, colW, 64);
+          ctx.strokeStyle = '#d97706';
+          ctx.lineWidth = 2;
+          ctx.strokeRect(tableX + col * colW, tableY, colW, 64);
+          ctx.fillStyle = '#ffffff';
+          ctx.font = 'bold 24px sans-serif';
+          ctx.fillText(headers[col], tableX + col * colW + 18, tableY + 40);
+        }
+        tableY += 64;
+
+        const rowH = 340;
+        rows.forEach((r) => {
+          for (let col = 0; col < 4; col++) {
+            ctx.fillStyle = col === 0 ? '#fffbeb' : '#ffffff';
+            ctx.fillRect(tableX + col * colW, tableY, colW, rowH);
+            ctx.strokeStyle = '#cbd5e1';
+            ctx.lineWidth = 2;
+            ctx.strokeRect(tableX + col * colW, tableY, colW, rowH);
+            ctx.fillStyle = '#1e293b';
+            ctx.font = col === 0 ? 'bold 21px sans-serif' : '21px sans-serif';
+            drawWrappedCanvasText(ctx, r[col], tableX + col * colW + 16, tableY + 42, colW - 32, 32, 9);
+          }
+          tableY += rowH;
+        });
+
+        pdfCanvases.push(c);
+      }
+
+      const pdfBlob = buildPdfBlobFromCanvases(pdfCanvases);
+      const url = URL.createObjectURL(pdfBlob);
+      const a = document.createElement('a');
+      const safeName = title.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'journey-of-a-drop-of-blood';
+      a.href = url;
+      a.download = `${safeName}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 3000);
+      showToast(`✅ Downloaded ${safeName}.pdf!`);
+    }
+
+    async function printOrDownloadPDF() {
+      showToast('🖨️ Preparing Print Preview...');
+      const html = await buildPrintableHTMLContent();
+      const printContainer = document.getElementById('printContainer');
+      const previewBody = document.getElementById('printPreviewBody');
+      printContainer.innerHTML = html;
+      if (previewBody) previewBody.innerHTML = html;
+
+      const dlg = document.getElementById('printPreviewDialog');
+      if (dlg && !dlg.open) {
+        dlg.showModal();
+      }
+      setTimeout(() => {
+        window.print();
+      }, 300);
+    }
+
+    function triggerSystemPrint() {
+      window.print();
+    }
+
+    async function downloadPrintableHTMLFile() {
+      showToast('⬇️ Downloading Printable HTML File...');
+      const title = document.getElementById('bookTitle').value || 'Journey of a Drop of Blood';
+      const bodyHtml = await buildPrintableHTMLContent();
+      const doc = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>${escapeHtml(title)} — Printable PDF Sheet</title>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; color: #1e293b; max-width: 840px; margin: 0 auto; padding: 24px; background: #f8fafc; }
+  .top-bar { background: #0f172a; color: #fff; padding: 14px 20px; border-radius: 14px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .btn-print { background: #e11d48; color: #fff; border: 0; padding: 10px 18px; border-radius: 10px; font-weight: 800; cursor: pointer; font-size: 14px; }
+  .print-page { background: #fff; border: 2px solid #cbd5e1; border-radius: 16px; padding: 24px; margin-bottom: 24px; page-break-after: always; break-after: page; }
+  img { max-width: 100%; height: auto; border-radius: 12px; border: 1px solid #cbd5e1; margin: 12px 0; }
+  table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 13px; }
+  th, td { border: 1px solid #cbd5e1; padding: 10px; text-align: left; }
+  th { background: #f59e0b; color: #fff; }
+  @media print { .top-bar { display: none !important; } body { background: #fff; padding: 0; } }
+</style>
+</head>
+<body>
+  <div class="top-bar">
+    <div><strong>${escapeHtml(title)}</strong> — Ready to Print or Save as PDF</div>
+    <button class="btn-print" onclick="window.print()">🖨️ Print / Save as PDF</button>
+  </div>
+  ${bodyHtml}
+  <script>setTimeout(() => window.print(), 400);<\/script>
+</body>
+</html>`;
+      const blob = new Blob([doc], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const safeName = title.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'journey-of-a-drop-of-blood';
+      a.href = url;
+      a.download = `${safeName}-printable.html`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      showToast(`✅ Downloaded ${safeName}-printable.html!`);
+    }
+
+    async function downloadStandaloneHTMLFlipbook() {
+      showToast('⬇️ Generating Standalone HTML Flipbook...');
+      const title = document.getElementById('bookTitle').value || 'Journey of a Drop of Blood';
+      const author = document.getElementById('pupilName').value || 'Pupil';
+      const cls = document.getElementById('pupilClass').value || '';
+      const prac = getPracticeStoryForExport();
+
+      const exportedPages = [];
+      for (const p of pages) {
+        const imgData = await renderPageToDataUrl(p);
+        exportedPages.push({
+          heading: p.heading,
+          story: getPagePlainText(p),
+          img: imgData
+        });
+      }
+
+      const standaloneHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapeHtml(title)} — By ${escapeHtml(author)}</title>
+<style>
+  body { font-family: system-ui, -apple-system, sans-serif; background: linear-gradient(135deg, #fff1f2, #f0f9ff); color: #1e293b; margin: 0; padding: 24px; display: flex; flex-direction: column; align-items: center; min-height: 100vh; }
+  .book-card { max-width: 820px; width: 100%; background: #ffffff; border-radius: 24px; border: 2px solid #fecdd3; box-shadow: 0 20px 40px rgb(0 0 0 / 0.08); padding: 28px; box-sizing: border-box; }
+  .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #f1f5f9; padding-bottom: 14px; margin-bottom: 16px; flex-wrap: wrap; gap: 10px; }
+  .badge { background: #e11d48; color: #fff; font-weight: 800; padding: 4px 12px; border-radius: 999px; font-size: 13px; }
+  .illustration { width: 100%; border-radius: 16px; border: 1px solid #e2e8f0; margin-bottom: 16px; }
+  .story-box { background: #fffbeb; border: 1px solid #fde68a; border-radius: 16px; padding: 18px; font-size: 17px; line-height: 1.65; white-space: pre-line; margin-bottom: 20px; }
+  .prac-box { background: #eff6ff; border: 1px solid #bfdbfe; border-radius: 14px; padding: 14px; font-size: 14px; line-height: 1.55; margin-top: 18px; }
+  .controls { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+  button { cursor: pointer; border: none; border-radius: 12px; padding: 10px 18px; font-weight: 700; font-size: 14px; transition: 0.15s; }
+  .btn-primary { background: #e11d48; color: white; }
+  .btn-secondary { background: #f1f5f9; color: #334155; }
+  .btn-tts { background: #4f46e5; color: white; }
+  button:disabled { opacity: 0.4; cursor: not-allowed; }
+  @media print { .no-print { display: none !important; } }
+</style>
+</head>
+<body>
+  <div class="book-card">
+    <div class="header">
+      <div>
+        <div style="font-size:12px;font-weight:700;color:#e11d48;text-transform:uppercase;">Activity 4.7 E-Storybook</div>
+        <h1 style="margin:4px 0 0;font-size:24px;">${escapeHtml(title)}</h1>
+        <div style="font-size:13px;color:#64748b;">By <strong>${escapeHtml(author)}</strong> ${cls ? '(' + escapeHtml(cls) + ')' : ''}</div>
+      </div>
+      <div class="no-print" style="display:flex;gap:8px;">
+        <button class="btn-tts" onclick="readCurrentPage()">🔊 Read Aloud</button>
+        <button class="btn-secondary" onclick="window.print()">🖨️ Print</button>
+      </div>
+    </div>
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+      <span id="pBadge" class="badge">Page 1</span>
+      <h2 id="pHeading" style="margin:0;font-size:18px;"></h2>
+    </div>
+    <img id="pImg" class="illustration" src="" alt="Story Illustration" />
+    <div id="pStory" class="story-box"></div>
+    <div class="controls no-print">
+      <button id="prevBtn" class="btn-secondary" onclick="changePage(-1)">← Previous Page</button>
+      <span id="pCount" style="font-weight:700;font-size:14px;color:#64748b;"></span>
+      <button id="nextBtn" class="btn-primary" onclick="changePage(1)">Next Page →</button>
+    </div>
+    <div class="prac-box">
+      <strong>Part 1 Guided Warm-Up Story:</strong><br/>
+      ${escapeHtml(prac.text)}
+    </div>
+  </div>
+  <script>
+    const PAGES = ${JSON.stringify(exportedPages)};
+    let idx = 0;
+    function render() {
+      const p = PAGES[idx];
+      document.getElementById('pBadge').textContent = 'Page ' + (idx + 1);
+      document.getElementById('pHeading').textContent = p.heading;
+      document.getElementById('pImg').src = p.img;
+      document.getElementById('pStory').textContent = p.story || '(No story written on this page)';
+      document.getElementById('pCount').textContent = 'Page ' + (idx + 1) + ' of ' + PAGES.length;
+      document.getElementById('prevBtn').disabled = idx === 0;
+      document.getElementById('nextBtn').disabled = idx === PAGES.length - 1;
+    }
+    function changePage(delta) {
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      idx = Math.max(0, Math.min(PAGES.length - 1, idx + delta));
+      render();
+    }
+    function readCurrentPage() {
+      if (!('speechSynthesis' in window)) return;
+      window.speechSynthesis.cancel();
+      const u = new SpeechSynthesisUtterance(PAGES[idx].heading + '. ' + PAGES[idx].story);
+      u.rate = 0.95;
+      window.speechSynthesis.speak(u);
+    }
+    render();
+  <\/script>
+</body>
+</html>`;
+
+      const blob = new Blob([standaloneHtml], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const safeName = title.toLowerCase().replace(/[^a-z0-9]+/g, '-') || 'journey-of-a-drop-of-blood';
+      a.href = url;
+      a.download = `${safeName}-ebook.html`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      setTimeout(() => URL.revokeObjectURL(url), 2000);
+      showToast(`✅ Downloaded ${safeName}-ebook.html!`);
+    }
+
+    function escapeHtml(str) {
+      return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
+    }
+
+    document.querySelectorAll('.left-tab-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        activeLeftTab = btn.getAttribute('data-left-tab');
+        document.querySelectorAll('.left-tab-btn').forEach((b) => {
+          const active = b.getAttribute('data-left-tab') === activeLeftTab;
+          b.className = `left-tab-btn py-2 px-2 rounded-lg text-xs font-bold transition ${
+            active ? 'bg-white text-rose-600 shadow-sm' : 'text-slate-600 hover:text-slate-900'
+          }`;
+        });
+        document.querySelectorAll('.left-tab-panel').forEach((panel) => panel.classList.add('hidden'));
+        const target = document.getElementById(`tab-${activeLeftTab}`);
+        target.classList.remove('hidden');
+        target.classList.add('flex');
+
+        document.querySelectorAll('.sticker-item').forEach((el) => {
+          el.style.pointerEvents = activeLeftTab === 'draw' ? 'none' : 'auto';
+        });
+        drawCanvas.style.cursor = activeLeftTab === 'draw' ? 'crosshair' : 'default';
+      });
+    });
+
+    document.querySelectorAll('.sticker-cat-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        selectedStickerCategory = btn.getAttribute('data-sticker-cat');
+        document.querySelectorAll('.sticker-cat-btn').forEach((b) => {
+          const active = b.getAttribute('data-sticker-cat') === selectedStickerCategory;
+          b.className = `sticker-cat-btn px-2.5 py-1 rounded-full text-xs font-bold ${
+            active ? 'bg-rose-600 text-white' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+          }`;
+        });
+        renderStickerGallery();
+      });
+    });
+
+    document.getElementById('sentenceCategoryFilter').addEventListener('change', renderSentenceBank);
+
+    document.getElementById('btnAddCustomSentence').addEventListener('click', () => {
+      const inp = document.getElementById('customSentenceInput');
+      addCustomSentenceToPage(inp.value);
+      inp.value = '';
+    });
+
+    document.getElementById('customSentenceInput').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        const inp = document.getElementById('customSentenceInput');
+        addCustomSentenceToPage(inp.value);
+        inp.value = '';
+      }
+    });
+
+    document.getElementById('btnClearPageStory').addEventListener('click', () => {
+      pages[currentPageIndex].composedBlocks = [];
+      activeBlankTarget = null;
+      renderStoryDropzone();
+      evaluateRubrics();
+    });
+
+    document.getElementById('btnAddSpeechBubble').addEventListener('click', () => {
+      const input = document.getElementById('customBubbleInput');
+      const text = input.value.trim() || 'Pump! Pump!';
+      const newBubble = {
+        uid: 'bub_' + Date.now(),
+        id: 'Bubble',
+        text,
+        x: 50,
+        y: 30,
+        scale: 1.0,
+        flip: false
+      };
+      pages[currentPageIndex].stickers.push(newBubble);
+      selectedStickerUid = newBubble.uid;
+      input.value = '';
+      renderStickersDom();
+    });
+
+    document.getElementById('btnStickerBigger').addEventListener('click', () => {
+      const st = pages[currentPageIndex].stickers.find((s) => s.uid === selectedStickerUid);
+      if (st) {
+        st.scale = Math.min(2.2, +(st.scale + 0.15).toFixed(2));
+        renderStickersDom();
+      }
+    });
+    document.getElementById('btnStickerSmaller').addEventListener('click', () => {
+      const st = pages[currentPageIndex].stickers.find((s) => s.uid === selectedStickerUid);
+      if (st) {
+        st.scale = Math.max(0.45, +(st.scale - 0.15).toFixed(2));
+        renderStickersDom();
+      }
+    });
+    document.getElementById('btnStickerFlip').addEventListener('click', () => {
+      const st = pages[currentPageIndex].stickers.find((s) => s.uid === selectedStickerUid);
+      if (st) {
+        st.flip = !st.flip;
+        renderStickersDom();
+      }
+    });
+    document.getElementById('btnStickerDelete').addEventListener('click', () => {
+      pages[currentPageIndex].stickers = pages[currentPageIndex].stickers.filter((s) => s.uid !== selectedStickerUid);
+      selectedStickerUid = null;
+      renderStickersDom();
+    });
+    document.getElementById('btnClearStickers').addEventListener('click', () => {
+      pages[currentPageIndex].stickers = [];
+      selectedStickerUid = null;
+      renderStickersDom();
+    });
+
+    document.querySelectorAll('.draw-tool-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        drawTool = btn.getAttribute('data-draw-tool');
+        document.querySelectorAll('.draw-tool-btn').forEach((b) => {
+          const active = b.getAttribute('data-draw-tool') === drawTool;
+          b.className = `draw-tool-btn py-2 px-2 rounded-lg border text-xs font-bold ${
+            active ? 'border-rose-500 bg-rose-50 text-rose-700' : 'border-slate-200 bg-slate-50 text-slate-700'
+          }`;
+        });
+      });
+    });
+
+    document.querySelectorAll('.color-swatch').forEach((swatch) => {
+      swatch.addEventListener('click', () => {
+        drawColor = swatch.getAttribute('data-color');
+        document.getElementById('customColorPicker').value = drawColor;
+        document.querySelectorAll('.color-swatch').forEach((s) => s.classList.remove('ring-2', 'ring-offset-2', 'ring-slate-800'));
+        swatch.classList.add('ring-2', 'ring-offset-2', 'ring-slate-800');
+      });
+    });
+
+    document.getElementById('customColorPicker').addEventListener('input', (e) => {
+      drawColor = e.target.value;
+    });
+
+    document.getElementById('brushSizeSlider').addEventListener('input', (e) => {
+      brushSize = Number(e.target.value);
+      document.getElementById('brushSizeVal').textContent = `${brushSize} px`;
+    });
+
+    document.getElementById('btnUndoStroke').addEventListener('click', () => {
+      pages[currentPageIndex].strokes.pop();
+      renderStrokes(drawCtx, pages[currentPageIndex].strokes, drawCanvas.width, drawCanvas.height);
+    });
+
+    document.getElementById('btnClearDrawing').addEventListener('click', () => {
+      pages[currentPageIndex].strokes = [];
+      renderStrokes(drawCtx, pages[currentPageIndex].strokes, drawCanvas.width, drawCanvas.height);
+    });
+
+    pageHeadingInput.addEventListener('input', (e) => {
+      pages[currentPageIndex].heading = e.target.value;
+      evaluateRubrics();
+    });
+
+    document.getElementById('btnPrevPage').addEventListener('click', () => {
+      if (currentPageIndex > 0) {
+        currentPageIndex--;
+        selectedStickerUid = null;
+        activeBlankTarget = null;
+        renderCurrentPage();
+      }
+    });
+
+    document.getElementById('btnNextPage').addEventListener('click', () => {
+      if (currentPageIndex < pages.length - 1) {
+        currentPageIndex++;
+        selectedStickerUid = null;
+        activeBlankTarget = null;
+        renderCurrentPage();
+      } else {
+        addNewPage();
+      }
+    });
+
+    function addNewPage() {
+      const newIdx = pages.length + 1;
+      pages.push({
+        id: 'p_' + Date.now(),
+        heading: `Page ${newIdx}: Next Stop on My Journey`,
+        sceneId: 'vessel-highway',
+        prompt: 'Where does the drop of blood travel next? Which body parts or systems are working together here?',
+        composedBlocks: [],
+        stickers: [],
+        strokes: []
+      });
+      currentPageIndex = pages.length - 1;
+      selectedStickerUid = null;
+      activeBlankTarget = null;
+      renderCurrentPage();
+    }
+
+    document.getElementById('btnAddPage').addEventListener('click', addNewPage);
+
+    document.getElementById('btnDeletePage').addEventListener('click', () => {
+      if (pages.length <= 1) return;
+      pages.splice(currentPageIndex, 1);
+      currentPageIndex = Math.max(0, currentPageIndex - 1);
+      selectedStickerUid = null;
+      activeBlankTarget = null;
+      renderCurrentPage();
+    });
+
+    document.getElementById('btnOpenRubric').addEventListener('click', () => {
+      evaluateRubrics();
+      document.getElementById('rubricDialog').showModal();
+    });
+
+    document.getElementById('btnResetTemplate').addEventListener('click', () => {
+      document.getElementById('templateDialog').showModal();
+    });
+
+    document.getElementById('btnLoadPupilBuilder').addEventListener('click', () => {
+      pages = createPupilBuilderPages();
+      currentPageIndex = 0;
+      selectedStickerUid = null;
+      activeBlankTarget = null;
+      renderCurrentPage();
+      document.getElementById('templateDialog').close();
+    });
+
+    document.getElementById('btnLoadBlankTemplate').addEventListener('click', () => {
+      pages = createBlankPages();
+      currentPageIndex = 0;
+      selectedStickerUid = null;
+      activeBlankTarget = null;
+      renderCurrentPage();
+      document.getElementById('templateDialog').close();
+    });
+
+    document.getElementById('btnPreviewBook').addEventListener('click', openFlipbookModal);
+
+    document.getElementById('btnFlipPrev').addEventListener('click', () => {
+      stopSpeech();
+      if (flipbookIndex > 0) {
+        flipbookIndex--;
+        updateFlipbookView();
+      }
+    });
+
+    document.getElementById('btnFlipNext').addEventListener('click', () => {
+      stopSpeech();
+      if (flipbookIndex < pages.length - 1) {
+        flipbookIndex++;
+        updateFlipbookView();
+      }
+    });
+
+    document.getElementById('btnFlipbookReadAll').addEventListener('click', () => {
+      const p = pages[flipbookIndex];
+      speakText(`${p.heading}. ${getPagePlainText(p)}`);
+    });
+
+    document.getElementById('btnFlipbookStopTTS').addEventListener('click', stopSpeech);
+
+    document.getElementById('btnReadPageAloud').addEventListener('click', () => {
+      const p = pages[currentPageIndex];
+      const txt = getPagePlainText(p);
+      speakText(txt ? `${p.heading}. ${txt}` : p.heading);
+    });
+
+    document.getElementById('btnDownloadPDF').addEventListener('click', downloadDirectPDF);
+    document.getElementById('btnDownloadHTML').addEventListener('click', downloadStandaloneHTMLFlipbook);
+
+    // Initialize Studio on Load
+    renderStickerGallery();
+    renderSentenceBank();
+    renderWordTilesBank();
+    renderCurrentPage();
+  </script>
+</body>
+</html>
